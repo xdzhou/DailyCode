@@ -1,6 +1,6 @@
 package com.loic.algo;
 
-public class Sort {
+public class SortAlgo {
 	/*
 	 * 选择排序：每次把最小的放在前面
 	 * @param a the list of comparable to sort
