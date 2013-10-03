@@ -108,7 +108,7 @@ public class SortAlgo {
 	}
 	
 	private static int partition(Comparable[] a, int lo, int hi){
-		int i=lo, j=hi;
+		int i=lo, j=hi+1;
 		Comparable p = a[lo]; //切分元素
 		while(true){
 			while(less(a[++i], p)) if(i==hi) break;
