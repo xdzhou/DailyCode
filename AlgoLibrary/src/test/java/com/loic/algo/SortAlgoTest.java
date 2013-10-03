@@ -7,7 +7,7 @@ import org.testng.annotations.AfterClass;
 
 public class SortAlgoTest {
 	private Comparable<Double>[] lists;
-	private int Num = 20;
+	private int Num = 200;
 	
   @BeforeClass
   public void beforeClass() {
