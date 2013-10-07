@@ -1,5 +1,7 @@
 package com.loic.algo;
 
+import java.util.Arrays;
+
 public class MaxPQ<T extends Comparable<T>> {
 	private T[] pq;
 	private int N=0;
@@ -52,4 +54,5 @@ public class MaxPQ<T extends Comparable<T>> {
 		pq[i] = pq[j];
 		pq[j] = t;
 	}
+
 }
