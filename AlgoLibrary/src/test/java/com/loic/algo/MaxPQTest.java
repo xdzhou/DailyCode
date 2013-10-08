@@ -40,9 +40,9 @@ public class MaxPQTest {
 	public void MaxPQtest() {
 		for(int i=0; i<N; i++){
 			double d1 = pq_java.poll();
-			double d3 = pq_my.delMax();
-			System.out.println("d1="+d1+" d2="+d3);
-			Assert.assertTrue(d1==d3);
+			double d2 = pq_my.delMax();
+			System.out.println("d1="+d1+" d2="+d2);
+			Assert.assertTrue(d1==d2);
 		}
 	}
 }
