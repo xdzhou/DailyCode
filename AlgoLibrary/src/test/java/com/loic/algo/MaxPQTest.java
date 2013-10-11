@@ -12,7 +12,7 @@ import org.testng.annotations.AfterClass;
 
 
 public class MaxPQTest {
-	private int N =10;
+	private int N =100;
 	private PriorityQueue<Double> pq_java;
 	private MaxPQ<Double> pq_my;
 	
