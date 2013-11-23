@@ -6,8 +6,6 @@ public class StockExchangeLosses {
 	
 	public static void main(String args[]) {
 		Scanner in = new Scanner(System.in);
-		int big = 0;
-		int small = 0;
 		int min;
 		
 		int n = in.nextInt();
