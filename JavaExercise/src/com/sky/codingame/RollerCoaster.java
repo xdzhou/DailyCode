@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 class Note{
 	public int sizeC = 0;
@@ -29,7 +30,6 @@ public class RollerCoaster {
 		for (int i = 0; i < N; i++) {
 			queue.offer(in.nextInt());
 		}
-		
 		int cap;
 		int nbGroup = queue.size();
 		int numFlag = 1;
