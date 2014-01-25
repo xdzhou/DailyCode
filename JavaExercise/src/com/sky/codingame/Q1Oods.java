@@ -6,14 +6,14 @@ public class Q1Oods {
 	
 	public static void main(String args[]) {
 		int N, C;
-		Comparable<Integer>[] budget;
+		Integer[] budget;
 		//int pay[];
 		int totalBudget = 0;
 		
 		Scanner in = new Scanner(System.in);
 		N = in.nextInt();
 		C = in.nextInt();
-		budget = new Comparable[N];
+		budget = new Integer[N];
 		
 		for (int i = 0; i < N; i++) {
 			int b = in.nextInt();
@@ -28,7 +28,7 @@ public class Q1Oods {
 		int moyen = C/N;
 		
 		for (int i = 0; i < N; i++) {
-			int temp = (Integer) budget[i];
+			int temp = budget[i];
 			int tempC = C;
 			if( temp > moyen) moyen = C/(N-i);
 			C = pay(i, temp, moyen,C, budget);
