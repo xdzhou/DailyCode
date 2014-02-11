@@ -12,7 +12,8 @@ public class Surface {
 		Scanner in = new Scanner(System.in);
 		width = in.nextInt();
 		height = in.nextInt();
-		in.nextLine();
+		in.nextLine(); // don't know why
+		
 		table = new char[width][height];
 		for(int i=0; i<height; i++){
 			String line = in.nextLine();
