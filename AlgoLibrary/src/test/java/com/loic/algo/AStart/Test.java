@@ -12,7 +12,7 @@ public class Test {
                 {1,1,1,1,0,1,1,1,1,1}
         };
 		AStart aStart = new AStart(map, 6, 10);
-		aStart.serch(4, 0, 0, 0);
+		aStart.search(5, 0, 5, 9);
 	}
 
 }

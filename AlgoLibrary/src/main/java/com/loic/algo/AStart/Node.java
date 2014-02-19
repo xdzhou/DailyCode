@@ -40,8 +40,6 @@ public class Node {
 		return true;
 	}
 
-
-
 	public int getX() {
 		return x;
 	}
@@ -78,6 +76,10 @@ public class Node {
 	public void updateF() {
 		F = G+H;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Node ("+x+","+y+"), G=" + G + ", H=" + H + ", F="+ F;
+	}
 	
 }

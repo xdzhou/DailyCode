@@ -10,7 +10,7 @@ public class AStart {
 	int line, row;
 	List<Node> closeList;
 	List<Node> openList;
-	private final int COST_STRAIGHT = 10;//垂直方向或水平方向移动的路径评分
+	private final int COST_STRAIGHT = 1;//垂直方向或水平方向移动的路径评分
     private final int COST_DIAGONAL = 14;//斜方向移动的路径评分
     NodeComparator comparator = new NodeComparator();
 	
@@ -22,56 +22,58 @@ public class AStart {
 		openList = new ArrayList<Node>();
 	}
 	
-	public boolean serch(int startX, int startY, int endX, int endY){
+	public boolean search(int startX, int startY, int endX, int endY){
 		if(!initCheck(startX, startY, endX, endY)) return false;
 		Node startNode = new Node(startX, startY, null);
 		startNode.setG(0);
 		openList.add(startNode);
-		boolean isFound = false;
+		Node endNode = null;
 		while(openList.size()>0){
 			Node node = openList.get(0);
-			closeList.add(node);
-			if(!isFound && node.getX()-1>0){
-				isFound = treatNewNode(node, node.getX()-1, node.getY(), COST_STRAIGHT, endX, endY);
-			}
-			if (!isFound && node.getX()+1<=line-1) {
-				isFound = treatNewNode(node, node.getX()+1, node.getY(), COST_STRAIGHT, endX, endY);
-			}
-			if (!isFound && node.getY()-1>0) {
-				isFound = treatNewNode(node, node.getX(), node.getY()-1, COST_STRAIGHT, endX, endY);
-			}
-			if (!isFound && node.getY()+1<=row-1) {
-				isFound = treatNewNode(node, node.getX(), node.getY()+1, COST_STRAIGHT, endX, endY);
-			}
-			if(isFound) break;
-			openList.remove(0);
 			//closeList.add(node);
+			if(node.getX()==endX && node.getY()==endY){
+				endNode = node;
+				break;
+			}
+			System.out.println("current: "+node);
+			if(node.getX()-1>=0){
+				treatNewNode(node, node.getX()-1, node.getY(), COST_STRAIGHT, endX, endY);
+			}
+			if (node.getX()+1<=line-1) {
+				treatNewNode(node, node.getX()+1, node.getY(), COST_STRAIGHT, endX, endY);
+			}
+			if (node.getY()-1>=0) {
+				treatNewNode(node, node.getX(), node.getY()-1, COST_STRAIGHT, endX, endY);
+			}
+			if (node.getY()+1<=row-1) {
+				treatNewNode(node, node.getX(), node.getY()+1, COST_STRAIGHT, endX, endY);
+			}
+			openList.remove(0);
+			closeList.add(node);
 			Collections.sort(openList, comparator);
 		}
-		if(!isFound) {
+		if(endNode == null) {
 			System.out.println("Not found!");
 			return false;
-		}
-		else {
-			printTrace(endX,endY);
+		}else {
+			printTrace(endNode);
 			return true;			
 		}
 		
 	}
 	
-	private boolean treatNewNode(Node parentNode, int x, int y, int cost, int endX, int endY){
-		
+	private boolean treatNewNode(Node parentNode, int x, int y, int cost, int endX, int endY){	
 		Node tempNode = new Node(x,y,parentNode);
-		if(x==endX && y==endY){ //get the target, return true
+		/*if(x==endX && y==endY){ //get the target, return true
 			openList.clear();
 			closeList.add(tempNode);
 			return true;
-		}
+		}*/
 		if(closeList.contains(tempNode)) return false;
 		else if(openList.contains(tempNode)){
 			Node node = getNodeEqualTo(tempNode);
 			int newG = parentNode.getG()+cost;
-			if(newG<node.getG()){
+			if(newG < node.getG()){
 				node.setG(newG);
 				node.updateF();
 				node.setParentNode(parentNode);
@@ -82,18 +84,17 @@ public class AStart {
 				tempNode.setG(parentNode.getG()+cost);
 				tempNode.setH(estimeLen);
 				tempNode.updateF();
-				System.out.println(x+","+y);
+				System.out.println(tempNode);
 				openList.add(tempNode);
 			}else {
 				closeList.add(tempNode);
 			}
 		}
-		Collections.sort(openList, comparator);
+		//Collections.sort(openList, comparator);
 		return false;
 	}
 	
-	private void printTrace(int endX, int endY){
-		Node endNode = closeList.get(closeList.size()-1);
+	private void printTrace(Node endNode){
 		do{
 			System.out.print("<--("+endNode.getX()+","+endNode.getY()+")");
 			map[endNode.getX()][endNode.getY()] = 8;
