@@ -4,7 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/*
+ A星算法步骤：
+ 1.起点先添加到开启列表中
+ 2.开启列表中有节点的话，取出第一个节点，即最小F值的节点
+   判断此节点是否是目标点，是则找到了，跳出
+   根据此节点取得八个方向的节点，求出G，H，F值
+   判断每个节点在地图中是否能通过，不能通过则加入关闭列表中，跳出
+   判断每个节点是否在关闭列表中，在则跳出
+   判断每个节点是否在开启列表中，在则更新G值，F值，还更新其父节点；不在则将其添加到开启列表中，计算G值，H值，F值，添加其节点
+ 3.把此节点从开启列表中删除，再添加到关闭列表中
+ 4.把开启列表中按照F值最小的节点进行排序，最小的F值在第一个
+ 5.重复2，3，4步骤
+   直到目标点在开启列表中，即找到了；目标点不在开启列表中，开启列表为空，即没找到
+ */
 public class AStart {
 	int[][] map;
 	int line, row;
@@ -62,14 +75,9 @@ public class AStart {
 		
 	}
 	
-	private boolean treatNewNode(Node parentNode, int x, int y, int cost, int endX, int endY){	
+	private void treatNewNode(Node parentNode, int x, int y, int cost, int endX, int endY){	
 		Node tempNode = new Node(x,y,parentNode);
-		/*if(x==endX && y==endY){ //get the target, return true
-			openList.clear();
-			closeList.add(tempNode);
-			return true;
-		}*/
-		if(closeList.contains(tempNode)) return false;
+		if(closeList.contains(tempNode)) return;
 		else if(openList.contains(tempNode)){
 			Node node = getNodeEqualTo(tempNode);
 			int newG = parentNode.getG()+cost;
@@ -90,8 +98,6 @@ public class AStart {
 				closeList.add(tempNode);
 			}
 		}
-		//Collections.sort(openList, comparator);
-		return false;
 	}
 	
 	private void printTrace(Node endNode){
@@ -105,8 +111,7 @@ public class AStart {
 			for(int j=0; j<row; j++)
 				System.out.print(map[i][j]);
 			System.out.println();
-		}
-			
+		}	
 	}
 	
 	private int estimeFunction(int sx, int sy, int ex, int ey){
