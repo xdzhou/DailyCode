@@ -1,4 +1,4 @@
-package com.sky.codingame;
+package com.sky.codingame.training;
 
 import java.util.Scanner;
 

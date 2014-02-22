@@ -1,4 +1,4 @@
-package com.sky.codingame;
+package com.sky.codingame.match;
 
 // Read inputs from System.in, Write outputs to System.out.
 // Your class name has to be Solution

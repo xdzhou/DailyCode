@@ -1,4 +1,4 @@
-package com.sky.codingame;
+package com.sky.codingame.match;
 
 import java.util.ArrayList;
 import java.util.Collections;
