@@ -25,7 +25,7 @@ public class TeadsQ1 {
 			String[] tempStrings = in.nextLine().split(" ");
 			int a = Integer.parseInt(tempStrings[0]);
 			int b = Integer.parseInt(tempStrings[1]);
-			forroot = a;
+			forroot = b;
 			Node na, nb;
 			if(totalNodes.containsKey(a)){
 				na = totalNodes.get(a);
@@ -39,21 +39,10 @@ public class TeadsQ1 {
 				nb = new Node(null);
 				totalNodes.put(b, nb);
 			}
-			if(na.parent==null){
-				na.parent = nb;
-				nb.childre.add(na);
-				na.root = nb.root;
-			}else if (nb.parent==null) {
-				nb.parent = na;
-				na.childre.add(nb);
-				nb.root = na.root;
-			}else {
-				nb.setParent(na);
-				nb.root = na.root;
-			}
+			na.union(nb);
 		}
 		
-		Node root = totalNodes.get(forroot);
+		Node root = totalNodes.get(forroot).getRoot();
 		Result r = getMaxDistance(root);
 		return (r.maxDistance+1)/2;
 	}
@@ -108,7 +97,6 @@ public class TeadsQ1 {
 	}
 	
 	private class Node{
-		Node root = this;
 		Node parent = null;
 		List<Node> childre = new ArrayList<Node>();
 		
@@ -116,15 +104,61 @@ public class TeadsQ1 {
 			this.parent = parent;
 		}
 		
-		public void setParent(Node p){
-			if(parent==null){
-				parent=p;
-			}else {
-				parent.childre.remove(this);
-				childre.add(parent);
-				parent.setParent(this);
-				parent = p;
+		public Node getRoot(){
+			Node currentNode = this;
+			while(currentNode.parent!=null){
+				currentNode = currentNode.parent;
 			}
+			return currentNode;
+		}
+		
+		//connect 2 nodes (union of 2 trees)
+		public void union(Node n) {
+			if(!(this.parent==n || n.parent==this)){
+				if(parent == null){
+					this.parent = n;
+					n.childre.add(this);
+				}else if (n.parent == null) {
+					n.parent = this;
+					this.childre.add(n);
+				}else {
+					int a = getHeight(this);
+					int b = getHeight(n);
+					if(a<b){
+						this.resetRoot();
+						this.parent = n;
+						n.childre.add(this);
+					}else {
+						n.resetRoot();n.parent = this;
+						this.childre.add(n);
+					}
+				}
+			}
+		}
+		//change the root node of a tree
+		private void resetRoot(){
+			if(this.parent!=null){
+				Node c = this;
+				Node p = this.parent;
+				while(p!=null){
+					Node temp = p.parent;
+					p.childre.remove(c);
+					p.parent = c;
+					c.childre.add(p);
+					c = p;
+					p = temp;
+				}
+				this.parent = null;
+			}		
+		}
+		
+		private int getHeight(Node n){
+			int height = 0;
+			while(n.parent!=null){
+				height ++;
+				n = n.parent;
+			}
+			return height;
 		}
 	}
 
