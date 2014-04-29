@@ -39,10 +39,31 @@ public class ChargingChaos {
 					break BREAKFLAG;
 				}
 			}
-			while(specialIndex.size()>0){
-				
-			}
-			System.out.println("Case #"+(i+1)+": "+nbSwitch);
+			int min = getMinSwitch(device, electric, specialIndex, L);
+			if(min==-1) System.out.println("Case #"+(i+1)+": NOT POSSIBLE");
+			else System.out.println("Case #"+(i+1)+": "+(nbSwitch+min));
+		}
+	}
+	
+	private int getMinSwitch(List<Integer> device, List<Integer> electric, List<Integer> specialIndex, int L){
+		if(isListEqual(electric, device)) return 0;
+		if(!isBitEqual(device, electric, specialIndex, L)) return -1;
+		
+		List<Integer> copyelectric = new ArrayList<Integer>(electric.size());
+		Collections.copy(copyelectric, electric);
+
+		int index = specialIndex.remove(0);
+		int min1 = getMinSwitch(device, electric, specialIndex, L);
+		bitSwitch(copyelectric, L-1-index);
+		int min2 = getMinSwitch(device, copyelectric, specialIndex, L);
+		
+		if(min1==min2 && min1==-1) return -1;
+		else if (min1 == -1) {
+			return min2+1;
+		}else if (min2==-1) {
+			return min1;
+		}else {
+			return (min1>min2+1)?min2+1:min1;
 		}
 	}
 	
