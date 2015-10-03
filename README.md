@@ -1,4 +1,4 @@
-Algo_Study
+AlgoStudy
 ==========
 
 learn to algorithm
