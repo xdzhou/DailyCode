@@ -1,0 +1,14 @@
+sourceSets {
+    main {
+        java {srcDir "src/main"}
+    } 
+    test{
+        java {srcDir "src/test"}
+    }
+}
+
+dependencies {
+	compile project(':AlgoLibrary')
+	compile 'org.apache.httpcomponents:httpclient:4.5.1'
+	
+}

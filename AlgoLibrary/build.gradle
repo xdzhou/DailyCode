@@ -1,0 +1,13 @@
+sourceSets {
+    main {
+        java {srcDir "src/main"}
+    } 
+    test{
+        java {srcDir "src/test"}
+    }
+}
+
+dependencies {
+	compile 'org.apache.hadoop:hadoop-core:1.2.1'
+	
+}
