@@ -1,22 +1,25 @@
 package com.sky.designpattern.observer;
 
-public class NewSubject extends Subject{
+public class NewSubject extends Subject
+{
 	private int a = 0;
 	private int b = 0;
-	
-	public void setChange(){
+
+	public void setChange()
+	{
 		a++;
 		b++;
 		notifyAllObserver();
 	}
 
-	public int getA() {
+	public int getA()
+	{
 		return a;
 	}
 
-	public int getB() {
+	public int getB()
+	{
 		return b;
 	}
-	
-	
+
 }

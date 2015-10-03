@@ -1,5 +1,6 @@
 package com.sky.designpattern.factory;
 
-public class ProduitA implements Produit {
+public class ProduitA implements Produit
+{
 
 }

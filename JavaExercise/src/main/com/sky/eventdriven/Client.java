@@ -1,52 +1,61 @@
 package com.sky.eventdriven;
 
-public class Client {
+public class Client
+{
 	private int id;
 	private int arriveTime;
 	private int startServiceTime;
 	private int serviceDuring;
 	private int numWin;
-	
-	public Client(int id, int arriveTime,int serviceDuring) {
+
+	public Client(int id, int arriveTime, int serviceDuring)
+	{
 		this.id = id;
 		this.arriveTime = arriveTime;
 		this.serviceDuring = serviceDuring;
 	}
 
-	public int getStartServiceTime() {
+	public int getStartServiceTime()
+	{
 		return startServiceTime;
 	}
 
-	public void setStartServiceTime(int startServiceTime) {
+	public void setStartServiceTime(int startServiceTime)
+	{
 		this.startServiceTime = startServiceTime;
 	}
 
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
 
-	public int getArriveTime() {
+	public int getArriveTime()
+	{
 		return arriveTime;
 	}
 
-	public int getServiceDuring() {
+	public int getServiceDuring()
+	{
 		return serviceDuring;
 	}
 
-	public int getNumWin() {
+	public int getNumWin()
+	{
 		return numWin;
 	}
 
-	public void setNumWin(int numWin) {
+	public void setNumWin(int numWin)
+	{
 		this.numWin = numWin;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Client [id=" + id + ", arriveTime=" + arriveTime
 				+ ", startServiceTime=" + startServiceTime + ", serviceDuring="
 				+ serviceDuring + "]";
 	}
-	
-	
+
 }

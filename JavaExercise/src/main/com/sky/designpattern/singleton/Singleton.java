@@ -1,32 +1,41 @@
 package com.sky.designpattern.singleton;
 
-public class Singleton {
-	/* ³ÖÓÐË½ÓÐ¾²Ì¬ÊµÀý£¬·ÀÖ¹±»ÒýÓÃ£¬´Ë´¦¸³ÖµÎªnull£¬Ä¿µÄÊÇÊµÏÖÑÓ³Ù¼ÓÔØ */
+public class Singleton
+{
+	/* ï¿½ï¿½ï¿½ï¿½Ë½ï¿½Ð¾ï¿½Ì¬Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ÖµÎªnullï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½Ó³Ù¼ï¿½ï¿½ï¿½ */
 	private static Singleton instance = null;
-	
-	/* Ë½ÓÐ¹¹Ôì·½·¨£¬·ÀÖ¹±»ÊµÀý»¯ */
-	private Singleton(){		
+
+	/* Ë½ï¿½Ð¹ï¿½ï¿½ì·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ */
+	private Singleton()
+	{
 	}
-	
-	//////////////////////////////////////////
-	 /* ¾²Ì¬¹¤³Ì·½·¨£¬´´½¨ÊµÀý */
-	public static Singleton getInstance1(){
-		if(instance == null){
-			createInstance();;
+
+	// ////////////////////////////////////////
+	/* ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ */
+	public static Singleton getInstance1()
+	{
+		if (instance == null)
+		{
+			createInstance();
+			;
 		}
 		return instance;
 	}
-	
-	private static synchronized void createInstance(){
-		if(instance == null) instance = new Singleton();
+
+	private static synchronized void createInstance()
+	{
+		if (instance == null)
+			instance = new Singleton();
 	}
-	
-	/////////////////////////////////////////////
-	private static class singletonFactory{
+
+	// ///////////////////////////////////////////
+	private static class singletonFactory
+	{
 		private static Singleton inst = new Singleton();
 	}
-	
-	public static Singleton getInstance2(){
+
+	public static Singleton getInstance2()
+	{
 		return singletonFactory.inst;
 	}
 }

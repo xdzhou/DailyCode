@@ -10,39 +10,46 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 
-
-public class MaxPQTest {
-	private int N =100;
+public class MaxPQTest
+{
+	private int N = 100;
 	private PriorityQueue<Double> pq_java;
 	private MaxPQ<Double> pq_my;
-	
+
 	@BeforeClass
-	public void beforeClass() {	
-		Comparator<Double> cmp = new Comparator<Double>() {
-			public int compare(Double o1, Double o2) {
-				return (int) (o2-o1);
+	public void beforeClass()
+	{
+		Comparator<Double> cmp = new Comparator<Double>()
+		{
+			public int compare(Double o1, Double o2)
+			{
+				return (int) (o2 - o1);
 			}
 		};
-		pq_java = new PriorityQueue<Double>(N,cmp);
+		pq_java = new PriorityQueue<Double>(N, cmp);
 		pq_my = new MaxPQ<Double>(N);
-		for(int i=0; i<N; i++){
-			double d = Math.random()*100;
+		for (int i = 0; i < N; i++)
+		{
+			double d = Math.random() * 100;
 			pq_java.add(d);
 			pq_my.insert(d);
 		}
 	}
 
 	@AfterClass
-	public void afterClass() {
+	public void afterClass()
+	{
 	}
-	
+
 	@Test
-	public void MaxPQtest() {
-		for(int i=0; i<N; i++){
+	public void MaxPQtest()
+	{
+		for (int i = 0; i < N; i++)
+		{
 			double d1 = pq_java.poll();
 			double d2 = pq_my.delMax();
-			System.out.println("d1="+d1+" d2="+d2);
-			Assert.assertTrue(d1==d2);
+			System.out.println("d1=" + d1 + " d2=" + d2);
+			Assert.assertTrue(d1 == d2);
 		}
 	}
 }

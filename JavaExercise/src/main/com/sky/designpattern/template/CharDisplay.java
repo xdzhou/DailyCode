@@ -1,23 +1,30 @@
 package com.sky.designpattern.template;
 
-public class CharDisplay extends AbstractDisplay{
+public class CharDisplay extends AbstractDisplay
+{
 	private char ch;
-	public CharDisplay(char ch){
+
+	public CharDisplay(char ch)
+	{
 		this.ch = ch;
 	}
+
 	@Override
-	public void open() {
+	public void open()
+	{
 		System.out.println("<<");
 	}
+
 	@Override
-	public void print() {
+	public void print()
+	{
 		System.out.println(ch);
 	}
+
 	@Override
-	public void close() {
+	public void close()
+	{
 		System.out.println(">>");
 	}
-	
-	
 
 }

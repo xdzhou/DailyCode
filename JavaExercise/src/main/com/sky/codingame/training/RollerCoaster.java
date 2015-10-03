@@ -7,27 +7,32 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
-class Note{
+class Note
+{
 	public int sizeC = 0;
 	public long totalL = 0L;
-	
-	public Note(int sizeC, long totalL){
+
+	public Note(int sizeC, long totalL)
+	{
 		this.sizeC = sizeC;
 		this.totalL = totalL;
 	}
 }
 
-public class RollerCoaster {
-	
-	public static void main(String args[]) {
-		int L,C,N;
+public class RollerCoaster
+{
+
+	public static void main(String args[])
+	{
+		int L, C, N;
 		Queue<Integer> queue = new LinkedList<Integer>();
-		
+
 		Scanner in = new Scanner(System.in);
 		L = in.nextInt();
 		C = in.nextInt();
 		N = in.nextInt();
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < N; i++)
+		{
 			queue.offer(in.nextInt());
 		}
 		int cap;
@@ -35,26 +40,33 @@ public class RollerCoaster {
 		int numFlag = 1;
 		HashMap<Integer, Note> noteMap = new HashMap<Integer, Note>();
 		long resulta = 0;
-		for(int i = 1; i <= C; i++){
-			if(noteMap.containsKey(numFlag)){
-				
-			}else {
+		for (int i = 1; i <= C; i++)
+		{
+			if (noteMap.containsKey(numFlag))
+			{
+
+			} else
+			{
 				noteMap.put(numFlag, new Note(i, resulta));
 			}
-			
+
 			int size = nbGroup;
 			cap = 0;
-			while(true){
+			while (true)
+			{
 				cap += queue.peek();
-				if(cap <= L ) {
+				if (cap <= L)
+				{
 					queue.offer(queue.poll());
-					size --;
-					if(size == 0)break;
-				}
-				else break;
+					size--;
+					if (size == 0)
+						break;
+				} else
+					break;
 			}
-			if(cap > L) cap -= queue.element();
-			System.out.println("cap = "+cap);
+			if (cap > L)
+				cap -= queue.element();
+			System.out.println("cap = " + cap);
 			resulta += cap;
 		}
 		System.out.println(resulta);

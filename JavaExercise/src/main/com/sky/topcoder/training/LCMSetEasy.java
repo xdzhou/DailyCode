@@ -1,4 +1,5 @@
 package com.sky.topcoder.training;
+
 /*
  * For any non-empty sequence of positive integers s1, s2, ..., sK 
  * their least common multiple is the smallest positive integer 
@@ -13,34 +14,44 @@ package com.sky.topcoder.training;
  * and x=lcm(s1, s2, ..., sK). Return "Possible" if such elements of S exist, 
  * and "Impossible" if they don't.
  */
-public class LCMSetEasy {
+public class LCMSetEasy
+{
 
-	public String include(int[] S, int x){
+	public String include(int[] S, int x)
+	{
 		int minMulti = 1;
-		for(int i=0; i<S.length; i++){
-			if(x%S[i] == 0){
+		for (int i = 0; i < S.length; i++)
+		{
+			if (x % S[i] == 0)
+			{
 				minMulti = minCommonMultiple(minMulti, S[i]);
 			}
 		}
-		if(minMulti==x) return "Possible";
-		else return "Impossible";
+		if (minMulti == x)
+			return "Possible";
+		else
+			return "Impossible";
 	}
-	
-	private int minCommonMultiple(int m, int n){
-		return m*n/maxCommonDivisor(m, n);
+
+	private int minCommonMultiple(int m, int n)
+	{
+		return m * n / maxCommonDivisor(m, n);
 	}
-	
-	private int maxCommonDivisor(int m, int n){
-		if (m < n) {// 保证m>n,若m<n,则进行数据交换  
-            int temp = m;  
-            m = n;  
-            n = temp;  
-        }  
-        while (m % n != 0) {// 在余数不能为0时,进行循环  
-            int temp = m % n;  
-            m = n;  
-            n = temp;  
-        }  
-        return n;// 返回最大公约数  
+
+	private int maxCommonDivisor(int m, int n)
+	{
+		if (m < n)
+		{// 保证m>n,若m<n,则进行数据交换
+			int temp = m;
+			m = n;
+			n = temp;
+		}
+		while (m % n != 0)
+		{// 在余数不能为0时,进行循环
+			int temp = m % n;
+			m = n;
+			n = temp;
+		}
+		return n;// 返回最大公约数
 	}
 }

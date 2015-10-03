@@ -1,30 +1,39 @@
 package com.sky.designpattern.template;
 
-public class StringDisplay extends AbstractDisplay {
-	private String string;  //Ó¦Êä³öµÄ×Ö·û´®  
-    private int width;      //ÒÔbyteÎªµ¥Î»ËùÇó³öµÄ×Ö·û´®µÄ"³¤¶È"  
-      
-    public StringDisplay(String string) {  
-        this.string =string;  
-        width = string.length();  
-    }  
-  
-    public void open() {  //´òÓ¡Í·×°ÊÎ×Ö·û´®  
-        printLine();  
-    }  
-    public void print() { //´òÓ¡ÄÚÈİ  
-        System.out.println("|"+string+"|");  
-    }  
-    public void close() { //´òÓ¡Î²×°ÊÎ×Ö·û´®  
-        printLine();  
-    }  
-  
-    public void printLine() {  
-        System.out.print("+");  //Êä³ö"+"ºÅ±íÊ¾±ß¿òÎ»ÖÃ  
-        for(int i=0; i < width; ++i) {  
-            System.out.print("-");  //µ±×÷Ïß¶Î  
-        }  
-        System.out.println("+");  //Êä³ö"+"ºÅ±íÊ¾±ß¿òÎ»ÖÃ  
-    }  
+public class StringDisplay extends AbstractDisplay
+{
+	private String string; // Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	private int width; // ï¿½ï¿½byteÎªï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"
+
+	public StringDisplay(String string)
+	{
+		this.string = string;
+		width = string.length();
+	}
+
+	public void open()
+	{ // ï¿½ï¿½Ó¡Í·×°ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+		printLine();
+	}
+
+	public void print()
+	{ // ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½
+		System.out.println("|" + string + "|");
+	}
+
+	public void close()
+	{ // ï¿½ï¿½Ó¡Î²×°ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+		printLine();
+	}
+
+	public void printLine()
+	{
+		System.out.print("+"); // ï¿½ï¿½ï¿½"+"ï¿½Å±ï¿½Ê¾ï¿½ß¿ï¿½Î»ï¿½ï¿½
+		for (int i = 0; i < width; ++i)
+		{
+			System.out.print("-"); // ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
+		}
+		System.out.println("+"); // ï¿½ï¿½ï¿½"+"ï¿½Å±ï¿½Ê¾ï¿½ß¿ï¿½Î»ï¿½ï¿½
+	}
 
 }

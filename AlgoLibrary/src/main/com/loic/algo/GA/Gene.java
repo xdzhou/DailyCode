@@ -5,36 +5,44 @@ import junit.framework.Assert;
 /*
  * 基因编码
  */
-public abstract class Gene {
+public abstract class Gene
+{
 	protected int[] chromosome;
 	private double fitness;
 	private int gene_len;
 
-	public Gene(int nb) {
+	public Gene(int nb)
+	{
 		gene_len = nb;
 		chromosome = new int[nb];
 	}
-	
-	public double getFitness() {
+
+	public double getFitness()
+	{
 		return fitness;
 	}
 
-	public void setFitness(double fitness) {
+	public void setFitness(double fitness)
+	{
 		this.fitness = fitness;
 	}
-	
-	public int getGene_len() {
+
+	public int getGene_len()
+	{
 		return gene_len;
 	}
 
-	public void setChromosome(int[] chromosome) {
-		Assert.assertTrue(chromosome.length==gene_len);
+	public void setChromosome(int[] chromosome)
+	{
+		Assert.assertTrue(chromosome.length == gene_len);
 		this.chromosome = chromosome;
 	}
 
-	public void showGene(){
-		for(int i=0; i<chromosome.length; i++){
-			System.out.print(chromosome[i]+" ");		
+	public void showGene()
+	{
+		for (int i = 0; i < chromosome.length; i++)
+		{
+			System.out.print(chromosome[i] + " ");
 		}
 		System.out.println();
 	}
