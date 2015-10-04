@@ -5,14 +5,14 @@ subprojects {
     repositories {
        mavenCentral()
     }
+    
+    test {  
+		useTestNG()
+		include '**/Test*.*'
+	}
 
     dependencies {
         testCompile 'org.testng:testng:6.9.6'
-    }
-
-    version = '1.0'
-
-    jar {
-        manifest.attributes provider: 'com loic'
+        compile 'com.google.guava:guava:19.0-rc2'
     }
 }

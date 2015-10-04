@@ -1,7 +1,5 @@
 package com.loic.algo.DP;
 
-import junit.framework.Assert;
-
 /*
  * 01背包问题:
  * 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。
@@ -12,7 +10,10 @@ public class Knapsack
 
 	public int getMaxValue(int capacity, int[] weight, int[] value)
 	{
-		Assert.assertTrue(weight.length == value.length);
+		if(weight.length != value.length)
+		{
+			throw new IllegalArgumentException("weight.length != value.length");
+		}
 		int nbObjet = weight.length;
 		int[][] dp = new int[nbObjet + 1][capacity + 1];
 

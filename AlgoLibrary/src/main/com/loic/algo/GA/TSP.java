@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import junit.framework.Assert;
-
 /*
  * 旅行推销员问题（Travelling Salesman Problem， 又称为旅行商问题、货郎担问题、TSP问题）
  * 是一个多局部最优的最优化问题：有n个城市，一个推销员要从其中某一个城市出发，唯一走遍所有的城市，
@@ -22,7 +20,10 @@ public class TSP
 
 	public void start(int[] x, int[] y)
 	{
-		Assert.assertTrue(x.length == y.length);
+		if(x.length != y.length)
+		{
+			throw new IllegalArgumentException("x.length != y.length");
+		}
 		double sommeFitness = 0;
 		int maxFitnessIndi = 0;
 

@@ -1,7 +1,5 @@
 package com.loic.algo.GA;
 
-import junit.framework.Assert;
-
 /*
  * 基因编码
  */
@@ -34,7 +32,10 @@ public abstract class Gene
 
 	public void setChromosome(int[] chromosome)
 	{
-		Assert.assertTrue(chromosome.length == gene_len);
+		if(chromosome.length != gene_len)
+		{
+			throw new IllegalArgumentException("chromosome.length != gene_len");
+		}
 		this.chromosome = chromosome;
 	}
 

@@ -7,8 +7,6 @@ import java.util.PriorityQueue;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.AfterClass;
 
 public class MaxPQTest
 {

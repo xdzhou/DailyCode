@@ -9,6 +9,5 @@ sourceSets {
 
 dependencies {
 	compile 'org.apache.hadoop:hadoop-core:1.2.1'
-	compile 'com.google.guava:guava:19.0-rc2'
-	
+	compile 'org.jgrapht:jgrapht-core:0.9.1'
 }

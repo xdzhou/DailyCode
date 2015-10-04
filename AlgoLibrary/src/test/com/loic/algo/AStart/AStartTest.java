@@ -1,9 +1,11 @@
 package com.loic.algo.AStart;
 
+import org.testng.annotations.Test;
+
 public class AStartTest
 {
-
-	public static void main(String[] args)
+	@Test
+	public void test()
 	{
 		int[][] map = new int[][] {// 地图数组
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
