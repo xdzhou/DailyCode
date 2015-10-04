@@ -1,7 +1,5 @@
 package com.loic.algo;
 
-import org.jgrapht.Graph;
-
 public class MaxPQ<T extends Comparable<T>>
 {
 	private T[] pq;

@@ -6,9 +6,15 @@ subprojects {
        mavenCentral()
     }
     
-    test {  
-		useTestNG()
-		include '**/Test*.*'
+    allprojects {
+	    tasks.withType(JavaCompile) {
+	        options.compilerArgs << "-Xlint:deprecation"
+	    }
+	}
+	
+	tasks.withType(Test) {
+	    scanForTestClasses = false
+	    include "**/*Test.class" // whatever Ant pattern matches your test class files
 	}
 
     dependencies {

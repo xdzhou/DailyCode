@@ -19,6 +19,7 @@ public class UnionFindTest
 			uf.union(p, q);
 		}
 		System.out.println(uf.getCount() + " components");
+		in.close();
 	}
 
 }

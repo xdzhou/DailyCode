@@ -1,6 +1,5 @@
 package com.loic.algo;
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -34,11 +33,6 @@ public class MaxPQTest
 		}
 	}
 
-	@AfterClass
-	public void afterClass()
-	{
-	}
-
 	@Test
 	public void MaxPQtest()
 	{
@@ -47,7 +41,7 @@ public class MaxPQTest
 			double d1 = pq_java.poll();
 			double d2 = pq_my.delMax();
 			System.out.println("d1=" + d1 + " d2=" + d2);
-			Assert.assertTrue(d1 == d2);
+			Assert.assertEquals(d1, d2);
 		}
 	}
 }

@@ -7,7 +7,7 @@ public class SortAlgo
 	 * 
 	 * @param a the list of comparable to sort
 	 */
-	public static void sortSelect(Comparable[] a)
+	public static <T extends Comparable<T>>  void sortSelect(T[] a)
 	{
 		int N = a.length;
 		for (int i = 0; i < N; i++)
@@ -26,7 +26,7 @@ public class SortAlgo
 	 * 
 	 * @param a the list of comparable to sort
 	 */
-	public static void sortInsert(Comparable[] a)
+	public static <T extends Comparable<T>> void sortInsert(T[] a)
 	{
 		int N = a.length;
 		for (int i = 1; i < N; i++)
@@ -41,7 +41,7 @@ public class SortAlgo
 	 * 
 	 * @param a the list of comparable to sort
 	 */
-	public static void sortShell(Comparable[] a)
+	public static <T extends Comparable<T>> void sortShell(T[] a)
 	{
 		int N = a.length;
 		int h = 1;
@@ -126,12 +126,12 @@ public class SortAlgo
 	 * 
 	 * @param a the list of comparable to sort
 	 */
-	public static void sortQuick(Comparable[] a)
+	public static <T extends Comparable<T>> void sortQuick(T[] a)
 	{
 		sortQuick(a, 0, a.length - 1);
 	}
 
-	private static void sortQuick(Comparable[] a, int lo, int hi)
+	private static <T extends Comparable<T>> void sortQuick(T[] a, int lo, int hi)
 	{
 		if (hi <= lo)
 			return;
@@ -140,10 +140,10 @@ public class SortAlgo
 		sortQuick(a, j + 1, hi);
 	}
 
-	private static int partition(Comparable[] a, int lo, int hi)
+	private static <T extends Comparable<T>> int partition(T[] a, int lo, int hi)
 	{
 		int i = lo, j = hi + 1;
-		Comparable p = a[lo]; // 切分元素
+		T p = a[lo]; // 切分元素
 		while (true)
 		{
 			while (less(a[++i], p))
@@ -162,19 +162,19 @@ public class SortAlgo
 
 	// /////////////////////////////////////////////////////////////////////////////////////
 
-	private static void exch(Comparable[] a, int i, int j)
+	private static <T extends Comparable<T>> void exch(T[] a, int i, int j)
 	{
-		Comparable t = a[i];
+		T t = a[i];
 		a[i] = a[j];
 		a[j] = t;
 	}
 
-	private static boolean less(Comparable c1, Comparable c2)
+	private static <T extends Comparable<T>> boolean less(T c1, T c2)
 	{
 		return c1.compareTo(c2) < 0;
 	}
 
-	public static void show(Comparable[] a)
+	public static <T extends Comparable<T>> void show(T[] a)
 	{
 		for (int i = 0; i < a.length; i++)
 		{
@@ -184,7 +184,7 @@ public class SortAlgo
 	}
 
 	// check if the list is sorted (from samll to big)
-	public static boolean isSorted(Comparable[] a)
+	public static <T extends Comparable<T>> boolean isSorted(T[] a)
 	{
 		for (int i = 1; i < a.length; i++)
 		{

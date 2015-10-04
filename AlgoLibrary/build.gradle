@@ -7,6 +7,11 @@ sourceSets {
     }
 }
 
+test {  
+	useTestNG()
+	include '**/Test*.*'
+}
+
 dependencies {
 	compile 'org.apache.hadoop:hadoop-core:1.2.1'
 	compile 'org.jgrapht:jgrapht-core:0.9.1'
