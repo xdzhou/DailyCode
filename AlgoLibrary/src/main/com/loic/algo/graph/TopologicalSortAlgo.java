@@ -34,7 +34,7 @@ public abstract class TopologicalSortAlgo
 	public abstract List<Integer> topologicalSort();
 	
 	/*
-	 * Kahn算法：
+	 * Kahn算法：广度优先搜索
 	 * 每次从该集合中取出(没有特殊的取出规则，随机取出也行，使用队列/栈也行，下同)一个顶点，将该顶点放入保存结果的List中。
 	 * 紧接着循环遍历由该顶点引出的所有边，从图中移除这条边，同时获取该边的另外一个顶点，如果该顶点的入度在减去本条边之后为0，
 	 * 那么也将这个顶点放到入度为0的集合中。然后继续从集合中取出一个顶点…………
