@@ -9,9 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.loic.algo.graph.TopologicalSortAlgo.DfsAlgo;
-import com.loic.algo.graph.TopologicalSortAlgo.KahnAlgo;
-
 public class TopologicalSortAlgoTest
 {
 	private DirectedGraph<Integer, DefaultEdge> mGraph;
@@ -58,7 +55,8 @@ public class TopologicalSortAlgoTest
 	@Test
 	public void kahnAlgoTest()
 	{
-		KahnAlgo algo = new KahnAlgo(mGraph);
+		TopologicalKahnAlgo algo = new TopologicalKahnAlgo();
+		algo.setGraph(mGraph);
 		List<Integer> results = algo.topologicalSort();
 		Assert.assertEquals(13, results.size());
 		
@@ -68,14 +66,16 @@ public class TopologicalSortAlgoTest
 	@Test
 	public void kahnAlgoCycleTest()
 	{
-		KahnAlgo algo = new KahnAlgo(mGraphWithCycle);
+		TopologicalKahnAlgo algo = new TopologicalKahnAlgo();
+		algo.setGraph(mGraph);
 		Assert.assertTrue(algo.topologicalSort() == null);
 	}
 	
 	@Test
 	public void DfsAlgoTest()
 	{
-		DfsAlgo algo = new DfsAlgo(mGraph);
+		TopologicalDfsAlgo algo = new TopologicalDfsAlgo();
+		algo.setGraph(mGraph);
 		List<Integer> results = algo.topologicalSort();
 		Assert.assertEquals(13, results.size());
 		
@@ -85,7 +85,8 @@ public class TopologicalSortAlgoTest
 	@Test
 	public void DfsAlgoCycleTest()
 	{
-		DfsAlgo algo = new DfsAlgo(mGraphWithCycle);
+		TopologicalDfsAlgo algo = new TopologicalDfsAlgo();
+		algo.setGraph(mGraph);
 		List<Integer> results = algo.topologicalSort();
 		System.out.println(results);
 		Assert.assertTrue(results == null);

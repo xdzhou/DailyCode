@@ -1,7 +1,5 @@
 package com.loic.algo.graph;
 
-import java.util.List;
-
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
@@ -18,15 +16,17 @@ public interface ShortestPathAlgo
 	//set a graph to algo
 	public abstract void setGraph(WeightedGraph<Integer, DefaultWeightedEdge> graph);
 	//solves the shortest path problem
-	public abstract List<Integer> getShortestPath();
+	public abstract ShortestPathGenerator getShortestPath();
 	//solves the source-target shortest path problem
-	public abstract List<Integer> getShortestPath(int startPoint, int endPoint);
+	public abstract ShortestPathGenerator getShortestPath(int startPoint, int endPoint);
 	//solves the single-source shortest path problem
-	public abstract List<Integer> getShortestPathWithStartPoint(int startPoint);
+	public abstract ShortestPathGenerator getShortestPathWithStartPoint(int startPoint);
 	//solves the single-target shortest path problem
-	public abstract List<Integer> getShortestPathWithEndPoint(int endPoint);
+	public abstract ShortestPathGenerator getShortestPathWithEndPoint(int endPoint);
 	
-	
+	/**
+	 * used to print shortest path info
+	 */
 	public interface ShortestPathGenerator
 	{
 		public double getShortestPathLength(int source, int target);
@@ -38,6 +38,25 @@ public interface ShortestPathAlgo
 		public double getShortestPathLength(int source, int target)
 		{
 			return (source == target) ? 0 : UNKNOWN_DIS;
+		}
+	}
+	
+	public static class ShortestPathWithSourchTarget implements ShortestPathGenerator
+	{
+		private final int mSource, mTarget;
+		private final double mDistance;
+		
+		public ShortestPathWithSourchTarget(int source, int target, double distance)
+		{
+			mSource = source;
+			mTarget = target;
+			mDistance = distance;
+		}
+		
+		@Override
+		public double getShortestPathLength(int source, int target)
+		{
+			return (source == mSource && target == mTarget) ? mDistance : UNKNOWN_DIS;
 		}
 	}
 	
@@ -66,6 +85,8 @@ public interface ShortestPathAlgo
 					sb.insert(0, " "+target);
 					currentIndex = prev[currentIndex];
 				}
+				sb.insert(0, Integer.toString(source));
+				System.out.println(sb.toString());
 				return distFromSource[target];
 			}
 			else 
@@ -73,7 +94,6 @@ public interface ShortestPathAlgo
 				return UNKNOWN_DIS;
 			}
 		}
-		
 	}
 	
 }

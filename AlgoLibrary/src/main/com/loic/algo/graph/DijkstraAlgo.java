@@ -1,7 +1,6 @@
 package com.loic.algo.graph;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.WeightedGraph;
@@ -21,20 +20,55 @@ public class DijkstraAlgo implements ShortestPathAlgo
 	}
 
 	@Override
-	public List<Integer> getShortestPath()
+	public ShortestPathGenerator getShortestPath()
 	{
 		throw new UnsupportedOperationException("not support for DijkstraAlgo");
 	}
 
 	@Override
-	public List<Integer> getShortestPath(int startPoint, int endPoint)
+	public ShortestPathGenerator getShortestPath(int startPoint, int endPoint)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Set<Integer> vertexSet = mGraph.vertexSet();
+		// Distance from source to source
+		double[] dist = new double[vertexSet.size()];
+		// Previous node in optimal path initialization
+		int[] prev = new int[vertexSet.size()];
+		//open list
+		Set<Integer> openList = new HashSet<>(vertexSet.size());
+		for(int pointIndex : vertexSet)
+		{
+			dist[pointIndex] = (pointIndex == startPoint) ? 0 : UNKNOWN_DIS;
+			prev[pointIndex] = (pointIndex == startPoint) ? startPoint : -1;
+			openList.add(pointIndex);
+		}
+		while(! openList.isEmpty())
+		{
+			int pointIndexWithMinDis = 0;
+			if(pointIndexWithMinDis == endPoint)
+			{
+				break;
+			}
+			openList.remove(pointIndexWithMinDis);
+			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndexWithMinDis))
+			{
+				if(mGraph.getEdgeSource(edge) == pointIndexWithMinDis)
+				{
+					int targetIndex = mGraph.getEdgeTarget(edge);
+					double dis = dist[pointIndexWithMinDis] + mGraph.getEdgeWeight(edge);
+					if(dist[targetIndex] > dis)
+					{
+						dist[targetIndex] = dis;
+						prev[targetIndex] = pointIndexWithMinDis;
+					}
+				}
+			}
+		}
+		
+		return new ShortestPathWithSourchTarget(startPoint, endPoint, dist[endPoint]);
 	}
 
 	@Override
-	public List<Integer> getShortestPathWithStartPoint(int startPoint)
+	public ShortestPathGenerator getShortestPathWithStartPoint(int startPoint)
 	{
 		Set<Integer> vertexSet = mGraph.vertexSet();
 		// Distance from source to source
@@ -72,14 +106,45 @@ public class DijkstraAlgo implements ShortestPathAlgo
 			}
 		}
 		
-		return null;
+		return new ShortestPathWithSource(startPoint, dist, prev);
 	}
 
 	@Override
-	public List<Integer> getShortestPathWithEndPoint(int endPoint)
+	public ShortestPathGenerator getShortestPathWithEndPoint(int endPoint)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Set<Integer> vertexSet = mGraph.vertexSet();
+		// Distance from source to source
+		double[] dist = new double[vertexSet.size()];
+		// Previous node in optimal path initialization
+		int[] prev = new int[vertexSet.size()];
+		//open list
+		Set<Integer> openList = new HashSet<>(vertexSet.size());
+		for(int pointIndex : vertexSet)
+		{
+			dist[pointIndex] = (pointIndex == endPoint) ? 0 : UNKNOWN_DIS;
+			prev[pointIndex] = (pointIndex == endPoint) ? endPoint : -1;
+			openList.add(pointIndex);
+		}
+		while(! openList.isEmpty())
+		{
+			int pointIndexWithMinDis = 0;
+			openList.remove(pointIndexWithMinDis);
+			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndexWithMinDis))
+			{
+				if(mGraph.getEdgeTarget(edge) == pointIndexWithMinDis)
+				{
+					int targetIndex = mGraph.getEdgeSource(edge);
+					double dis = dist[pointIndexWithMinDis] + mGraph.getEdgeWeight(edge);
+					if(dist[targetIndex] > dis)
+					{
+						dist[targetIndex] = dis;
+						prev[targetIndex] = pointIndexWithMinDis;
+					}
+				}
+			}
+		}
+		
+		return new ShortestPathWithSource(endPoint, dist, prev);
 	}
 
 }
