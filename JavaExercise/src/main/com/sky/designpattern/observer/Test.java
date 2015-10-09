@@ -1,8 +1,5 @@
 package com.sky.designpattern.observer;
 
-import com.sky.exercise.FatherClass;
-import com.sky.exercise.SonClass;
-
 public class Test
 {
 

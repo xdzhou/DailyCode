@@ -1,8 +1,5 @@
 package com.sky.eventdriven;
 
-import java.util.Collection;
-import java.util.Collections;
-
 public class Event implements Comparable<Event>
 {
 	private int time;
