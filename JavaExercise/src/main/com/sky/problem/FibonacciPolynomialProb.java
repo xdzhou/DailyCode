@@ -1,6 +1,6 @@
 package com.sky.problem;
 
-/*
+/**
  * 斐波那契数列 Fibonacci polynomial
  * function fib(n）
  *      if n = 0 or n = 1
