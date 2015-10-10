@@ -13,6 +13,7 @@ public class Temperatures
 		if (n == 0)
 		{
 			System.out.println(0);
+			in.close();
 			return;
 		}
 		for (int i = 0; i < n; i++)
@@ -30,6 +31,7 @@ public class Temperatures
 		}
 
 		System.out.println(small);
+		in.close();
 	}
 
 }

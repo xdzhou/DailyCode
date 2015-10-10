@@ -52,6 +52,7 @@ public class TeadsQ1
 
 		Node root = totalNodes.get(forroot).getRoot();
 		Result r = getMaxDistance(root);
+		in.close();
 		return (r.maxDistance + 1) / 2;
 	}
 

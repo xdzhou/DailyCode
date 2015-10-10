@@ -1,11 +1,9 @@
 package com.sky.codingame.training;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 class Note
 {
@@ -70,6 +68,7 @@ public class RollerCoaster
 			resulta += cap;
 		}
 		System.out.println(resulta);
+		in.close();
 	}
 
 }

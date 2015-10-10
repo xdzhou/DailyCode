@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Q1Oods
 {
-
 	public static void main(String args[])
 	{
 		int N, C;
@@ -26,6 +25,7 @@ public class Q1Oods
 		if (totalBudget < C)
 		{
 			System.out.println("IMPOSSIBLE");
+			in.close();
 			return;
 		}
 		sortShell(budget);
@@ -53,13 +53,11 @@ public class Q1Oods
 				}
 				break;
 			}
-
 		}
-
+		in.close();
 	}
 
-	private static int pay(int i, int temp, int moyen, int C,
-			Comparable[] budget)
+	private static <T extends Comparable<T>> int pay(int i, int temp, int moyen, int C, T[] budget)
 	{
 		if (temp <= moyen)
 		{
@@ -71,7 +69,7 @@ public class Q1Oods
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////////////
-	public static void sortShell(Comparable[] a)
+	public static <T extends Comparable<T>> void sortShell(T[] a)
 	{
 		int N = a.length;
 		int h = 1;
@@ -90,19 +88,19 @@ public class Q1Oods
 		}
 	}
 
-	private static void exch(Comparable[] a, int i, int j)
+	private static <T extends Comparable<T>> void exch(T[] a, int i, int j)
 	{
-		Comparable t = a[i];
+		T t = a[i];
 		a[i] = a[j];
 		a[j] = t;
 	}
 
-	private static boolean less(Comparable c1, Comparable c2)
+	private static <T extends Comparable<T>> boolean less(T c1, T c2)
 	{
 		return c1.compareTo(c2) < 0;
 	}
 
-	public static void show(Comparable[] a)
+	public static <T extends Comparable<T>> void show(T[] a)
 	{
 		for (int i = 0; i < a.length; i++)
 		{

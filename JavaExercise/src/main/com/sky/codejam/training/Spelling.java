@@ -39,6 +39,7 @@ public class Spelling
 			}
 			System.out.println("Case #" + (i + 1) + ": " + sb.toString());
 		}
+		in.close();
 	}
 
 	private void initMap(HashMap<Character, String> map)

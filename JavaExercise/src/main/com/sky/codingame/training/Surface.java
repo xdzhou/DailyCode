@@ -47,6 +47,7 @@ public class Surface
 				System.out.println(surface);
 			}
 		}
+		in.close();
 	}
 
 	private static int getSurfaceWater(char[][] table, int width, int height,

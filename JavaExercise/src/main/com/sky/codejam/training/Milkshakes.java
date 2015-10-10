@@ -65,6 +65,7 @@ public class Milkshakes
 				System.out.println("Case #" + (i + 1) + " IMPOSSIBLE");
 
 		}
+		in.close();
 	}
 
 }

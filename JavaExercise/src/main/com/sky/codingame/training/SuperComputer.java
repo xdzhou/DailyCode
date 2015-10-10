@@ -2,13 +2,13 @@ package com.sky.codingame.training;
 
 import java.util.Scanner;
 
-class Task implements Comparable
+class Task implements Comparable<Task>
 {
 	public int debut = 0;
 	public int fin = 0;
 
 	@Override
-	public int compareTo(Object o)
+	public int compareTo(Task o)
 	{
 		Task task = (Task) o;
 		return fin - task.fin;
@@ -45,11 +45,11 @@ public class SuperComputer
 		}
 
 		System.out.println(nb);
-
+		in.close();
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////////////
-	public static void sortShell(Comparable[] a)
+	public static <T extends Comparable<T>> void sortShell(T[] a)
 	{
 		int N = a.length;
 		int h = 1;
@@ -68,14 +68,14 @@ public class SuperComputer
 		}
 	}
 
-	private static void exch(Comparable[] a, int i, int j)
+	private static <T extends Comparable<T>> void exch(T[] a, int i, int j)
 	{
-		Comparable t = a[i];
+		T t = a[i];
 		a[i] = a[j];
 		a[j] = t;
 	}
 
-	private static boolean less(Comparable c1, Comparable c2)
+	private static <T extends Comparable<T>> boolean less(T c1, T c2)
 	{
 		return c1.compareTo(c2) < 0;
 	}

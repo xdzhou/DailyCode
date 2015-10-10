@@ -33,5 +33,6 @@ public class StockExchangeLosses
 		}
 
 		System.out.print(min);
+		in.close();
 	}
 }

@@ -60,16 +60,7 @@ public class ChargingChaos
 				System.out
 						.println("Case #" + (i + 1) + ": " + (nbSwitch + min));
 		}
-	}
-
-	private void showList(int[] list, int size)
-	{
-		System.out.print("list[]: ");
-		for (int k = 0; k < size; k++)
-		{
-			System.out.print(list[k] + " ");
-		}
-		System.out.println();
+		in.close();
 	}
 
 	private void showList(List<Integer> list)

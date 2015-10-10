@@ -37,6 +37,7 @@ public class SnakesLadders
 		startNode.G = startNode.F = 0;
 		openList.add(startNode);
 		avancer();
+		in.close();
 	}
 
 	private void avancer()

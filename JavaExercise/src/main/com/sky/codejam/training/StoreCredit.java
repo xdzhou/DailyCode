@@ -1,8 +1,5 @@
 package com.sky.codejam.training;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class StoreCredit
@@ -57,11 +54,7 @@ public class StoreCredit
 				}
 			}
 		}
-	}
-
-	private void addItem()
-	{
-
+		in.close();
 	}
 
 	private int binarySearch(int[] list, int from, int to, int key, int except)

@@ -1,8 +1,6 @@
 package com.sky.codingame.training;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class Resistance
@@ -38,6 +36,7 @@ public class Resistance
 			word2tree(sb.toString());
 		}
 		System.out.println(getNumMsg(0));
+		in.close();
 	}
 
 	private int getNumMsg(int position)

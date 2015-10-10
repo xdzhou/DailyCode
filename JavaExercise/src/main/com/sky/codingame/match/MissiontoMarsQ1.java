@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class MissiontoMarsQ1
 {
-
 	public static void main(String[] args)
 	{
 		Scanner in = new Scanner(System.in);
@@ -38,7 +37,6 @@ public class MissiontoMarsQ1
 
 			getOutPut(HS, VS, dx, dy);
 		}
-
 	}
 
 	private static void getOutPut(int vx, int vy, int dx, int dy)

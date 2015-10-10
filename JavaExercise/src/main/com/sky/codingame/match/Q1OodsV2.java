@@ -29,13 +29,13 @@ public class Q1OodsV2
 		if (totalBudget < C)
 		{
 			System.out.println("IMPOSSIBLE");
+			in.close();
 			return;
 		}
 		Collections.sort(budget);
-		int moyen = C / N;
 
 		pay(0, budget, C);
-
+		in.close();
 	}
 
 	private static void pay(int numPeople, List<Integer> monerys, int priceToPay)

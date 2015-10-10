@@ -35,5 +35,6 @@ public class MinimumScalarProduct
 			}
 			System.out.println("Case #" + (i + 1) + ": " + somme);
 		}
+		in.close();
 	}
 }

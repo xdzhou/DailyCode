@@ -26,7 +26,7 @@ public class AStart
 	List<Node> closeList;
 	List<Node> openList;
 	private final int COST_STRAIGHT = 1;// 垂直方向或水平方向移动的路径评分
-	private final int COST_DIAGONAL = 14;// 斜方向移动的路径评分
+	//private final int COST_DIAGONAL = 14;// 斜方向移动的路径评分
 	NodeComparator comparator = new NodeComparator();
 
 	public AStart(int[][] map, int line, int row)

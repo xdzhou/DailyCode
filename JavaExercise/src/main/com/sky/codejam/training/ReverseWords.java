@@ -25,8 +25,10 @@ public class ReverseWords
 			{
 				sb.append(items[j] + " ");
 			}
+			
 			System.out.println("Case #" + (i + 1) + ": " + sb.toString());
 		}
+		in.close();
 	}
 
 }

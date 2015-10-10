@@ -1,12 +1,10 @@
 package com.sky.codingame.match;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 // Read inputs from System.in, Write outputs to System.out.
-// Your class name has to be Solution
-
-import java.util.*;
-import java.io.*;
-import java.math.*;
-
 class Solution
 {
 
@@ -20,13 +18,7 @@ class Solution
 		List<Integer> portee = determinerPortee(W, H, image);
 
 		System.out.println(computeNotes(W, H, image, portee).trim());
-	}
-
-	private static List<Integer> addPorteeVirtuelle(List<Integer> porteeReel)
-	{
-		List<Integer> portee = new ArrayList<Integer>(porteeReel);
-
-		return portee;
+		in.close();
 	}
 
 	private static boolean[][] buildImage(Scanner in, int W, int H)
@@ -233,39 +225,5 @@ class Solution
 			portee.add(last + ecart + i);
 		}
 		return portee;
-	}
-
-	private static void lireDeGaucheADroite(int W, int H, boolean[][] image)
-	{
-		for (int i = 0; i < W; i++)
-		{
-			System.out.println(printPixel(image[i][0]));
-		}
-
-	}
-
-	private static String printPixel(boolean pixel)
-	{
-		return pixel ? "#" : " ";
-	}
-
-	private static String printNotes(int W, int H, boolean[][] image)
-	{
-		String imageAsString = "";
-		for (int j = 0; j < H; j++)
-		{
-			for (int i = 0; i < W; i++)
-			{
-				if (image[i][j])
-				{
-					imageAsString += "#";
-				} else
-				{
-					imageAsString += " ";
-				}
-			}
-			imageAsString += "\n";
-		}
-		return imageAsString;
 	}
 }

@@ -127,6 +127,7 @@ public class Q2Image
 		}
 
 		System.out.println(notes.get(num) + "" + c);
+		in.close();
 	}
 
 }
