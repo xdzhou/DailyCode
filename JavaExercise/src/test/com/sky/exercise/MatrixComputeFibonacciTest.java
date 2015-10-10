@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.sky.dynamicProgramming.DPFibonacciPolynomial;
-import com.sky.problem.FibonacciPolynomialProb;
+import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
 
 public class MatrixComputeFibonacciTest
 {
@@ -14,10 +14,10 @@ public class MatrixComputeFibonacciTest
 		DPFibonacciPolynomial fp = new DPFibonacciPolynomial();
 		FibonacciPolynomialProb mcf = new MatrixComputeFibonacci();
 		
-		Assert.assertEquals(fp.computeFibonacciSum(10), mcf.computeFibonacciSum(10));
-		Assert.assertEquals(fp.computeFibonacciSum(100), mcf.computeFibonacciSum(100));
-		Assert.assertEquals(fp.computeFibonacciSumImprove(1000), mcf.computeFibonacciSum(1000));
-		Assert.assertEquals(fp.computeFibonacciSumImprove(10000), mcf.computeFibonacciSum(10000));
-		Assert.assertEquals(fp.computeFibonacciSumImprove(100000), mcf.computeFibonacciSum(100000));
+		Assert.assertEquals(fp.resolve(10), mcf.resolve(10));
+		Assert.assertEquals(fp.resolve(100), mcf.resolve(100));
+		Assert.assertEquals(fp.computeFibonacciSumImprove(1000), (int)mcf.resolve(1000));
+		Assert.assertEquals(fp.computeFibonacciSumImprove(10000), (int)mcf.resolve(10000));
+		Assert.assertEquals(fp.computeFibonacciSumImprove(100000), (int)mcf.resolve(100000));
 	}
 }

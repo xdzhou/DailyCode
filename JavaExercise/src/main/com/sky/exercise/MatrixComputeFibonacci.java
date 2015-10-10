@@ -1,6 +1,6 @@
 package com.sky.exercise;
 
-import com.sky.problem.FibonacciPolynomialProb;
+import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
 
 /**
  * f(n) = f(n-1)+f(n-2)
@@ -14,7 +14,7 @@ public class MatrixComputeFibonacci implements FibonacciPolynomialProb
 {
 
 	@Override
-	public int computeFibonacciSum(int n)
+	public Integer resolve(Integer n)
 	{
 		if(n < 2)
 		{

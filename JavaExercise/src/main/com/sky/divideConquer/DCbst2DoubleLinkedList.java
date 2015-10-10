@@ -1,7 +1,7 @@
 package com.sky.divideConquer;
 
 import com.loic.algo.tree.TreeNode;
-import com.sky.problem.BST2DoublyLinkedListProb;
+import com.sky.problem.OneInputOneOutputProb.BST2DoublyLinkedListProb;
 
 public class DCbst2DoubleLinkedList implements BST2DoublyLinkedListProb
 {

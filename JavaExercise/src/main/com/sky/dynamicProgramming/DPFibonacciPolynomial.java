@@ -1,12 +1,12 @@
 package com.sky.dynamicProgramming;
 
-import com.sky.problem.FibonacciPolynomialProb;
+import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
 
 public class DPFibonacciPolynomial implements FibonacciPolynomialProb
 {
 
 	@Override
-	public int computeFibonacciSum(int n)
+	public Integer resolve(Integer n)
 	{
 		if(n <= 1)
 		{
