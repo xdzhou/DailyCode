@@ -67,7 +67,7 @@ public class TopologicalSortAlgoTest
 	public void kahnAlgoCycleTest()
 	{
 		TopologicalKahnAlgo algo = new TopologicalKahnAlgo();
-		algo.setGraph(mGraph);
+		algo.setGraph(mGraphWithCycle);
 		Assert.assertTrue(algo.topologicalSort() == null);
 	}
 	
@@ -86,7 +86,7 @@ public class TopologicalSortAlgoTest
 	public void DfsAlgoCycleTest()
 	{
 		TopologicalDfsAlgo algo = new TopologicalDfsAlgo();
-		algo.setGraph(mGraph);
+		algo.setGraph(mGraphWithCycle);
 		List<Integer> results = algo.topologicalSort();
 		System.out.println(results);
 		Assert.assertTrue(results == null);

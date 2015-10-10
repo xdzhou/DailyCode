@@ -4,8 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.sun.org.apache.xml.internal.security.Init;
-
 public class FindSubStringWithAllCharTest
 {
 	FindSubStringWithAllChar algo;

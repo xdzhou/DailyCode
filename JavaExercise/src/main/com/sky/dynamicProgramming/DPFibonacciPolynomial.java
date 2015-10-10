@@ -15,7 +15,7 @@ public class DPFibonacciPolynomial implements FibonacciPolynomialProb
 		int[] result = new int[n + 1];
 		result[0] = 0;
 		result[1] = 1;
-		for(int i=2; i<n; i++)
+		for(int i = 2; i < n + 1; i++)
 		{
 			result[i] = result[i - 1] + result[i - 2];
 		}
@@ -32,7 +32,7 @@ public class DPFibonacciPolynomial implements FibonacciPolynomialProb
 		int[] result = new int[3];
 		result[0] = 0;
 		result[1] = 1;
-		for(int i=2; i<n; i++)
+		for(int i = 2; i < n + 1; i++)
 		{
 			result[i % 3] = result[(i - 1) % 3] + result[(i - 2) % 3];
 		}

@@ -7,6 +7,11 @@ sourceSets {
     }
 }
 
+test {  
+	useTestNG()
+	include '**/Test*.*'
+}
+
 dependencies {
 	compile project(':AlgoLibrary')
 	compile 'org.apache.httpcomponents:httpclient:4.5.1'	

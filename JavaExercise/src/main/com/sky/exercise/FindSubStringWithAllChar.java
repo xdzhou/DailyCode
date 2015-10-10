@@ -56,7 +56,7 @@ public class FindSubStringWithAllChar
 		}
 		if(cacheHead != -1)
 		{
-			return content.substring(cacheTail, cacheHead);
+			return content.substring(cacheTail, cacheHead + 1);
 		}
 		else
 		{

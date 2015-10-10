@@ -55,7 +55,7 @@ public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer>
 			}
 		}
 		
-		return results;
+		return results.isEmpty() ? null : results;
 	}
 	
 	/*
