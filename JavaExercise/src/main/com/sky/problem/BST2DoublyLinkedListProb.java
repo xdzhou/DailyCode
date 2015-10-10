@@ -8,5 +8,5 @@ import com.loic.algo.tree.TreeNode;
  */
 public interface BST2DoublyLinkedListProb
 {
-	public TreeNode process(TreeNode bstNode);
+	public TreeNode resolve(TreeNode bstNode);
 }

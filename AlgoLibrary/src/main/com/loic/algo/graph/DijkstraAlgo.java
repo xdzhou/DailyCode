@@ -1,15 +1,20 @@
 package com.loic.algo.graph;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import org.jgrapht.GraphPath;
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.GraphPathImpl;
 
 /*
  * Dijkstra算法使用了广度优先搜索解决非负权有向图的单源最短路径问题，算法最终得到一个最短路径树。
  */
-public class DijkstraAlgo implements ShortestPathAlgo
+public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 {
 	private WeightedGraph<Integer, DefaultWeightedEdge> mGraph;
 
@@ -20,131 +25,45 @@ public class DijkstraAlgo implements ShortestPathAlgo
 	}
 
 	@Override
-	public ShortestPathGenerator getShortestPath()
-	{
-		throw new UnsupportedOperationException("not support for DijkstraAlgo");
-	}
-
-	@Override
-	public ShortestPathGenerator getShortestPath(int startPoint, int endPoint)
+	public GraphPath<Integer, DefaultWeightedEdge> getShortestPath(Integer startNode, Integer endNode)
 	{
 		Set<Integer> vertexSet = mGraph.vertexSet();
-		// Distance from source to source
+		// Distance from source to a node OR from a node to target
 		double[] dist = new double[vertexSet.size()];
-		// Previous node in optimal path initialization
+		//Previous node in optimal path
 		int[] prev = new int[vertexSet.size()];
 		//open list
-		Set<Integer> openList = new HashSet<>(vertexSet.size());
-		for(int pointIndex : vertexSet)
+		Set<Integer> openList = new HashSet<Integer>();
+		for(Integer node : vertexSet)
 		{
-			dist[pointIndex] = (pointIndex == startPoint) ? 0 : UNKNOWN_DIS;
-			prev[pointIndex] = (pointIndex == startPoint) ? startPoint : -1;
-			openList.add(pointIndex);
+			dist[node] = (node == startNode) ? 0 : UNKNOWN_DIS;
+			prev[node] = (node == startNode) ? startNode : -1;
 		}
+		openList.add(startNode);
 		while(! openList.isEmpty())
 		{
-			int pointIndexWithMinDis = 0;
-			if(pointIndexWithMinDis == endPoint)
+			Integer nodeWithMinDis = null;
+			if(nodeWithMinDis == endNode)
 			{
 				break;
 			}
-			openList.remove(pointIndexWithMinDis);
-			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndexWithMinDis))
+			openList.remove(nodeWithMinDis);
+			for(DefaultWeightedEdge edge: mGraph.edgesOf(nodeWithMinDis))
 			{
-				if(mGraph.getEdgeSource(edge) == pointIndexWithMinDis)
+				if(mGraph.getEdgeSource(edge) == nodeWithMinDis)
 				{
-					int targetIndex = mGraph.getEdgeTarget(edge);
-					double dis = dist[pointIndexWithMinDis] + mGraph.getEdgeWeight(edge);
-					if(dist[targetIndex] > dis)
+					Integer targetNode = mGraph.getEdgeTarget(edge);
+					double dis = dist[nodeWithMinDis] + mGraph.getEdgeWeight(edge);
+					if(dist[targetNode] > dis)
 					{
-						dist[targetIndex] = dis;
-						prev[targetIndex] = pointIndexWithMinDis;
+						dist[targetNode] = dis;
+						prev[targetNode] = nodeWithMinDis;
 					}
+					openList.add(targetNode);
 				}
 			}
 		}
 		
-		return new ShortestPathWithSourchTarget(startPoint, endPoint, dist[endPoint]);
+		return new GraphPathImpl<Integer, DefaultWeightedEdge>(mGraph, startNode, endNode, null, dist[endNode]);
 	}
-
-	@Override
-	public ShortestPathGenerator getShortestPathWithStartPoint(int startPoint)
-	{
-		Set<Integer> vertexSet = mGraph.vertexSet();
-		// Distance from source to source
-		double[] dist = new double[vertexSet.size()];
-		// Previous node in optimal path initialization
-		int[] prev = new int[vertexSet.size()];
-		//open list
-		Set<Integer> openList = new HashSet<>(vertexSet.size());
-		for(int pointIndex : vertexSet)
-		{
-			dist[pointIndex] = (pointIndex == startPoint) ? 0 : UNKNOWN_DIS;
-			prev[pointIndex] = (pointIndex == startPoint) ? startPoint : -1;
-			openList.add(pointIndex);
-		}
-		while(! openList.isEmpty())
-		{
-			int pointIndexWithMinDis = 0;
-			if(dist[pointIndexWithMinDis] == UNKNOWN_DIS)
-			{
-				break;
-			}
-			openList.remove(pointIndexWithMinDis);
-			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndexWithMinDis))
-			{
-				if(mGraph.getEdgeSource(edge) == pointIndexWithMinDis)
-				{
-					int targetIndex = mGraph.getEdgeTarget(edge);
-					double dis = dist[pointIndexWithMinDis] + mGraph.getEdgeWeight(edge);
-					if(dist[targetIndex] > dis)
-					{
-						dist[targetIndex] = dis;
-						prev[targetIndex] = pointIndexWithMinDis;
-					}
-				}
-			}
-		}
-		
-		return new ShortestPathWithSource(startPoint, dist, prev);
-	}
-
-	@Override
-	public ShortestPathGenerator getShortestPathWithEndPoint(int endPoint)
-	{
-		Set<Integer> vertexSet = mGraph.vertexSet();
-		// Distance from source to source
-		double[] dist = new double[vertexSet.size()];
-		// Previous node in optimal path initialization
-		int[] prev = new int[vertexSet.size()];
-		//open list
-		Set<Integer> openList = new HashSet<>(vertexSet.size());
-		for(int pointIndex : vertexSet)
-		{
-			dist[pointIndex] = (pointIndex == endPoint) ? 0 : UNKNOWN_DIS;
-			prev[pointIndex] = (pointIndex == endPoint) ? endPoint : -1;
-			openList.add(pointIndex);
-		}
-		while(! openList.isEmpty())
-		{
-			int pointIndexWithMinDis = 0;
-			openList.remove(pointIndexWithMinDis);
-			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndexWithMinDis))
-			{
-				if(mGraph.getEdgeTarget(edge) == pointIndexWithMinDis)
-				{
-					int targetIndex = mGraph.getEdgeSource(edge);
-					double dis = dist[pointIndexWithMinDis] + mGraph.getEdgeWeight(edge);
-					if(dist[targetIndex] > dis)
-					{
-						dist[targetIndex] = dis;
-						prev[targetIndex] = pointIndexWithMinDis;
-					}
-				}
-			}
-		}
-		
-		return new ShortestPathWithSource(endPoint, dist, prev);
-	}
-
 }
