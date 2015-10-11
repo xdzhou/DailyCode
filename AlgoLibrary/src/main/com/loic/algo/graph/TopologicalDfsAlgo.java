@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 /*
  * 借助深度优先遍历来实现拓扑排序
  */
 public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer>
 {
-	private DirectedGraph<Integer, DefaultEdge> mGraph;
+	private DirectedGraph<Integer, DefaultWeightedEdge> mGraph;
 	
 	private boolean[] visitFlag;
 	private boolean[] inTraceFlag;
 	private List<Integer> results;
 	
 	@Override
-	public void setGraph(DirectedGraph<Integer, DefaultEdge> graph)
+	public void setGraph(DirectedGraph<Integer, DefaultWeightedEdge> graph)
 	{
 		mGraph = graph;
 	}
@@ -34,7 +34,7 @@ public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer>
 		Arrays.fill(visitFlag, false);
 		Arrays.fill(inTraceFlag, false);
 		int[] outComingList = new int[points.size()];
-		for(DefaultEdge edge: mGraph.edgeSet())
+		for(DefaultWeightedEdge edge: mGraph.edgeSet())
 		{
 			outComingList[mGraph.getEdgeSource(edge)] ++;
 		}
@@ -71,7 +71,7 @@ public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer>
 		{
 			visitFlag[pointIndex] = true;
 			inTraceFlag[pointIndex] = true;
-			for(DefaultEdge edge: mGraph.edgesOf(pointIndex))
+			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndex))
 			{
 				if(mGraph.getEdgeTarget(edge) == pointIndex)
 				{

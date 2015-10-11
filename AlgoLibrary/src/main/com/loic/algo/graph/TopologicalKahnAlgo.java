@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 /*
  * Kahn算法：广度优先搜索
@@ -18,10 +18,10 @@ import org.jgrapht.graph.DefaultEdge;
  */
 public class TopologicalKahnAlgo implements TopologicalSortAlgo<Integer>
 {
-	private DirectedGraph<Integer, DefaultEdge> mGraph;
+	private DirectedGraph<Integer, DefaultWeightedEdge> mGraph;
 	
 	@Override
-	public void setGraph(DirectedGraph<Integer, DefaultEdge> graph)
+	public void setGraph(DirectedGraph<Integer, DefaultWeightedEdge> graph)
 	{
 		mGraph = graph;
 	}
@@ -38,7 +38,7 @@ public class TopologicalKahnAlgo implements TopologicalSortAlgo<Integer>
 		int[] comingSize = new int[points.size()];
 		LinkedList<Integer> emptyInComingList = new LinkedList<>();
 		
-		for(DefaultEdge edge: mGraph.edgeSet())
+		for(DefaultWeightedEdge edge: mGraph.edgeSet())
 		{
 			comingSize[mGraph.getEdgeTarget(edge)] ++;
 		}
@@ -55,7 +55,7 @@ public class TopologicalKahnAlgo implements TopologicalSortAlgo<Integer>
 		{
 			int pointIndex = emptyInComingList.poll();
 			results.add(pointIndex);
-			for(DefaultEdge edge: mGraph.edgesOf(pointIndex))
+			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndex))
 			{
 				if(mGraph.getEdgeSource(edge) == pointIndex)
 				{

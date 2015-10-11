@@ -4,7 +4,6 @@ import com.sky.problem.OneInputOneOutputProb.IntegerDivisionProb;
 
 public class DCIntegerDivision implements IntegerDivisionProb
 {
-
 	@Override
 	public Integer resolve(Integer n)
 	{

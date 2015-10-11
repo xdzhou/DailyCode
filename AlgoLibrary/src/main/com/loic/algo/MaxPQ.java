@@ -1,13 +1,16 @@
 package com.loic.algo;
 
+import java.lang.reflect.Array;
+
 public class MaxPQ<T extends Comparable<T>>
 {
 	private T[] pq;
 	private int N = 0;
 
-	public MaxPQ(int maxN)
+	@SuppressWarnings("unchecked")
+	public MaxPQ(Class<T> clazz, int maxN)
 	{
-		pq = (T[]) new Comparable[maxN + 1];
+		pq = (T[]) Array.newInstance(clazz, maxN + 1);
 	}
 
 	public boolean isEmpty()

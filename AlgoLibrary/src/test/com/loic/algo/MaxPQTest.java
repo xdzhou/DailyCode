@@ -24,7 +24,7 @@ public class MaxPQTest
 			}
 		};
 		pq_java = new PriorityQueue<Double>(N, cmp);
-		pq_my = new MaxPQ<Double>(N);
+		pq_my = new MaxPQ<Double>(Double.class, N);
 		for (int i = 0; i < N; i++)
 		{
 			double d = Math.random() * 100;

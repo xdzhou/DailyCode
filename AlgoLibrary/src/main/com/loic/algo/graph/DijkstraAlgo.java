@@ -1,9 +1,7 @@
 package com.loic.algo.graph;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.jgrapht.GraphPath;
@@ -42,7 +40,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 		openList.add(startNode);
 		while(! openList.isEmpty())
 		{
-			Integer nodeWithMinDis = null;
+			Integer nodeWithMinDis = getNodeWithMinDis(openList, dist);
 			if(nodeWithMinDis == endNode)
 			{
 				break;
@@ -65,5 +63,24 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 		}
 		
 		return new GraphPathImpl<Integer, DefaultWeightedEdge>(mGraph, startNode, endNode, null, dist[endNode]);
+	}
+	
+	private Integer getNodeWithMinDis(Set<Integer> openList, double[] dist)
+	{
+		if(openList.size() == 1)
+		{
+			return openList.iterator().next();
+		}
+		int retVal = -1;
+		Iterator<Integer> iterator = openList.iterator();
+		while(openList.iterator().hasNext())
+		{
+			int a = iterator.next();
+			if(retVal == -1 || dist[a] < dist[retVal])
+			{
+				retVal = a;
+			}
+		}
+		return retVal;
 	}
 }
