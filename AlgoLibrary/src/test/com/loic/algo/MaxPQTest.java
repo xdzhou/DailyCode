@@ -33,7 +33,6 @@ public class MaxPQTest
 		}
 	}
 
-	@Test
 	public void MaxPQtest()
 	{
 		for (int i = 0; i < N; i++)

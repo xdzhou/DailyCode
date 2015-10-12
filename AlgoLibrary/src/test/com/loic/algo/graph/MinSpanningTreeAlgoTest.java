@@ -12,14 +12,14 @@ public class MinSpanningTreeAlgoTest extends GraphTest
 {
 	private UndirectedGraph<Integer, DefaultWeightedEdge> mUndirectedGraph;
 
-	@BeforeClass
+
 	public void beforeClass()
 	{
 		init();
 		mUndirectedGraph = new AsUndirectedGraph<>(mDirectedGraphGraph);
 	}
 	
-	@Test
+
 	public void test()
 	{
 		PrimAlgo<Integer> primAlgo = new PrimAlgo<>();
