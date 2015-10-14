@@ -1,12 +1,14 @@
 package com.sky.OOP;
 
+import java.util.Arrays;
+
 import com.loic.algo.common.Pair;
 
 public class RubikCube
 {
 	private enum Color
 	{
-		Yellow, Red, Green, Orange, Blue, White
+		Yellow, Red, Green, Orange, Blue, White, UnKnownColor
 	}
 	
 	private enum Side
@@ -25,7 +27,7 @@ public class RubikCube
 		}
 	}
 	
-	private enum Direction
+	public enum Direction
 	{
 		XDirection(Side.Right, Side.Top,   Side.Behind, Side.Bellow, Side.Front), //right side
 		YDirection(Side.Front, Side.Top,   Side.Right,  Side.Bellow, Side.Left),  //front side
@@ -102,6 +104,18 @@ public class RubikCube
 	
 	public boolean isRubikCubePrefect()
 	{
+		for(Side side : Side.values())
+		{
+			SubCube[] subCubes = getSubCubesForSide(side);
+			Color color = subCubes[0].getColorForSide(side);
+			for(int i=1; i<subCubes.length; i++)
+			{
+				if(color != subCubes[i].getColorForSide(side))
+				{
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 	
@@ -109,15 +123,35 @@ public class RubikCube
 	{
 		SubCube[] cubesToRotateCubes = getSubcubeFrom(dir, level);
 		turnCount = turnCount % 4;
+		Side[] targetSides = dir.getTargetSides(turnCount);
 		for(SubCube cube : cubesToRotateCubes)
 		{
-			cube.transform(dir.transformOrder, dir.getTargetSides(turnCount));
+			cube.transform(dir.transformOrder, targetSides);
 		}
+	}
+	
+	private SubCube[] getSubCubesForSide(Side side)
+	{
+		SubCube[] retVal = new SubCube[9];
+		int curIndex = 0;
+		for(SubCube cube : mSubCubes)
+		{
+			if(curIndex >= retVal.length)
+			{
+				break;
+			}
+			if(cube.isPresentIn(side))
+			{
+				retVal[curIndex++] = cube;
+			}
+		}
+		//System.out.println("getSubCubes For Side:"+side+", "+Arrays.toString(retVal));
+		return retVal;
 	}
 	
 	private SubCube[] getSubcubeFrom(Direction dir, int level)
 	{
-		SubCube[] retVal = new SubCube[level == 1 ? 8 : 9];
+		SubCube[] retVal = new SubCube[level == 2 ? 8 : 9];
 		int curIndex = 0;
 		for(SubCube cube : mSubCubes)
 		{
@@ -128,7 +162,7 @@ public class RubikCube
 			switch (level)
 			{
 			case 1:
-				if(cube.isPresentIn(dir.relativeSide))
+				if(cube.isPresentIn(dir.relativeSide.getOppisiteSide()))
 				{
 					retVal[curIndex++] = cube;
 				}
@@ -141,7 +175,7 @@ public class RubikCube
 				}
 				break;
 			case 3:
-				if(cube.isPresentIn(dir.relativeSide.getOppisiteSide()))
+				if(cube.isPresentIn(dir.relativeSide))
 				{
 					retVal[curIndex++] = cube;
 				}
@@ -171,13 +205,14 @@ public class RubikCube
 		
 		public void transform(Side[] from, Side[] to)
 		{
-			for(int i=0; i<from.length; i++)
+			for(Pair<Color, Side> colorPair: colorPairs)
 			{
-				for(Pair<Color, Side> colorPair: colorPairs)
+				for(int i=0; i<from.length; i++)
 				{
 					if(colorPair.getSecond() == from[i])
 					{
 						colorPair.setSecond(to[i]);
+						break;
 					}
 				}
 			}
@@ -193,6 +228,24 @@ public class RubikCube
 				}
 			}
 			return false;
+		}
+		
+		public Color getColorForSide(Side dir)
+		{
+			for(Pair<Color, Side> colorPair: colorPairs)
+			{
+				if(colorPair.getSecond() == dir)
+				{
+					return colorPair.getFirst();
+				}
+			}
+			return Color.UnKnownColor;
+		}
+
+		@Override
+		public String toString()
+		{
+			return "SubCube {" + Arrays.toString(colorPairs) + "}";
 		}
 	}
 	

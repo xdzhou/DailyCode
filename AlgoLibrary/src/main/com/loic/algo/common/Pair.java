@@ -35,4 +35,10 @@ public class Pair<T, E> implements Cloneable
 	{
 		return new Pair<T, E>(first, second);
 	}
+
+	@Override
+	public String toString()
+	{
+		return "[" + first + ", " + second + "]";
+	}
 }

@@ -1,5 +1,7 @@
 package com.sky.problem;
 
+import java.util.List;
+
 import com.loic.algo.tree.TreeNode;
 
 /**
@@ -39,6 +41,19 @@ public interface OneInputOneOutputProb<T, E>
 	 * 要求不能创建任何新的结点，只调整指针的指向。
 	 */
 	public interface BST2DoublyLinkedListProb extends OneInputOneOutputProb<TreeNode, TreeNode>
+	{
+	}
+	
+	/**
+	 * LongestIncreasingSubsequence
+	 * 一个序列有N个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度。
+	 * (讲DP基本都会讲到的一个问题LIS：longest increasing subsequence)
+	 * DP状态转移方程:
+	 * D[i] = max{1, D[j] + 1} (j = 1, 2, 3, ..., i-1 且 A[j] < A[i])
+	 * D[i] 表示是A[i]以为结尾的LIS
+	 * result = D[i]中最大值
+	 */
+	public interface LISProb extends OneInputOneOutputProb<Integer[], Integer>
 	{
 	}
 }
