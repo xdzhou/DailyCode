@@ -23,7 +23,7 @@ public class LinkListUtils
 		return null;
 	}
 	
-	private boolean isJoinedSimple(LinkListNode root1, LinkListNode root2)
+	private static boolean isJoinedSimple(LinkListNode root1, LinkListNode root2)
 	{
 		while(root1.mNext != null)
 		{
@@ -36,7 +36,7 @@ public class LinkListUtils
 		return root1 == root2;
 	}
 	
-	public boolean isJoined(LinkListNode root1, LinkListNode root2)
+	public static boolean isJoined(LinkListNode root1, LinkListNode root2)
 	{
 		LinkListNode cycle1 = hasCycle(root1);
 		LinkListNode cycle2 = hasCycle(root2);
