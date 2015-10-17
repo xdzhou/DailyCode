@@ -14,6 +14,7 @@ public class UglyNumberTest
 		Assert.assertEquals(algo.resolve(10), algo.resolve2(10));
 		Assert.assertEquals(algo.resolve(99), algo.resolve2(99));
 		Assert.assertEquals(algo.resolve(911), algo.resolve2(911));
+		//TODO
 		//Assert.assertEquals(algo.resolve(1500), algo.resolve2(1500));
 	}
 }

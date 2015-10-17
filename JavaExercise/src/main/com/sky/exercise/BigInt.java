@@ -21,7 +21,6 @@ public class BigInt
             }
             mPrefix.increase(1);
         }
-        System.out.println("value = "+getPrintablValue());
     }
 
     public String getPrintablValue()

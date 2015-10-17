@@ -52,26 +52,6 @@ public class UglyNumber implements OneInputOneOutputProb<Integer, Integer>
 	    return false;
 	}
 	
-	private List<Integer> test(Integer param)
-	{
-	    //DP list
-		List<Integer> uglyNumberList = new ArrayList<Integer>(param);
-	    uglyNumberList.add(1);
-
-	    int currentTocheckNum = 2;
-
-	    while (uglyNumberList.size() < param)
-	    {
-	        if(isUgly(currentTocheckNum, uglyNumberList))
-	        {
-	            uglyNumberList.add(currentTocheckNum);
-	        }
-	        currentTocheckNum ++;
-	    }
-	    //System.out.println(uglyNumberList);
-	    return uglyNumberList;
-	}
-	
 	public Integer resolve2(Integer param)
 	{
 		List<Integer> uglyHeap = new ArrayList<>(param);
