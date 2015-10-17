@@ -1,12 +1,29 @@
 package com.sky.exercise;
 
-public class BigInt
+public class BigInt implements Cloneable
 {
 	private static final int MAX = 999999999;
     private BigInt mPrefix;
     private int value = 0;
+    
+    public BigInt(String num)
+    {
+    	if(num.length() <= 9)
+    	{
+    		this.value = Integer.parseInt(num);
+    	}
+    	else 
+    	{
+    		this.value = Integer.parseInt(num.substring(num.length() - 9, num.length()));
+    		mPrefix = new BigInt(num.substring(0, num.length() - 9));
+		}
+    }
+    
+    public BigInt()
+    {
+    }
 
-    public void increase(int n)
+    public void add(int n)
     {
         if(MAX - value >= n)
         {
@@ -19,8 +36,33 @@ public class BigInt
             {
                 mPrefix = new BigInt();
             }
-            mPrefix.increase(1);
+            mPrefix.add(1);
         }
+    }
+    
+    public void add(BigInt bigInt)
+    {
+    	if(bigInt != null)
+    	{
+    		if(MAX - value >= bigInt.value)
+            {
+                value += bigInt.value;
+            }
+            else
+            {
+                value = bigInt.value - (MAX - value + 1);
+            }
+        	int addition = (MAX - value >= bigInt.value) ? 0 : 1;
+        	if(addition > 0 || bigInt.mPrefix != null)
+        	{
+        		if(mPrefix == null)
+                {
+                    mPrefix = new BigInt();
+                }
+        		mPrefix.add(addition);
+        		mPrefix.add(bigInt.mPrefix);
+        	}
+    	}
     }
 
     public String getPrintablValue()
@@ -40,5 +82,17 @@ public class BigInt
             valueSb.insert(0, mPrefix.getPrintablValue());
             return valueSb.toString();
         }
+    }
+    
+    @Override
+    public BigInt clone()
+    {
+    	BigInt newInstance = new BigInt();
+    	newInstance.value = this.value;
+    	if(mPrefix != null)
+    	{
+    		newInstance.mPrefix = mPrefix.clone();
+    	}
+    	return newInstance;
     }
 }
