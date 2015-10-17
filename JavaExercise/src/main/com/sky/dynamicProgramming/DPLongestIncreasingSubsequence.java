@@ -9,7 +9,6 @@ public class DPLongestIncreasingSubsequence implements LISProb
 	@Override
 	public Integer resolve(Integer[] param)
 	{
-		System.out.println(Arrays.toString(param));
 		int[] dp = new int[param.length];
 		dp[0] = 1;
 		int retVal = 1;
@@ -24,7 +23,6 @@ public class DPLongestIncreasingSubsequence implements LISProb
 				}
 			}
 			dp[i] = len;
-			System.out.println("dp["+i+"] = "+len);
 			if(retVal < len)
 			{
 				retVal = len;

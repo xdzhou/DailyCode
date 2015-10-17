@@ -2,10 +2,15 @@ package com.sky.OOP;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.loic.algo.common.Pair;
 
 public class RubikCube
 {
+	private static final Logger Log = LoggerFactory.getLogger(RubikCube.class);
+	
 	private enum Color
 	{
 		Yellow, Red, Green, Orange, Blue, White, UnKnownColor
@@ -108,6 +113,7 @@ public class RubikCube
 		{
 			SubCube[] subCubes = getSubCubesForSide(side);
 			Color color = subCubes[0].getColorForSide(side);
+			Log.debug("check side : "+side+", color : "+color);
 			for(int i=1; i<subCubes.length; i++)
 			{
 				if(color != subCubes[i].getColorForSide(side))
@@ -121,9 +127,11 @@ public class RubikCube
 	
 	public void clockwiseRotate(Direction dir, int level, int turnCount)
 	{
+		Log.debug("clockwise Rotate in direction: "+dir+", for level: "+level+", turn count: "+turnCount);
 		SubCube[] cubesToRotateCubes = getSubcubeFrom(dir, level);
 		turnCount = turnCount % 4;
 		Side[] targetSides = dir.getTargetSides(turnCount);
+		Log.debug("change direction from "+Arrays.toString(dir.transformOrder)+" to "+Arrays.toString(targetSides));
 		for(SubCube cube : cubesToRotateCubes)
 		{
 			cube.transform(dir.transformOrder, targetSides);

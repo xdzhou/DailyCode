@@ -31,23 +31,16 @@ public class ContinuousCards implements OneInputOneOutputProb<Integer[], Boolean
 			allowGaps = 2;
 		}
 		int curIndex = allowGaps;
-		while(curIndex < param.length)
+		while(curIndex + 1 < param.length)
 		{
-			if(curIndex + 1 < param.length)
+			allowGaps -= param[curIndex + 1] - param[curIndex] - 1;
+			if(allowGaps >= 0)
 			{
-				allowGaps -= param[curIndex + 1] - param[curIndex] - 1;
-				if(allowGaps >= 0)
-				{
-					curIndex ++;
-				}
-				else 
-				{
-					return false;
-				}
+				curIndex ++;
 			}
 			else 
 			{
-				break;
+				return false;
 			}
 		}
 		return true;

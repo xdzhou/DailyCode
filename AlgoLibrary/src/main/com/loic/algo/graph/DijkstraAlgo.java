@@ -8,12 +8,16 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.GraphPathImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * Dijkstra算法使用了广度优先搜索解决非负权有向图的单源最短路径问题，算法最终得到一个最短路径树。
  */
 public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 {
+	private static final Logger Log = LoggerFactory.getLogger(DijkstraAlgo.class);
+	
 	private WeightedGraph<Integer, DefaultWeightedEdge> mGraph;
 
 	@Override
@@ -25,6 +29,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 	@Override
 	public GraphPath<Integer, DefaultWeightedEdge> getShortestPath(Integer startNode, Integer endNode)
 	{
+		Log.debug("try find shortest path from %d to %d ...", startNode, endNode);
 		Set<Integer> vertexSet = mGraph.vertexSet();
 		// Distance from source to a node OR from a node to target
 		double[] dist = new double[vertexSet.size()];
@@ -61,6 +66,16 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 				}
 			}
 		}
+		
+		StringBuilder sb = new StringBuilder(Integer.toString(endNode));
+		int curIndex = prev[endNode];
+		while(curIndex != startNode)
+		{
+			sb.insert(0, Integer.toString(prev[curIndex])).insert(0, ",");
+			curIndex = prev[curIndex];
+		}
+		sb.insert(0, Integer.toString(startNode));
+		Log.debug("the shortest path is %s", sb.toString());
 		
 		return new GraphPathImpl<Integer, DefaultWeightedEdge>(mGraph, startNode, endNode, null, dist[endNode]);
 	}

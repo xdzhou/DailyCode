@@ -8,9 +8,13 @@ import java.util.Set;
 
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PrimAlgo<T> implements MinSpanningTreeAlgo<T>
 {
+	private static final Logger Log = LoggerFactory.getLogger(PrimAlgo.class);
+	
 	private UndirectedGraph<T, DefaultWeightedEdge> mGraph;
 	private Set<DefaultWeightedEdge> mMinSpanTreeEdges;
 
@@ -73,6 +77,7 @@ public class PrimAlgo<T> implements MinSpanningTreeAlgo<T>
 			{
 				break;
 			}
+			Log.debug("find a MinSpanTree edge : %s", edge.toString());
 			mMinSpanTreeEdges.add(edge);
 			
 			T newNode = mGraph.getEdgeSource(edge);

@@ -13,7 +13,6 @@ public class ArrayUtils
 	{
 		int low = from;
         int high = to - 1;
-
         while (low <= high)
         {
             int mid = (low + high) >>> 1;

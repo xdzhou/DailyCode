@@ -1,7 +1,11 @@
 package com.sky.exercise;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BigInt implements Cloneable
 {
+	private static final Logger Log = LoggerFactory.getLogger(BigInt.class);
 	private static final int MAX = 999999999;
     private BigInt mPrefix;
     private int value = 0;
@@ -10,11 +14,26 @@ public class BigInt implements Cloneable
     {
     	if(num.length() <= 9)
     	{
-    		this.value = Integer.parseInt(num);
+    		try
+			{
+    			this.value = Integer.parseInt(num);
+			} 
+    		catch (NumberFormatException e)
+			{
+    			Log.warn("parse number failed for "+num);
+			}
     	}
     	else 
     	{
-    		this.value = Integer.parseInt(num.substring(num.length() - 9, num.length()));
+    		try
+			{
+    			this.value = Integer.parseInt(num.substring(num.length() - 9, num.length()));
+			} 
+    		catch (NumberFormatException e)
+			{
+    			Log.warn("parse number failed for "+num);
+			}
+    		
     		mPrefix = new BigInt(num.substring(0, num.length() - 9));
 		}
     }

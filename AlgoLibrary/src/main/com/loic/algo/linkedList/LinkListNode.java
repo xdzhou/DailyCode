@@ -1,7 +1,12 @@
 package com.loic.algo.linkedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class LinkListNode<T>
 {
+	private static final Logger Log = LoggerFactory.getLogger(LinkListNode.class);
+	
 	public T mValue;
 	public LinkListNode<T> mNext;
 	
@@ -16,18 +21,22 @@ public class LinkListNode<T>
 	 */
 	public void removeNode(LinkListNode<T> nodeToRemove)
 	{
+		Log.debug("remove node: %s", nodeToRemove.mValue.toString());
+		
 		if(this.mNext == nodeToRemove)
 		{
 			this.mNext = nodeToRemove.mNext;
 		}
 		else if(nodeToRemove.mNext != null)
 		{
+			Log.debug("remove node, copy next node: %s", nodeToRemove.mNext.mValue.toString());
 			//copy next node's value
 			nodeToRemove.mValue = nodeToRemove.mNext.mValue;
 			nodeToRemove.mNext = nodeToRemove.mNext.mNext;
 		}
 		else 
 		{
+			Log.debug("remove last node");
 			LinkListNode<T> curNode = this;
 			while (curNode.mNext != null && curNode.mNext.mNext != null)
 			{
@@ -89,10 +98,12 @@ public class LinkListNode<T>
 		LinkListNode<T> cycle2 = anotherList.hasCycle();
 		if(cycle1 == null && cycle2 == null)
 		{
+			Log.debug("check joined state for noCycle list");
 			return isSimpleJoinedWith(anotherList);
 		}
 		else if(cycle1 != null && cycle2 != null) 
 		{
+			Log.debug("check joined state for 2 Cycle list");
 			if(cycle1 == cycle2)
 			{
 				return true;
