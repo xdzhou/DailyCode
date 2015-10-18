@@ -113,7 +113,7 @@ public class RubikCube
 		{
 			SubCube[] subCubes = getSubCubesForSide(side);
 			Color color = subCubes[0].getColorForSide(side);
-			Log.debug("check side : "+side+", color : "+color);
+			Log.debug("check side : {}, color : {}", side, color);
 			for(int i=1; i<subCubes.length; i++)
 			{
 				if(color != subCubes[i].getColorForSide(side))
@@ -127,11 +127,11 @@ public class RubikCube
 	
 	public void clockwiseRotate(Direction dir, int level, int turnCount)
 	{
-		Log.debug("clockwise Rotate in direction: "+dir+", for level: "+level+", turn count: "+turnCount);
+		Log.debug("clockwise Rotate in direction: {}, for level: {}, turn count: {}", dir, level, turnCount);
 		SubCube[] cubesToRotateCubes = getSubcubeFrom(dir, level);
 		turnCount = turnCount % 4;
 		Side[] targetSides = dir.getTargetSides(turnCount);
-		Log.debug("change direction from "+Arrays.toString(dir.transformOrder)+" to "+Arrays.toString(targetSides));
+		Log.debug("change direction from {} to {}", Arrays.toString(dir.transformOrder), Arrays.toString(targetSides));
 		for(SubCube cube : cubesToRotateCubes)
 		{
 			cube.transform(dir.transformOrder, targetSides);
@@ -153,7 +153,6 @@ public class RubikCube
 				retVal[curIndex++] = cube;
 			}
 		}
-		//System.out.println("getSubCubes For Side:"+side+", "+Arrays.toString(retVal));
 		return retVal;
 	}
 	
