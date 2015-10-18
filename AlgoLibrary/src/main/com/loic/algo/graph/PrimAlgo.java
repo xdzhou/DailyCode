@@ -77,7 +77,7 @@ public class PrimAlgo<T> implements MinSpanningTreeAlgo<T>
 			{
 				break;
 			}
-			Log.debug("find a MinSpanTree edge : %s", edge.toString());
+			Log.debug("find a MinSpanTree edge : {}", edge);
 			mMinSpanTreeEdges.add(edge);
 			
 			T newNode = mGraph.getEdgeSource(edge);

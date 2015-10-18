@@ -29,7 +29,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 	@Override
 	public GraphPath<Integer, DefaultWeightedEdge> getShortestPath(Integer startNode, Integer endNode)
 	{
-		Log.debug("try find shortest path from %d to %d ...", startNode, endNode);
+		Log.debug("try find shortest path from {} to {} ...", startNode, endNode);
 		Set<Integer> vertexSet = mGraph.vertexSet();
 		// Distance from source to a node OR from a node to target
 		double[] dist = new double[vertexSet.size()];
@@ -75,7 +75,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer>
 			curIndex = prev[curIndex];
 		}
 		sb.insert(0, Integer.toString(startNode));
-		Log.debug("the shortest path is %s", sb.toString());
+		Log.debug("the shortest path is {}", sb);
 		
 		return new GraphPathImpl<Integer, DefaultWeightedEdge>(mGraph, startNode, endNode, null, dist[endNode]);
 	}

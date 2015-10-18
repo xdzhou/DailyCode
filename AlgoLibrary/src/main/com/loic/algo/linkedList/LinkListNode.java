@@ -29,7 +29,7 @@ public class LinkListNode<T>
 		}
 		else if(nodeToRemove.mNext != null)
 		{
-			Log.debug("remove node, copy next node: %s", nodeToRemove.mNext.mValue.toString());
+			Log.debug("remove node, copy next node: {}", nodeToRemove.mNext.mValue);
 			//copy next node's value
 			nodeToRemove.mValue = nodeToRemove.mNext.mValue;
 			nodeToRemove.mNext = nodeToRemove.mNext.mNext;
