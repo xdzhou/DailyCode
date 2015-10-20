@@ -1,4 +1,4 @@
-package com.sky.exercise;
+package com.sky.greedy;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,39 +19,23 @@ public class MinComposeNum implements OneInputOneOutputProb<Integer[], String>
 	public String resolve(Integer[] param)
 	{
 		List<Integer> list = Arrays.asList(param);
+
 		Comparator<Integer> comparator = new Comparator<Integer>()
 		{
 			@Override
 			public int compare(Integer o1, Integer o2)
 			{
-				int len1 = o1.toString().length();
-				int len2 = o2.toString().length();
-				if(len1 == len2)
-				{
-					return o1 - o2;
-				}
-				else if (len1 > len2) 
-				{
-					return (int) (o1 - o2 * Math.pow(10, len1 - len2));
-				}
-				else 
-				{
-					return (int) (o1 * Math.pow(10, len2 - len1) - o2 );
-				}
+				return (""+o1+o2).compareTo(""+o2+o1);
 			}
 		};
 		Collections.sort(list, comparator);
 		
-		while(! list.isEmpty())
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<list.size(); i++)
 		{
-			
+			sb.append(list.get(i));
 		}
-		return null;
-	}
-	
-	private String getHeadMinNum(List<Integer> list)
-	{
-		
+		return sb.toString();
 	}
 
 }
