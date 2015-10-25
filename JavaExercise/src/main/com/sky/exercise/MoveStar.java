@@ -19,31 +19,22 @@ public class MoveStar implements OneInputOneOutputProb<String, String>
 		{
 			values[i] = param.charAt(i);
 		}
-		int starFlag = param.length();
-		int charFlag = param.length();
-		while(true)
+		int starFlag = param.length() - 1;
+		int charFlag = 0;
+		while(starFlag >= 0 && charFlag >= 0)
 		{
-			while(values[--starFlag] != '*')
+			while(starFlag >= 0 && values[starFlag] != '*')
 			{
-				if(starFlag < 0)
-					break;
+				starFlag --;
 			}
-			charFlag = starFlag;
-			if(charFlag > 0)
+			charFlag = starFlag - 1;
+			while(charFlag >= 0 && values[charFlag] == '*')
 			{
-				while(values[--charFlag] == '*')
-				{
-					if(charFlag <= 0)
-						break;
-				}
+				charFlag --;
 			}
-			if(starFlag >= 0 && charFlag > 0)
+			if(starFlag >= 0 && charFlag >= 0)
 			{
 				exch(values, starFlag, charFlag);
-			}
-			else 
-			{
-				break;
 			}
 		}
 		return new String(values);
