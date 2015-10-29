@@ -5,55 +5,55 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 public class TeadsQ1
 {
-	ResultDepthComparator resultDepthComparator = new ResultDepthComparator();
-	ResultDistanceComparator resultDistanceComparator = new ResultDistanceComparator();
-
-	public static void main(String args[])
+	private ResultDepthComparator resultDepthComparator = new ResultDepthComparator();
+	private ResultDistanceComparator resultDistanceComparator = new ResultDistanceComparator();
+	
+	private HashMap<Integer, Node> totalNodes = new HashMap<Integer, Node>();
+	private int forroot = 0;
+	
+	public void clear()
 	{
-		System.out.println("result = " + new TeadsQ1().start());
+		totalNodes.clear();
 	}
-
-	public int start()
+	
+	public int getShortestTransformPathLength()
 	{
-		Scanner in = new Scanner(System.in);
-		int n = Integer.parseInt(in.nextLine());
-		HashMap<Integer, Node> totalNodes = new HashMap<Integer, Node>();
-		int forroot = 0;
-
-		for (int i = 0; i < n; i++)
-		{
-			String[] tempStrings = in.nextLine().split(" ");
-			int a = Integer.parseInt(tempStrings[0]);
-			int b = Integer.parseInt(tempStrings[1]);
-			forroot = b;
-			Node na, nb;
-			if (totalNodes.containsKey(a))
-			{
-				na = totalNodes.get(a);
-			} else
-			{
-				na = new Node(null);
-				totalNodes.put(a, na);
-			}
-			if (totalNodes.containsKey(b))
-			{
-				nb = totalNodes.get(b);
-			} else
-			{
-				nb = new Node(null);
-				totalNodes.put(b, nb);
-			}
-			na.union(nb);
-		}
-
 		Node root = totalNodes.get(forroot).getRoot();
-		Result r = getMaxDistance(root);
-		in.close();
-		return (r.maxDistance + 1) / 2;
+		if(root != null)
+		{
+			Result r = getMaxDistance(root);
+			return (r.maxDistance + 1) / 2;
+		}
+		else 
+		{
+			return -1;
+		}
+	}
+	
+	public void addNewLien(int a, int b)
+	{
+		forroot = b;
+		Node na, nb;
+		if (totalNodes.containsKey(a))
+		{
+			na = totalNodes.get(a);
+		} else
+		{
+			na = new Node(null);
+			totalNodes.put(a, na);
+		}
+		if (totalNodes.containsKey(b))
+		{
+			nb = totalNodes.get(b);
+		} else
+		{
+			nb = new Node(null);
+			totalNodes.put(b, nb);
+		}
+		na.union(nb);
 	}
 
 	public Result getMaxDistance(Node node)
@@ -105,7 +105,7 @@ public class TeadsQ1
 
 	}
 
-	private class ResultDepthComparator implements Comparator<Result>
+	private static class ResultDepthComparator implements Comparator<Result>
 	{
 		@Override
 		public int compare(Result arg0, Result arg1)
@@ -114,7 +114,7 @@ public class TeadsQ1
 		}
 	}
 
-	private class ResultDistanceComparator implements Comparator<Result>
+	private static class ResultDistanceComparator implements Comparator<Result>
 	{
 		@Override
 		public int compare(Result arg0, Result arg1)
@@ -123,7 +123,7 @@ public class TeadsQ1
 		}
 	}
 
-	private class Node
+	private static class Node
 	{
 		Node parent = null;
 		List<Node> childre = new ArrayList<Node>();
