@@ -145,6 +145,25 @@ public class LinkListNode<T>
 		return p;
 	}
 	
+	public LinkListNode<T> getIntersectNodeIfCycle()
+	{
+		LinkListNode<T> node = hasCycle();
+		if(node != null)
+		{
+			LinkListNode<T> cur1 = this, cur2 = node;
+			while(cur1 != null && cur2 != null)
+			{
+				if(cur1 == cur2)
+				{
+					return cur1;
+				}
+				cur1 = cur1.mNext;
+				cur2 = cur2.mNext;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * get first intersect node
 	 * @param anotherList
