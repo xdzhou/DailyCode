@@ -1,4 +1,4 @@
-package com.sky.exercise;
+package com.sky.recursion;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

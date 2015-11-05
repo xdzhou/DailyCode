@@ -1,8 +1,9 @@
-package com.sky.exercise;
+package com.sky.divideConquer;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.sky.divideConquer.MatrixComputeFibonacci;
 import com.sky.dynamicProgramming.DPFibonacciPolynomial;
 import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
 

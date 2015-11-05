@@ -1,4 +1,4 @@
-package com.sky.exercise;
+package com.sky.divideConquer;
 
 import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
 

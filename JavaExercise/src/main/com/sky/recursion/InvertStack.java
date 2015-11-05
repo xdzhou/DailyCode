@@ -1,4 +1,4 @@
-package com.sky.exercise;
+package com.sky.recursion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

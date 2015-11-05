@@ -1,4 +1,4 @@
-package com.sky.exercise;
+package com.sky.recursion;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
