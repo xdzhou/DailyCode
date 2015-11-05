@@ -1,5 +1,13 @@
 package com.sky.exercise;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Preconditions;
 import com.sky.problem.OneInputOneOutputProb;
 /**
@@ -15,7 +23,9 @@ import com.sky.problem.OneInputOneOutputProb;
  */
 public class AutobiographicalNumber implements OneInputOneOutputProb<Integer, Boolean>
 {
-
+	private static final Logger Log = LoggerFactory.getLogger(AutobiographicalNumber.class);
+	private List<Integer> autobiographicalNumberList;
+	
 	@Override
 	public Boolean resolve(Integer param)
 	{
@@ -35,9 +45,106 @@ public class AutobiographicalNumber implements OneInputOneOutputProb<Integer, Bo
 		return numString.equals(sb.toString());
 	}
 	
-	public boolean resolve2(int n)
+	public Boolean resolve2(int n)
 	{
-		return false;
+		if(autobiographicalNumberList == null)
+		{
+			autobiographicalNumberList = new ArrayList<Integer>();
+			int[] temp = new int[10];
+			for(int len = 3; len <= 10; len ++)
+			{
+				Arrays.fill(temp, 0);
+				fillTempList(0, len, len - 2, len, temp);
+			}
+			Log.debug("All autobiographical Number : "+autobiographicalNumberList);
+		}
+		return autobiographicalNumberList.contains(n);
 	}
 
+	private boolean fillTempList(int from, int len, int max, int sum, int[] list)
+	{
+		if(len <= 0 || sum < 0)
+		{
+			return false;
+		}
+		if(len == 1)
+		{
+			if(max < sum)
+			{
+				return false;
+			}
+			else 
+			{
+				list[from] = sum;
+				checkAutobiographicalNumber(list, from + len);
+				return true;
+			}
+		}
+		else 
+		{
+			if(sum == 0)
+			{
+				checkAutobiographicalNumber(list, from + len);
+				return true;
+			}
+			else 
+			{
+				int curMax = Math.min(max, sum);
+				boolean success = true;
+				while(curMax > 0 && success)
+				{
+					list[from] = curMax;
+					success = fillTempList(from + 1, len - 1, curMax, sum - curMax, list);
+					curMax --;
+				}
+				return success;
+			}
+		}
+	}
+	
+	private void checkAutobiographicalNumber(int list[], int length)
+	{
+		if(list[length - 1] != 0)
+		{
+			return;
+		}
+		Log.debug("check list for length {} : {} ", length, list);
+		int[] count = new int[length];
+		for(int i=0; i<length; i++)
+		{
+			count[list[i]] ++;
+		}
+		int[] count2 = new int[length];
+		for(int i=0; i<length; i++)
+		{
+			int index = count[i];
+			if(index < length)
+			{
+				count2[count[i]] ++;
+			}
+			else 
+			{
+				return;
+			}
+		}
+		boolean found = Arrays.equals(count, count2);
+		if(found)
+		{
+			StringBuilder numBuilder = new StringBuilder();
+			for(int i=0; i<length; i++)
+			{
+				numBuilder.append(count[i]);
+			}
+			try
+			{
+				int num = Integer.parseInt(numBuilder.toString());
+				autobiographicalNumberList.add(num);
+				Log.debug("Find new Autobiographical Number : {}", num);
+			} 
+			catch (NumberFormatException e)
+			{
+				Log.debug("Find new Autobiographical Number(bigger than Int_Max) : {}", numBuilder.toString());
+			}
+		}
+	}
 }
