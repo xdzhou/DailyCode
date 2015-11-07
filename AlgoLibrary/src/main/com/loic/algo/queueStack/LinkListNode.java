@@ -1,7 +1,9 @@
-package com.loic.algo.linkedList;
+package com.loic.algo.queueStack;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Preconditions;
 
 public class LinkListNode<T>
 {
@@ -207,6 +209,35 @@ public class LinkListNode<T>
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * find the nth to last element of a singly linked list
+	 */
+	public LinkListNode<T> fineNthLastNode(int n)
+	{
+		Preconditions.checkArgument(n > 0);
+		LinkListNode<T> resultIndi = this;
+		LinkListNode<T> headIndi = this;
+		n--;
+		while (n > 0 && headIndi.mNext != null)
+		{
+			headIndi = headIndi.mNext;
+			n--;
+		}
+		if(n > 0)
+		{
+			return null;
+		}
+		else 
+		{
+			while (headIndi.mNext != null)
+			{
+				headIndi = headIndi.mNext;
+				resultIndi = resultIndi.mNext;
+			}
+			return resultIndi;
+		}
 	}
 	
 	public LinkListNode<T> append(T nextValue)

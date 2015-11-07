@@ -1,8 +1,10 @@
-package com.loic.algo.linkedList;
+package com.loic.algo.queueStack;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import com.loic.algo.queueStack.LinkListNode;
 
 public class LinkListTest
 {
