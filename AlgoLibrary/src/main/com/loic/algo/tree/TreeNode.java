@@ -1,5 +1,7 @@
 package com.loic.algo.tree;
 
+import java.util.Arrays;
+
 import com.google.common.base.Preconditions;
 
 public class TreeNode<T>
@@ -16,7 +18,7 @@ public class TreeNode<T>
 	public static <T> TreeNode<T> generateBinaryTree(T[] arrays)
 	{
 		Preconditions.checkNotNull(arrays);
-		
+		Arrays.sort(arrays);
 		return generateBinaryTree(arrays, 0, arrays.length - 1);
 	}
 	
