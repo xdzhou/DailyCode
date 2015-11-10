@@ -1,18 +1,25 @@
 package com.sky.divideConquer;
 
-import com.sky.problem.OneInputOneOutputProb.FibonacciPolynomialProb;
+import com.sky.problem.ProblemTwoSolutions;
 
 /**
- * f(n) = f(n-1)+f(n-2)
- * 
- * |f(n)  |    |1  1|   |f(n-1)|   |1  1|(n-1)   |f(1)|
- * |	  |  = |    | * |      | = |    |      * |    |
- * |f(n-1)|    |1  0|   |f(n-2)|   |1  0|        |f(0)|
- *
+ * 斐波那契数列 Fibonacci polynomial
+ * function fib(n）
+ *      if n = 0 or n = 1
+ *          return 1
+ *      return fib(n − 1) + fib（n − 2
  */
-public class MatrixComputeFibonacci implements FibonacciPolynomialProb
+public class MatrixComputeFibonacci implements ProblemTwoSolutions<Integer, Integer>
 {
 
+	/**
+	 * f(n) = f(n-1)+f(n-2)
+	 * 
+	 * |f(n)  |    |1  1|   |f(n-1)|   |1  1|(n-1)   |f(1)|
+	 * |	  |  = |    | * |      | = |    |      * |    |
+	 * |f(n-1)|    |1  0|   |f(n-2)|   |1  0|        |f(0)|
+	 *
+	 */
 	@Override
 	public Integer resolve(Integer n)
 	{
@@ -57,5 +64,24 @@ public class MatrixComputeFibonacci implements FibonacciPolynomialProb
 	private int[] matrixMultiplication(int[] m1, int[] m2, int[] m3)
 	{
 		return matrixMultiplication(matrixMultiplication(m1, m2), m3);
+	}
+
+	@Override
+	public Integer resolve2(Integer param)
+	{
+		int n = param;
+		if(n <= 1)
+		{
+			return n;
+		}
+		int[] result = new int[3];
+		result[0] = 0;
+		result[1] = 1;
+		for(int i = 2; i < n + 1; i++)
+		{
+			result[i % 3] = result[(i - 1) % 3] + result[(i - 2) % 3];
+		}
+		
+		return result[n % 3];
 	}
 }

@@ -2,7 +2,7 @@ package com.sky.recursion;
 
 import java.util.Objects;
 
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.Problem;
 /**
  * 判断整数序列是不是二元查找树的后序遍历结果
  * 题目：输入一个整数数组，判断该数组是不是某二元查找树的后序遍历的结果。
@@ -16,7 +16,7 @@ import com.sky.problem.OneInputOneOutputProb;
  * 因此返回true。
  * 如果输入7、4、6、5，没有哪棵树的后序遍历的结果是这个序列，因此返回false。
  */
-public class CheckPostOrder implements OneInputOneOutputProb<Integer[], Boolean>
+public class CheckPostOrder implements Problem<Integer[], Boolean>
 {
 
 	@Override

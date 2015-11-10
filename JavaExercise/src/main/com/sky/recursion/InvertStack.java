@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.Problem;
 
 /**
  * 用递归颠倒一个栈。例如输入栈{1, 2, 3, 4, 5}，1 在栈顶。
  * 颠倒之后的栈为{5, 4, 3, 2, 1}，5 处在栈顶。
  */
-public class InvertStack implements OneInputOneOutputProb<LinkedList<Integer>, LinkedList<Integer>>
+public class InvertStack implements Problem<LinkedList<Integer>, LinkedList<Integer>>
 {
 
 	@Override

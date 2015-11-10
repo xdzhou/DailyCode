@@ -4,12 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.Problem;
 
 /**
  * 求最长公共子串（Longest Common Subsequence, LCS）
  */
-public class DPLCS implements OneInputOneOutputProb<String[], String>
+public class DPLCS implements Problem<String[], String>
 {
 	private static final Logger Log = LoggerFactory.getLogger(DPLCS.class);
 	

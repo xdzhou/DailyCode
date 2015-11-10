@@ -1,10 +1,10 @@
 package com.sky.exercise;
 
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.Problem;
 /**
  * 数组中有一个数字出现的次数超过了数组长度的一半，找出这个数字。
  */
-public class FindMajorNum implements OneInputOneOutputProb<Integer[], Integer>
+public class FindMajorNum implements Problem<Integer[], Integer>
 {
 
 	@Override

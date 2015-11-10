@@ -9,7 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.Problem;
+import com.sky.problem.ProblemTwoSolutions;
 /**
  * 给你10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数
  * 要求下排每个数都是先前上排那十个数在下排出现的次数。
@@ -21,7 +22,7 @@ import com.sky.problem.OneInputOneOutputProb;
  * 0 在下排出现了6 次，1 在下排出现了2 次，
  * 2 在下排出现了1 次，3 在下排出现了0 次....
  */
-public class AutobiographicalNumber implements OneInputOneOutputProb<Integer, Boolean>
+public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Boolean>
 {
 	private static final Logger Log = LoggerFactory.getLogger(AutobiographicalNumber.class);
 	private List<Integer> autobiographicalNumberList;
@@ -45,7 +46,8 @@ public class AutobiographicalNumber implements OneInputOneOutputProb<Integer, Bo
 		return numString.equals(sb.toString());
 	}
 	
-	public Boolean resolve2(int n)
+	@Override
+	public Boolean resolve2(Integer param)
 	{
 		if(autobiographicalNumberList == null)
 		{
@@ -58,7 +60,7 @@ public class AutobiographicalNumber implements OneInputOneOutputProb<Integer, Bo
 			}
 			Log.debug("All autobiographical Number : "+autobiographicalNumberList);
 		}
-		return autobiographicalNumberList.contains(n);
+		return autobiographicalNumberList.contains(param);
 	}
 
 	private boolean fillTempList(int from, int len, int max, int sum, int[] list)

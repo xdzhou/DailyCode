@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.loic.algo.array.ArrayUtils;
-import com.sky.problem.OneInputOneOutputProb;
+import com.sky.problem.ProblemTwoSolutions;
 
 /**
  * 我们把只包含因子2、3 和5 的数称作丑数（Ugly Number）。例如6、8 都是丑数，
  * 但14 不是，因为它包含因子7。习惯上我们把1 当做是第一个丑数。求按从小到大的顺序的第1500 个丑数。
  *
  */
-public class UglyNumber implements OneInputOneOutputProb<Integer, Integer>
+public class UglyNumber implements ProblemTwoSolutions<Integer, Integer>
 {
 	
 	@Override
@@ -52,6 +52,7 @@ public class UglyNumber implements OneInputOneOutputProb<Integer, Integer>
 	    return false;
 	}
 	
+	@Override
 	public Integer resolve2(Integer param)
 	{
 		List<Integer> uglyHeap = new ArrayList<>(param);
