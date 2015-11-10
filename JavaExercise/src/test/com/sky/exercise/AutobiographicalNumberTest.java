@@ -1,16 +1,23 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class AutobiographicalNumberTest
+import com.sky.common.CommonTest;
+
+public class AutobiographicalNumberTest extends CommonTest<Integer, Boolean>
 {
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new AutobiographicalNumber());
+	}
+	
 	@Test
 	public void test()
 	{
-		AutobiographicalNumber algo = new AutobiographicalNumber();
-		Assert.assertEquals(algo.resolve(2020), algo.resolve2(2020));
-		Assert.assertEquals(algo.resolve(1210), algo.resolve2(1210));
-		Assert.assertEquals(algo.resolve(132545), algo.resolve2(132545));
+		check(2020, null);
+		check(1210, null);
+		check(132545, null);
 	}
 }

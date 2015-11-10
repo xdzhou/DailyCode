@@ -1,20 +1,26 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class UglyNumberTest
+import com.sky.common.CommonTest;
+
+public class UglyNumberTest extends CommonTest<Integer, Integer>
 {
 
 	@Test
 	public void test()
 	{
-		UglyNumber algo = new UglyNumber();
-		Assert.assertEquals(algo.resolve(3), algo.resolve2(3));
-		Assert.assertEquals(algo.resolve(10), algo.resolve2(10));
-		Assert.assertEquals(algo.resolve(99), algo.resolve2(99));
-		Assert.assertEquals(algo.resolve(911), algo.resolve2(911));
-		//TODO
-		//Assert.assertEquals(algo.resolve(1500), algo.resolve2(1500));
+		check(3, null);
+		check(10, null);
+		check(99, null);
+		check(911, null);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new UglyNumber());
 	}
 }

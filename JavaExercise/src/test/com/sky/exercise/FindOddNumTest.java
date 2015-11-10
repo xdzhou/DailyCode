@@ -1,20 +1,23 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class FindOddNumTest
+import com.sky.common.CommonTest;
+
+public class FindOddNumTest extends CommonTest<Integer[], Integer>
 {
 	@Test
 	public void test()
 	{
-		FindOddNum algo = new FindOddNum();
-		Assert.assertEquals(check(algo, 1, 2,2), 1);
-		Assert.assertEquals(check(algo, 1,1,2,2,2,3,4,4,3), 2);
+		check(transform(1, 2, 2), 1);
+		check(transform(1,1,2,2,2,3,4,4,3), 2);
 	}
-	
-	private int check(FindOddNum algo, Integer ... list)
+
+	@Override
+	@BeforeTest
+	public void init()
 	{
-		return algo.resolve(list);
+		setAlgo(new FindOddNum());
 	}
 }

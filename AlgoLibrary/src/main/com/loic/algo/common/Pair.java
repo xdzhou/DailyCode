@@ -31,14 +31,28 @@ public class Pair<T, E> implements Cloneable
 		this.second = second;
 	}
 	
+	@Override
 	public Pair<T, E> clone()
 	{
-		return new Pair<T, E>(first, second);
+		try
+		{
+			return (Pair<T, E>) super.clone();
+		} 
+		catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public String toString()
 	{
 		return "[" + first + ", " + second + "]";
+	}
+	
+	public static <T, E> Pair<T, E> create(T first, E second)
+	{
+		return new Pair<>(first, second);
 	}
 }

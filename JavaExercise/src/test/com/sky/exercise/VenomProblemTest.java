@@ -1,18 +1,26 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class VenomProblemTest
+import com.sky.common.CommonTest;
+
+public class VenomProblemTest extends CommonTest<Integer, Integer>
 {
 	@Test
 	public void test()
 	{
-		VenomProblem algo = new VenomProblem();
-		Assert.assertEquals((int)algo.resolve(1000), 10);
-		Assert.assertEquals((int)algo.resolve(4), 2);
-		Assert.assertEquals((int)algo.resolve(7), 3);
-		Assert.assertEquals((int)algo.resolve(1024), 10);
-		Assert.assertEquals((int)algo.resolve(16), 4);
+		check(1000, 10);
+		check(4, 2);
+		check(7, 3);
+		check(1024, 10);
+		check(16, 4);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new VenomProblem());
 	}
 }

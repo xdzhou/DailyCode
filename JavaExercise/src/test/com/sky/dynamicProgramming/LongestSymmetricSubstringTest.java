@@ -1,17 +1,25 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class LongestSymmetricSubstringTest
+import com.sky.common.CommonTest;
+ 
+public class LongestSymmetricSubstringTest extends CommonTest<String, Integer>
 {
 	@Test
 	public void test()
 	{
-		LongestSymmetricSubstring algo = new LongestSymmetricSubstring();
-		Assert.assertEquals((int)algo.resolve("google"), 4);
-		Assert.assertEquals((int)algo.resolve("abcdef"), 0);
-		Assert.assertEquals((int)algo.resolve("elgoogle"), 8);
-		Assert.assertEquals((int)algo.resolve("454sd5456sbaab116565"), 4);
+		check("google", 4);
+		check("abcdef", 0);
+		check("elgoogle", 8);
+		check("454sd5456sbaab116565", 4);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new LongestSymmetricSubstring());
 	}
 }

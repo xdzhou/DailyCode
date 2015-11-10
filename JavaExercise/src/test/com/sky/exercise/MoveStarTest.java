@@ -1,17 +1,25 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class MoveStarTest
+import com.sky.common.CommonTest;
+
+public class MoveStarTest extends CommonTest<String, String>
 {
 	@Test
 	public void test()
 	{
-		MoveStar algo = new MoveStar();
-		Assert.assertEquals(algo.resolve("ab**cd**e*12"), "*****abcde12");
-		Assert.assertEquals(algo.resolve("*az*12*"), "***az12");
-		Assert.assertEquals(algo.resolve("*****"), "*****");
-		Assert.assertEquals(algo.resolve("12345"), "12345");
+		check("ab**cd**e*12", "*****abcde12");
+		check("*az*12*", "***az12");
+		check("*****", "*****");
+		check("12345", "12345");
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new MoveStar());
 	}
 }

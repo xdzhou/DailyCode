@@ -1,27 +1,31 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class ContinuousCardsTest
+import com.sky.common.CommonTest;
+
+public class ContinuousCardsTest extends CommonTest<Integer[], Boolean>
 {
+	
 	@Test
 	public void test()
 	{
-		ContinuousCards algo = new ContinuousCards();
-		Assert.assertEquals(check(algo, 1), true);
-		Assert.assertEquals(check(algo, 1, 2, 3), true);
-		Assert.assertEquals(check(algo, 1, 2, 5), false);
-		Assert.assertEquals(check(algo, 0, 2, 4, 5), true);
-		Assert.assertEquals(check(algo, 0, 3, 4, 7), false);
-		Assert.assertEquals(check(algo, 0, 0), true);
-		Assert.assertEquals(check(algo, 0, 0, 2), true);
-		Assert.assertEquals(check(algo, 0, 0, 2, 4), true);
-		Assert.assertEquals(check(algo, 0, 0, 2, 5, 6, 7), true);
+		check(transform(1), true);
+		check(transform(1, 2, 3), true);
+		check(transform(1, 2, 5), false);
+		check(transform(0, 2, 4, 5), true);
+		check(transform(0, 3, 4, 7), false);
+		check(transform(0, 0), true);
+		check(transform(0, 0, 2), true);
+		check(transform(0, 0, 2, 4), true);
+		check(transform(0, 0, 2, 5, 6, 7), true);
 	}
-	
-	private boolean check(ContinuousCards algo, Integer ... list)
+
+	@BeforeTest
+	@Override
+	public void init()
 	{
-		return algo.resolve(list);
+		setAlgo(new ContinuousCards());
 	}
 }

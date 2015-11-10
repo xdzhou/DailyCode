@@ -1,21 +1,24 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class FindMidNumTest
+import com.sky.common.CommonTest;
+
+public class FindMidNumTest extends CommonTest<Integer[], Integer>
 {
 	@Test
 	public void test()
 	{
-		FindMidNum algo = new FindMidNum();
-		Assert.assertEquals(process(algo, 3,2,1,4,6,5,7), 4);
-		Assert.assertEquals(process(algo, 2,2,2,2,2), 2);
-		Assert.assertEquals(process(algo, 1,2,3), 2);
+		check(transform(3,2,1,4,6,5,7), 4);
+		check(transform(2,2,2,2,2), 2);
+		check(transform(1,2,3), 2);
 	}
-	
-	private int process(FindMidNum algo, Integer ... a)
+
+	@Override
+	@BeforeTest
+	public void init()
 	{
-		return algo.resolve(a);
+		setAlgo(new FindMidNum());
 	}
 }

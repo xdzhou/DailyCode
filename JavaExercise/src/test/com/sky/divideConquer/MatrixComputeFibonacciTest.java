@@ -1,20 +1,26 @@
 package com.sky.divideConquer;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.sky.common.CommonTest;
 import com.sky.divideConquer.MatrixComputeFibonacci;
-public class MatrixComputeFibonacciTest
+public class MatrixComputeFibonacciTest extends CommonTest<Integer, Integer>
 {
 	@Test
 	public void test()
 	{
-		MatrixComputeFibonacci algo = new MatrixComputeFibonacci();
-		
-		Assert.assertEquals(algo.resolve(10), algo.resolve2(10));
-		Assert.assertEquals(algo.resolve(100), algo.resolve2(100));
-		Assert.assertEquals(algo.resolve(1000), algo.resolve2(1000));
-		Assert.assertEquals(algo.resolve(10000), algo.resolve2(10000));
-		Assert.assertEquals(algo.resolve(100000), algo.resolve2(100000));
+		check(10, null);
+		check(100, null);
+		check(1000, null);
+		check(10000, null);
+		check(100000, null);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new MatrixComputeFibonacci());
 	}
 }

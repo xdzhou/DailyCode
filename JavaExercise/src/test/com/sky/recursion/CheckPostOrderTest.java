@@ -1,21 +1,24 @@
 package com.sky.recursion;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class CheckPostOrderTest
+import com.sky.common.CommonTest;
+
+public class CheckPostOrderTest extends CommonTest<Integer[], Boolean>
 {
 	@Test
 	public void test()
 	{
-		CheckPostOrder algo = new CheckPostOrder();
-		Assert.assertEquals(process(algo, 5,7,6,9,11,10,8), true);
-		Assert.assertEquals(process(algo, 1,1,1,1,1,1,1), true);
-		Assert.assertEquals(process(algo, 7,4,6,5), false);
+		check(transform(5,7,6,9,11,10,8), true);
+		check(transform(1,1,1,1,1,1,1), true);
+		check(transform(7,4,6,5), false);
 	}
-	
-	private boolean process(CheckPostOrder algo, Integer ... param)
+
+	@Override
+	@BeforeTest
+	public void init()
 	{
-		return algo.resolve(param);
+		setAlgo(new CheckPostOrder());
 	}
 }

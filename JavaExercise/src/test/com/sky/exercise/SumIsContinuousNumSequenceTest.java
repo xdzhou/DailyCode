@@ -1,15 +1,23 @@
 package com.sky.exercise;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class SumIsContinuousNumSequenceTest
+import com.sky.common.CommonTest;
+
+public class SumIsContinuousNumSequenceTest extends CommonTest<Integer, Integer>
 {
 	@Test
 	public void test()
 	{
-		SumIsContinuousNumSequence algo = new SumIsContinuousNumSequence();
-		Assert.assertEquals((int)algo.resolve(15), 3);
-		Assert.assertEquals((int)algo.resolve(3), 1);
+		check(15, 3);
+		check(3, 1);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new SumIsContinuousNumSequence());
 	}
 }

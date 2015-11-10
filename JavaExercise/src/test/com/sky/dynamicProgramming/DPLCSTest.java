@@ -1,22 +1,24 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class DPLCSTest
+import com.sky.common.CommonTest;
+
+public class DPLCSTest extends CommonTest<String[], String>
 {
 	@Test
 	public void test()
 	{
-		DPLCS algo = new DPLCS();
-		
-		Assert.assertEquals(check(algo, "abcdefg", "apcmzf"), "acf");
-		Assert.assertEquals(check(algo, "123654987", "zfddsf"), null);
-		Assert.assertEquals(check(algo, "1234", "34"), "34");
+		check(transform("abcdefg", "apcmzf"), "acf");
+		check(transform("123654987", "zfddsf"), null);
+		check(transform("1234", "34"), "34");
 	}
-	
-	private String check(DPLCS algo, String ... list)
+
+	@Override
+	@BeforeTest
+	public void init()
 	{
-		return algo.resolve(list);
+		setAlgo(new DPLCS());
 	}
 }

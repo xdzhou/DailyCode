@@ -1,16 +1,22 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class DPLongestIncreasingSubsequenceTest
+import com.sky.common.CommonTest;
+
+public class DPLongestIncreasingSubsequenceTest extends CommonTest<Integer[], Integer>
 {
 	@Test
 	public void test()
 	{
-		DPLongestIncreasingSubsequence algo = new DPLongestIncreasingSubsequence();
-		Integer[] params =  {4, 5, 6, 1, 2, 3};
-		int result = algo.resolve(params);
-		Assert.assertEquals(result, 3);
+		check(transform(4, 5, 6, 1, 2, 3), 3);
+	}
+
+	@Override
+	@BeforeTest
+	public void init()
+	{
+		setAlgo(new DPLongestIncreasingSubsequence());
 	}
 }

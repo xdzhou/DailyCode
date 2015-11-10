@@ -69,12 +69,12 @@ public class RubikCube
 	{
 		RubikCube rubikCube = new RubikCube();
 		//top:yellow	bellow:red	left:green	right:orange	front:blue	behind:white
-		Pair<Color, Side> topPair = SubCube.createPair(Color.Yellow, Side.Top);
-		Pair<Color, Side> bellowPair = SubCube.createPair(Color.Red, Side.Bellow);
-		Pair<Color, Side> leftPair = SubCube.createPair(Color.Green, Side.Left);
-		Pair<Color, Side> rightPair = SubCube.createPair(Color.Orange, Side.Right);
-		Pair<Color, Side> frontPair = SubCube.createPair(Color.Blue, Side.Front);
-		Pair<Color, Side> behindPair = SubCube.createPair(Color.White, Side.Behind);
+		Pair<Color, Side> topPair = Pair.create(Color.Yellow, Side.Top);
+		Pair<Color, Side> bellowPair = Pair.create(Color.Red, Side.Bellow);
+		Pair<Color, Side> leftPair = Pair.create(Color.Green, Side.Left);
+		Pair<Color, Side> rightPair = Pair.create(Color.Orange, Side.Right);
+		Pair<Color, Side> frontPair = Pair.create(Color.Blue, Side.Front);
+		Pair<Color, Side> behindPair = Pair.create(Color.White, Side.Behind);
 		//top level 3
 		rubikCube.mSubCubes[0] = new SubCube(topPair.clone(), leftPair.clone(), frontPair.clone());
 		rubikCube.mSubCubes[1] = new SubCube(topPair.clone(), leftPair.clone(), behindPair.clone());
@@ -203,11 +203,6 @@ public class RubikCube
 		public SubCube (Pair<Color, Side> ...pairs)
 		{
 			colorPairs = pairs;
-		}
-		
-		public static Pair<Color, Side> createPair(Color color, Side side)
-		{
-			return new Pair<Color, Side>(color, side);
 		}
 		
 		public void transform(Side[] from, Side[] to)
