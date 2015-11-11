@@ -55,4 +55,5 @@ public abstract class CommonTest<T, E>
 	{
 		return list;
 	}
+
 }
