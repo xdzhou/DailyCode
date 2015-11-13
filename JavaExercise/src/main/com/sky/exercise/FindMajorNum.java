@@ -1,10 +1,11 @@
 package com.sky.exercise;
 
-import com.sky.problem.Problem;
+import com.loic.algo.array.ArrayUtils;
+import com.sky.problem.ProblemTwoSolutions;
 /**
  * 数组中有一个数字出现的次数超过了数组长度的一半，找出这个数字。
  */
-public class FindMajorNum implements Problem<Integer[], Integer>
+public class FindMajorNum implements ProblemTwoSolutions<Integer[], Integer>
 {
 
 	@Override
@@ -32,6 +33,12 @@ public class FindMajorNum implements Problem<Integer[], Integer>
 			}
 		}
 		return king;
+	}
+
+	@Override
+	public Integer resolve2(Integer[] param)
+	{
+		return ArrayUtils.findKth(param, (param.length - 1) / 2);
 	}
 
 }

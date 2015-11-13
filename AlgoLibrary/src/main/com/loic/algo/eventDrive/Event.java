@@ -9,8 +9,6 @@ public abstract class Event implements Comparable<Event>
 		this.time = time;
 	}
 	
-	
-	
 	public abstract boolean isValid();
 	
 	@Override
