@@ -30,7 +30,7 @@ public class BankServiceSystem extends EventDriveSystem
 	}
 
 	@Override
-	protected boolean isFinish(double time)
+	protected boolean isFinish()
 	{
 		return false;
 	}

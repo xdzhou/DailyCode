@@ -10,30 +10,28 @@ public abstract class EventDriveSystem
 	protected static final Logger Log = LoggerFactory.getLogger(EventDriveSystem.class);
 	
 	protected PriorityQueue<Event> mEventsQueue;
-	protected double mTime;
 	
 	public EventDriveSystem()
 	{
 		mEventsQueue = new PriorityQueue<>();
-		mTime = 0;
 	}
 	
 	public void simulate()
 	{
+		onStartSimulate();
 		while(!mEventsQueue.isEmpty())
 		{
-			if(isFinish(mTime))
+			if(isFinish())
 			{
 				break;
 			}
 			Event curEvent = mEventsQueue.poll();
 			if(curEvent.isValid())
 			{
-				//Log.debug("start process event : {}", curEvent);
-				mTime = curEvent.time;
 				processEvent(curEvent);
 			}
 		}
+		onStopSimulate();
 		Log.debug("simulate stop !");
 	}
 	
@@ -42,7 +40,15 @@ public abstract class EventDriveSystem
 		mEventsQueue.add(event);
 	}
 	
-	protected abstract boolean isFinish(double time);
+	protected void onStartSimulate()
+	{
+	}
+	
+	protected void onStopSimulate()
+	{
+	}
+	
+	protected abstract boolean isFinish();
 	
 	protected abstract void processEvent(Event event);
 }
