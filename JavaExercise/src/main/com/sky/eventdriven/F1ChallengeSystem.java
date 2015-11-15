@@ -111,6 +111,7 @@ public class F1ChallengeSystem extends EventDriveSystem
 					}
 				}
 			}
+			
 			if(lastCar.nitro())
 			{
 				Log.debug("{} use nitro ...", lastCar);
@@ -122,7 +123,7 @@ public class F1ChallengeSystem extends EventDriveSystem
 		}
 	}
 	
-	//innner class
+	//inner class
 	private static class CarRecord
 	{
 		private double recordTime = 0;

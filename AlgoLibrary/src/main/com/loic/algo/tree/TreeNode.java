@@ -34,4 +34,5 @@ public class TreeNode<T>
 		root.mRightNode = generateBinaryTree(arrays, mid + 1, to);
 		return root;
 	}
+
 }
