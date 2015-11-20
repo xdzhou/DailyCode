@@ -2,14 +2,12 @@ package com.sky.exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.Problem;
 import com.sky.problem.ProblemTwoSolutions;
 /**
  * 给你10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数
@@ -110,7 +108,7 @@ public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Bool
 		{
 			return;
 		}
-		Log.debug("check list for length {} : {} ", length, list);
+		//Log.debug("check list for length {} : {} ", length, list);
 		int[] count = new int[length];
 		for(int i=0; i<length; i++)
 		{

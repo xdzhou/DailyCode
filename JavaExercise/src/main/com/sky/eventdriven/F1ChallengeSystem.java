@@ -114,7 +114,7 @@ public class F1ChallengeSystem extends EventDriveSystem
 			
 			if(lastCar.nitro())
 			{
-				Log.debug("{} use nitro ...", lastCar);
+				//Log.debug("{} use nitro ...", lastCar);
 				if(lastCar.record.curSpeed < lastCar.topSpeed)
 				{
 					addNewEvent(new AcceleratStopEvent(event.time, lastCar));
