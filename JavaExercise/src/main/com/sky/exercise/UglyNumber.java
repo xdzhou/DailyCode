@@ -57,7 +57,7 @@ public class UglyNumber implements ProblemTwoSolutions<Integer, Integer>
 	{
 		List<Integer> uglyHeap = new ArrayList<>(param);
 		uglyHeap.add(1);
-		for(int i=0; i<param - 1; i++)
+		for(int i = 0; i < param - 1; i++)
 		{
 			int min = uglyHeap.remove(0);
 			

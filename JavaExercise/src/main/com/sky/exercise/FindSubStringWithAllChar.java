@@ -9,6 +9,7 @@ package com.sky.exercise;
 public class FindSubStringWithAllChar
 {
 
+	//Tips:需要一个数组存储各个数字出现的次数，使用head和tail 2个游标，每次head前进一步，tail游标只有当它指向得数字出现的次数大于1时才前进
 	public String findAllChar(String content, int N)
 	{
 		if(content == null || content.isEmpty())

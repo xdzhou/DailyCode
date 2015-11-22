@@ -10,6 +10,7 @@ import com.sky.problem.Problem;
  */
 public class FindOddNum implements Problem<Integer[], Integer>
 {
+	//Tips：A （XOR）A = 0
 	@Override
 	public Integer resolve(Integer[] param)
 	{

@@ -22,9 +22,14 @@ import com.sky.problem.ProblemTwoSolutions;
  */
 public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Boolean>
 {
+	/**
+	 * Autobiographical a 特征是 ：a的各位数字的和为a的长度；最后一位一定为0；a的长度最短为3
+	 */
 	private static final Logger Log = LoggerFactory.getLogger(AutobiographicalNumber.class);
+	//计算出所有的Autobiographical
 	private List<Integer> autobiographicalNumberList;
 	
+	//检测每个数字出现的次数依次组成的数是否和原来的相等
 	@Override
 	public Boolean resolve(Integer param)
 	{

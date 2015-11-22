@@ -9,7 +9,7 @@ import com.sky.problem.Problem;
  */
 public class MoveStar implements Problem<String, String>
 {
-
+	//用1个游标从尾部开始向前移动，指向*时和前面第一个非*字符互换
 	@Override
 	public String resolve(String param)
 	{

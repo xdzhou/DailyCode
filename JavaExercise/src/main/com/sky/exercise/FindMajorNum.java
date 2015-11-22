@@ -8,6 +8,7 @@ import com.sky.problem.ProblemTwoSolutions;
 public class FindMajorNum implements ProblemTwoSolutions<Integer[], Integer>
 {
 
+	//不同的数相遇就都消失，最后剩下的数就是所求的数
 	@Override
 	public Integer resolve(Integer[] param)
 	{
@@ -35,6 +36,7 @@ public class FindMajorNum implements ProblemTwoSolutions<Integer[], Integer>
 		return king;
 	}
 
+	//要找的数肯定是此数组的中数
 	@Override
 	public Integer resolve2(Integer[] param)
 	{

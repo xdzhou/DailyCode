@@ -13,6 +13,7 @@ import com.sky.problem.Problem;
 public class MaxPointsInLine implements Problem<Point[], Integer>
 {
 
+	//以一个点为基准，其他的点和它计算斜率，所有斜率相同的点必在一条直线上
 	@Override
 	public Integer resolve(Point[] param)
 	{
@@ -60,6 +61,7 @@ public class MaxPointsInLine implements Problem<Point[], Integer>
 		float k = (p2.x == p1.x) ? Float.MAX_VALUE : (p2.y - p1.y) / (float)(p2.x - p1.x);
 		if(k == 0)
 		{
+			//different from 0.0 and -0.0
 			k = 0;
 		}
 		System.out.println(p1+" : "+p2+" : "+k);

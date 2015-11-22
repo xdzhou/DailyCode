@@ -18,16 +18,16 @@ import com.sky.problem.ProblemTwoSolutions;
  */
 public class SumBitDifferences implements ProblemTwoSolutions<Integer[], Integer>
 {
-
+	//取2个数异或，再计算二进制表示中1的个数
 	@Override
 	public Integer resolve(Integer[] param)
 	{
 		Objects.requireNonNull(param);
 		int len = param.length;
 		int sum = 0;
-		for(int i=0; i<len; i++)
+		for(int i = 0; i < len; i++)
 		{
-			for(int j=i+1; j<len; j++)
+			for(int j = i + 1; j < len; j++)
 			{
 				sum += BitUtils.getOneCount(param[i] ^ param[j]);
 			}
@@ -35,6 +35,10 @@ public class SumBitDifferences implements ProblemTwoSolutions<Integer[], Integer
 		return sum * 2;
 	}
 
+	/**
+	 * int是32位，可以换个思路，对每个数的32bit分别计算
+	 * 对每次取出每个数的第i位并算出bit 1 出现的次数，和bit 0 的出现次数
+	 */
 	@Override
 	public Integer resolve2(Integer[] param)
 	{
