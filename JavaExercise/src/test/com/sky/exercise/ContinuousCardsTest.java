@@ -1,9 +1,9 @@
 package com.sky.exercise;
 
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
 
 public class ContinuousCardsTest extends CommonTest<Integer[], Boolean>
 {
@@ -22,10 +22,9 @@ public class ContinuousCardsTest extends CommonTest<Integer[], Boolean>
 		check(transform(0, 0, 2, 5, 6, 7), true);
 	}
 
-	@BeforeTest
 	@Override
-	public void init()
+	public Problem<Integer[], Boolean> getAlgo()
 	{
-		setAlgo(new ContinuousCards());
+		return new ContinuousCards();
 	}
 }

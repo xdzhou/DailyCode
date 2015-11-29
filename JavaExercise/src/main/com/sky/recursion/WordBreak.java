@@ -2,10 +2,21 @@ package com.sky.recursion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-public class WordBreak
+import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
+
+public class WordBreak implements Problem<Pair<String, Set<String>>, List<String>>
 {
+	@Override
+	public List<String> resolve(Pair<String, Set<String>> param)
+	{
+		Objects.requireNonNull(param);
+		return wordBreak(param.getFirst(), param.getSecond());
+	}
+	
 	public List<String> wordBreak(String s, Set<String> wordDict)
     {
         List<String> result = new ArrayList<String>();

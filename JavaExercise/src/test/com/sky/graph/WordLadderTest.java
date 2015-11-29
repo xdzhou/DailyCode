@@ -1,30 +1,42 @@
 package com.sky.graph;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WordLadderTest
+import com.loic.algo.common.Triple;
+import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
+
+public class WordLadderTest extends CommonTest<Triple<String, String, Set<String>>, List<List<String>>>
 {
-	private WordLadder algo = new WordLadder();
-	
 	@Test
 	public void test()
 	{
-		check(2, "hit", "cog", "hot","dot","dog","lot","log");
-		check(1, "hot", "dog", "hot","dot","dog");
+		check(Triple.create("hit", "cog", generateSet("hot","dot","dog","lot","log")));
+		check(Triple.create("hot", "dog", generateSet("hot","dot","dog")));
 	}
-	
-	private void check(int size, String start, String stop, String ...data)
+
+	@Override
+	protected void onOuputReady(Triple<String, String, Set<String>> input, List<List<String>> output)
 	{
-		Set<String> words = new HashSet<>();
-		for(String s : data)
+		if(! output.isEmpty())
 		{
-			words.add(s);
+			int pathLen = output.get(0).size();
+			for(List<String> paths : output)
+			{
+				Assert.assertEquals(pathLen, paths.size());
+				Assert.assertEquals(input.getFirst(), paths.get(0));
+				Assert.assertEquals(input.getSecond(), paths.get(paths.size() - 1));
+			}
 		}
-		Assert.assertEquals(algo.findLadders(start, stop, words).size(), size);
-		
+	}
+
+	@Override
+	public Problem<Triple<String, String, Set<String>>, List<List<String>>> getAlgo()
+	{
+		return new WordLadder();
 	}
 }

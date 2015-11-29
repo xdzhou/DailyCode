@@ -1,9 +1,9 @@
 package com.sky.recursion;
 
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
 
 public class CheckPostOrderTest extends CommonTest<Integer[], Boolean>
 {
@@ -16,9 +16,8 @@ public class CheckPostOrderTest extends CommonTest<Integer[], Boolean>
 	}
 
 	@Override
-	@BeforeTest
-	public void init()
+	public Problem<Integer[], Boolean> getAlgo()
 	{
-		setAlgo(new CheckPostOrder());
+		return new CheckPostOrder();
 	}
 }

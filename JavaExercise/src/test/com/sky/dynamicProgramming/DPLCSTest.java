@@ -1,9 +1,9 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
 
 public class DPLCSTest extends CommonTest<String[], String>
 {
@@ -16,9 +16,8 @@ public class DPLCSTest extends CommonTest<String[], String>
 	}
 
 	@Override
-	@BeforeTest
-	public void init()
+	public Problem<String[], String> getAlgo()
 	{
-		setAlgo(new DPLCS());
+		return new DPLCS();
 	}
 }

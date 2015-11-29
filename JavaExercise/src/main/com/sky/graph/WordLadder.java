@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+
+import com.loic.algo.common.Triple;
+import com.sky.problem.Problem;
 
 /**
  * Given two words (beginWord and endWord), and a dictionary's word list, 
@@ -16,9 +20,16 @@ import java.util.Set;
  * @link https://leetcode.com/problems/word-ladder-ii/
  *
  */
-public class WordLadder
+public class WordLadder implements Problem<Triple<String, String, Set<String>>, List<List<String>>>
 {
-	public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList)
+	@Override
+	public List<List<String>> resolve(Triple<String, String, Set<String>> param)
+	{
+		Objects.requireNonNull(param);
+		return findLadders(param.getFirst(), param.getSecond(), param.getThird());
+	}
+	
+	private List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList)
     {
         List<List<String>> result = new ArrayList<List<String>>();
 

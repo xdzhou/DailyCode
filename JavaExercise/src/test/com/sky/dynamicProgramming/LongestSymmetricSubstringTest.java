@@ -1,9 +1,9 @@
 package com.sky.dynamicProgramming;
 
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
  
 public class LongestSymmetricSubstringTest extends CommonTest<String, Integer>
 {
@@ -17,9 +17,8 @@ public class LongestSymmetricSubstringTest extends CommonTest<String, Integer>
 	}
 
 	@Override
-	@BeforeTest
-	public void init()
+	public Problem<String, Integer> getAlgo()
 	{
-		setAlgo(new LongestSymmetricSubstring());
+		return new LongestSymmetricSubstring();
 	}
 }
