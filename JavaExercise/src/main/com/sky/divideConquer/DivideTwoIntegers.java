@@ -1,12 +1,26 @@
 package com.sky.divideConquer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
+
 /**
  * Divide two integers without using multiplication, division and mod operator.
  * 
  * @link https://leetcode.com/problems/divide-two-integers/
  */
-public class DivideTwoIntegers
+public class DivideTwoIntegers implements Problem<Pair<Integer, Integer>, Integer>
 {
+	private static final Logger Log = LoggerFactory.getLogger(DivideTwoIntegers.class);
+	
+	@Override
+	public Integer resolve(Pair<Integer, Integer> param)
+	{
+		return divide(param.getFirst(), param.getSecond());
+	}
+	
 	public int divide(int a, int b)
     {
         if(b == 0)
@@ -52,12 +66,12 @@ public class DivideTwoIntegers
     {
         if(a == b)
         {
-        	System.out.println(a+" / "+b+" = "+1+" ... "+0);
+        	Log.debug("{} / {} = {} ... {}", a, b, 1, 0);
             return new int[] {1, 0};
         }
         if(a < b)
         {
-        	System.out.println(a+" / "+b+" = "+0+" ... "+a);
+        	Log.debug("{} / {} = {} ... {}", a, b, 0, a);
             return new int[] {0, a};
         }
         int mid = a >>> 1;
@@ -81,7 +95,8 @@ public class DivideTwoIntegers
         }
         result[0] = quotient;
         result[1] = remainder;
-        System.out.println(a+" / "+b+" = "+quotient+" ... "+remainder);
+        Log.debug("{} / {} = {} ... {}", a, b, quotient, remainder);
         return result;
     }
+
 }

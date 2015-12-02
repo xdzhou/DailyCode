@@ -42,7 +42,6 @@ public class MoveStar implements Problem<String, String>
 	
 	private void exch(char[] a, int i, int j)
 	{
-		System.out.println("change "+a[i]+", "+a[j]);
 		char c = a[i];
 		a[i] = a[j];
 		a[j] = c;

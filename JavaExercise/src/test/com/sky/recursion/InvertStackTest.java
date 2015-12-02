@@ -19,7 +19,6 @@ public class InvertStackTest
 			stack.push(i);
 		}
 		String s = stack.toString();
-		System.out.println(s);
 		
 		algo.resolve(stack);
 		Assert.assertNotEquals(s, stack.toString());

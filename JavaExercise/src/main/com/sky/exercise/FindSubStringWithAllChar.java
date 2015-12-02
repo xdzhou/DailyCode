@@ -1,16 +1,25 @@
 package com.sky.exercise;
 
+import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
+
 /**
  * 一串首尾相连的珠子(m 个)，有N 种颜色(N<=10)，
  * 设计一个算法，取出其中一段，要求包含所有N 中颜色，并使长度最短。
  * 并分析时间复杂度与空间复杂度。
  *
  */
-public class FindSubStringWithAllChar
+public class FindSubStringWithAllChar implements Problem<Pair<String, Integer>, String>
 {
 
+	@Override
+	public String resolve(Pair<String, Integer> param)
+	{
+		return findAllChar(param.getFirst(), param.getSecond());
+	}
+	
 	//Tips:需要一个数组存储各个数字出现的次数，使用head和tail 2个游标，每次head前进一步，tail游标只有当它指向得数字出现的次数大于1时才前进
-	public String findAllChar(String content, int N)
+	private String findAllChar(String content, int N)
 	{
 		if(content == null || content.isEmpty())
 		{
@@ -81,4 +90,5 @@ public class FindSubStringWithAllChar
 	{
 		return content.charAt(index) - '0';
 	}
+
 }

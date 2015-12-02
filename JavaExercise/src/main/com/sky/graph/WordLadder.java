@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.loic.algo.common.Triple;
 import com.sky.problem.Problem;
 
@@ -22,6 +25,8 @@ import com.sky.problem.Problem;
  */
 public class WordLadder implements Problem<Triple<String, String, Set<String>>, List<List<String>>>
 {
+	private static final Logger Log = LoggerFactory.getLogger(WordLadder.class);
+	
 	@Override
 	public List<List<String>> resolve(Triple<String, String, Set<String>> param)
 	{
@@ -64,7 +69,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
         {
         	for(List<String> list : result)
         	{
-        		System.out.println("path : "+list); 
+        		Log.debug("path : {}", list);
         	}
         }
         

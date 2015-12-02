@@ -1,41 +1,41 @@
 package com.sky.exercise;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class FindSubStringWithAllCharTest
+import com.loic.algo.common.Pair;
+import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
+
+public class FindSubStringWithAllCharTest extends CommonTest<Pair<String, Integer>, String>
 {
-	FindSubStringWithAllChar algo;
-	
-	@BeforeTest
-	public void Init()
-	{
-		algo = new FindSubStringWithAllChar();
-	}
-	
 	@Test
 	public void testOneChar()
 	{
-		String result = algo.findAllChar("00000000000", 1);
-		System.out.println(result);
-		Assert.assertEquals(result, "0");
+		check(Pair.create("00000000000", 1), "0");
 	}
 	
 	@Test
 	public void testThreeChar()
 	{
-		String result = algo.findAllChar("000212102002202102012220210", 3);
-		System.out.println(result);
-		Assert.assertEquals(result.length(), 3);
+		check(Pair.create("000212102002202102012220210", 3));
 	}
 	
 	@Test
 	public void testTenChar()
 	{
-		FindSubStringWithAllChar algo = new FindSubStringWithAllChar();
-		String result = algo.findAllChar("202105649848910207523690841", 10);
-		System.out.println(result);
-		Assert.assertEquals(result.length(), 10);
+		check(Pair.create("202105649848910207523690841", 10));
+	}
+
+	@Override
+	protected void onOuputReady(Pair<String, Integer> input, String output)
+	{
+		Assert.assertEquals(output.length(), (int)input.getSecond());
+	}
+
+	@Override
+	public Problem<Pair<String, Integer>, String> getAlgo()
+	{
+		return new FindSubStringWithAllChar();
 	}
 }

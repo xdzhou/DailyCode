@@ -3,6 +3,9 @@ package com.sky.exercise;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.loic.algo.common.Point;
 import com.sky.problem.Problem;
 
@@ -12,6 +15,7 @@ import com.sky.problem.Problem;
  */
 public class MaxPointsInLine implements Problem<Point[], Integer>
 {
+	private static final Logger Log = LoggerFactory.getLogger(MaxPointsInLine.class);
 
 	//以一个点为基准，其他的点和它计算斜率，所有斜率相同的点必在一条直线上
 	@Override
@@ -64,7 +68,7 @@ public class MaxPointsInLine implements Problem<Point[], Integer>
 			//different from 0.0 and -0.0
 			k = 0;
 		}
-		System.out.println(p1+" : "+p2+" : "+k);
+		Log.debug("slope between {} and {} : {}", p1, p2, k);
 		
 		return k;
 	}

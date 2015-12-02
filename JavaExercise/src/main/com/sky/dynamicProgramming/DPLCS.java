@@ -90,7 +90,7 @@ public class DPLCS implements Problem<String[], String>
 				retVal = sb.toString();
 			}
 		}
-		Log.info("get LCS for {} and {} , result {}", s1, s2, retVal);
+		Log.debug("get LCS for {} and {} , result {}", s1, s2, retVal);
 		return retVal;
 	}
 }
