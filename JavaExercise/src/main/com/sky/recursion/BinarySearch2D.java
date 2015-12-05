@@ -7,7 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import com.loic.algo.common.Pair;
 import com.sky.problem.Problem;
-
+/**
+ * 给出一个矩阵，其中每一行和每一列都是有序的，写一个函数在矩阵中找出指定的数
+ * @link http://www.hawstein.com/posts/9.6.html
+ *
+ */
 public class BinarySearch2D<K extends Comparable<K>> implements Problem<Pair<K[][], K>, Pair<Integer, Integer>>
 {
 	private static final Logger Log = LoggerFactory.getLogger(BinarySearch2D.class);
