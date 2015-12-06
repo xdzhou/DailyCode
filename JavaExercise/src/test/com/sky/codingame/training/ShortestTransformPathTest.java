@@ -4,26 +4,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
 
-public class ShortestTransformPathTest
+public class ShortestTransformPathTest extends CommonTest<Void, Integer>
 {
-	private ShortestTransformPath<Integer> algo;
-	
-	@BeforeTest
-	public void Init()
-	{
-		algo = new ShortestTransformPath<Integer>();
-	}
 	
 	private void chargeData(String fileIn)
 	{
+		ShortestTransformPath<Integer> algo = (ShortestTransformPath<Integer>) getProblem();
 		String floder = "src/resources/com/sky/codingame/training";
 		try
 		{
+			algo.clear();
 			Scanner in = new Scanner(new File(floder+File.separator+fileIn));
 			int n = in.nextInt();
 	        for (int i = 0; i < n; i++) 
@@ -43,81 +38,77 @@ public class ShortestTransformPathTest
 	@Test
 	public void test1()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn1.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 2);
+		check(null, 2);
 	}
 	
 	@Test
 	public void test2()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn2.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 2);
+		check(null, 2);
 	}
 	
 	@Test
 	public void test3()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn3.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 3);
+		check(null, 3);
 	}
 	
 	@Test
 	public void test4()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn4.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 5);
+		check(null, 5);
 	}
 	
 	@Test
 	public void test5()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn5.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 5);
+		check(null, 5);
 	}
 	
 	@Test
 	public void test6()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn6.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 7);
+		check(null, 7);
 	}
 	
 	@Test
 	public void test7()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn7.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 15);
+		check(null, 15);
 	}
 	
 	@Test
 	public void test8()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn8.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 9);
+		check(null, 9);
 	}
 	
 	@Test
 	public void test9()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn9.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 15);
+		check(null, 15);
 	}
 	
 	@Test
 	public void test10()
 	{
-		algo.clear();
 		chargeData("ShortestTransformPathIn10.txt");
-		Assert.assertEquals(algo.getShortestTransformPathLength(), 5);
+		check(null, 5);
+	}
+
+	@Override
+	public Problem<Void, Integer> getAlgo()
+	{
+		return new ShortestTransformPath<Integer>();
 	}
 	
 }

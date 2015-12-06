@@ -8,7 +8,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		List<Element> lists = new ArrayList<Element>();
+		List<Element> lists = new ArrayList<Element>(2);
 		lists.add(new ElementA());
 		lists.add(new ElementB());
 

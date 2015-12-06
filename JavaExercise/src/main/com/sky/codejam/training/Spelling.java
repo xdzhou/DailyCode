@@ -26,12 +26,12 @@ public class Spelling
 			for (int j = 0; j < s.length(); j++)
 			{
 				char c = s.charAt(j);
-				int currentIndi = Integer.parseInt(letteMap.get(c).substring(0,
-						1));
+				int currentIndi = Integer.parseInt(letteMap.get(c).substring(0, 1));
 				if (currentIndi == lastIndi)
 				{
-					sb.append(" " + letteMap.get(c));
-				} else
+					sb.append(" ").append(letteMap.get(c));
+				} 
+				else
 				{
 					sb.append(letteMap.get(c));
 				}
@@ -44,6 +44,7 @@ public class Spelling
 
 	private void initMap(HashMap<Character, String> map)
 	{
+		map.clear();
 		map.put('a', "2");
 		map.put('b', "22");
 		map.put('c', "222");

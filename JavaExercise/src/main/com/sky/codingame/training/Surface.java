@@ -50,12 +50,13 @@ public class Surface
 		in.close();
 	}
 
-	private static int getSurfaceWater(char[][] table, int width, int height,
-			int px, int py, int id)
+	private static int getSurfaceWater(char[][] table, int width, int height, int px, int py, int id)
 	{
 		int surface;
 		if (px < 0 || py < 0 || px >= width || py >= height)
+		{
 			return 0;
+		}
 		if (table[px][py] == 0)
 		{
 			surface = 1;
@@ -64,7 +65,8 @@ public class Surface
 			surface += getSurfaceWater(table, width, height, px + 1, py, id);
 			surface += getSurfaceWater(table, width, height, px, py - 1, id);
 			surface += getSurfaceWater(table, width, height, px, py + 1, id);
-		} else
+		} 
+		else
 		{
 			return 0;
 		}

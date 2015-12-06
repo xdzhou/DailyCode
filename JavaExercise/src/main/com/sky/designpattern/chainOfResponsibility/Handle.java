@@ -2,7 +2,7 @@ package com.sky.designpattern.chainOfResponsibility;
 
 public abstract class Handle
 {
-	protected Handle successHandle = null;
+	private Handle successHandle = null;
 
 	public abstract boolean handleRequest(String user, float fee);
 

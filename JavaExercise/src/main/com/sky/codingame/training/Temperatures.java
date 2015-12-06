@@ -19,14 +19,20 @@ public class Temperatures
 		for (int i = 0; i < n; i++)
 		{
 			if (small == 10001)
+			{
 				small = in.nextInt();
+			}
 			else
 			{
 				int nextValut = in.nextInt();
 				if (Math.abs(nextValut) < Math.abs(small))
+				{
 					small = nextValut;
+				}
 				if (Math.abs(nextValut) == Math.abs(small))
+				{
 					small = (nextValut > small) ? nextValut : small;
+				}
 			}
 		}
 

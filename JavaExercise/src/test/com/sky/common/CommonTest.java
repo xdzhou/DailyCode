@@ -23,6 +23,11 @@ public abstract class CommonTest<T, E>
 		Assert.assertNotEquals(mAlgoToTest, null);
 	}
 	
+	public Problem<T, E> getProblem()
+	{
+		return mAlgoToTest;
+	}
+	
 	protected void check(T input, E output)
 	{
 		if(mAlgoToTest instanceof ProblemThreeSolutions)
@@ -78,6 +83,7 @@ public abstract class CommonTest<T, E>
 	{
 	}
 	
+	// helper method
 	protected List<String> generateList(String ...data)
 	{
 		List<String> result = new ArrayList<>();

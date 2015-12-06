@@ -73,14 +73,16 @@ public class SnakesLadders
 							node.G = newG;
 							node.updateF();
 						}
-					} else
+					} 
+					else
 					{
 						tempNode.G = currentNode.G + 1;
 						tempNode.updateF();
 						openList.add(tempNode);
 					}
 				}
-			} else
+			} 
+			else
 			{
 				int step = Integer.parseInt(square[position]);
 				nextPosition = position + step;
@@ -96,7 +98,8 @@ public class SnakesLadders
 							node.G = newG;
 							node.updateF();
 						}
-					} else
+					} 
+					else
 					{
 						if (!closeList.contains(tempNode))
 						{

@@ -11,11 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
 
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610
  */
-public class ShortestTransformPath<T>
+public class ShortestTransformPath<T> implements Problem<Void, Integer>
 {
 	private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 	
@@ -24,6 +25,12 @@ public class ShortestTransformPath<T>
 	public ShortestTransformPath()
 	{
 		treeMap = new HashMap<T, HashSet<T>>();
+	}
+	
+	@Override
+	public Integer resolve(Void param)
+	{
+		return getShortestTransformPathLength();
 	}
 	
 	private Comparator<Pair<Integer, Integer>> longestPathComparator = new Comparator<Pair<Integer,Integer>>()

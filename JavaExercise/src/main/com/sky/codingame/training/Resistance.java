@@ -59,11 +59,13 @@ public class Resistance
 						newPossion++;
 						if (currentNode.isComplet)
 							nbMessage += getNumMsg(newPossion);
-					} else
+					} 
+					else
 					{
 						break;
 					}
-				} else
+				} 
+				else
 				{
 					if (currentNode.dasheNode != null)
 					{
@@ -71,7 +73,8 @@ public class Resistance
 						newPossion++;
 						if (currentNode.isComplet)
 							nbMessage += getNumMsg(newPossion);
-					} else
+					} 
+					else
 					{
 						break;
 					}
@@ -95,7 +98,8 @@ public class Resistance
 					currentNode.dotNode = newNode;
 				}
 				currentNode = currentNode.dotNode;
-			} else
+			} 
+			else
 			{
 				if (currentNode.dasheNode == null)
 				{
@@ -105,7 +109,9 @@ public class Resistance
 				currentNode = currentNode.dasheNode;
 			}
 			if (i == morseWord.length() - 1)
+			{
 				currentNode.isComplet = true;
+			}
 		}
 	}
 

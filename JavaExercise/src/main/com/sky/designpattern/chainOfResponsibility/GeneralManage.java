@@ -10,12 +10,10 @@ public class GeneralManage extends Handle
 		{
 			System.out.println("General Manager is agree for fee:" + fee);
 			return true;
-		} else
+		} 
+		else
 		{
-			if (successHandle != null)
-				return successHandle.handleRequest(user, fee);
-			else
-				return false;
+			return getSuccessHandle() != null && getSuccessHandle().handleRequest(user, fee);
 		}
 	}
 

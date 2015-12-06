@@ -88,7 +88,7 @@ public class MissiontoMarsQ1
 			return;
 		}
 
-		double rate = 300 / 4;
+		double rate = 300 / 4d;
 		double fdx = dx / rate;
 		double fdy = dy / rate;
 		fdx += vx;
