@@ -1,7 +1,6 @@
 package com.sky.recursion;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -21,91 +20,143 @@ public class NumberCount implements ProblemTwoSolutions<Integer, Integer[]>
 {
 	private static final Logger Log = LoggerFactory.getLogger(NumberCount.class);
 	
+	/**
+	 * WARNING: result[0] is faux
+	 */
 	@Override
 	public Integer[] resolve(Integer param)
 	{
 		Objects.requireNonNull(param);
 		Preconditions.checkArgument(param > 0, "n must be bigger than 0 !");
-		Map<Integer, Integer[]> cacheMap = new HashMap<>();
-		return getNumberCount(param, cacheMap);
-	}
-	
-	private Integer[] getNumberCount(int n, Map<Integer, Integer[]> cacheMap)
-	{
-		if(n < 10)
+		int[] result = getNumCount(param);
+		Integer[] res = new Integer[10];
+		for(int i = 0; i < 10; i++)
 		{
-			Integer[] result = new Integer[10];
-			for(int i = 0; i <= n; i++)
-			{
-				result[i] = 1;
-			}
-			if(n == 9)
-			{
-				cacheMap.put(9, result);
-			}
-			Log.info("i(s) Count for {} : {}", n, result);
-			return result;
+			res[i] = result[i];
 		}
-		else
-		{
-			String num = Integer.toString(n);
-			int highNum = num.charAt(0) - '0';
-			int continus9 = getContinus9(num.length() - 1);
-			Integer[] continus9NumCount = cacheMap.get(continus9);
-			if(continus9NumCount == null)
-			{
-				continus9NumCount = getNumberCount(continus9, cacheMap);
-				cacheMap.put(continus9, continus9NumCount);
-			}
-			multipleList(highNum, continus9NumCount);
-			for(int i = 1; i < highNum; i++)
-			{
-				continus9NumCount[i] += (continus9 + 1);
-			}
-			int rest = n - highNum * (continus9 + 1);
-			Integer[] restList = getNumberCount(rest, cacheMap);
-			addList(continus9NumCount, restList);
-			continus9NumCount[highNum] += (rest + 1);
-			Log.info("i(s) Count for {} : {}", n, continus9NumCount);
-			return continus9NumCount;
-		}
-	}
-	
-	private void addList(Integer[] list1, Integer[] list2)
-	{
-		for(int i = 0; i < list1.length; i++)
-		{
-			list1[i] += list2[i];
-		}
-	}
-	
-	private void multipleList(int a, Integer[] list)
-	{
-		for(int i = 0; i < list.length; i++)
-		{
-			list[i] *= a;
-		}
-	}
-	
-	private int getContinus9(int len)
-	{
-		int num = 9;
-		while((len -= 1) > 0)
-		{
-			num *= 10;
-			num += 9;
-		}
-		return num;
+		return res;
 	}
 
+	public int[] getNumCount(int n)
+	{
+    	int[] result;
+    	if(n < 10)
+    	{
+        	result = new int[10];
+        	for(int i = 0; i <= n; i++)
+        	{
+        		result[i] = 1;
+        	}
+    	}
+    	else
+    	{
+        	String numString = Integer.toString(n);
+        	int highNum = numString.charAt(0) - '0';
+        	result = getNumCountForContinus9(numString.length() - 1);
+        	result = listMultiple(result, highNum);
+
+        	int delta = getMultiple10(numString.length() - 1);
+        	for(int i=1; i<highNum; i++)
+        	{
+        		result[i] += delta;
+        	}
+        	int rest = n - highNum * delta;
+        	result[highNum] += (rest + 1);
+        	int[] anotherList = getNumCount(rest);
+
+        	result = listAdd(result, anotherList);
+    	}
+    	Log.debug("getNumCount for {} : {}", n, result);
+    	return result;
+	}
+
+	private int[] listMultiple(int[] list, int a)
+	{
+    	for(int i = 0; i < list.length; i++)
+    	{
+    		list[i] *= a;
+    	}
+    	return list;
+	}
+
+	private int[] listAdd(int[] list1, int[]list2)
+	{
+    	for(int i = 0; i < list1.length; i++)
+    	{
+    		list1[i] += list2[i];
+    	}
+    	return list1;
+	}
+
+	private int getMultiple10(int len)
+	{
+    	int count = 10;
+    	while ((len -= 1) > 0)
+    	{
+    		count *= 10;
+    	}
+    	return count;
+	}
+
+	private int[] getNumCountForContinus9(int len)
+	{
+		Log.debug("getNumCountForContinus9 for len {}", len);
+    	int count = 1;
+    	int delta = 10;
+    	while ((len -= 1) > 0)
+    	{
+        	count *= 10;
+        	count += delta;
+        	delta *= 10;
+    	}
+    	int[] result = new int[10];
+    	for(int i = 0; i < 10; i++)
+    	{
+    		result[i] = count;
+    	}
+    	Log.debug("getNumCountForContinus9 result : {}", result);
+    	return result;
+	}
+
+	/**
+	 * 计算个位，十位，千位， 万位等各个位上出现i的次数
+	 * @link http://www.hawstein.com/posts/20.4.html
+	 */
 	@Override
 	public Integer[] resolve2(Integer param)
 	{
 		Objects.requireNonNull(param);
 		Preconditions.checkArgument(param > 0, "n must be bigger than 0 !");
-		return null;
+		Integer[] result = new Integer[10];
+		Arrays.fill(result, 0);
+	    int factor = 1;
+	    while (param / factor > 0)
+	    {
+	        int low = param % factor;//低位数字
+	        int cur = (param / factor) % 10;//当前位数字
+	        int high = param / (factor * 10);//高位数字
+
+	        for(int i = 0; i <10; i++)
+	        {
+	            int high2 = (i == 0) ? high - 1 : high;
+	            if(cur < i)
+	            {
+	                result[i] += (high2 * factor);
+	            }
+	            else if(i == cur)
+	            {
+	                result[i] += (high2 * factor + low + 1);
+	            }
+	            else
+	            {
+	                result[i] += ((high2 + 1) * factor);
+	            }
+	        }
+
+	        factor *= 10;
+	    }
+	    result[0] += 1;
+	    Log.debug("getNumCount2 for {} : {}", param, result);
+		return result;
 	}
-
-	
-
 }

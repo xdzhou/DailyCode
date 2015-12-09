@@ -17,7 +17,8 @@ public class NumberCountTest extends CommonTest<Integer, Integer[]>
 	@Test
 	public void test()
 	{
-		check(1235);
+		check(1235, null);
+		check(1212, null);
 	}
 
 }
