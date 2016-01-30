@@ -1,12 +1,24 @@
 package com.loic.algo.undoRedo;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class GroupRecord extends AbstractRecord
 {
-	private List<IRecordable> recordList = new LinkedList<>();
+	private static final int Max_Record_Count = 100;
+	
+	private final LinkedList<IRecordable> recordList = new LinkedList<>();
 	private int curPosition = -1;
+	private final int maxCount;
+	
+	public GroupRecord()
+	{
+		this(Max_Record_Count);
+	}
+	
+	public GroupRecord(int maxCount)
+	{
+		this.maxCount = maxCount;
+	}
 
 	@Override
 	public void undo()
@@ -34,9 +46,13 @@ public class GroupRecord extends AbstractRecord
 		{
 			for(int i = curPosition + 1; i < recordList.size(); i++)
 			{
-				recordList.remove(curPosition + 1);
+				recordList.removeLast();
 			}
-			recordList.add(record);
+			recordList.addLast(record);
+			if(recordList.size() > maxCount)
+			{
+				recordList.removeFirst();
+			}
 			curPosition = recordList.size() - 1;
 		}
 	}

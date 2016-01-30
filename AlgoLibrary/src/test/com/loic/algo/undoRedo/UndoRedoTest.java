@@ -1,0 +1,19 @@
+package com.loic.algo.undoRedo;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class UndoRedoTest
+{
+	@Test
+	public void test()
+	{
+		Model model = new Model();
+		ModifyRecord record = new ModifyRecord(model, 100);
+		Assert.assertEquals(100, model.getValue());
+		record.undo();
+		Assert.assertEquals(0, model.getValue());
+		record.redo();
+		Assert.assertEquals(100, model.getValue());
+	}
+}
