@@ -6,11 +6,5 @@ public interface IRecordable
 	void redo();
 	
 	IRecordable reverse();
-	
-	public enum RecordRelation
-	{
-		Record_offset, 		//
-		Record_Replace, 	//replace other record
-		Record_No_Effet; 	//has no effet
-	}
+	IRecordable merge(IRecordable other) throws UnsupportedOperationException;
 }

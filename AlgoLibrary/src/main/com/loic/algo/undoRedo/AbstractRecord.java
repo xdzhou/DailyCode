@@ -9,7 +9,7 @@ public abstract class AbstractRecord implements IRecordable
 	{
 		if(reverseRecord == null)
 		{
-			reverseRecord = new IRecordable()
+			reverseRecord = new AbstractRecord()
 			{
 				@Override
 				public void undo()
@@ -31,5 +31,18 @@ public abstract class AbstractRecord implements IRecordable
 			};
 		}
 		return reverseRecord;
+	}
+	
+	@Override
+	public IRecordable merge(IRecordable otherRecord)
+	{
+		if(reverseRecord != null && reverseRecord == otherRecord)
+		{
+			return null;
+		}
+		else
+		{
+			throw new UnsupportedOperationException("Can't merge this recordable");
+		}
 	}
 }

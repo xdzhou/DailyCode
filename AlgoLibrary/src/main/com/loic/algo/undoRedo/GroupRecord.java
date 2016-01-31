@@ -1,14 +1,12 @@
 package com.loic.algo.undoRedo;
 
-import java.util.LinkedList;
-
 public class GroupRecord extends AbstractRecord
 {
 	private static final int Max_Record_Count = 100;
-	
-	private final LinkedList<IRecordable> recordList = new LinkedList<>();
-	private int curPosition = -1;
+
 	private final int maxCount;
+	
+	private Node head, cur;
 	
 	public GroupRecord()
 	{
@@ -23,73 +21,149 @@ public class GroupRecord extends AbstractRecord
 	@Override
 	public void undo()
 	{
-		for(int i = curPosition; i >= 0; i--)
+		while(cur != null)
 		{
-			recordList.get(i).undo();
+			cur.record.undo();
+			cur = cur.prev;
 		}
-		curPosition = -1;
 	}
 
 	@Override
 	public void redo()
 	{
-		for(int i = curPosition + 1; i < recordList.size(); i++)
+		while(getNextNode() != null)
 		{
-			recordList.get(i).redo();
+			cur = getNextNode();
+			cur.record.redo();
 		}
-		curPosition = recordList.size() - 1;
+	}
+	
+	private Node getNextNode()
+	{
+		return (cur == null) ? head : cur.next;
 	}
 	
 	public void addRecord(IRecordable record)
 	{
 		if(record != null)
 		{
-			for(int i = curPosition + 1; i < recordList.size(); i++)
+			Node newNode = new Node(null, record, null);
+			if(cur == null)
 			{
-				recordList.removeLast();
+				head = newNode;
 			}
-			recordList.addLast(record);
-			if(recordList.size() > maxCount)
+			else
 			{
-				recordList.removeFirst();
+				//remove all undo record
+				Node curNext = cur.next;
+				if(curNext != null)
+				{
+					curNext.next = null; //help GC
+					curNext.prev = null;
+					curNext.record = null;
+				}
+				cur.next = newNode;
+				newNode.prev = cur;
 			}
-			curPosition = recordList.size() - 1;
+			cur = newNode;
 		}
 	}
 	
 	public void undoOneStep()
 	{
-		if(curPosition - 1 >= 0)
+		if(cur != null)
 		{
-			recordList.get(curPosition).undo();
-			curPosition --;
+			cur.record.undo();
+			cur = cur.prev;
 		}
 	}
 
 	public void redoOneStep()
 	{
-		if(curPosition + 1 < recordList.size())
+		if(getNextNode() != null)
 		{
-			curPosition ++;
-			recordList.get(curPosition).redo();
+			cur = getNextNode();
+			cur.record.redo();
 		}
 	}
 	
 	public IRecordable simplifySelf()
 	{
-		for(int i = curPosition + 1; i < recordList.size(); i++)
+		//remove all undo record
+		if(cur != null && cur.next != null)
 		{
-			recordList.remove(curPosition + 1);
+			Node curNext = cur.next;
+			curNext.next = null; //help GC
+			curNext.prev = null;
+			curNext.record = null;
+			cur.next = null;
 		}
-		curPosition = recordList.size() - 1;
-		if(curPosition < 0 || recordList.isEmpty())
+		//check merge record
+		Node curNode = head;
+		while (curNode != null && curNode.next != null)
+		{
+			try
+			{
+				IRecordable mergeRecord = curNode.record.merge(curNode.next.record);
+				Node preNode = curNode.prev;
+				Node nextNode = curNode.next;
+				Node nextNextNode = nextNode.next;
+				if(mergeRecord == null)
+				{
+					removeNode(curNode);
+					removeNode(nextNode);
+					curNode = (preNode != null) ? preNode : nextNextNode;
+				}
+				else
+				{
+					removeNode(curNode);
+					nextNode.record = mergeRecord;
+					curNode = nextNode;
+				}
+			} 
+			catch (UnsupportedOperationException e)
+			{
+				// can't merge record, skip to next
+				curNode = curNode.next;
+			}
+		}
+		
+		//check if empty
+		if(cur == null)
 		{
 			return null;
 		}
-		else if (recordList.size() == 1) 
+		//only one record
+		else if (head == cur)
 		{
-			return recordList.get(0);
+			return head.record;
 		}
 		return this;
 	}
+	
+	private void removeNode(Node node)
+	{
+		if(node.prev == null) head = node.next;
+		else node.prev.next = node.next;
+		if(node.next == null) cur =  node.prev;
+		else node.next.prev = node.prev;
+		//help GC
+		node.next = null;
+		node.prev = null;
+		node.record = null;
+	}
+	
+	private static class Node 
+	{
+        IRecordable record;
+        Node next;
+        Node prev;
+
+        Node(Node prev, IRecordable record, Node next) 
+        {
+            this.record = record;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
 }
