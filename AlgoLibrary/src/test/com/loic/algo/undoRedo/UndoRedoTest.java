@@ -10,6 +10,7 @@ public class UndoRedoTest
 	{
 		Model model = new Model();
 		ModifyRecord record = new ModifyRecord(model, 100);
+		record.redo();
 		
 		//undo redo test
 		Assert.assertEquals(100, model.getValue());

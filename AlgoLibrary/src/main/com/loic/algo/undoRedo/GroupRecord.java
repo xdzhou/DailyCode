@@ -47,6 +47,8 @@ public class GroupRecord extends AbstractRecord
 	{
 		if(record != null)
 		{
+			record.redo(); // execute record
+			
 			Node newNode = new Node(null, record, null);
 			if(cur == null)
 			{

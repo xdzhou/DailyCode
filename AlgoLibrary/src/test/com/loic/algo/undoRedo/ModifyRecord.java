@@ -3,15 +3,14 @@ package com.loic.algo.undoRedo;
 public class ModifyRecord extends AbstractRecord
 {
 	private final Model model;
-	private final int oldValue;
-	private final int newValue;
+	private int oldValue;
+	private int newValue;
 	
 	public ModifyRecord(Model model, int newValue)
 	{
 		this.model = model;
 		this.oldValue = model.getValue();
 		this.newValue = newValue;
-		model.setValue(newValue);
 	}
 
 	@Override
@@ -24,6 +23,17 @@ public class ModifyRecord extends AbstractRecord
 	public void redo()
 	{
 		model.setValue(newValue);
+	}
+	
+	@Override
+	public IRecordable merge(IRecordable otherRecord)
+	{
+		if(otherRecord instanceof ModifyRecord)
+		{
+			this.newValue = ((ModifyRecord) otherRecord).newValue;
+			return this;
+		}
+		return super.merge(otherRecord);
 	}
 
 }
