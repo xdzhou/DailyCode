@@ -45,11 +45,12 @@ public class GroupRecord extends AbstractRecord
 	
 	public void addRecord(IRecordable record)
 	{
-		if(record != null)
+		IRecordable recordToAdd = (record instanceof GroupRecord) ? ((GroupRecord)record).simplifySelf() : record;
+		if(recordToAdd != null)
 		{
-			record.redo(); // execute record
+			recordToAdd.redo(); // execute record
 			
-			Node newNode = new Node(null, record, null);
+			Node newNode = new Node(null, recordToAdd, null);
 			if(cur == null)
 			{
 				head = newNode;
