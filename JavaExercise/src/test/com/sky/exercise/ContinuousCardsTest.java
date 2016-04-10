@@ -5,12 +5,10 @@ import org.testng.annotations.Test;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
 
-public class ContinuousCardsTest extends CommonTest<Integer[], Boolean>
-{
-	
+public class ContinuousCardsTest extends CommonTest<Integer[], Boolean> {
+
 	@Test
-	public void test()
-	{
+	public void test() {
 		check(transform(1), true);
 		check(transform(1, 2, 3), true);
 		check(transform(1, 2, 5), false);
@@ -23,8 +21,7 @@ public class ContinuousCardsTest extends CommonTest<Integer[], Boolean>
 	}
 
 	@Override
-	public Problem<Integer[], Boolean> getAlgo()
-	{
+	public Problem<Integer[], Boolean> getAlgo() {
 		return new ContinuousCards();
 	}
 }

@@ -11,85 +11,69 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PrimAlgo<T> implements MinSpanningTreeAlgo<T>
-{
+public class PrimAlgo<T> implements MinSpanningTreeAlgo<T> {
 	private static final Logger Log = LoggerFactory.getLogger(PrimAlgo.class);
-	
+
 	private UndirectedGraph<T, DefaultWeightedEdge> mGraph;
 	private Set<DefaultWeightedEdge> mMinSpanTreeEdges;
 
 	@Override
-	public void setGraph(UndirectedGraph<T, DefaultWeightedEdge> graph)
-	{
+	public void setGraph(UndirectedGraph<T, DefaultWeightedEdge> graph) {
 		this.mGraph = graph;
 	}
 
 	@Override
-	public Set<DefaultWeightedEdge> generateMinSpanningTree()
-	{
-		if(mMinSpanTreeEdges == null)
-		{
+	public Set<DefaultWeightedEdge> generateMinSpanningTree() {
+		if (mMinSpanTreeEdges == null) {
 			process();
 		}
 		return Collections.unmodifiableSet(mMinSpanTreeEdges);
 	}
 
 	@Override
-	public double getTotalWeight()
-	{
-		if(mMinSpanTreeEdges == null)
-		{
+	public double getTotalWeight() {
+		if (mMinSpanTreeEdges == null) {
 			process();
 		}
 		double retVal = 0;
-		for(DefaultWeightedEdge edge: mMinSpanTreeEdges)
-		{
+		for (DefaultWeightedEdge edge : mMinSpanTreeEdges) {
 			retVal += mGraph.getEdgeWeight(edge);
 		}
 		return retVal;
 	}
-	
-	private void process()
-	{
+
+	private void process() {
 		Set<T> openList = new HashSet<>(mGraph.vertexSet());
 		mMinSpanTreeEdges = new HashSet<>(openList.size() - 1);
 
-		PriorityQueue<DefaultWeightedEdge> priorityQueue = new PriorityQueue<>(new Comparator<DefaultWeightedEdge>()
-		{
+		PriorityQueue<DefaultWeightedEdge> priorityQueue = new PriorityQueue<>(new Comparator<DefaultWeightedEdge>() {
 			@Override
-			public int compare(DefaultWeightedEdge o1, DefaultWeightedEdge o2)
-			{
+			public int compare(DefaultWeightedEdge o1, DefaultWeightedEdge o2) {
 				return (int) (mGraph.getEdgeWeight(o1) - mGraph.getEdgeWeight(o2));
 			}
 		});
-		
+
 		T firstNode = openList.iterator().next();
-		for(DefaultWeightedEdge edge: mGraph.edgesOf(firstNode))
-		{
+		for (DefaultWeightedEdge edge : mGraph.edgesOf(firstNode)) {
 			priorityQueue.add(edge);
 		}
 		openList.remove(firstNode);
-		
-		while(! openList.isEmpty())
-		{
+
+		while (!openList.isEmpty()) {
 			DefaultWeightedEdge edge = priorityQueue.poll();
-			if(edge == null)
-			{
+			if (edge == null) {
 				break;
 			}
 			Log.debug("find a MinSpanTree edge : {}", edge);
 			mMinSpanTreeEdges.add(edge);
-			
+
 			T newNode = mGraph.getEdgeSource(edge);
-			if(! openList.contains(newNode))
-			{
+			if (!openList.contains(newNode)) {
 				newNode = mGraph.getEdgeTarget(edge);
 			}
 			openList.remove(newNode);
-			for(DefaultWeightedEdge e: mGraph.edgesOf(newNode))
-			{
-				if(! priorityQueue.contains(e))
-				{
+			for (DefaultWeightedEdge e : mGraph.edgesOf(newNode)) {
+				if (!priorityQueue.contains(e)) {
 					priorityQueue.add(e);
 				}
 			}

@@ -11,74 +11,59 @@ import com.loic.algo.common.Pair;
 import com.sky.problem.Problem;
 
 /**
- * 有两个序列a,b，大小都为n,序列元素的值任意整数，无序；
- * 要求：通过交换a,b 中的元素，使[序列a 元素的和]与[序列b 元素的和]之间的差最小。
+ * 有两个序列a,b，大小都为n,序列元素的值任意整数，无序； 要求：通过交换a,b 中的元素，使[序列a 元素的和]与[序列b 元素的和]之间的差最小。
  */
-public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer>
-{
+public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer> {
 	private static final Logger Log = LoggerFactory.getLogger(GetCloseSum.class);
-	
+
 	@Override
-	public Integer resolve(Pair<Integer[], Integer[]> param)
-	{
+	public Integer resolve(Pair<Integer[], Integer[]> param) {
 		Objects.requireNonNull(param);
 		return swithAndGetCloseSum(param.getFirst(), param.getSecond());
 	}
-	
-	public int swithAndGetCloseSum(Integer[] listA, Integer[] listB)
-	{
+
+	public int swithAndGetCloseSum(Integer[] listA, Integer[] listB) {
 		Preconditions.checkNotNull(listA);
 		Preconditions.checkNotNull(listB);
 		Preconditions.checkArgument(listA.length > 1 && listA.length == listB.length);
 
 		int sumA = 0, sumB = 0;
-		for(int ele : listA)
-		{
+		for (int ele : listA) {
 			sumA += ele;
 		}
-		for(int ele : listB)
-		{
+		for (int ele : listB) {
 			sumB += ele;
 		}
-		while(sumA != sumB)
-		{
+		while (sumA != sumB) {
 			Arrays.sort(listA);
 			Arrays.sort(listB);
 			Log.debug("list 1 {}, sum = {}", listA, sumA);
 			Log.debug("list 2 {}, sum = {}", listB, sumB);
-			
+
 			float base = (sumA - sumB) / 2f;
 			int minLimite = (int) (base - Math.abs(base));
 			int maxLimite = (int) (base + Math.abs(base));
 			int switchIndex1 = -1, switchIndex2 = -1;
-			
+
 			int cursor1 = 0, cursor2 = 0;
-			while(cursor1 < listA.length && cursor2 < listA.length)
-			{
+			while (cursor1 < listA.length && cursor2 < listA.length) {
 				int delta = listA[cursor1] - listB[cursor2];
-				if(minLimite < delta && delta < maxLimite)
-				{
-					if((switchIndex1 < 0) || (Math.abs(base - delta) < Math.abs(base - (listA[switchIndex1] - listB[switchIndex2]))))
-					{
+				if (minLimite < delta && delta < maxLimite) {
+					if ((switchIndex1 < 0) || (Math.abs(base - delta) < Math
+							.abs(base - (listA[switchIndex1] - listB[switchIndex2])))) {
 						switchIndex1 = cursor1;
 						switchIndex2 = cursor2;
 					}
 				}
-				if(delta == base)
-				{
+				if (delta == base) {
 					break;
-				}
-				else if (delta < base) 
-				{
-					cursor1 ++;
-				}
-				else 
-				{
-					cursor2 ++;
+				} else if (delta < base) {
+					cursor1++;
+				} else {
+					cursor2++;
 				}
 			}
-			if(switchIndex1 >= 0)
-			{
+			if (switchIndex1 >= 0) {
 				int delta = listA[switchIndex1] - listB[switchIndex2];
 				Log.debug("find exchange data, {} <==> {}", listA[switchIndex1], listB[switchIndex2]);
 				int temps = listA[switchIndex1];
@@ -86,9 +71,7 @@ public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer>
 				listB[switchIndex2] = temps;
 				sumA -= delta;
 				sumB += delta;
-			}
-			else 
-			{
+			} else {
 				Log.debug("NO data to change");
 				break;
 			}

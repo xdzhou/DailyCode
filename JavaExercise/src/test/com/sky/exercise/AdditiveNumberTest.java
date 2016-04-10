@@ -5,12 +5,10 @@ import org.testng.annotations.Test;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
 
-public class AdditiveNumberTest extends CommonTest<String, Boolean>
-{
+public class AdditiveNumberTest extends CommonTest<String, Boolean> {
 
 	@Test
-	public void test()
-	{
+	public void test() {
 		check("112358", true);
 		check("199100199", true);
 		check("123", true);
@@ -19,8 +17,7 @@ public class AdditiveNumberTest extends CommonTest<String, Boolean>
 	}
 
 	@Override
-	public Problem<String, Boolean> getAlgo()
-	{
+	public Problem<String, Boolean> getAlgo() {
 		return new AdditiveNumber();
 	}
 }

@@ -1,24 +1,20 @@
 package com.loic.algo.common;
 
-public class Point
-{
+public class Point {
 	public final int x;
 	public final int y;
-	
-	public Point(int x, int y)
-	{
+
+	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public Point()
-	{
+
+	public Point() {
 		this(0, 0);
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + x;
@@ -27,8 +23,7 @@ public class Point
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -44,8 +39,7 @@ public class Point
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "[" + x + "," + y + "]";
 	}
 }

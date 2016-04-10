@@ -6,12 +6,10 @@ import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
 
-public class DivideTwoIntegersTest extends CommonTest<Pair<Integer, Integer>, Integer>
-{
+public class DivideTwoIntegersTest extends CommonTest<Pair<Integer, Integer>, Integer> {
 
 	@Test
-	public void test()
-	{
+	public void test() {
 		check(Pair.create(1, 2), 1 / 2);
 		check(Pair.create(145, 12), 145 / 12);
 		check(Pair.create(1546, 0), Integer.MAX_VALUE);
@@ -20,8 +18,7 @@ public class DivideTwoIntegersTest extends CommonTest<Pair<Integer, Integer>, In
 	}
 
 	@Override
-	public Problem<Pair<Integer, Integer>, Integer> getAlgo()
-	{
+	public Problem<Pair<Integer, Integer>, Integer> getAlgo() {
 		return new DivideTwoIntegers();
 	}
 }

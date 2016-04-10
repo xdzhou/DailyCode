@@ -1,10 +1,8 @@
 package com.sky.designpattern.chainOfResponsibility;
 
-public class Test
-{
+public class Test {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		GeneralManage generalManage = new GeneralManage();
 		DepartmentManager departmentManager = new DepartmentManager();
 		departmentManager.setSuccessHandle(generalManage);

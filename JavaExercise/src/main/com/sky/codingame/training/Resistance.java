@@ -3,32 +3,27 @@ package com.sky.codingame.training;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Resistance
-{
+public class Resistance {
 	HashMap<Character, String> table = new HashMap<Character, String>();
 	Node root = new Node();
 	String morse_line;
 
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		new Resistance().start();
 	}
 
-	public void start()
-	{
+	public void start() {
 		int num_words;
 
 		initTable();
 		Scanner in = new Scanner(System.in);
 		morse_line = in.nextLine();
 		num_words = Integer.parseInt(in.nextLine());
-		for (int i = 0; i < num_words; i++)
-		{
+		for (int i = 0; i < num_words; i++) {
 			String word = in.nextLine();
 			// System.out.println(word);
 			StringBuffer sb = new StringBuffer();
-			for (int j = 0; j < word.length(); j++)
-			{
+			for (int j = 0; j < word.length(); j++) {
 				char c = word.charAt(j);
 				// System.out.println(c);
 				sb.append(table.get(c));
@@ -39,43 +34,31 @@ public class Resistance
 		in.close();
 	}
 
-	private int getNumMsg(int position)
-	{
+	private int getNumMsg(int position) {
 		int maxLen = morse_line.length();
 		if (position == maxLen)
 			return 1;
-		else
-		{
+		else {
 			int nbMessage = 0;
 			int newPossion = position;
 			Node currentNode = root;
-			while (newPossion < maxLen)
-			{
-				if (morse_line.charAt(newPossion) == '.')
-				{
-					if (currentNode.dotNode != null)
-					{
+			while (newPossion < maxLen) {
+				if (morse_line.charAt(newPossion) == '.') {
+					if (currentNode.dotNode != null) {
 						currentNode = currentNode.dotNode;
 						newPossion++;
 						if (currentNode.isComplet)
 							nbMessage += getNumMsg(newPossion);
-					} 
-					else
-					{
+					} else {
 						break;
 					}
-				} 
-				else
-				{
-					if (currentNode.dasheNode != null)
-					{
+				} else {
+					if (currentNode.dasheNode != null) {
 						currentNode = currentNode.dasheNode;
 						newPossion++;
 						if (currentNode.isComplet)
 							nbMessage += getNumMsg(newPossion);
-					} 
-					else
-					{
+					} else {
 						break;
 					}
 				}
@@ -84,39 +67,30 @@ public class Resistance
 		}
 	}
 
-	private void word2tree(String morseWord)
-	{
+	private void word2tree(String morseWord) {
 		Node currentNode = root;
-		for (int i = 0; i < morseWord.length(); i++)
-		{
+		for (int i = 0; i < morseWord.length(); i++) {
 			char c = morseWord.charAt(i);
-			if (c == '.')
-			{
-				if (currentNode.dotNode == null)
-				{
+			if (c == '.') {
+				if (currentNode.dotNode == null) {
 					Node newNode = new Node();
 					currentNode.dotNode = newNode;
 				}
 				currentNode = currentNode.dotNode;
-			} 
-			else
-			{
-				if (currentNode.dasheNode == null)
-				{
+			} else {
+				if (currentNode.dasheNode == null) {
 					Node newNode = new Node();
 					currentNode.dasheNode = newNode;
 				}
 				currentNode = currentNode.dasheNode;
 			}
-			if (i == morseWord.length() - 1)
-			{
+			if (i == morseWord.length() - 1) {
 				currentNode.isComplet = true;
 			}
 		}
 	}
 
-	private void initTable()
-	{
+	private void initTable() {
 		table.put('A', ".-");
 		table.put('B', "-...");
 		table.put('C', "-.-.");
@@ -145,8 +119,7 @@ public class Resistance
 		table.put('Z', "--..");
 	}
 
-	private class Node
-	{
+	private class Node {
 		Node dotNode = null;
 		Node dasheNode = null;
 		boolean isComplet = false;

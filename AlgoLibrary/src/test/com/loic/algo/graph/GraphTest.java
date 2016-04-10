@@ -4,21 +4,18 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
-public class GraphTest
-{
+public class GraphTest {
 	protected DirectedGraph<Integer, DefaultWeightedEdge> mDirectedGraphGraph;
 	protected DirectedGraph<Integer, DefaultWeightedEdge> mDirectedGraphGraphWithCycle;
 
-	public void init()
-	{
+	public void init() {
 		/*
 		 * @see graph image
 		 * http://my.csdn.net/uploads/201207/04/1341373589_4609.png
 		 */
 		mDirectedGraphGraph = new DefaultDirectedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-		
-		for(int i = 0; i < 13; i++)
-		{
+
+		for (int i = 0; i < 13; i++) {
 			mDirectedGraphGraph.addVertex(i);
 		}
 		mDirectedGraphGraph.addEdge(0, 6);
@@ -36,8 +33,9 @@ public class GraphTest
 		mDirectedGraphGraph.addEdge(9, 11);
 		mDirectedGraphGraph.addEdge(9, 12);
 		mDirectedGraphGraph.addEdge(11, 12);
-		
-		mDirectedGraphGraphWithCycle = new DefaultDirectedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+
+		mDirectedGraphGraphWithCycle = new DefaultDirectedGraph<Integer, DefaultWeightedEdge>(
+				DefaultWeightedEdge.class);
 		mDirectedGraphGraphWithCycle.addVertex(0);
 		mDirectedGraphGraphWithCycle.addVertex(1);
 		mDirectedGraphGraphWithCycle.addVertex(2);

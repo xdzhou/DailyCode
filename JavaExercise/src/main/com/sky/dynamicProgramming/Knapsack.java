@@ -11,31 +11,24 @@ import com.sky.problem.Problem;
  * 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。
  * 求解将哪些物品装入背包可使价值总和最大。
  */
-public class Knapsack implements Problem<Triple<Integer, Integer[], Integer[]>, Integer>
-{
+public class Knapsack implements Problem<Triple<Integer, Integer[], Integer[]>, Integer> {
 	@Override
-	public Integer resolve(Triple<Integer, Integer[], Integer[]> param)
-	{
+	public Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
 		Objects.requireNonNull(param);
-		Preconditions.checkArgument(param.getSecond().length == param.getThird().length, "weight.length != value.length");
+		Preconditions.checkArgument(param.getSecond().length == param.getThird().length,
+				"weight.length != value.length");
 		return getMaxValue(param.getFirst(), param.getSecond(), param.getThird());
 	}
 
-	private int getMaxValue(int capacity, Integer[] weight, Integer[] value)
-	{
+	private int getMaxValue(int capacity, Integer[] weight, Integer[] value) {
 		int nbObjet = weight.length;
 		int[][] dp = new int[nbObjet + 1][capacity + 1];
 
-		for (int i = 1; i <= nbObjet; i++)
-		{
-			for (int j = 1; j <= capacity; j++)
-			{
-				if (weight[i - 1] <= j)
-				{
+		for (int i = 1; i <= nbObjet; i++) {
+			for (int j = 1; j <= capacity; j++) {
+				if (weight[i - 1] <= j) {
 					dp[i][j] = Math.max(value[i - 1] + dp[i - 1][j - weight[i - 1]], dp[i - 1][j]);
-				} 
-				else
-				{
+				} else {
 					dp[i][j] = dp[i - 1][j];
 				}
 			}
@@ -43,5 +36,4 @@ public class Knapsack implements Problem<Triple<Integer, Integer[], Integer[]>, 
 		return dp[nbObjet][capacity];
 	}
 
-	
 }

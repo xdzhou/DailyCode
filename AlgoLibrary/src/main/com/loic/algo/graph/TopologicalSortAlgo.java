@@ -10,8 +10,8 @@ import org.jgrapht.graph.DefaultWeightedEdge;
  * 拓扑排序
  *
  */
-public interface TopologicalSortAlgo<T>
-{
+public interface TopologicalSortAlgo<T> {
 	public void setGraph(DirectedGraph<T, DefaultWeightedEdge> graph);
-	public List<T> topologicalSort();	
+
+	public List<T> topologicalSort();
 }

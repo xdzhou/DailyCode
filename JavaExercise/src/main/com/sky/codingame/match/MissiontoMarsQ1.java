@@ -2,17 +2,14 @@ package com.sky.codingame.match;
 
 import java.util.Scanner;
 
-public class MissiontoMarsQ1
-{
-	public static void main(String[] args)
-	{
+public class MissiontoMarsQ1 {
+	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int N = in.nextInt();
 		int sx, sy, indi = 0;
 		int px[] = new int[N];
 		int py[] = new int[N];
-		for (int i = 0; i < N; i++)
-		{
+		for (int i = 0; i < N; i++) {
 			px[i] = in.nextInt();
 			py[i] = in.nextInt();
 			if (i > 0 && py[i] == py[i - 1])
@@ -21,8 +18,7 @@ public class MissiontoMarsQ1
 		sx = (px[indi - 1] + px[indi]) / 2;
 		sy = py[indi];
 		System.out.println("0 4");
-		while (true)
-		{
+		while (true) {
 			int X = in.nextInt();
 			int Y = in.nextInt();
 			int HS = in.nextInt();
@@ -39,48 +35,37 @@ public class MissiontoMarsQ1
 		}
 	}
 
-	private static void getOutPut(int vx, int vy, int dx, int dy)
-	{
+	private static void getOutPut(int vx, int vy, int dx, int dy) {
 		int R = -1, P = 0;
 		if (Math.abs(dx) < 500)
 			R = 0;
-		else
-		{
+		else {
 			int temp = dx / 100 - vx;
-			if (temp > 10)
-			{
+			if (temp > 10) {
 				R = -75;
 				P = 4;
-			} else if (temp > 2000)
-			{
+			} else if (temp > 2000) {
 				R = -25;
 				P = 3;
-			} else if (temp > 900)
-			{
+			} else if (temp > 900) {
 				R = -15;
 				P = 4;
-			} else if (temp > 500)
-			{
+			} else if (temp > 500) {
 				R = -10;
 				P = 1;
-			} else if (temp < -3000)
-			{
+			} else if (temp < -3000) {
 				R = 75;
 				P = 4;
-			} else if (temp < -2000)
-			{
+			} else if (temp < -2000) {
 				R = 25;
 				P = 3;
-			} else if (temp < -900)
-			{
+			} else if (temp < -900) {
 				R = 15;
 				P = 4;
-			} else if (temp < -500)
-			{
+			} else if (temp < -500) {
 				R = 10;
 				P = 1;
-			} else
-			{
+			} else {
 				R = (temp > 0) ? -5 : 5;
 				P = 1;
 			}

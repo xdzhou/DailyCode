@@ -2,55 +2,44 @@ package com.loic.algo.queueStack;
 
 import java.util.LinkedList;
 
-public class GetMinStackImpl<T extends Comparable<T>> implements GetMinStack<T>
-{
+public class GetMinStackImpl<T extends Comparable<T>> implements GetMinStack<T> {
 	private LinkedList<T> contents = new LinkedList<>();
 	private LinkedList<T> mins = new LinkedList<>();
 
 	@Override
-	public void push(T ele)
-	{
+	public void push(T ele) {
 		contents.push(ele);
-		if(mins.isEmpty())
-		{
+		if (mins.isEmpty()) {
 			mins.push(ele);
-		}
-		else 
-		{
+		} else {
 			T curMin = mins.peek();
-			if(ele.compareTo(curMin) < 0)
-			{
+			if (ele.compareTo(curMin) < 0) {
 				mins.push(ele);
 			}
 		}
 	}
 
 	@Override
-	public T pop()
-	{
+	public T pop() {
 		T eleToPop = contents.peek();
-		if(eleToPop.compareTo(mins.peek()) == 0)
-		{
+		if (eleToPop.compareTo(mins.peek()) == 0) {
 			mins.pop();
 		}
 		return contents.pop();
 	}
 
 	@Override
-	public boolean isEmpty()
-	{
+	public boolean isEmpty() {
 		return contents.isEmpty();
 	}
 
 	@Override
-	public T peek()
-	{
+	public T peek() {
 		return contents.peek();
 	}
 
 	@Override
-	public T getMin()
-	{
+	public T getMin() {
 		return mins.peek();
 	}
 

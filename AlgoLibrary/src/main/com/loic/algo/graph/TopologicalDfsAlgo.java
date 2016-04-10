@@ -11,72 +11,58 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 /*
  * 借助深度优先遍历来实现拓扑排序
  */
-public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer>
-{
+public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer> {
 	private DirectedGraph<Integer, DefaultWeightedEdge> mGraph;
-	
+
 	private boolean[] visitFlag;
 	private boolean[] inTraceFlag;
 	private List<Integer> results;
-	
+
 	@Override
-	public void setGraph(DirectedGraph<Integer, DefaultWeightedEdge> graph)
-	{
+	public void setGraph(DirectedGraph<Integer, DefaultWeightedEdge> graph) {
 		mGraph = graph;
 	}
 
 	@Override
-	public List<Integer> topologicalSort()
-	{
+	public List<Integer> topologicalSort() {
 		Set<Integer> points = mGraph.vertexSet();
 		visitFlag = new boolean[points.size()];
 		inTraceFlag = new boolean[points.size()];
 		Arrays.fill(visitFlag, false);
 		Arrays.fill(inTraceFlag, false);
 		int[] outComingList = new int[points.size()];
-		for(DefaultWeightedEdge edge: mGraph.edgeSet())
-		{
-			outComingList[mGraph.getEdgeSource(edge)] ++;
+		for (DefaultWeightedEdge edge : mGraph.edgeSet()) {
+			outComingList[mGraph.getEdgeSource(edge)]++;
 		}
 		List<Integer> emptyOutComing = new ArrayList<>();
-		for(int i=0; i<points.size(); i++)
-		{
-			if(outComingList[i] == 0)
-			{
+		for (int i = 0; i < points.size(); i++) {
+			if (outComingList[i] == 0) {
 				emptyOutComing.add(i);
 			}
 		}
 		results = new ArrayList<>();
-		for(int noOutIndex : emptyOutComing)
-		{
-			if(visit(noOutIndex))
-			{
+		for (int noOutIndex : emptyOutComing) {
+			if (visit(noOutIndex)) {
 				return null;
 			}
 		}
-		
+
 		return results.isEmpty() ? null : results;
 	}
-	
+
 	/*
 	 * @return whether there is a cycle
 	 */
-	private boolean visit(int pointIndex)
-	{
-		if(inTraceFlag[pointIndex])
-		{
+	private boolean visit(int pointIndex) {
+		if (inTraceFlag[pointIndex]) {
 			return true;
 		}
-		if(! visitFlag[pointIndex])
-		{
+		if (!visitFlag[pointIndex]) {
 			visitFlag[pointIndex] = true;
 			inTraceFlag[pointIndex] = true;
-			for(DefaultWeightedEdge edge: mGraph.edgesOf(pointIndex))
-			{
-				if(mGraph.getEdgeTarget(edge) == pointIndex)
-				{
-					if(visit(mGraph.getEdgeSource(edge)))
-					{
+			for (DefaultWeightedEdge edge : mGraph.edgesOf(pointIndex)) {
+				if (mGraph.getEdgeTarget(edge) == pointIndex) {
+					if (visit(mGraph.getEdgeSource(edge))) {
 						return true;
 					}
 				}

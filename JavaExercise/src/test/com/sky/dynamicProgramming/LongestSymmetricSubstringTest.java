@@ -4,12 +4,10 @@ import org.testng.annotations.Test;
 
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
- 
-public class LongestSymmetricSubstringTest extends CommonTest<String, Integer>
-{
+
+public class LongestSymmetricSubstringTest extends CommonTest<String, Integer> {
 	@Test
-	public void test()
-	{
+	public void test() {
 		check("google", 4);
 		check("abcdef", 0);
 		check("elgoogle", 8);
@@ -17,8 +15,7 @@ public class LongestSymmetricSubstringTest extends CommonTest<String, Integer>
 	}
 
 	@Override
-	public Problem<String, Integer> getAlgo()
-	{
+	public Problem<String, Integer> getAlgo() {
 		return new LongestSymmetricSubstring();
 	}
 }

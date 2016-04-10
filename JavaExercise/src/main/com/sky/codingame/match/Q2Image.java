@@ -3,10 +3,8 @@ package com.sky.codingame.match;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Q2Image
-{
-	public static void main(String args[])
-	{
+public class Q2Image {
+	public static void main(String args[]) {
 		HashMap<Integer, Character> notes = new HashMap<Integer, Character>();
 		notes.put(0, 'G');
 		notes.put(1, 'F');
@@ -33,15 +31,12 @@ public class Q2Image
 		int len = 10;
 		int potion = 0;
 		String[] data = buf.split(" ");
-		for (int i = 2; i < data.length; i = i + 2)
-		{
+		for (int i = 2; i < data.length; i = i + 2) {
 			// System.out.println(data[i]);
-			if (len < W)
-			{
+			if (len < W) {
 				image[potion] += data[i];
 				int l = Integer.parseInt(data[i + 1]);
-				if (len + l > W)
-				{
+				if (len + l > W) {
 					image[potion] += (" " + (W - len) + " ");
 					potion++;
 					if (potion > 99)
@@ -49,11 +44,9 @@ public class Q2Image
 					len = l - (W - len);
 					if (len < W)
 						image[potion] = data[i] + (" " + len + " ");
-					else
-					{
+					else {
 						int n = len / W;
-						for (int j = 0; j < n; j++)
-						{
+						for (int j = 0; j < n; j++) {
 							image[potion + j] = data[i] + " " + W;
 						}
 						potion += n;
@@ -63,8 +56,7 @@ public class Q2Image
 						len = rest;
 						image[potion] = data[i] + " " + rest + " ";
 					}
-				} else
-				{
+				} else {
 					image[potion] += (" " + l + " ");
 					len += l;
 				}
@@ -90,38 +82,30 @@ public class Q2Image
 		else if (image[76].contains("B 22"))
 			num = 7;
 
-		else if (image[13].contains("W 18"))
-		{
+		else if (image[13].contains("W 18")) {
 			num = 2;
 			c = 'H';
-		} else if (image[37].contains("W 18"))
-		{
+		} else if (image[37].contains("W 18")) {
 			num = 4;
 			c = 'H';
-		} else if (image[61].contains("W 18"))
-		{
+		} else if (image[61].contains("W 18")) {
 			num = 6;
 			c = 'H';
-		} else if (image[85].contains("W 18"))
-		{
+		} else if (image[85].contains("W 18")) {
 			num = 8;
 			c = 'H';
 		}
 
-		else if (image[4].contains("W 18"))
-		{
+		else if (image[4].contains("W 18")) {
 			num = 1;
 			c = 'H';
-		} else if (image[28].contains("W 18"))
-		{
+		} else if (image[28].contains("W 18")) {
 			num = 3;
 			c = 'H';
-		} else if (image[52].contains("W 18"))
-		{
+		} else if (image[52].contains("W 18")) {
 			num = 5;
 			c = 'H';
-		} else if (image[76].contains("W 18"))
-		{
+		} else if (image[76].contains("W 18")) {
 			num = 7;
 			c = 'H';
 		}

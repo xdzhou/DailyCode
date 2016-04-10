@@ -1,47 +1,36 @@
 package com.loic.algo.undoRedo;
 
-public abstract class AbstractRecord implements IRecordable
-{
+public abstract class AbstractRecord implements IRecordable {
 	private IRecordable reverseRecord;
-	
+
 	@Override
-	public IRecordable reverse()
-	{
-		if(reverseRecord == null)
-		{
-			reverseRecord = new AbstractRecord()
-			{
+	public IRecordable reverse() {
+		if (reverseRecord == null) {
+			reverseRecord = new AbstractRecord() {
 				@Override
-				public void undo()
-				{
+				public void undo() {
 					AbstractRecord.this.redo();
 				}
-				
+
 				@Override
-				public void redo()
-				{
+				public void redo() {
 					AbstractRecord.this.undo();
 				}
-				
+
 				@Override
-				public IRecordable reverse()
-				{
+				public IRecordable reverse() {
 					return AbstractRecord.this;
 				}
 			};
 		}
 		return reverseRecord;
 	}
-	
+
 	@Override
-	public IRecordable merge(IRecordable otherRecord)
-	{
-		if(reverseRecord != null && reverseRecord == otherRecord)
-		{
+	public IRecordable merge(IRecordable otherRecord) {
+		if (reverseRecord != null && reverseRecord == otherRecord) {
 			return null;
-		}
-		else
-		{
+		} else {
 			throw new UnsupportedOperationException("Can't merge this recordable");
 		}
 	}

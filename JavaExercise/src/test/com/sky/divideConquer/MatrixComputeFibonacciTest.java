@@ -6,11 +6,9 @@ import com.sky.common.CommonTest;
 import com.sky.divideConquer.MatrixComputeFibonacci;
 import com.sky.problem.Problem;
 
-public class MatrixComputeFibonacciTest extends CommonTest<Integer, Integer>
-{
+public class MatrixComputeFibonacciTest extends CommonTest<Integer, Integer> {
 	@Test
-	public void test()
-	{
+	public void test() {
 		check(10, null);
 		check(100, null);
 		check(1000, null);
@@ -19,8 +17,7 @@ public class MatrixComputeFibonacciTest extends CommonTest<Integer, Integer>
 	}
 
 	@Override
-	public Problem<Integer, Integer> getAlgo()
-	{
+	public Problem<Integer, Integer> getAlgo() {
 		return new MatrixComputeFibonacci();
 	}
 }

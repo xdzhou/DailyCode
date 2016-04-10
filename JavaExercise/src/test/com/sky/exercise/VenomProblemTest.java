@@ -5,11 +5,9 @@ import org.testng.annotations.Test;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
 
-public class VenomProblemTest extends CommonTest<Integer, Integer>
-{
+public class VenomProblemTest extends CommonTest<Integer, Integer> {
 	@Test
-	public void test()
-	{
+	public void test() {
 		check(1000, 10);
 		check(4, 2);
 		check(7, 3);
@@ -18,8 +16,7 @@ public class VenomProblemTest extends CommonTest<Integer, Integer>
 	}
 
 	@Override
-	public Problem<Integer, Integer> getAlgo()
-	{
+	public Problem<Integer, Integer> getAlgo() {
 		return new VenomProblem();
 	}
 }

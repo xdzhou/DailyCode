@@ -16,116 +16,96 @@ import com.sky.problem.Problem;
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610
  */
-public class ShortestTransformPath<T> implements Problem<Void, Integer>
-{
+public class ShortestTransformPath<T> implements Problem<Void, Integer> {
 	private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
-	
+
 	private Map<T, HashSet<T>> treeMap;
-	
-	public ShortestTransformPath()
-	{
+
+	public ShortestTransformPath() {
 		treeMap = new HashMap<T, HashSet<T>>();
 	}
-	
+
 	@Override
-	public Integer resolve(Void param)
-	{
+	public Integer resolve(Void param) {
 		return getShortestTransformPathLength();
 	}
-	
-	private Comparator<Pair<Integer, Integer>> longestPathComparator = new Comparator<Pair<Integer,Integer>>()
-	{
+
+	private Comparator<Pair<Integer, Integer>> longestPathComparator = new Comparator<Pair<Integer, Integer>>() {
 		@Override
-		public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2)
-		{
+		public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
 			return o2.getFirst().compareTo(o1.getFirst());
 		}
 	};
-	
-	private Comparator<Pair<Integer, Integer>> depthComparator = new Comparator<Pair<Integer,Integer>>()
-	{
+
+	private Comparator<Pair<Integer, Integer>> depthComparator = new Comparator<Pair<Integer, Integer>>() {
 		@Override
-		public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2)
-		{
+		public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
 			return o2.getSecond().compareTo(o1.getSecond());
 		}
 	};
-	
-	public void clear()
-	{
+
+	public void clear() {
 		treeMap.clear();
 	}
-	
-	public int getShortestTransformPathLength()
-	{
+
+	public int getShortestTransformPathLength() {
 		int longPath = getLongestPath(treeMap.keySet().iterator().next()).getFirst();
 		return (longPath + 1) / 2;
 	}
+
 	/**
 	 * 
 	 * @param node
 	 * @return pair, first : longest path length, second : depth
 	 */
-	private Pair<Integer, Integer> getLongestPath(T node)
-	{
+	private Pair<Integer, Integer> getLongestPath(T node) {
 		HashSet<T> children = treeMap.get(node);
 		treeMap.remove(node);
-		if(children == null || children.isEmpty())
-		{
+		if (children == null || children.isEmpty()) {
 			return new Pair<Integer, Integer>(0, 0);
 		}
 		ArrayList<Pair<Integer, Integer>> childrenResult = new ArrayList<Pair<Integer, Integer>>(children.size());
-		for(T child : children)
-		{
-			if(treeMap.containsKey(child))
-			{
+		for (T child : children) {
+			if (treeMap.containsKey(child)) {
 				childrenResult.add(getLongestPath(child));
 			}
 		}
-		if(childrenResult.isEmpty())
-		{
+		if (childrenResult.isEmpty()) {
 			return new Pair<Integer, Integer>(0, 0);
-		}
-		else if(childrenResult.size() == 1)
-		{
+		} else if (childrenResult.size() == 1) {
 			int depth = 1 + childrenResult.get(0).getSecond();
 			int longPath = Math.max(depth, childrenResult.get(0).getFirst());
 
 			return new Pair<Integer, Integer>(longPath, depth);
-		}
-		else 
-		{
+		} else {
 			Collections.sort(childrenResult, longestPathComparator);
 			int childLongPath = childrenResult.get(0).getFirst();
-			
+
 			Collections.sort(childrenResult, depthComparator);
 			int maxDepth0 = childrenResult.get(0).getSecond();
 			int maxDepth1 = childrenResult.get(1).getSecond();
-			
+
 			int longPath = Math.max(maxDepth0 + maxDepth1 + 2, childLongPath);
 
 			return new Pair<Integer, Integer>(longPath, maxDepth0 + 1);
 		}
 	}
-	
-	public ShortestTransformPath<T> addNewLien(T from, T to)
-	{
+
+	public ShortestTransformPath<T> addNewLien(T from, T to) {
 		HashSet<T> fromChildren = treeMap.get(from);
 		HashSet<T> toChildren = treeMap.get(to);
-		if(fromChildren == null)
-		{
+		if (fromChildren == null) {
 			fromChildren = new HashSet<>();
 			treeMap.put(from, fromChildren);
 		}
-		if(toChildren == null)
-		{
+		if (toChildren == null) {
 			toChildren = new HashSet<>();
 			treeMap.put(to, toChildren);
 		}
-		
+
 		fromChildren.add(to);
 		toChildren.add(from);
-		
+
 		return this;
 	}
 }

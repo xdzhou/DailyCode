@@ -3,36 +3,28 @@ package com.sky.codejam.training;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Spelling
-{
+public class Spelling {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		new Spelling().start();
 	}
 
-	public void start()
-	{
+	public void start() {
 		HashMap<Character, String> letteMap = new HashMap<Character, String>();
 		initMap(letteMap);
 		Scanner in = new Scanner(System.in);
 		int N = in.nextInt();
 		in.nextLine();
-		for (int i = 0; i < N; i++)
-		{
+		for (int i = 0; i < N; i++) {
 			String s = in.nextLine();
 			StringBuffer sb = new StringBuffer();
 			int lastIndi = -1;
-			for (int j = 0; j < s.length(); j++)
-			{
+			for (int j = 0; j < s.length(); j++) {
 				char c = s.charAt(j);
 				int currentIndi = Integer.parseInt(letteMap.get(c).substring(0, 1));
-				if (currentIndi == lastIndi)
-				{
+				if (currentIndi == lastIndi) {
 					sb.append(" ").append(letteMap.get(c));
-				} 
-				else
-				{
+				} else {
 					sb.append(letteMap.get(c));
 				}
 				lastIndi = currentIndi;
@@ -42,8 +34,7 @@ public class Spelling
 		in.close();
 	}
 
-	private void initMap(HashMap<Character, String> map)
-	{
+	private void initMap(HashMap<Character, String> map) {
 		map.clear();
 		map.put('a', "2");
 		map.put('b', "22");

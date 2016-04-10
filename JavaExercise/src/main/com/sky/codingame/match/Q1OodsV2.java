@@ -5,11 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Q1OodsV2
-{
+public class Q1OodsV2 {
 
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		int N, C;
 		List<Integer> budget;
 		// int pay[];
@@ -20,14 +18,12 @@ public class Q1OodsV2
 		C = in.nextInt();
 		budget = new ArrayList<>(N);
 
-		for (int i = 0; i < N; i++)
-		{
+		for (int i = 0; i < N; i++) {
 			int b = in.nextInt();
 			totalBudget += b;
 			budget.add(b);
 		}
-		if (totalBudget < C)
-		{
+		if (totalBudget < C) {
 			System.out.println("IMPOSSIBLE");
 			in.close();
 			return;
@@ -38,31 +34,26 @@ public class Q1OodsV2
 		in.close();
 	}
 
-	private static void pay(int numPeople, List<Integer> monerys, int priceToPay)
-	{
+	private static void pay(int numPeople, List<Integer> monerys, int priceToPay) {
 		if (numPeople >= monerys.size())
 			return;
 		int moyen = priceToPay / (monerys.size() - numPeople);
 		int aleardyPay = 0, i;
-		for (i = numPeople; i < monerys.size(); i++)
-		{
-			if (monerys.get(i) < moyen)
-			{
+		for (i = numPeople; i < monerys.size(); i++) {
+			if (monerys.get(i) < moyen) {
 				aleardyPay += monerys.get(i);
 				System.out.println(monerys.get(i));
 			} else
 				break;
 		}
-		if (aleardyPay == 0)
-		{
+		if (aleardyPay == 0) {
 			int moreNuw = priceToPay % (monerys.size() - numPeople);
 			for (int j = 0; j < monerys.size() - numPeople - moreNuw; j++)
 				System.out.println(moyen);
 			for (int j = 0; j < moreNuw; j++)
 				System.out.println(moyen + 1);
 			pay(monerys.size(), monerys, 0);
-		} else
-		{
+		} else {
 			pay(i, monerys, priceToPay - aleardyPay);
 		}
 	}

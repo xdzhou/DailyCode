@@ -1,7 +1,6 @@
 package com.loic.algo.AStart;
 
-public class Node
-{
+public class Node {
 	private int x;
 	private int y;
 	private Node parentNode;
@@ -9,8 +8,7 @@ public class Node
 	private int H; // cost to end point (estimed)
 	private int F; // cost total
 
-	public Node(int x, int y, Node parentNode)
-	{
+	public Node(int x, int y, Node parentNode) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -18,8 +16,7 @@ public class Node
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + x;
@@ -28,8 +25,7 @@ public class Node
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -44,69 +40,56 @@ public class Node
 		return true;
 	}
 
-	public int getX()
-	{
+	public int getX() {
 		return x;
 	}
 
-	public void setX(int x)
-	{
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public int getY()
-	{
+	public int getY() {
 		return y;
 	}
 
-	public void setY(int y)
-	{
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public Node getParentNode()
-	{
+	public Node getParentNode() {
 		return parentNode;
 	}
 
-	public void setParentNode(Node parentNode)
-	{
+	public void setParentNode(Node parentNode) {
 		this.parentNode = parentNode;
 	}
 
-	public int getG()
-	{
+	public int getG() {
 		return G;
 	}
 
-	public void setG(int g)
-	{
+	public void setG(int g) {
 		G = g;
 	}
 
-	public int getH()
-	{
+	public int getH() {
 		return H;
 	}
 
-	public void setH(int h)
-	{
+	public void setH(int h) {
 		H = h;
 	}
 
-	public int getF()
-	{
+	public int getF() {
 		return F;
 	}
 
-	public void updateF()
-	{
+	public void updateF() {
 		F = G + H;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Node (" + x + "," + y + "), G=" + G + ", H=" + H + ", F=" + F;
 	}
 

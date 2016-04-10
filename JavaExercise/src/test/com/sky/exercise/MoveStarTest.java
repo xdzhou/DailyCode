@@ -5,11 +5,9 @@ import org.testng.annotations.Test;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
 
-public class MoveStarTest extends CommonTest<String, String>
-{
+public class MoveStarTest extends CommonTest<String, String> {
 	@Test
-	public void test()
-	{
+	public void test() {
 		check("ab**cd**e*12", "*****abcde12");
 		check("*az*12*", "***az12");
 		check("*****", "*****");
@@ -17,8 +15,7 @@ public class MoveStarTest extends CommonTest<String, String>
 	}
 
 	@Override
-	public Problem<String, String> getAlgo()
-	{
+	public Problem<String, String> getAlgo() {
 		return new MoveStar();
 	}
 }
