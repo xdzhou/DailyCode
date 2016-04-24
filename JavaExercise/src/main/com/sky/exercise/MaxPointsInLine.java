@@ -25,7 +25,7 @@ public class MaxPointsInLine implements Problem<Point[], Integer> {
             return param.length;
         }
         int sameSlopeCountMax = 1;
-        Map<Float, Integer> slopeMap = new HashMap<>();
+        Map<Float, Integer> slopeMap = new HashMap<Float, Integer>();
         for (int i = 0; i < param.length - 1; i++) {
             int curSameSlopeCountMax = 1;
             int delta = 0;

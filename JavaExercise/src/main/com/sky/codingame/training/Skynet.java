@@ -57,10 +57,10 @@ public class Skynet {
 
         public int[] getShortestLastLink(int start, int... ends) {
             int size = mMaps.length;
-            List<Integer> toTouchNodes = new ArrayList<>();
+            List<Integer> toTouchNodes = new ArrayList<Integer>();
             boolean[] removeFlags = new boolean[size];
             int[] prevNodes = new int[size];
-            List<Integer> destinations = new ArrayList<>(ends.length);
+            List<Integer> destinations = new ArrayList<Integer>(ends.length);
             for (int i = 0; i < ends.length; i++) destinations.add(ends[i]);
             toTouchNodes.add(start);
             while (!destinations.contains(toTouchNodes.get(0))) {

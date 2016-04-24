@@ -47,11 +47,11 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
             return result;
         }
 
-        Set<String> beginGroup = new HashSet<>();
+        Set<String> beginGroup = new HashSet<String>();
         beginGroup.add(beginWord);
-        Set<String> endGroup = new HashSet<>();
+        Set<String> endGroup = new HashSet<String>();
         endGroup.add(endWord);
-        Map<String, Set<String>> pathGraph = new HashMap<>();
+        Map<String, Set<String>> pathGraph = new HashMap<String, Set<String>>();
 
         if (biDirectionBFS(beginGroup, endGroup, pathGraph, wordList)) {
             DFS(pathGraph, beginWord, endWord, new ArrayList<String>(), result);
@@ -69,7 +69,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
     private void DFS(Map<String, Set<String>> pathGraph, String from, String to, List<String> path,
                      List<List<String>> result) {
         if (from.equals(to)) {
-            List<String> pathCopy = new ArrayList<>(path);
+            List<String> pathCopy = new ArrayList<String>(path);
             pathCopy.add(to);
             result.add(pathCopy);
         } else if (pathGraph.get(from) != null) {
@@ -111,7 +111,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
                             expandSet.add(newString);
                             Set<String> nexts = pathGraph.get(key);
                             if (nexts == null) {
-                                nexts = new HashSet<>();
+                                nexts = new HashSet<String>();
                                 pathGraph.put(key, nexts);
                             }
                             nexts.add(val);

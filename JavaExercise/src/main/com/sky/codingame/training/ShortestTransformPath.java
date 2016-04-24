@@ -92,11 +92,11 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
         HashSet<T> fromChildren = treeMap.get(from);
         HashSet<T> toChildren = treeMap.get(to);
         if (fromChildren == null) {
-            fromChildren = new HashSet<>();
+            fromChildren = new HashSet<T>();
             treeMap.put(from, fromChildren);
         }
         if (toChildren == null) {
-            toChildren = new HashSet<>();
+            toChildren = new HashSet<T>();
             treeMap.put(to, toChildren);
         }
 

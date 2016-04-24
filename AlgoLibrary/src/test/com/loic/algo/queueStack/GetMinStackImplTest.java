@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class GetMinStackImplTest {
     @Test
     public void test() {
-        GetMinStackImpl<Integer> algo = new GetMinStackImpl<>();
+        GetMinStackImpl<Integer> algo = new GetMinStackImpl<Integer>();
         algo.push(2);
         Assert.assertEquals((int) algo.getMin(), 2);
         algo.push(3);

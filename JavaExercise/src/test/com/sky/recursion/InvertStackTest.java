@@ -9,7 +9,7 @@ public class InvertStackTest {
     @Test
     public void test() {
         InvertStack algo = new InvertStack();
-        LinkedList<Integer> stack = new LinkedList<>();
+        LinkedList<Integer> stack = new LinkedList<Integer>();
         for (int i = 0; i < 10; i++) {
             stack.push(i);
         }

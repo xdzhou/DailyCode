@@ -1,21 +1,20 @@
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'eclipse'
 
     repositories {
        mavenCentral()
     }
     
     allprojects {
-	    tasks.withType(JavaCompile) {
-	        options.compilerArgs << "-Xlint:deprecation"
-	    }
-	}
-	
-	tasks.withType(Test) {
-	    scanForTestClasses = false
-	    include "**/*Test.class" // whatever Ant pattern matches your test class files
-	}
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:deprecation"
+        }
+    }
+    
+    tasks.withType(Test) {
+        scanForTestClasses = false
+        include "**/*Test.class" // whatever Ant pattern matches your test class files
+    }
 
     dependencies {
         testCompile 'org.testng:testng:6.9.6'
