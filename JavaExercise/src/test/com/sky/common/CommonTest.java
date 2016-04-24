@@ -67,7 +67,7 @@ public abstract class CommonTest<T, E> {
 
 	// helper method
 	protected List<String> generateList(String... data) {
-		List<String> result = new ArrayList<>();
+		List<String> result = new ArrayList<>(data.length);
 		for (String s : data) {
 			result.add(s);
 		}
@@ -75,7 +75,7 @@ public abstract class CommonTest<T, E> {
 	}
 
 	protected Set<String> generateSet(String... data) {
-		Set<String> result = new HashSet<>();
+		Set<String> result = new HashSet<>(data.length);
 		for (String s : data) {
 			result.add(s);
 		}
