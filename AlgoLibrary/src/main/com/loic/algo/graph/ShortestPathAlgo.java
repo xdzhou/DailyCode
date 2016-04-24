@@ -11,11 +11,11 @@ import org.jgrapht.graph.DefaultWeightedEdge;
  *
  */
 public interface ShortestPathAlgo<T> {
-	public static final int UNKNOWN_DIS = Integer.MAX_VALUE;
+    public static final int UNKNOWN_DIS = Integer.MAX_VALUE;
 
-	// set a graph to algo
-	public void setGraph(WeightedGraph<T, DefaultWeightedEdge> graph);
+    // set a graph to algo
+    public void setGraph(WeightedGraph<T, DefaultWeightedEdge> graph);
 
-	// solves the source-target shortest path problem
-	public GraphPath<T, DefaultWeightedEdge> getShortestPath(T startPoint, T endPoint);
+    // solves the source-target shortest path problem
+    public GraphPath<T, DefaultWeightedEdge> getShortestPath(T startPoint, T endPoint);
 }

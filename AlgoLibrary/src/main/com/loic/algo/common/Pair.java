@@ -1,46 +1,46 @@
 package com.loic.algo.common;
 
 public class Pair<T, E> implements Cloneable {
-	private T first;
-	private E second;
+    private T first;
+    private E second;
 
-	public Pair(T first, E second) {
-		this.first = first;
-		this.second = second;
-	}
+    public Pair(T first, E second) {
+        this.first = first;
+        this.second = second;
+    }
 
-	public T getFirst() {
-		return first;
-	}
+    public static <T, E> Pair<T, E> create(T first, E second) {
+        return new Pair<>(first, second);
+    }
 
-	public void setFirst(T first) {
-		this.first = first;
-	}
+    public T getFirst() {
+        return first;
+    }
 
-	public E getSecond() {
-		return second;
-	}
+    public void setFirst(T first) {
+        this.first = first;
+    }
 
-	public void setSecond(E second) {
-		this.second = second;
-	}
+    public E getSecond() {
+        return second;
+    }
 
-	@Override
-	public Pair<T, E> clone() {
-		try {
-			return (Pair<T, E>) super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    public void setSecond(E second) {
+        this.second = second;
+    }
 
-	@Override
-	public String toString() {
-		return "[" + first + ", " + second + "]";
-	}
+    @Override
+    public Pair<T, E> clone() {
+        try {
+            return (Pair<T, E>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	public static <T, E> Pair<T, E> create(T first, E second) {
-		return new Pair<>(first, second);
-	}
+    @Override
+    public String toString() {
+        return "[" + first + ", " + second + "]";
+    }
 }

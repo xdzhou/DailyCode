@@ -7,14 +7,14 @@ import com.sky.problem.Problem;
  * 请写程序找出这两个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。 分析：这是一道很新颖的关于位运算的面试题。
  */
 public class FindOddNum implements Problem<Integer[], Integer> {
-	// Tips：A （XOR）A = 0
-	@Override
-	public Integer resolve(Integer[] param) {
-		int retVal = param[0];
-		for (int i = 1; i < param.length; i++) {
-			retVal ^= param[i];
-		}
-		return retVal;
-	}
+    // Tips：A （XOR）A = 0
+    @Override
+    public Integer resolve(Integer[] param) {
+        int retVal = param[0];
+        for (int i = 1; i < param.length; i++) {
+            retVal ^= param[i];
+        }
+        return retVal;
+    }
 
 }

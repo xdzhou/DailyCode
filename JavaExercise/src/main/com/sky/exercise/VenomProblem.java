@@ -8,21 +8,21 @@ import com.sky.problem.Problem;
  */
 public class VenomProblem implements Problem<Integer, Integer> {
 
-	@Override
-	public Integer resolve(Integer param) {
-		int n = param;
-		--n;
-		n |= n >> 1;
-		n |= n >> 2;
-		n |= n >> 4;
-		n |= n >> 8;
-		n |= n >> 16;
-		++n;
-		int t = 0;
-		while (n != 1) {
-			n = n >> 1;
-			t++;
-		}
-		return t;
-	}
+    @Override
+    public Integer resolve(Integer param) {
+        int n = param;
+        --n;
+        n |= n >> 1;
+        n |= n >> 2;
+        n |= n >> 4;
+        n |= n >> 8;
+        n |= n >> 16;
+        ++n;
+        int t = 0;
+        while (n != 1) {
+            n = n >> 1;
+            t++;
+        }
+        return t;
+    }
 }

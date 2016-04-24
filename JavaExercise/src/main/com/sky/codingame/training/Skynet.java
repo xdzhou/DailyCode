@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Skynet {
 
-	public static void main(String args[]) {
+    public static void main(String args[]) {
         new Skynet().start();
     }
-	
-	private void start() {
-		Scanner in = new Scanner(System.in);
+
+    private void start() {
+        Scanner in = new Scanner(System.in);
         int N = in.nextInt(); // the total number of nodes in the level, including the gateways
         Graph graph = new Graph(N);
         int L = in.nextInt(); // the number of links
@@ -38,48 +38,48 @@ public class Skynet {
             graph.disconnect(result[0], result[1]);
             graph.disconnect(result[0], result[1]);
         }
-	}
-	
-	private class Graph {
-		private boolean[][] mMaps;
-		
-		public Graph(int size){
-			mMaps = new boolean[size][size];
-		}
-		
-		public void connect(int index1, int index2){
-			mMaps[index1][index2] = true;
-		}
-		
-		public void disconnect(int index1, int index2){
-			mMaps[index1][index2] = false;
-		}
-		
-		public int[] getShortestLastLink(int start, int... ends){
-			int size = mMaps.length;
-			List<Integer> toTouchNodes = new ArrayList<>();
-			boolean[] removeFlags = new boolean[size];
-			int[] prevNodes = new int[size];
-			List<Integer> destinations = new ArrayList<>(ends.length);
-			for(int i = 0; i < ends.length; i++) destinations.add(ends[i]);
-			toTouchNodes.add(start);
-			while(! destinations.contains(toTouchNodes.get(0))){
-				int node = toTouchNodes.get(0);
-				if (! removeFlags[node]) {
-					for(int i = 0; i < size; i++){
-						if (mMaps[node][i] && ! removeFlags[i] && ! toTouchNodes.contains(i)){
-							prevNodes[i] = node;
-							toTouchNodes.add(i);
-						}
-					}
-				}
-				toTouchNodes.remove(0);
-				removeFlags[node] = true;
-			}
-			int[] result = new int[2];
-			result[1] = toTouchNodes.get(0);
-			result[0] = prevNodes[result[1]];
-			return result;
-		}
-	}
+    }
+
+    private class Graph {
+        private boolean[][] mMaps;
+
+        public Graph(int size) {
+            mMaps = new boolean[size][size];
+        }
+
+        public void connect(int index1, int index2) {
+            mMaps[index1][index2] = true;
+        }
+
+        public void disconnect(int index1, int index2) {
+            mMaps[index1][index2] = false;
+        }
+
+        public int[] getShortestLastLink(int start, int... ends) {
+            int size = mMaps.length;
+            List<Integer> toTouchNodes = new ArrayList<>();
+            boolean[] removeFlags = new boolean[size];
+            int[] prevNodes = new int[size];
+            List<Integer> destinations = new ArrayList<>(ends.length);
+            for (int i = 0; i < ends.length; i++) destinations.add(ends[i]);
+            toTouchNodes.add(start);
+            while (!destinations.contains(toTouchNodes.get(0))) {
+                int node = toTouchNodes.get(0);
+                if (!removeFlags[node]) {
+                    for (int i = 0; i < size; i++) {
+                        if (mMaps[node][i] && !removeFlags[i] && !toTouchNodes.contains(i)) {
+                            prevNodes[i] = node;
+                            toTouchNodes.add(i);
+                        }
+                    }
+                }
+                toTouchNodes.remove(0);
+                removeFlags[node] = true;
+            }
+            int[] result = new int[2];
+            result[1] = toTouchNodes.get(0);
+            result[0] = prevNodes[result[1]];
+            return result;
+        }
+    }
 }

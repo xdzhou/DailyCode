@@ -1,9 +1,9 @@
 package com.loic.algo.graph;
 
-import java.util.List;
-
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
+
+import java.util.List;
 
 /*
  * @URL : http://blog.csdn.net/dm_vincent/article/details/7714519
@@ -11,7 +11,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
  *
  */
 public interface TopologicalSortAlgo<T> {
-	public void setGraph(DirectedGraph<T, DefaultWeightedEdge> graph);
+    public void setGraph(DirectedGraph<T, DefaultWeightedEdge> graph);
 
-	public List<T> topologicalSort();
+    public List<T> topologicalSort();
 }

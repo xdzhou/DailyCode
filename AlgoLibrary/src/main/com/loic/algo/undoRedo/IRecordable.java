@@ -1,11 +1,11 @@
 package com.loic.algo.undoRedo;
 
 public interface IRecordable {
-	void undo();
+    void undo();
 
-	void redo();
+    void redo();
 
-	IRecordable reverse();
+    IRecordable reverse();
 
-	IRecordable merge(IRecordable other) throws UnsupportedOperationException;
+    IRecordable merge(IRecordable other) throws UnsupportedOperationException;
 }

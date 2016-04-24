@@ -8,32 +8,32 @@ import com.sky.problem.Problem;
  */
 public class DCbst2DoubleLinkedList<T> implements Problem<TreeNode<T>, TreeNode<T>> {
 
-	@Override
-	public TreeNode<T> resolve(TreeNode<T> bstNode) {
-		return changeToLinkList(bstNode);
-	}
+    @Override
+    public TreeNode<T> resolve(TreeNode<T> bstNode) {
+        return changeToLinkList(bstNode);
+    }
 
-	private TreeNode<T> changeToLinkList(TreeNode<T> node) {
-		if (node == null) {
-			return null;
-		} else if (node.mLeftNode == null && node.mRightNode == null) {
-			return node;
-		} else {
-			TreeNode<T> leftLinkList = changeToLinkList(node.mLeftNode);
-			TreeNode<T> rightLinkList = changeToLinkList(node.mRightNode);
-			TreeNode<T> retVal = leftLinkList == null ? node : leftLinkList;
-			while (leftLinkList != null && leftLinkList.mRightNode != null) {
-				leftLinkList = leftLinkList.mRightNode;
-			}
-			node.mLeftNode = leftLinkList;
-			node.mRightNode = rightLinkList;
-			if (leftLinkList != null) {
-				leftLinkList.mRightNode = node;
-			}
-			if (rightLinkList != null) {
-				rightLinkList.mLeftNode = node;
-			}
-			return retVal;
-		}
-	}
+    private TreeNode<T> changeToLinkList(TreeNode<T> node) {
+        if (node == null) {
+            return null;
+        } else if (node.mLeftNode == null && node.mRightNode == null) {
+            return node;
+        } else {
+            TreeNode<T> leftLinkList = changeToLinkList(node.mLeftNode);
+            TreeNode<T> rightLinkList = changeToLinkList(node.mRightNode);
+            TreeNode<T> retVal = leftLinkList == null ? node : leftLinkList;
+            while (leftLinkList != null && leftLinkList.mRightNode != null) {
+                leftLinkList = leftLinkList.mRightNode;
+            }
+            node.mLeftNode = leftLinkList;
+            node.mRightNode = rightLinkList;
+            if (leftLinkList != null) {
+                leftLinkList.mRightNode = node;
+            }
+            if (rightLinkList != null) {
+                rightLinkList.mLeftNode = node;
+            }
+            return retVal;
+        }
+    }
 }
