@@ -10,7 +10,7 @@ public class Triple<T, E, K> {
     }
 
     public static <T, E, K> Triple<T, E, K> create(T first, E second, K third) {
-        return new Triple<>(first, second, third);
+        return new Triple<T, E, K>(first, second, third);
     }
 
     public T getFirst() {

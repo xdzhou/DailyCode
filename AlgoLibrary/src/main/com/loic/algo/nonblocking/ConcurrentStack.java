@@ -3,14 +3,14 @@ package com.loic.algo.nonblocking;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ConcurrentStack<T> {
-    private AtomicReference<Node<T>> mHead = new AtomicReference<>();
+    private AtomicReference<Node<T>> mHead = new AtomicReference<Node<T>>();
 
     public boolean isEmpty() {
         return mHead.get() == null;
     }
 
     public void push(T value) {
-        Node<T> newValue = new Node<>(value);
+        Node<T> newValue = new Node<T>(value);
         Node<T> oldHead;
         do {
             oldHead = mHead.get();

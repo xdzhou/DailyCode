@@ -21,10 +21,10 @@ public class TreeNode<T> {
 
     private static <T> TreeNode<T> generateBinaryTree(T[] arrays, int from, int to) {
         if (from == to) {
-            return new TreeNode<>(arrays[from]);
+            return new TreeNode<T>(arrays[from]);
         }
         int mid = from + ((from + to) >>> 1);
-        TreeNode<T> root = new TreeNode<>(arrays[mid]);
+        TreeNode<T> root = new TreeNode<T>(arrays[mid]);
         root.mLeftNode = generateBinaryTree(arrays, from, mid - 1);
         root.mRightNode = generateBinaryTree(arrays, mid + 1, to);
         return root;

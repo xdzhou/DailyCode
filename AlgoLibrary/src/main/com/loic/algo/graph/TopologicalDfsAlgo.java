@@ -34,13 +34,13 @@ public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer> {
         for (DefaultWeightedEdge edge : mGraph.edgeSet()) {
             outComingList[mGraph.getEdgeSource(edge)]++;
         }
-        List<Integer> emptyOutComing = new ArrayList<>();
+        List<Integer> emptyOutComing = new ArrayList<Integer>();
         for (int i = 0; i < points.size(); i++) {
             if (outComingList[i] == 0) {
                 emptyOutComing.add(i);
             }
         }
-        results = new ArrayList<>();
+        results = new ArrayList<Integer>();
         for (int noOutIndex : emptyOutComing) {
             if (visit(noOutIndex)) {
                 return null;
