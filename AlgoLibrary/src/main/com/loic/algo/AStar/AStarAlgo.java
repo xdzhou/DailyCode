@@ -3,8 +3,9 @@ package com.loic.algo.AStar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class AStarAlgo {
@@ -20,7 +21,7 @@ public class AStarAlgo {
         this.mMapInfo = mMapInfo;
     }
 
-    public void search(int startX, int startY, IResultChecker checker) {
+    public List<Integer> search(int startX, int startY, IResultChecker checker) {
         int w = mMapInfo.getWidth();
         int h = mMapInfo.getHeight();
         int[] prev = new int[w * h];
@@ -38,20 +39,26 @@ public class AStarAlgo {
             int y = node.index % w;
 
             if (checker.isResult(x, y)){
-                printTrace(prev, node.index);
-                return;
+                return getPath(prev, node.index);
             }
+            //
+            if (mMapInfo.reachable(x, y, x - 1, y)) treat(x - 1, y, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x + 1, y)) treat(x + 1, y, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x, y - 1)) treat(x, y - 1, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x, y + 1)) treat(x, y + 1, node, priorityQueue, flags, prev);
+            //
+            if (mMapInfo.reachable(x, y, x - 1, y - 1)) treat(x - 1, y - 1, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x + 1, y + 1)) treat(x + 1, y + 1, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x + 1, y - 1)) treat(x + 1, y - 1, node, priorityQueue, flags, prev);
+            if (mMapInfo.reachable(x, y, x - 1, y + 1)) treat(x - 1, y + 1, node, priorityQueue, flags, prev);
 
-            treat(x - 1, y, node, priorityQueue, flags, prev);
-            treat(x + 1, y, node, priorityQueue, flags, prev);
-            treat(x, y - 1, node, priorityQueue, flags, prev);
-            treat(x, y + 1, node, priorityQueue, flags, prev);
             flags[node.index] = TRACED;
         }
         Log.info("Sorry, can't find trace");
+        return null;
     }
 
-    public void search(int startX, int startY, int endX, int endY) {
+    public List<Integer> search(int startX, int startY, int endX, int endY) {
         int w = mMapInfo.getWidth();
         int h = mMapInfo.getHeight();
         int[] prev = new int[w * h];
@@ -68,48 +75,40 @@ public class AStarAlgo {
         while (! priorityQueue.isEmpty()) {
             Node node = priorityQueue.poll();
             if (node.index == endIndex){
-                printTrace(prev, endIndex);
-                printPath(prev, endIndex);
-                return;
+                return getPath(prev, endIndex);
             }
             int x = node.index / w;
             int y = node.index % w;
-            treat(x - 1, y, node, priorityQueue, flags, prev, endX, endY);
-            treat(x + 1, y, node, priorityQueue, flags, prev, endX, endY);
-            treat(x, y - 1, node, priorityQueue, flags, prev, endX, endY);
-            treat(x, y + 1, node, priorityQueue, flags, prev, endX, endY);
+            //
+            if (mMapInfo.reachable(x, y, x - 1, y)) treat(x - 1, y, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x + 1, y)) treat(x + 1, y, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x, y - 1)) treat(x, y - 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x, y + 1)) treat(x, y + 1, node, priorityQueue, flags, prev, endX, endY);
+            //
+            if (mMapInfo.reachable(x, y, x - 1, y - 1)) treat(x - 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x + 1, y + 1)) treat(x + 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x + 1, y - 1)) treat(x + 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x - 1, y + 1)) treat(x - 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
+
             flags[node.index] = TRACED;
         }
         Log.info("Sorry, can't find trace");
+        return null;
     }
 
-    private void printTrace(int[] prev, int endIndex) {
-
+    private List<Integer> getPath(int[] prev, int endIndex) {
         int curIndex = endIndex;
-        StringBuilder sb = new StringBuilder();
-
-        do {
-            sb.insert(0, curIndex).insert(0, "->");
-            curIndex = prev[curIndex];
-        } while (curIndex != -1);
-
-        Log.info("trace : " + sb.toString());
-    }
-
-    private void printPath(int[] prev, int endIndex) {
         int w = mMapInfo.getWidth();
-        int h = mMapInfo.getHeight();
-        int curIndex = endIndex;
-        char[][] datas = new char[h][w];
-
+        List<Integer> retVal = new ArrayList<Integer>();
         do {
             int x = curIndex / w;
             int y = curIndex % w;
-            datas[x][y] = '*';
+            retVal.add(0, y);
+            retVal.add(0, x);
             curIndex = prev[curIndex];
         } while (curIndex != -1);
-        for (int i = 0 ; i < h; i ++)
-            System.err.println("path : "+ Arrays.toString(datas[i]));
+        Log.info("Path found : " + retVal);
+        return retVal;
     }
 
     private void treat(int x, int y, Node node, PriorityQueue<Node> priorityQueue, byte[] flags, int[] prev) {
@@ -117,25 +116,24 @@ public class AStarAlgo {
     }
 
     private void treat(int x, int y, Node node, PriorityQueue<Node> priorityQueue, byte[] flags, int[] prev, int endX, int endY) {
-        if (mMapInfo.reachable(x, y)) {
-            int index = getIndex(x, y);
-            if (flags[index] == UNKNOWN) {
-                Node newNode = new Node(index);
-                newNode.disFromStart = node.disFromStart + 1;
-                if (mMapInfo.reachable(endX, endY)) newNode.disToEnd = mMapInfo.getEstimateDis(x, y, endX, endY);
-                prev[index] = node.index;
-                flags[index] = TO_TRACE;
-                priorityQueue.add(newNode);
-            } else if (flags[index] == TO_TRACE) {
-                Node existNode = getExistNode(priorityQueue, index);
-                if (existNode != null) {
-                    if (node.disFromStart + 1 < existNode.disFromStart) {
-                        existNode.disFromStart = node.disFromStart + 1;
-                        prev[index] = node.index;
-                    }
-                } else {
-                    Log.info("Oops, {} is in open list, but can't find it...", index);
+        int index = getIndex(x, y);
+        if (flags[index] == UNKNOWN) {
+            Node newNode = new Node(index);
+            newNode.disFromStart = node.disFromStart + 1;
+            newNode.disToEnd = mMapInfo.getEstimateDis(x, y, endX, endY);
+            prev[index] = node.index;
+            flags[index] = TO_TRACE;
+            priorityQueue.add(newNode);
+        } else if (flags[index] == TO_TRACE) {
+            Node existNode = getExistNode(priorityQueue, index);
+            if (existNode != null) {
+                if (node.disFromStart + 1 < existNode.disFromStart) {
+                    existNode.disFromStart = node.disFromStart + 1;
+                    prev[index] = node.index;
                 }
+                priorityQueue.add(existNode);
+            } else {
+                Log.info("Oops, {} is in open list, but can't find it...", index);
             }
         }
     }
@@ -144,7 +142,10 @@ public class AStarAlgo {
         Iterator<Node> iterator = priorityQueue.iterator();
         while (iterator.hasNext()) {
             Node n = iterator.next();
-            if(n.index == index) return n;
+            if(n.index == index) {
+                iterator.remove();
+                return n;
+            }
         }
         return null;
     }
@@ -175,7 +176,7 @@ public class AStarAlgo {
     public interface IMapInfo {
         int getHeight();
         int getWidth();
-        boolean reachable(int x, int y);
+        boolean reachable(int fromX, int fromY, int toX, int toY);
         int getEstimateDis(int x1, int y1, int x2, int y2);
     }
 }

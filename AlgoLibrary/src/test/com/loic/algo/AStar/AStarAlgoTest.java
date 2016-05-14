@@ -34,9 +34,9 @@ public class AStarAlgoTest {
             }
 
             @Override
-            public boolean reachable(int x, int y) {
-                if (x >= 0 && x < 15 && y >= 0 && y < 30){
-                    char c = maps[x].charAt(y);
+            public boolean reachable(int fromX, int fromY, int toX, int toY) {
+                if (isValidPosition(fromX, fromY) && isValidPosition(toX, toY) && (fromX == toX || fromY == toY)) {
+                    char c = maps[toX].charAt(toY);
                     switch (c) {
                         case '#':
                             return false;
@@ -49,9 +49,16 @@ public class AStarAlgoTest {
                 return false;
             }
 
+            private boolean isValidPosition(int x, int y) {
+                return x >= 0 && x < 15 && y >= 0 && y < 30;
+            }
+
             @Override
             public int getEstimateDis(int x1, int y1, int x2, int y2) {
-                return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+                if (isValidPosition(x1, y1) && isValidPosition(x2, y2))
+                    return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+                else
+                    return 0;
             }
         };
 
