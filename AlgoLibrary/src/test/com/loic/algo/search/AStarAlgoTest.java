@@ -1,4 +1,4 @@
-package com.loic.algo.AStar;
+package com.loic.algo.search;
 
 import org.testng.annotations.Test;
 

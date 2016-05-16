@@ -1,4 +1,4 @@
-package com.loic.algo.AStar;
+package com.loic.algo.search;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * KeyWorld : Path finding
+ */
 public class AStarAlgo {
     private static final Logger Log = LoggerFactory.getLogger(AStarAlgo.class.getSimpleName());
 
@@ -22,6 +25,10 @@ public class AStarAlgo {
     }
 
     public List<Integer> search(int startX, int startY, IResultChecker checker) {
+        return search(startX, startY, checker, Integer.MAX_VALUE);
+    }
+
+    public List<Integer> search(int startX, int startY, IResultChecker checker, int maxLen) {
         int w = mMapInfo.getWidth();
         int h = mMapInfo.getHeight();
         int[] prev = new int[w * h];
@@ -38,7 +45,10 @@ public class AStarAlgo {
             int x = node.index / w;
             int y = node.index % w;
 
-            if (checker.isResult(x, y)){
+            if (node.disFromStart > maxLen) {
+                Log.info("max length exceed ...");
+                return null;
+            } else if (checker.isResult(x, y)){
                 return getPath(prev, node.index);
             }
             //
@@ -59,6 +69,10 @@ public class AStarAlgo {
     }
 
     public List<Integer> search(int startX, int startY, int endX, int endY) {
+        return search(startX, startY, endX, endY, Integer.MAX_VALUE);
+    }
+
+    public List<Integer> search(int startX, int startY, int endX, int endY, int maxLen) {
         int w = mMapInfo.getWidth();
         int h = mMapInfo.getHeight();
         int[] prev = new int[w * h];
@@ -74,7 +88,10 @@ public class AStarAlgo {
         int endIndex = getIndex(endX, endY);
         while (! priorityQueue.isEmpty()) {
             Node node = priorityQueue.poll();
-            if (node.index == endIndex){
+            if (node.disFromStart > maxLen) {
+                Log.info("max length exceed ...");
+                return null;
+            } else if (node.index == endIndex){
                 return getPath(prev, endIndex);
             }
             int x = node.index / w;
