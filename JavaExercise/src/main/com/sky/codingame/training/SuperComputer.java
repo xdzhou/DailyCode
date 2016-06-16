@@ -2,17 +2,6 @@ package com.sky.codingame.training;
 
 import java.util.Scanner;
 
-class Task implements Comparable<Task> {
-    public int debut = 0;
-    public int fin = 0;
-
-    @Override
-    public int compareTo(Task o) {
-        Task task = (Task) o;
-        return fin - task.fin;
-    }
-}
-
 public class SuperComputer {
 
     public static void main(String args[]) {
@@ -67,4 +56,13 @@ public class SuperComputer {
         return c1.compareTo(c2) < 0;
     }
 
+    private static class Task implements Comparable<Task> {
+        private int debut = 0;
+        private int fin = 0;
+
+        @Override
+        public int compareTo(Task o) {
+            return fin - o.fin;
+        }
+    }
 }

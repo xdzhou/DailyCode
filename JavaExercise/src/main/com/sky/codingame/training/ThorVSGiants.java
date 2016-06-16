@@ -1,16 +1,17 @@
 package com.sky.codingame.training;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import com.loic.algo.search.AbstractNode;
+import com.loic.algo.search.BruteForce;
+import com.loic.algo.search.Transition;
+
+import java.util.*;
 
 public class ThorVSGiants {
     private static final int mHeight = 18;
     private static final int mWidth = 40;
 
     public static void main(String args[]) {
-        ThorVSGiants algo = new ThorVSGiants();
+        Algo algo = new Algo();
 
         Scanner in = new Scanner(System.in);
         algo.root.curX = in.nextInt();
@@ -33,64 +34,52 @@ public class ThorVSGiants {
         }
     }
 
-    private Node root;
-    private int totalGiant = -1;
+    private static class Algo extends BruteForce<Node, Step> {
+        private Node root;
+        private int totalGiant = -1;
 
-    public ThorVSGiants() {
-        root = new Node();
-    }
+        public Algo() {
+            root = new Node();
+        }
 
-    public String getNextAction() {
-        System.err.println("Cur ROOT : "+root);
-        process(root, 5);
-        printStep(root);
-        String nextStep = (root.bestChild != null) ? root.bestChild.step.toString() : "STRIKE";
-        root = root.bestChild;
-        return nextStep;
-    }
+        public String getNextAction() {
+            System.err.println("Cur ROOT : "+root);
+            getNextTransition(root, 5);
+            printStep(root);
+            String nextStep = (root.getBestChild() != null) ? root.getBestChild().getTransition().toString() : "STRIKE";
+            root = (Node) root.getBestChild();
+            return nextStep;
+        }
 
-    private float process(Node node, int depth) {
-        if (depth == 0 || node.isOver()) {
-            float fitness = node.heuristic(totalGiant);
-            //System.err.println("fitness: " + fitness+", Node: " + node);
-            return fitness;
-        } else {
-            float best = Integer.MIN_VALUE;
-            Node bestChild = null;
-            for(Step step : Step.values()) {
-                Node child = node.applyStep(step);
-                if (child != null) {
-                    float value = process(child, depth - 1);
-                    if (value > best) {
-                        best = value;
-                        bestChild = child;
-                        if (best == Integer.MAX_VALUE) break;
-                    }
-                }
+        private void printStep(Node n) {
+            Node curNode = n;
+            while (curNode != null) {
+                System.err.println(curNode);
+                curNode = (Node) curNode.getBestChild();
             }
-            node.bestChild = bestChild;
-            return best;
+        }
+
+        @Override
+        protected void onChildNodeCreated(Node parent, Node child, Step transition) {
+            child.totalGiant = totalGiant;
         }
     }
 
-    private static void printStep(Node n) {
-        Node curNode = n;
-        while (curNode != null) {
-            System.err.println(curNode);
-            curNode = curNode.bestChild;
-        }
-    }
-
-    private static class Node implements Cloneable {
-        private Node bestChild;
-        private Step step;
+    private static class Node extends AbstractNode<Step> implements Cloneable {
+        private int totalGiant;
         private int round = 0;
         private int strikeNb;
         private int curX, curY;
         private List<Integer> giants = new ArrayList<Integer>();
 
+        @Override
         public boolean isOver() {
             return isLose() || isWin();
+        }
+
+        @Override
+        public List<Step> getPossibleTransitions() {
+            return Arrays.asList(Step.values());
         }
 
         private boolean isWin() {
@@ -105,7 +94,8 @@ public class ThorVSGiants {
         }
 
         //return next child Node
-        public Node applyStep(Step step) {
+        @Override
+        public Node applyTransition(Step step) {
             if (curX + step.deltaX < 0 || curY + step.deltaY < 0) return null;
             if (curX + step.deltaX >= mWidth || curY + step.deltaY >= mHeight) return null;
 
@@ -116,7 +106,7 @@ public class ThorVSGiants {
                 if (arounds == null) return null;
             }
             Node child = clone();
-            child.step = step;
+            child.mTransition = step;
             child.round = round + 1;
             child.curX += step.deltaX;
             child.curY += step.deltaY;
@@ -156,12 +146,12 @@ public class ThorVSGiants {
                     x += Integer.compare(curX, x);
                     y += Integer.compare(curY, y);
                 }
-
                 giants.set(i, x * mHeight + y);
             }
         }
 
-        public float heuristic(int totalGiant) {
+        @Override
+        public float heuristic() {
             float fitness;
             if (isLose()) fitness = Integer.MIN_VALUE;
             else if(isWin()) fitness = Integer.MAX_VALUE;
@@ -208,7 +198,7 @@ public class ThorVSGiants {
 
         @Override
         public String toString() {
-            return "{step=" + step +
+            return "{step=" + mTransition +
                     ", round=" + round +
                     ", strikeNb=" + strikeNb +
                     ", curX=" + curX +
@@ -227,7 +217,7 @@ public class ThorVSGiants {
         }
     }
 
-    private enum Step {
+    private enum Step implements Transition{
         STRIKE(0, 0),
         //WAIT(0,0),
 

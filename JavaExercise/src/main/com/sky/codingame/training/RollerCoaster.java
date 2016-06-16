@@ -5,16 +5,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-class Note {
-    public int sizeC = 0;
-    public long totalL = 0L;
-
-    public Note(int sizeC, long totalL) {
-        this.sizeC = sizeC;
-        this.totalL = totalL;
-    }
-}
-
 public class RollerCoaster {
 
     public static void main(String args[]) {
@@ -61,4 +51,13 @@ public class RollerCoaster {
         in.close();
     }
 
+    private static class Note {
+        public int sizeC = 0;
+        public long totalL = 0L;
+
+        public Note(int sizeC, long totalL) {
+            this.sizeC = sizeC;
+            this.totalL = totalL;
+        }
+    }
 }
