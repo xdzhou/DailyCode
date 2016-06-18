@@ -1,8 +1,6 @@
 package com.sky.codingame.training;
 
-import com.loic.algo.search.AbstractNode;
 import com.loic.algo.search.BruteForce;
-import com.loic.algo.search.Transition;
 
 import java.util.*;
 
@@ -65,7 +63,7 @@ public class ThorVSGiants {
         }
     }
 
-    private static class Node extends AbstractNode<Step> implements Cloneable {
+    private static class Node extends com.loic.algo.search.Node<Step> implements Cloneable {
         private int totalGiant;
         private int round = 0;
         private int strikeNb;
@@ -186,14 +184,9 @@ public class ThorVSGiants {
 
         @Override
         protected Node clone() {
-            try {
-                Node n = (Node) super.clone();
-                n.giants = new ArrayList<Integer>(giants);
-                return n;
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-            return null;
+            Node n = (Node) super.clone();
+            n.giants = new ArrayList<Integer>(giants);
+            return n;
         }
 
         @Override
@@ -217,7 +210,7 @@ public class ThorVSGiants {
         }
     }
 
-    private enum Step implements Transition{
+    private enum Step {
         STRIKE(0, 0),
         //WAIT(0,0),
 

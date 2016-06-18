@@ -1,6 +1,6 @@
 package com.loic.algo.search;
 
-public class BruteForce<N extends AbstractNode<T>, T extends Transition> {
+public class BruteForce<N extends Node<T>, T> {
 
     public void getNextTransition(N root, int depth) {
         process(root, depth);
