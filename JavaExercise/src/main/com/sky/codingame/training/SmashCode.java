@@ -1,6 +1,6 @@
 package com.sky.codingame.training;
 
-import com.loic.algo.search.MonteCarlo;
+import com.loic.algo.search.GeneticAlgorithm;
 
 import java.util.*;
 
@@ -10,15 +10,45 @@ public class SmashCode {
     private static final int MAX_DEPTH = 8;
 
     public static void main(String args[]) {
+
         Scanner in = new Scanner(System.in);
-        SmashCode algo = new SmashCode();
+        final ColorSet[] colors = new ColorSet[MAX_DEPTH];
+        final MapInfo mapInfo = new MapInfo();
+        GeneticAlgorithm<ColorGene> ga = new GeneticAlgorithm<>(new GeneticAlgorithm.IGAListener<ColorGene>() {
+            @Override
+            public ColorGene createNewGene(Random random) {
+                return ColorGene.getOneGene(random);
+            }
 
-        ColorSet[] colors = new ColorSet[MAX_DEPTH];
-        String[] lines = new String[HEIGHT];
+            @Override
+            public float computerFitness(ColorGene gene) {
+                Integer[] data = gene.mData;
+                MapInfo clone = mapInfo.clone();
+                float score = 0;
+                float rate = 1f;
+                for(int i = 0; i < 8; i++) {
+                    score += rate * clone.drop(data[i * 2], data[i * 2 + 1], colors[i]);
+                    rate *= 0.9f;
+                    if (clone.isOver()) return 0;
+                }
+                return score;
+            }
 
-        Node root = new Node();
-        root.mMapInfo = new MapInfo();
-        int round = 0;
+            @Override
+            public ColorGene getChild(Random random, ColorGene parent1, ColorGene parent2) {
+                //TODO
+                int changIndex = random.nextInt(parent1.mData.length - 1);
+                ColorGene child = new ColorGene(new Integer[ColorGene.LEN]);
+                for(int i = 0; i < parent1.mData.length; i++) {
+                    child.mData[i] = (i <= changIndex) ? parent1.mData[i] : parent2.mData[i];
+                }
+                if (changIndex % 2 == 0 && child.mData[changIndex] == 5 && child.mData[changIndex + 1] % 2 == 0) {
+                    child.mData[changIndex] = random.nextInt(5);
+                }
+                return child;
+            }
+        });
+
         // game loop
         while (true) {
             for (int i = 0; i < 8; i++) {
@@ -29,219 +59,50 @@ public class SmashCode {
             int score1 = in.nextInt();
             for (int i = 0; i < 12; i++) {
                 String row = in.next();
-                lines[i] = row;
+                mapInfo.setLine(row, i);
             }
             int score2 = in.nextInt();
             for (int i = 0; i < 12; i++) {
                 String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
             }
-            root.mMapInfo.buildData(lines);
-            algo.setData(root, colors);
-
-            System.out.println(algo.getCol(round)); // "x": the column in which to drop your blocks
-            round++;
+            ColorGene bestGene = ga.execute(50, 1000);
+            System.err.println("fitness : "+bestGene.getFitness());
+            Integer[] data = bestGene.mData;
+            int col = data[1] == 2 ? data[0] + 1 : data[0];
+            System.out.println(col+" "+data[1]); // "x": the column in which to drop your blocks
         }
     }
 
-    private static final float C = (float) Math.sqrt(2);
-    private Random mRandom = new Random(new Date().getTime());
-    private Node mRoot;
-    private ColorSet[] mColors;
+    private static class ColorGene extends GeneticAlgorithm.Gene<Integer> {
+        public static final int LEN = 16;
 
-    public void setData(Node root, ColorSet[] colors) {
-        root.reset();
-        mRoot = root;
-        mColors = colors;
-    }
-
-    public String getCol(int turnNb) {
-        if (turnNb < 4) {
-            return simpleCase();
-        } else {
-            for(int i = 0; i < 3000; i++) {
-                process();
-            }
-            Node bestChild = getBestChild(mRoot);
-            int col = (bestChild.mRotation == 2) ? bestChild.mStep + 1 : bestChild.mStep;
-            return col + " " + bestChild.mRotation;
+        private ColorGene(Integer[] data) {
+            super(data);
         }
-    }
 
-    private String simpleCase() {
-        int fireTop = mRoot.mMapInfo.getEmptyLine(0);
-        int lastTop = mRoot.mMapInfo.getEmptyLine(5);
-        int lowCol = (fireTop < lastTop) ? 5 : 0;
-        int lowTop = (fireTop < lastTop) ? lastTop : fireTop;
-        if (lowTop + 1 < HEIGHT) {
-            char c = mRoot.mMapInfo.getChar(lowTop + 1, lowCol);
-            if (c != mColors[0].c1) {
-                return lowCol + " 1";
-            } else if (c != mColors[0].c2) {
-                return lowCol + " 3";
+        @Override
+        protected void mutation(Random random) {
+            int index = random.nextInt(LEN);
+            if (index % 2 == 0) {
+                mData[index] = (mData[index + 1] % 2 == 0) ? random.nextInt(5) : random.nextInt(6);
             } else {
-                int highCol = (fireTop < lastTop) ? 0 : 5;
-                int highTop = (fireTop < lastTop) ? fireTop : lastTop;
-                char highChar = mRoot.mMapInfo.getChar(highTop + 1, highCol);
-                if (highChar != mColors[0].c1) {
-                    return highCol + " 1";
-                } else if (highChar != mColors[0].c2) {
-                    return highCol + " 3";
-                } else {
-                    return lowCol + " 0";
-                }
-            }
-        } else {
-            return lowCol + " 1";
-        }
-    }
-
-    private void process() {
-        List<Node> path = selection();
-        //System.err.println("get Path len : "+path.size());
-        Node leafNode = path.get(path.size() - 1);
-        Node selectedNode = null;
-        if (leafNode != mRoot && leafNode.simulationCount == 0 ) {
-            selectedNode = leafNode;
-            path.remove(path.size() - 1);
-        } else {
-            selectedNode = expansion(leafNode, path.size() - 1);
-        }
-        //System.err.println("select Node : "+(selectedNode == null ? "NULL" : selectedNode.print(true)));
-        float winning;
-        if (selectedNode == null) {
-            winning = leafNode.heuristic();
-            //System.err.println("heuristic winning : " + winning);
-        } else {
-            winning = simulation(selectedNode, path.size());
-            //System.err.println("simulation winning : " + winning);
-        }
-        backPropagation(winning, path);
-        //System.err.println("after process : "+mRoot.print(false));
-    }
-
-    private List<Node> selection() {
-        List<Node> path = new ArrayList<Node>();
-        Node curNode = mRoot;
-        while (curNode.children != null && ! curNode.children.isEmpty()) {
-            path.add(curNode);
-            curNode = getBestChild(curNode);
-        }
-        path.add(curNode);
-        return path;
-    }
-
-    private Node getBestChild(Node parent) {
-        double best = Double.NEGATIVE_INFINITY;
-        Node bestChild = null;
-        for(Node child : parent.children) {
-            if (child.simulationCount == 0) {
-                bestChild = child;
-                break;
-            } else {
-                double value = (child.mWin / (float) child.simulationCount + C * Math.sqrt(Math.log(parent.simulationCount) / (float) child.simulationCount));
-                if (value > best || (value == best && mRandom.nextBoolean())) {
-                    best = value;
-                    bestChild = child;
+                mData[index] = random.nextInt(4);
+                if (mData[index] % 2 == 0 && mData[index - 1] == 5) {
+                    mData[index - 1] = random.nextInt(5);
                 }
             }
         }
-        return bestChild;
-    }
 
-    private Node expansion(Node leafNode, int leafDepth) {
-        if (leafNode.mMapInfo.isOver() || leafDepth >= MAX_DEPTH) {
-            return null;
-        } else {
-            leafNode.children = new ArrayList<Node>(22);
-            int[] rotations = new int[] {0,1,2,3};
-            for (int rotation : rotations) {
-                int size = (rotation % 2 == 0) ? WIDTH - 1 : WIDTH;
-                for(int col = 0; col < size; col ++) {
-                    Node child = new Node();
-                    child.mStep = col;
-                    child.mRotation = rotation;
-                    child.mMapInfo = leafNode.mMapInfo.clone();
-                    child.mScore += child.mMapInfo.drop(col, rotation, mColors[leafDepth]);
-                    leafNode.children.add(child);
-                }
+        public static ColorGene getOneGene(Random random) {
+            Integer[] data = new Integer[LEN];
+            for(int i = 0; i < 8; i++) {
+                int rotate = random.nextInt(4);
+                int col = (rotate == 0 || rotate == 2) ? random.nextInt(5) : random.nextInt(6);
+                data[i * 2] = col;
+                data[i * 2 + 1] = rotate;
             }
-
-            if (leafNode != mRoot) leafNode.mMapInfo = null;
-            //
-            int childIndex = mRandom.nextInt(leafNode.children.size());
-            //System.err.println("expansion node "+leafNode.print(false)+", depth "+leafDepth+", choice child "+childIndex);
-            return leafNode.children.get(childIndex);
-        }
-    }
-
-    private float simulation(Node node, int depth) {
-        float winning;
-        if (depth >= MAX_DEPTH) {
-            winning = node.heuristic();
-        } else {
-            //System.err.println("simulation in depth "+depth+" for Node "+node.print(false));
-            MapInfo mapInfo = node.mMapInfo.clone();
-            int score = node.mScore;
-            for (int i = depth + 1; i <= MAX_DEPTH && !mapInfo.isOver(); i++) {
-                int rotation = mRandom.nextInt(4);
-                int dropCol = mRandom.nextInt((rotation % 2 == 0) ? WIDTH - 1 : WIDTH);
-                score += mapInfo.drop(dropCol, rotation, mColors[i - 1]);
-            }
-            winning = scoreToWinning(score);
-        }
-        node.applyWinning(winning);
-        return winning;
-    }
-
-    private void backPropagation(float winning, List<Node> path) {
-        for(Node n : path) {
-            n.applyWinning(winning);
-        }
-    }
-
-    private static float scoreToWinning(int score) {
-        float max = 500f;
-        float s = Math.abs(Math.max(max * 2, score) - max);
-
-        return 1 - s / max;
-    }
-
-    private static class Node {
-        private float mWin = 0f;
-        private int simulationCount = 0;
-        private List<Node> children;
-
-        private int mStep; //0,1...5 col
-        private int mRotation; //0,1,2,3
-        private int mScore = 0;
-        private MapInfo mMapInfo;
-
-        public void applyWinning(float winning) {
-            simulationCount ++;
-            mWin += winning;
-        }
-
-        public void reset() {
-            mWin = 0f;
-            simulationCount = 0;
-            mScore = 0;
-            children = null;
-        }
-
-        public float heuristic() {
-            if (mMapInfo.isOver || mScore <= 0) return 0;
-            else return scoreToWinning(mScore);
-        }
-
-        public String print(boolean withMap) {
-            String title = mWin+"/"+simulationCount+"\n";
-            if (withMap) title += mMapInfo + "\n";
-            if (children != null) {
-                for(Node c : children) {
-                    title += c.mWin+"/"+c.simulationCount+"\n";
-                }
-            }
-            return title.substring(0, title.length());
+            //System.err.println("score : " + Arrays.toString(data));
+            return new ColorGene(data);
         }
     }
 
@@ -254,14 +115,10 @@ public class SmashCode {
         private char[][] data = new char[HEIGHT][WIDTH];
         private boolean isOver = false;
 
-        private int buildData(String[] lines) {
-            int size = 0;
-            for(int line = 0; line < HEIGHT; line ++)
-                for(int column = 0; column < WIDTH; column ++) {
-                    data[line][column] = lines[line].charAt(column);
-                    if (data[line][column] != '.') size ++;
-                }
-            return size;
+        private void setLine(String s, int line) {
+            for(int column = 0; column < WIDTH; column ++) {
+                data[line][column] = s.charAt(column);
+            }
         }
 
         public int getEmptyLine(int col) {
@@ -449,6 +306,7 @@ public class SmashCode {
         protected MapInfo clone(){
             try {
                 MapInfo m = (MapInfo) super.clone();
+                m.isOver = false;
                 m.data = new char[HEIGHT][WIDTH];
                 for(int line = 0; line < HEIGHT; line ++)
                     for(int column = 0; column < WIDTH; column ++) {
@@ -513,35 +371,6 @@ public class SmashCode {
 
         public boolean containIndex(int index) {
             return mIndexs != null && mIndexs.contains(index);
-        }
-    }
-
-    private static class Transition {
-        private int mCol;
-        private int mRotation;
-    }
-    private static class MapNode extends MonteCarlo.MonteCarloNode<Transition> {
-        private char[][] data = new char[HEIGHT][WIDTH];
-        private boolean isOver = false;
-
-        @Override
-        public float heuristic() {
-            return 0;
-        }
-
-        @Override
-        public com.loic.algo.search.Node<Transition> applyTransition(Transition transition) {
-            return null;
-        }
-
-        @Override
-        public boolean isOver() {
-            return false;
-        }
-
-        @Override
-        public List<Transition> getPossibleTransitions() {
-            return null;
         }
     }
 }

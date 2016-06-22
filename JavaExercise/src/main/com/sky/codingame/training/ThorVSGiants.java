@@ -9,62 +9,46 @@ public class ThorVSGiants {
     private static final int mWidth = 40;
 
     public static void main(String args[]) {
-        Algo algo = new Algo();
+        Maze maze = Maze.getInstance();
+        MapNode root = new MapNode();
+        BruteForce<MapNode, Step> algo = new BruteForce<MapNode, Step>();
 
         Scanner in = new Scanner(System.in);
-        algo.root.curX = in.nextInt();
-        algo.root.curY = in.nextInt();
+        root.curX = in.nextInt();
+        root.curY = in.nextInt();
 
         // game loop
         while (true) {
             int H = in.nextInt(); // the remaining number of hammer strikes.
             int N = in.nextInt(); // the number of giants which are still present on the map.
-            if (algo.totalGiant < 0) algo.totalGiant = N;
-            algo.root.round = 0;
-            algo.root.strikeNb = H;
-            algo.root.giants.clear();
+            if (maze.mTotalGiant < 0) maze.mTotalGiant = N;
+            root.round = 0;
+            root.strikeNb = H;
+            root.giants.clear();
             for (int i = 0; i < N; i++) {
                 int X = in.nextInt();
                 int Y = in.nextInt();
-                algo.root.giants.add(X * mHeight + Y);
+                root.giants.add(X * mHeight + Y);
             }
-            System.out.println(algo.getNextAction());
-        }
-    }
-
-    private static class Algo extends BruteForce<Node, Step> {
-        private Node root;
-        private int totalGiant = -1;
-
-        public Algo() {
-            root = new Node();
-        }
-
-        public String getNextAction() {
-            System.err.println("Cur ROOT : "+root);
-            getNextTransition(root, 5);
-            printStep(root);
+            algo.execute(root, 5);
             String nextStep = (root.getBestChild() != null) ? root.getBestChild().getTransition().toString() : "STRIKE";
-            root = (Node) root.getBestChild();
-            return nextStep;
-        }
-
-        private void printStep(Node n) {
-            Node curNode = n;
-            while (curNode != null) {
-                System.err.println(curNode);
-                curNode = (Node) curNode.getBestChild();
-            }
-        }
-
-        @Override
-        protected void onChildNodeCreated(Node parent, Node child, Step transition) {
-            child.totalGiant = totalGiant;
+            root = (MapNode) root.getBestChild();
+            System.out.println(nextStep);
         }
     }
 
-    private static class Node extends com.loic.algo.search.Node<Step> implements Cloneable {
-        private int totalGiant;
+    private static class Maze {
+        private int mTotalGiant = -1;
+
+        private static Maze mInstance;
+
+        public static Maze getInstance() {
+            if (mInstance == null) mInstance = new Maze();
+            return mInstance;
+        }
+    }
+
+    private static class MapNode extends BruteForce.BruteForceNode<Step> implements Cloneable {
         private int round = 0;
         private int strikeNb;
         private int curX, curY;
@@ -77,7 +61,19 @@ public class ThorVSGiants {
 
         @Override
         public List<Step> getPossibleTransitions() {
-            return Arrays.asList(Step.values());
+            List<Step> result = Arrays.asList(Step.values());
+            Iterator<Step> iterator = result.iterator();
+            while (iterator.hasNext()) {
+                Step step = iterator.next();
+                if (curX + step.deltaX < 0 || curY + step.deltaY < 0) iterator.remove();
+                if (curX + step.deltaX >= mWidth || curY + step.deltaY >= mHeight) iterator.remove();
+
+                if (step == Step.STRIKE) {
+                    if (strikeNb <= 0) iterator.remove();
+                    else if (giantsAround() == null) iterator.remove();
+                }
+            }
+            return result;
         }
 
         private boolean isWin() {
@@ -91,30 +87,20 @@ public class ThorVSGiants {
             return isLose;
         }
 
-        //return next child Node
+        //return next child MapNode
         @Override
-        public Node applyTransition(Step step) {
-            if (curX + step.deltaX < 0 || curY + step.deltaY < 0) return null;
-            if (curX + step.deltaX >= mWidth || curY + step.deltaY >= mHeight) return null;
-
-            List<Integer> arounds = null;
-            if (step == Step.STRIKE) {
-                if (strikeNb <= 0) return null;
-                arounds = giantsAround();
-                if (arounds == null) return null;
-            }
-            Node child = clone();
-            child.mTransition = step;
-            child.round = round + 1;
-            child.curX += step.deltaX;
-            child.curY += step.deltaY;
+        public void applyTransition(Step step) {
+            List<Integer> arounds = giantsAround();
+            mTransition = step;
+            round = round + 1;
+            curX += step.deltaX;
+            curY += step.deltaY;
             if (arounds != null) {
                 System.err.println("strike giants : "+arounds.size());
-                child.giants.removeAll(arounds);
-                child.strikeNb --;
+                giants.removeAll(arounds);
+                strikeNb --;
             }
-            child.moveGiants();
-            return child;
+            moveGiants();
         }
 
         private List<Integer> giantsAround() {
@@ -155,7 +141,7 @@ public class ThorVSGiants {
             else if(isWin()) fitness = Integer.MAX_VALUE;
             else {
                 int maxValue = mWidth + mHeight;
-                fitness = (totalGiant - giants.size()) * maxValue;
+                fitness = (Maze.getInstance().mTotalGiant - giants.size()) * maxValue;
                 for (int i = 0; i <giants.size(); i++) {
                     int level = getLevel(giants.get(i));
                     if (level <= 4) fitness += (maxValue - 1);
@@ -175,16 +161,9 @@ public class ThorVSGiants {
             return (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         }
 
-        private final Comparator<Integer> mComparator = new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return getLevel(o1) - getLevel(o2);
-            }
-        };
-
         @Override
-        protected Node clone() {
-            Node n = (Node) super.clone();
+        protected MapNode clone() {
+            MapNode n = (MapNode) super.clone();
             n.giants = new ArrayList<Integer>(giants);
             return n;
         }

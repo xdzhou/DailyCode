@@ -80,9 +80,8 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
             List<T> transitions = leafNode.getPossibleTransitions();
             leafNode.mChildren = new ArrayList<MonteCarloNode<T>>(transitions.size());
             for(T t : transitions) {
-                N child = (N) leafNode.applyTransition(t);
+                N child = (N) leafNode.getChildForTransition(t);
                 if (child != null) {
-                    child.setTransition(t);
                     leafNode.addChild(child);
                 }
             }
@@ -102,7 +101,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
             for (int i = depth + 1; i <= mMaxDepth && !curNode.isOver(); i++) {
                 List<T> transitions = curNode.getPossibleTransitions();
                 int selectIndex = mRandom.nextInt(transitions.size());
-                curNode = (N) curNode.applyTransition(transitions.get(selectIndex));
+                curNode = (N) curNode.getChildForTransition(transitions.get(selectIndex));
             }
             winning = curNode.heuristic();
         }

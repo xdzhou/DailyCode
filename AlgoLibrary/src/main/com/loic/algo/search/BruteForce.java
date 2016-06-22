@@ -1,8 +1,8 @@
 package com.loic.algo.search;
 
-public class BruteForce<N extends Node<T>, T> {
+public class BruteForce<N extends BruteForce.BruteForceNode<T>, T> {
 
-    public void getNextTransition(N root, int depth) {
+    public void execute(N root, int depth) {
         process(root, depth);
     }
 
@@ -13,10 +13,8 @@ public class BruteForce<N extends Node<T>, T> {
             float best = Float.NEGATIVE_INFINITY;
             N bestChild = null;
             for(T transition : root.getPossibleTransitions()) {
-                N child = (N) root.applyTransition(transition);
+                N child = (N) root.getChildForTransition(transition);
                 if (child != null) {
-                    child.setTransition(transition);
-                    onChildNodeCreated(root, child, transition);
                     float value = process(child, depth - 1);
                     if (value > best) {
                         best = value;
@@ -25,12 +23,23 @@ public class BruteForce<N extends Node<T>, T> {
                     }
                 }
             }
-            root.setBestChild(bestChild);
+            root.mBestChild = bestChild;
             return best;
         }
     }
 
-    protected void onChildNodeCreated(N parent, N child, T transition) {
+    public static abstract class BruteForceNode<T> extends Node<T> {
+        protected Node<T> mBestChild;
 
+        public Node<T> getBestChild() {
+            return mBestChild;
+        }
+
+        @Override
+        protected BruteForceNode<T> clone() {
+            BruteForceNode<T> node = (BruteForceNode<T>) super.clone();
+            node.mBestChild = null;
+            return node;
+        }
     }
 }

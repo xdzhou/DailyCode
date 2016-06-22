@@ -173,7 +173,7 @@ public class VoxCodei {
 
                 MapNode self = clone();
                 while (!self.mBombs.isEmpty()) {
-                    self.applyTransitionSelf(-1);
+                    self.applyTransition(-1);
                     rate *= 0.9f;
                     wining += rate * (totalSize - self.mSurveillances.size()) / (float) maze.mTotalPoint;
                     totalSize = self.mSurveillances.size();
@@ -187,13 +187,7 @@ public class VoxCodei {
         }
 
         @Override
-        public MapNode applyTransition(Integer transition) {
-            MapNode child = clone();
-            child.applyTransitionSelf(transition);
-            return child;
-        }
-
-        private void applyTransitionSelf(Integer transition) {
+        protected void applyTransition(Integer transition) {
             Set<BombInfo> expositionBombs = new HashSet<BombInfo>();
             for(BombInfo bi : mBombs) {
                 bi.oneTurn();
