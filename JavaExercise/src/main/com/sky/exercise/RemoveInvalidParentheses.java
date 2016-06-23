@@ -42,7 +42,7 @@ public class RemoveInvalidParentheses implements Problem<String, List<String>> {
      * remove all close parentheses invalid
      */
     private Set<String> removeCloseParenthesesInvalid(String originString) {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
 
         int open = 0, close = 0;
         int len = originString.length();
@@ -99,7 +99,7 @@ public class RemoveInvalidParentheses implements Problem<String, List<String>> {
      * remove all open parentheses invalid
      */
     private Set<String> removeOpenParenthesesInvalid(String originString) {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
 
         int open = 0, close = 0;
         int len = originString.length();
@@ -150,7 +150,7 @@ public class RemoveInvalidParentheses implements Problem<String, List<String>> {
     }
 
     private List<String> removeChar(String s, char c) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
             if (c == s.charAt(i) && (i + 1 >= s.length() || s.charAt(i + 1) != c)) {
                 result.add(removeCharAt(s, i));

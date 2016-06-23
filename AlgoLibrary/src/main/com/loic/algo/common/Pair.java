@@ -10,7 +10,7 @@ public class Pair<T, E> implements Cloneable {
     }
 
     public static <T, E> Pair<T, E> create(T first, E second) {
-        return new Pair<T, E>(first, second);
+        return new Pair<>(first, second);
     }
 
     public T getFirst() {

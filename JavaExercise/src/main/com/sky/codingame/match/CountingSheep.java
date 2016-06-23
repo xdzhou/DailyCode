@@ -39,7 +39,7 @@ public class CountingSheep {
         boolean[] flags = new boolean[10];
         int changeCount = 0;
 
-        private List<Integer> nums = new ArrayList<Integer>();
+        private List<Integer> nums = new ArrayList<>();
 
         public void add(int[] chiffres, int startIndex) {
             int delta = 0;

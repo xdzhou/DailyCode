@@ -20,8 +20,8 @@ public class ChargingChaos {
             int nbSwitch = 0;
             int N = in.nextInt();
             int L = in.nextInt();
-            List<Integer> electric = new ArrayList<Integer>(N);
-            List<Integer> device = new ArrayList<Integer>(N);
+            List<Integer> electric = new ArrayList<>(N);
+            List<Integer> device = new ArrayList<>(N);
             in.nextLine();
             String[] elcStr = in.nextLine().split(" ");
             for (int j = 0; j < N; j++)
@@ -32,7 +32,7 @@ public class ChargingChaos {
             int[] elcNBone = getNbOne(electric, L);
             int[] devNBone = getNbOne(device, L);
 
-            List<Integer> specialIndex = new ArrayList<Integer>();
+            List<Integer> specialIndex = new ArrayList<>();
             for (int j = 0; j < L; j++) {
                 if (elcNBone[j] == devNBone[j]) {
                     if (elcNBone[j] == N / 2 && N % 2 == 0)
@@ -69,7 +69,7 @@ public class ChargingChaos {
         if (!isBitEqual(device, electric, specialIndex, L))
             return -1;
 
-        List<Integer> copyelectric = new ArrayList<Integer>(electric.size());
+        List<Integer> copyelectric = new ArrayList<>(electric.size());
         copyelectric.addAll(electric);
 
         int index = specialIndex.remove(0);
@@ -119,9 +119,9 @@ public class ChargingChaos {
     private boolean isBitEqual(List<Integer> l1, List<Integer> l2, List<Integer> specialIndex, int L) {
         if (specialIndex.size() == l1.size())
             return true;
-        List<Integer> copyL1 = new ArrayList<Integer>(l1.size());
+        List<Integer> copyL1 = new ArrayList<>(l1.size());
         copyL1.addAll(l1);
-        List<Integer> copyL2 = new ArrayList<Integer>(l2.size());
+        List<Integer> copyL2 = new ArrayList<>(l2.size());
         copyL2.addAll(l2);
         for (int index : specialIndex) {
             for (int i = 0; i < copyL1.size(); i++) {

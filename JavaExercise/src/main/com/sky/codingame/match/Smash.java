@@ -43,7 +43,7 @@ class Smash {
         private static final int GENERATION = 100;
         private static final float PV = 1 / 10f;
 
-        private List<Gene> mGenes = new ArrayList<Gene>(POPULATION);
+        private List<Gene> mGenes = new ArrayList<>(POPULATION);
         private Random mRandom = new Random(new Date().getTime());
 
         private MapInfo mMapInfo = new MapInfo();
@@ -60,7 +60,7 @@ class Smash {
                 }
             }
             if (fitnessSomme < 8) return start(nextColors[0]);
-            List<Gene> childrenGenes = new ArrayList<Gene>(POPULATION);
+            List<Gene> childrenGenes = new ArrayList<>(POPULATION);
 
             for (int i = 0; i < GENERATION; i++) {
                 if (fitnessSomme < 8) break;
@@ -249,7 +249,7 @@ class Smash {
             }
 
             //disappear
-            List<Integer> indexToCheck = new ArrayList<Integer>();
+            List<Integer> indexToCheck = new ArrayList<>();
             for (int column = 0; column < WIDTH; column++) {
                 if (topBound[column] != -1) {
                     int len = bottomBound[column] - topBound[column] + 1;
@@ -262,7 +262,7 @@ class Smash {
                 }
             }
             //check chain
-            List<Zone> zoneToDisappear = new ArrayList<Zone>();
+            List<Zone> zoneToDisappear = new ArrayList<>();
             while (!indexToCheck.isEmpty()) {
                 int index = indexToCheck.get(0);
                 Zone oneZone = getZoneFor(index);
@@ -337,12 +337,12 @@ class Smash {
         }
 
         public void addIndex(int index) {
-            if (mIndexs == null) mIndexs = new ArrayList<Integer>();
+            if (mIndexs == null) mIndexs = new ArrayList<>();
             mIndexs.add(index);
         }
 
         public void addBlock(int index) {
-            if (mIndexs == null) mIndexs = new ArrayList<Integer>();
+            if (mIndexs == null) mIndexs = new ArrayList<>();
             mIndexs.add(index);
             mBlockCount++;
         }

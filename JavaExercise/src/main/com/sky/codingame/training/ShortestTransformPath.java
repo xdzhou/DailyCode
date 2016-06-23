@@ -34,7 +34,7 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
     };
 
     public ShortestTransformPath() {
-        treeMap = new HashMap<T, HashSet<T>>();
+        treeMap = new HashMap<>();
     }
 
     @Override
@@ -59,21 +59,21 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
         HashSet<T> children = treeMap.get(node);
         treeMap.remove(node);
         if (children == null || children.isEmpty()) {
-            return new Pair<Integer, Integer>(0, 0);
+            return new Pair<>(0, 0);
         }
-        ArrayList<Pair<Integer, Integer>> childrenResult = new ArrayList<Pair<Integer, Integer>>(children.size());
+        ArrayList<Pair<Integer, Integer>> childrenResult = new ArrayList<>(children.size());
         for (T child : children) {
             if (treeMap.containsKey(child)) {
                 childrenResult.add(getLongestPath(child));
             }
         }
         if (childrenResult.isEmpty()) {
-            return new Pair<Integer, Integer>(0, 0);
+            return new Pair<>(0, 0);
         } else if (childrenResult.size() == 1) {
             int depth = 1 + childrenResult.get(0).getSecond();
             int longPath = Math.max(depth, childrenResult.get(0).getFirst());
 
-            return new Pair<Integer, Integer>(longPath, depth);
+            return new Pair<>(longPath, depth);
         } else {
             Collections.sort(childrenResult, longestPathComparator);
             int childLongPath = childrenResult.get(0).getFirst();
@@ -84,7 +84,7 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
 
             int longPath = Math.max(maxDepth0 + maxDepth1 + 2, childLongPath);
 
-            return new Pair<Integer, Integer>(longPath, maxDepth0 + 1);
+            return new Pair<>(longPath, maxDepth0 + 1);
         }
     }
 
@@ -92,11 +92,11 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
         HashSet<T> fromChildren = treeMap.get(from);
         HashSet<T> toChildren = treeMap.get(to);
         if (fromChildren == null) {
-            fromChildren = new HashSet<T>();
+            fromChildren = new HashSet<>();
             treeMap.put(from, fromChildren);
         }
         if (toChildren == null) {
-            toChildren = new HashSet<T>();
+            toChildren = new HashSet<>();
             treeMap.put(to, toChildren);
         }
 

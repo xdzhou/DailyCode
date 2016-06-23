@@ -18,8 +18,8 @@ public class MaxPQTest {
                 return (int) (o2 - o1);
             }
         };
-        pq_java = new PriorityQueue<Double>(N, cmp);
-        pq_my = new MaxPQ<Double>(Double.class, N);
+        pq_java = new PriorityQueue<>(N, cmp);
+        pq_my = new MaxPQ<>(Double.class, N);
         for (int i = 0; i < N; i++) {
             double d = Math.random() * 100;
             pq_java.add(d);

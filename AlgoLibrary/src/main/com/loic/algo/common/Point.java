@@ -9,10 +9,6 @@ public class Point {
         this.y = y;
     }
 
-    public Point() {
-        this(0, 0);
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

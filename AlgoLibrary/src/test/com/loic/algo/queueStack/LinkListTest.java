@@ -13,10 +13,10 @@ public class LinkListTest {
 
     @BeforeTest
     public void init() {
-        noCyclyNode1 = new LinkListNode<Integer>(1);
+        noCyclyNode1 = new LinkListNode<>(1);
         intersectNode = noCyclyNode1.append(2).append(3);
         intersectNode.append(4).append(5).append(6).append(7);
-        noCyclyNode2 = new LinkListNode<Integer>(11);
+        noCyclyNode2 = new LinkListNode<>(11);
         noCyclyNode2.append(22).setNextNode(intersectNode);
 
         System.out.println(noCyclyNode1.printList());
@@ -25,7 +25,7 @@ public class LinkListTest {
         Assert.assertEquals(noCyclyNode1.mNext, null);
         noCyclyNode1 = reversNode.reverse();
 
-        cyclyNode = new LinkListNode<Integer>(1);
+        cyclyNode = new LinkListNode<>(1);
         LinkListNode<Integer> temp = cyclyNode.append(2).append(3);
         temp.append(4).append(5).append(6).setNextNode(temp);
     }

@@ -9,7 +9,7 @@ public class EightQueens implements Problem<Void, Integer> {
 
     @Override
     public Integer resolve(Void param) {
-        List<Integer> positions = new ArrayList<Integer>(8);
+        List<Integer> positions = new ArrayList<>(8);
         return search(0, positions);
     }
 

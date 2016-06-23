@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 class Ragnarok {
-    List<Position> gaintList = new ArrayList<Position>();
+    List<Position> gaintList = new ArrayList<>();
 
     public static void main(String[] args) {
         new Ragnarok().start();
@@ -138,7 +138,7 @@ class Ragnarok {
     private class PositionComparator implements Comparator<Position> {
         @Override
         public int compare(Position o1, Position o2) {
-            return (int) (o1.length - o2.length);
+            return o1.length - o2.length;
         }
     }
 }

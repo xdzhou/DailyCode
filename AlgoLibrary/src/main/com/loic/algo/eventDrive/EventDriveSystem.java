@@ -11,7 +11,7 @@ public abstract class EventDriveSystem {
     protected PriorityQueue<Event> mEventsQueue;
 
     public EventDriveSystem() {
-        mEventsQueue = new PriorityQueue<Event>();
+        mEventsQueue = new PriorityQueue<>();
     }
 
     public void simulate() {

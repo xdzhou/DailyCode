@@ -15,7 +15,7 @@ public class BankServiceSystem extends EventDriveSystem {
 
     public BankServiceSystem() {
         super();
-        mQueue = new LinkedList<Client>();
+        mQueue = new LinkedList<>();
         // we have 2 window in service
         windows = new boolean[2];
         Arrays.fill(windows, true);

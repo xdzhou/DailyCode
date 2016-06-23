@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Q2Image {
     public static void main(String args[]) {
-        HashMap<Integer, Character> notes = new HashMap<Integer, Character>();
+        HashMap<Integer, Character> notes = new HashMap<>();
         notes.put(0, 'G');
         notes.put(1, 'F');
         notes.put(2, 'E');

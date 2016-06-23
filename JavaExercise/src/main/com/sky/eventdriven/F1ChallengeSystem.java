@@ -45,7 +45,7 @@ public class F1ChallengeSystem extends EventDriveSystem {
     public F1ChallengeSystem(int N, int maxDis) {
         super();
         this.maxDis = maxDis;
-        mCarsList = new ArrayList<F1ChallengeSystem.Car>(N);
+        mCarsList = new ArrayList<>(N);
         for (int i = 1; i <= N; i++) {
             Car car = new Car(i, (150 + 10 * i) / 3.6d, 2 * i);
             car.record.dis = -200 * (i - 1);

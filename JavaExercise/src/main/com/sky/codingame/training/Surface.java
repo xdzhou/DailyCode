@@ -26,7 +26,7 @@ public class Surface {
         }
 
         N = in.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < N; i++) {
             int px = in.nextInt();
             int py = in.nextInt();

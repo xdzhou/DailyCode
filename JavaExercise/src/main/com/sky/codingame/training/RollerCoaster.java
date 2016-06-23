@@ -9,7 +9,7 @@ public class RollerCoaster {
 
     public static void main(String args[]) {
         int L, C, N;
-        Queue<Integer> queue = new LinkedList<Integer>();
+        Queue<Integer> queue = new LinkedList<>();
 
         Scanner in = new Scanner(System.in);
         L = in.nextInt();
@@ -21,7 +21,7 @@ public class RollerCoaster {
         int cap;
         int nbGroup = queue.size();
         int numFlag = 1;
-        HashMap<Integer, Note> noteMap = new HashMap<Integer, Note>();
+        HashMap<Integer, Note> noteMap = new HashMap<>();
         long resulta = 0;
         for (int i = 1; i <= C; i++) {
             if (noteMap.containsKey(numFlag)) {

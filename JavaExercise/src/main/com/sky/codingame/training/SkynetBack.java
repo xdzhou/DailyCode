@@ -62,21 +62,21 @@ public class SkynetBack {
         }
 
         public void putEnds(int... ends) {
-            specialPoints = new HashMap<Integer, List<Integer>>();
+            specialPoints = new HashMap<>();
             int size = mMaps.length;
             for(int end : ends) {
                 for (int i = 0; i < size; i++) {
                     if (mMaps[end][i] ) {
                         List<Integer> gates = specialPoints.get(i);
                         if(gates == null){
-                            gates = new ArrayList<Integer>();
+                            gates = new ArrayList<>();
                             specialPoints.put(i, gates);
                         }
                         gates.add(end);
                     }
                 }
             }
-            hasGates = new ArrayList<Integer>(specialPoints.keySet());
+            hasGates = new ArrayList<>(specialPoints.keySet());
             for(Integer key : hasGates) {
                 if (specialPoints.get(key).size() <= 1) {
                     specialPoints.remove(key);
@@ -97,7 +97,7 @@ public class SkynetBack {
             }
             if (gate == -1) {
                 int size = mMaps.length;
-                List<Integer> toTouchNodes = new ArrayList<Integer>();
+                List<Integer> toTouchNodes = new ArrayList<>();
                 boolean[] removeFlags = new boolean[size];
                 int[] prevNodes = new int[size];
                 Arrays.fill(prevNodes, -1);

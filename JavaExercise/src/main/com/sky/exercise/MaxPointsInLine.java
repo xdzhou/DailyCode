@@ -25,7 +25,7 @@ public class MaxPointsInLine implements Problem<Point[], Integer> {
             return param.length;
         }
         int sameSlopeCountMax = 1;
-        Map<Float, Integer> slopeMap = new HashMap<Float, Integer>();
+        Map<Float, Integer> slopeMap = new HashMap<>();
         for (int i = 0; i < param.length - 1; i++) {
             int curSameSlopeCountMax = 1;
             int delta = 0;
@@ -47,8 +47,7 @@ public class MaxPointsInLine implements Problem<Point[], Integer> {
             curSameSlopeCountMax += delta;
             sameSlopeCountMax = Math.max(sameSlopeCountMax, curSameSlopeCountMax);
         }
-        int result = Math.min(sameSlopeCountMax + 1, param.length);
-        return result;
+        return Math.min(sameSlopeCountMax + 1, param.length);
     }
 
     private float getSlope(Point p1, Point p2) {

@@ -23,14 +23,14 @@ public class ParanoidAndroid {
         int nbAdditionalElevators = in.nextInt(); // number of additional elevators that you can build
         System.err.println("number of elevators can be created: "+nbAdditionalElevators);
         int nbElevators = in.nextInt(); // number of elevators
-        final Map<Integer, List<Integer>> elevatorMap = new HashMap<Integer, List<Integer>>(nbElevators);
+        final Map<Integer, List<Integer>> elevatorMap = new HashMap<>(nbElevators);
         for (int i = 0; i < nbElevators; i++) {
             int elevatorFloor = in.nextInt(); // floor on which this elevator is found
             int elevatorPos = in.nextInt(); // position of the elevator on its floor
             if(elevatorMap.containsKey(elevatorFloor)) {
                 elevatorMap.get(elevatorFloor).add(elevatorPos);
             } else {
-                List<Integer> pos = new ArrayList<Integer>();
+                List<Integer> pos = new ArrayList<>();
                 pos.add(elevatorPos);
                 elevatorMap.put(elevatorFloor, pos);
             }
@@ -53,7 +53,7 @@ public class ParanoidAndroid {
 
             if (elePos == null) {
                 System.err.println("Start point : " + cloneFloor+", "+clonePos);
-                final List<Integer> hasEleFloors = new ArrayList<Integer>();
+                final List<Integer> hasEleFloors = new ArrayList<>();
                 for(Integer floor : elevatorMap.keySet()) {
                     if (floor < exitFloor ) hasEleFloors.add(floor);
                 }
@@ -65,7 +65,7 @@ public class ParanoidAndroid {
                     path = algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
                 } else {
                     if (elevatorAdd > hasEleFloors.size()) elevatorAdd = hasEleFloors.size();
-                    List<Integer> ignoreList = new ArrayList<Integer>(elevatorAdd);
+                    List<Integer> ignoreList = new ArrayList<>(elevatorAdd);
 
                     class Iterator {
                         List<Integer> fill(List<Integer> ignoreList, int startIndex, int count){
@@ -182,7 +182,6 @@ public class ParanoidAndroid {
         private static final byte TO_TRACE = 2;
 
         private IMapInfo mMapInfo;
-        private boolean isRight = true;
 
         public AStarAlgo(IMapInfo mMapInfo) {
             this.mMapInfo = mMapInfo;
@@ -194,8 +193,8 @@ public class ParanoidAndroid {
             byte[] flags = new byte[w * h];
 
             int startIndex = getIndex(startX, startY);
-            PriorityQueue<Node> priorityQueue = new PriorityQueue<Node>();
-            List<Node> visitedNodes = new ArrayList<Node>();
+            PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+            List<Node> visitedNodes = new ArrayList<>();
 
             flags[startIndex] = TO_TRACE;
             Node startNode = new Node(startIndex);
@@ -234,7 +233,7 @@ public class ParanoidAndroid {
         private List<Integer> getPath(Node lastNode) {
             Node curNode = lastNode;
             int w = mMapInfo.getWidth();
-            List<Integer> retVal = new ArrayList<Integer>();
+            List<Integer> retVal = new ArrayList<>();
             do {
                 int curIndex = curNode.index;
                 int x = curIndex / w;

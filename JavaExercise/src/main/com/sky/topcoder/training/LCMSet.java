@@ -6,9 +6,9 @@ import java.util.List;
 public class LCMSet {
 
     public String equal(int[] A, int[] B) {
-        List<Integer> commonList = new ArrayList<Integer>();
-        List<Integer> listA = new ArrayList<Integer>();
-        List<Integer> listB = new ArrayList<Integer>();
+        List<Integer> commonList = new ArrayList<>();
+        List<Integer> listA = new ArrayList<>();
+        List<Integer> listB = new ArrayList<>();
         int indiA = 0, indiB = 0;
         while (true) {
             if (indiA < A.length && indiB < B.length) {

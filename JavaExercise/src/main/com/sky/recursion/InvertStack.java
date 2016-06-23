@@ -33,7 +33,7 @@ public class InvertStack implements Problem<LinkedList<Integer>, LinkedList<Inte
 
     public LinkedList<Integer> resolve2(LinkedList<Integer> stack) {
         if (stack.size() > 1) {
-            List<Integer> tempList = new ArrayList<Integer>(stack.size());
+            List<Integer> tempList = new ArrayList<>(stack.size());
             while (!stack.isEmpty()) {
                 tempList.add(stack.pop());
             }

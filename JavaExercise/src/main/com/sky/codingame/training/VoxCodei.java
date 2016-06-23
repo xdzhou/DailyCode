@@ -9,7 +9,7 @@ public class VoxCodei {
     public static void main(String args[]) {
         Maze maze = Maze.getInstance();
         MapNode root = new MapNode();
-        MonteCarlo<MapNode, Integer> algo = new MonteCarlo<MapNode, Integer>();
+        MonteCarlo<MapNode, Integer> algo = new MonteCarlo<>();
 
         Scanner in = new Scanner(System.in);
         maze.mWidth = in.nextInt(); // width of the firewall grid
@@ -49,7 +49,7 @@ public class VoxCodei {
 
     private static class Maze {
         private int mHeight, mWidth;
-        private List<Integer> mIndestructibles = new ArrayList<Integer>();
+        private List<Integer> mIndestructibles = new ArrayList<>();
         private int mTotalPoint;
 
         private static Maze mInstance;
@@ -154,8 +154,8 @@ public class VoxCodei {
 
     private static class MapNode extends MonteCarlo.MonteCarloNode<Integer> implements Cloneable {
         private int mBombNb;
-        private List<Integer> mSurveillances = new ArrayList<Integer>();
-        private List<BombInfo> mBombs = new ArrayList<BombInfo>();
+        private List<Integer> mSurveillances = new ArrayList<>();
+        private List<BombInfo> mBombs = new ArrayList<>();
         //TODO
         private int mPutPosition = -1;
 
@@ -188,7 +188,7 @@ public class VoxCodei {
 
         @Override
         protected void applyTransition(Integer transition) {
-            Set<BombInfo> expositionBombs = new HashSet<BombInfo>();
+            Set<BombInfo> expositionBombs = new HashSet<>();
             for(BombInfo bi : mBombs) {
                 bi.oneTurn();
                 if (bi.mTurnLeft == 0) expositionBombs.add(bi);
@@ -224,7 +224,7 @@ public class VoxCodei {
             } else {
                 final List<Integer> temp;
                 if (!mBombs.isEmpty()) {
-                    temp = new ArrayList<Integer>(mSurveillances);
+                    temp = new ArrayList<>(mSurveillances);
                     for(BombInfo bi : mBombs) {
                         config.influenceZone(bi.mPosition, new Maze.IInfluenceListener() {
                             @Override
@@ -243,7 +243,7 @@ public class VoxCodei {
                         temp.add(bi.mPosition);
                     }
                 }
-                final Map<Integer, Integer> candidature = new HashMap<Integer, Integer>();
+                final Map<Integer, Integer> candidature = new HashMap<>();
                 for(int p : temp) {
                     config.influenceZone(p, new Maze.IInfluenceListener() {
                         @Override
@@ -257,7 +257,7 @@ public class VoxCodei {
                     });
                 }
                 //System.err.println("candidature : " + candidature);
-                List<Integer> maxCounts = new ArrayList<Integer>();
+                List<Integer> maxCounts = new ArrayList<>();
                 int maxCount = 0;
                 for(Map.Entry<Integer, Integer> entry : candidature.entrySet()) {
                     if (entry.getValue() == maxCount) {
@@ -349,7 +349,7 @@ public class VoxCodei {
         public List<Integer> getPossibleTransitions() {
             Maze maze = Maze.getInstance();
             if (mBombNb > 0) {
-                final Set<Integer> set = new HashSet<Integer>();
+                final Set<Integer> set = new HashSet<>();
                 for(int p : mSurveillances) {
                     maze.influenceZone(p, new Maze.IInfluenceListener() {
                         @Override
@@ -360,7 +360,7 @@ public class VoxCodei {
                         }
                     });
                 }
-                List<Integer> result = new ArrayList<Integer>(set);
+                List<Integer> result = new ArrayList<>(set);
                 result.remove(mSurveillances);
                 if (!mBombs.isEmpty()) result.add(-1);
                 return result;
@@ -372,8 +372,8 @@ public class VoxCodei {
         @Override
         protected MapNode clone(){
             MapNode n = (MapNode) super.clone();
-            n.mSurveillances = new ArrayList<Integer>(mSurveillances);
-            n.mBombs = new ArrayList<BombInfo>(mBombs.size());
+            n.mSurveillances = new ArrayList<>(mSurveillances);
+            n.mBombs = new ArrayList<>(mBombs.size());
             for(BombInfo bi : mBombs) {
                 n.mBombs.add(bi.clone());
             }

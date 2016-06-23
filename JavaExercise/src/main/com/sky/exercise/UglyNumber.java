@@ -15,7 +15,7 @@ public class UglyNumber implements ProblemTwoSolutions<Integer, Integer> {
     @Override
     public Integer resolve(Integer param) {
         // DP list
-        List<Integer> uglyNumberList = new ArrayList<Integer>(param);
+        List<Integer> uglyNumberList = new ArrayList<>(param);
         uglyNumberList.add(1);
 
         int currentTocheckNum = 2;
@@ -45,7 +45,7 @@ public class UglyNumber implements ProblemTwoSolutions<Integer, Integer> {
 
     @Override
     public Integer resolve2(Integer param) {
-        List<Integer> uglyHeap = new ArrayList<Integer>(param);
+        List<Integer> uglyHeap = new ArrayList<>(param);
         uglyHeap.add(1);
         for (int i = 0; i < param - 1; i++) {
             int min = uglyHeap.remove(0);

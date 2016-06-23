@@ -30,9 +30,9 @@ public class TopologicalKahnAlgo implements TopologicalSortAlgo<Integer> {
             return null;
         }
         Set<Integer> points = mGraph.vertexSet();
-        List<Integer> results = new ArrayList<Integer>(points.size());
+        List<Integer> results = new ArrayList<>(points.size());
         int[] comingSize = new int[points.size()];
-        LinkedList<Integer> emptyInComingList = new LinkedList<Integer>();
+        LinkedList<Integer> emptyInComingList = new LinkedList<>();
 
         for (DefaultWeightedEdge edge : mGraph.edgeSet()) {
             comingSize[mGraph.getEdgeTarget(edge)]++;

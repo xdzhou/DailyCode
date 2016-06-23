@@ -25,7 +25,7 @@ class SkynetBridge {
 
         int S = in.nextInt(); // the motorbikes' speed
         int curX = 0;
-        List<Integer> curY = new ArrayList<Integer>(M);
+        List<Integer> curY = new ArrayList<>(M);
         for (int i = 0; i < M; i++) {
             curX = in.nextInt(); // x coordinate of the motorbike
             int Y = in.nextInt(); // y coordinate of the motorbike
@@ -71,7 +71,7 @@ class SkynetBridge {
     }
 
     public List<Command> getCommands(int curSpeed, int curX, List<Integer> curY) {
-        List<Command> commands = new ArrayList<Command>();
+        List<Command> commands = new ArrayList<>();
         return find(curSpeed, curX, curY, commands);
     }
 
@@ -93,7 +93,7 @@ class SkynetBridge {
                     else if (com == Command.SLOW) newSpeed = curSpeed - 1;
                     else newSpeed = curSpeed;
 
-                    List<Integer> newY = applyCommand(curX, newSpeed, new ArrayList<Integer>(curY), com);
+                    List<Integer> newY = applyCommand(curX, newSpeed, new ArrayList<>(curY), com);
                     retVal = find(newSpeed, curX + newSpeed, newY, commands);
 
                     if (retVal == null) commands.remove(commands.size() - 1);

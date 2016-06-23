@@ -8,7 +8,7 @@ public class Milkshakes {
 
     public static void main(String[] args) {
         // new Milkshakes().start();
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         list.add(3);
         list.add(2);
         list.add(1);
@@ -28,12 +28,12 @@ public class Milkshakes {
             int[] typeMikeShark = new int[numType];
             for (int j = 0; j < numType; j++)
                 typeMikeShark[j] = -1;
-            List<ArrayList<Integer>> untreatedList = new ArrayList<ArrayList<Integer>>();
+            List<ArrayList<Integer>> untreatedList = new ArrayList<>();
 
             boolean isPossible = true;
             for (int j = 0; j < numClient; j++) {
                 int numFlavor = in.nextInt();
-                ArrayList<Integer> tempList = new ArrayList<Integer>();
+                ArrayList<Integer> tempList = new ArrayList<>();
                 for (int m = 0; m < numFlavor; m++) {
                     int type = in.nextInt() - 1;
                     if (typeMikeShark[type] == -1) {

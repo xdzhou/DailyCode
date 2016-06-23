@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // Read inputs from System.in, Write outputs to System.out.
-class Solution {
+class Q2Imageothers {
 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
@@ -145,7 +145,7 @@ class Solution {
     }
 
     private static List<Integer> getNote(int W, int H, boolean[][] image, List<Integer> portee, int curseur) {
-        List<Integer> note = new ArrayList<Integer>();
+        List<Integer> note = new ArrayList<>();
         for (int i = 0; i < H; i++) {
             if (image[curseur][i] && !portee.contains(i)) {
                 note.add(i);
@@ -155,7 +155,7 @@ class Solution {
     }
 
     private static List<Integer> determinerPortee(int W, int H, boolean[][] image) {
-        List<Integer> portee = new ArrayList<Integer>();
+        List<Integer> portee = new ArrayList<>();
         int curseur = 0;
         while (portee.isEmpty()) {
             for (int i = 0; i < H; i++) {

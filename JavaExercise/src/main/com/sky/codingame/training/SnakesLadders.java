@@ -10,8 +10,8 @@ public class SnakesLadders {
     NodeComparator comparator = new NodeComparator();
     private String[] square;
     private int startP, endP;
-    private List<Node> openList = new ArrayList<Node>();
-    private List<Node> closeList = new ArrayList<Node>();
+    private List<Node> openList = new ArrayList<>();
+    private List<Node> closeList = new ArrayList<>();
 
     public static void main(String[] args) {
         new SnakesLadders().start();

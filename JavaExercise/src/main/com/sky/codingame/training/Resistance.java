@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Resistance {
-    HashMap<Character, String> table = new HashMap<Character, String>();
+    HashMap<Character, String> table = new HashMap<>();
     Node root = new Node();
     String morse_line;
 

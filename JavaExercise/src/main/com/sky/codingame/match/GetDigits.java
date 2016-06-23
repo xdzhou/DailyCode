@@ -22,12 +22,12 @@ public class GetDigits {
     }
 
     private void treat(String str, int index) {
-        List<Character> chars = new ArrayList<Character>(str.length());
+        List<Character> chars = new ArrayList<>(str.length());
         for(int i = 0; i < str.length(); i++){
             chars.add(str.charAt(i));
         }
         Collections.sort(chars);
-        List<Integer> results = new ArrayList<Integer>();
+        List<Integer> results = new ArrayList<>();
         //first round
         while (checkNum(chars, 'Z', "ZERO")) results.add(0);
         while (checkNum(chars, 'W', "TWO")) results.add(2);

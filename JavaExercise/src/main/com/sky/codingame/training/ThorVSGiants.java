@@ -11,7 +11,7 @@ public class ThorVSGiants {
     public static void main(String args[]) {
         Maze maze = Maze.getInstance();
         MapNode root = new MapNode();
-        BruteForce<MapNode, Step> algo = new BruteForce<MapNode, Step>();
+        BruteForce<MapNode, Step> algo = new BruteForce<>();
 
         Scanner in = new Scanner(System.in);
         root.curX = in.nextInt();
@@ -52,7 +52,7 @@ public class ThorVSGiants {
         private int round = 0;
         private int strikeNb;
         private int curX, curY;
-        private List<Integer> giants = new ArrayList<Integer>();
+        private List<Integer> giants = new ArrayList<>();
 
         @Override
         public boolean isOver() {
@@ -104,7 +104,7 @@ public class ThorVSGiants {
         }
 
         private List<Integer> giantsAround() {
-            List<Integer> retVal = new ArrayList<Integer>();
+            List<Integer> retVal = new ArrayList<>();
             for(int index : giants) {
                 int x = index / mHeight;
                 int y = index % mHeight;
@@ -164,7 +164,7 @@ public class ThorVSGiants {
         @Override
         protected MapNode clone() {
             MapNode n = (MapNode) super.clone();
-            n.giants = new ArrayList<Integer>(giants);
+            n.giants = new ArrayList<>(giants);
             return n;
         }
 

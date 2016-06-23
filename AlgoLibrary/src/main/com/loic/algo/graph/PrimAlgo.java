@@ -44,9 +44,9 @@ public class PrimAlgo<T> implements MinSpanningTreeAlgo<T> {
 
     private void process() {
         Set<T> openList = new HashSet<T>(mGraph.vertexSet());
-        mMinSpanTreeEdges = new HashSet<DefaultWeightedEdge>(openList.size() - 1);
+        mMinSpanTreeEdges = new HashSet<>(openList.size() - 1);
 
-        PriorityQueue<DefaultWeightedEdge> priorityQueue = new PriorityQueue<DefaultWeightedEdge>(new Comparator<DefaultWeightedEdge>() {
+        PriorityQueue<DefaultWeightedEdge> priorityQueue = new PriorityQueue<>(new Comparator<DefaultWeightedEdge>() {
             @Override
             public int compare(DefaultWeightedEdge o1, DefaultWeightedEdge o2) {
                 return (int) (mGraph.getEdgeWeight(o1) - mGraph.getEdgeWeight(o2));

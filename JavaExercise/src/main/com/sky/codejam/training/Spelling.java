@@ -10,7 +10,7 @@ public class Spelling {
     }
 
     public void start() {
-        HashMap<Character, String> letteMap = new HashMap<Character, String>();
+        HashMap<Character, String> letteMap = new HashMap<>();
         initMap(letteMap);
         Scanner in = new Scanner(System.in);
         int N = in.nextInt();

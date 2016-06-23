@@ -33,10 +33,10 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
     }
 
     private List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-        List<List<String>> result = new ArrayList<List<String>>();
+        List<List<String>> result = new ArrayList<>();
 
         if (beginWord.equals(endWord) || isConnected(beginWord, endWord)) {
-            List<String> list = new ArrayList<String>(2);
+            List<String> list = new ArrayList<>(2);
             if (beginWord.equals(endWord)) {
                 list.add(beginWord);
             } else {
@@ -47,11 +47,11 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
             return result;
         }
 
-        Set<String> beginGroup = new HashSet<String>();
+        Set<String> beginGroup = new HashSet<>();
         beginGroup.add(beginWord);
-        Set<String> endGroup = new HashSet<String>();
+        Set<String> endGroup = new HashSet<>();
         endGroup.add(endWord);
-        Map<String, Set<String>> pathGraph = new HashMap<String, Set<String>>();
+        Map<String, Set<String>> pathGraph = new HashMap<>();
 
         if (biDirectionBFS(beginGroup, endGroup, pathGraph, wordList)) {
             DFS(pathGraph, beginWord, endWord, new ArrayList<String>(), result);
@@ -69,7 +69,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
     private void DFS(Map<String, Set<String>> pathGraph, String from, String to, List<String> path,
                      List<List<String>> result) {
         if (from.equals(to)) {
-            List<String> pathCopy = new ArrayList<String>(path);
+            List<String> pathCopy = new ArrayList<>(path);
             pathCopy.add(to);
             result.add(pathCopy);
         } else if (pathGraph.get(from) != null) {
@@ -111,7 +111,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
                             expandSet.add(newString);
                             Set<String> nexts = pathGraph.get(key);
                             if (nexts == null) {
-                                nexts = new HashSet<String>();
+                                nexts = new HashSet<>();
                                 pathGraph.put(key, nexts);
                             }
                             nexts.add(val);

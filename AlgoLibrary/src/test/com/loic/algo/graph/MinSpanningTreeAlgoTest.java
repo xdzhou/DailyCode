@@ -11,13 +11,13 @@ public class MinSpanningTreeAlgoTest extends GraphTest {
 
     public void beforeClass() {
         init();
-        mUndirectedGraph = new AsUndirectedGraph<Integer, DefaultWeightedEdge>(mDirectedGraphGraph);
+        mUndirectedGraph = new AsUndirectedGraph<>(mDirectedGraphGraph);
     }
 
     public void test() {
-        PrimAlgo<Integer> primAlgo = new PrimAlgo<Integer>();
+        PrimAlgo<Integer> primAlgo = new PrimAlgo<>();
         primAlgo.setGraph(mUndirectedGraph);
-        PrimMinimumSpanningTree<Integer, DefaultWeightedEdge> jGraphPrimAlog = new PrimMinimumSpanningTree<Integer, DefaultWeightedEdge>(
+        PrimMinimumSpanningTree<Integer, DefaultWeightedEdge> jGraphPrimAlog = new PrimMinimumSpanningTree<>(
                 mUndirectedGraph);
         Assert.assertEquals(primAlgo.getTotalWeight(), jGraphPrimAlog.getMinimumSpanningTreeTotalWeight());
     }

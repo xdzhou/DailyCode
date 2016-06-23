@@ -33,7 +33,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer> {
         // Previous node in optimal path
         int[] prev = new int[vertexSet.size()];
         // open list
-        Set<Integer> openList = new HashSet<Integer>();
+        Set<Integer> openList = new HashSet<>();
         for (Integer node : vertexSet) {
             dist[node] = (node == startNode) ? 0 : UNKNOWN_DIS;
             prev[node] = (node == startNode) ? startNode : -1;
@@ -67,7 +67,7 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer> {
         sb.insert(0, Integer.toString(startNode));
         Log.debug("the shortest path is {}", sb);
 
-        return new GraphPathImpl<Integer, DefaultWeightedEdge>(mGraph, startNode, endNode, null, dist[endNode]);
+        return new GraphPathImpl<>(mGraph, startNode, endNode, null, dist[endNode]);
     }
 
     private Integer getNodeWithMinDis(Set<Integer> openList, double[] dist) {

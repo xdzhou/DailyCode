@@ -13,7 +13,7 @@ public class GraphTest {
 		 * @see graph image
 		 * http://my.csdn.net/uploads/201207/04/1341373589_4609.png
 		 */
-        mDirectedGraphGraph = new DefaultDirectedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+        mDirectedGraphGraph = new DefaultDirectedGraph<>(DefaultWeightedEdge.class);
 
         for (int i = 0; i < 13; i++) {
             mDirectedGraphGraph.addVertex(i);
@@ -34,8 +34,7 @@ public class GraphTest {
         mDirectedGraphGraph.addEdge(9, 12);
         mDirectedGraphGraph.addEdge(11, 12);
 
-        mDirectedGraphGraphWithCycle = new DefaultDirectedGraph<Integer, DefaultWeightedEdge>(
-                DefaultWeightedEdge.class);
+        mDirectedGraphGraphWithCycle = new DefaultDirectedGraph<>(DefaultWeightedEdge.class);
         mDirectedGraphGraphWithCycle.addVertex(0);
         mDirectedGraphGraphWithCycle.addVertex(1);
         mDirectedGraphGraphWithCycle.addVertex(2);

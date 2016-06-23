@@ -16,7 +16,7 @@ public class Q1OodsV2 {
         Scanner in = new Scanner(System.in);
         N = in.nextInt();
         C = in.nextInt();
-        budget = new ArrayList<Integer>(N);
+        budget = new ArrayList<>(N);
 
         for (int i = 0; i < N; i++) {
             int b = in.nextInt();

@@ -3,8 +3,8 @@ package com.loic.algo.queueStack;
 import java.util.LinkedList;
 
 public class GetMinStackImpl<T extends Comparable<T>> implements GetMinStack<T> {
-    private LinkedList<T> contents = new LinkedList<T>();
-    private LinkedList<T> mins = new LinkedList<T>();
+    private LinkedList<T> contents = new LinkedList<>();
+    private LinkedList<T> mins = new LinkedList<>();
 
     @Override
     public void push(T ele) {

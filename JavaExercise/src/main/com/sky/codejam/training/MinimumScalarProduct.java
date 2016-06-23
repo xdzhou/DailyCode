@@ -16,8 +16,8 @@ public class MinimumScalarProduct {
         int N = in.nextInt();
         for (int i = 0; i < N; i++) {
             int num = in.nextInt();
-            List<Long> list1 = new ArrayList<Long>(num);
-            List<Long> list2 = new ArrayList<Long>(num);
+            List<Long> list1 = new ArrayList<>(num);
+            List<Long> list2 = new ArrayList<>(num);
             for (int j = 0; j < num; j++)
                 list1.add(in.nextLong());
             for (int j = 0; j < num; j++)

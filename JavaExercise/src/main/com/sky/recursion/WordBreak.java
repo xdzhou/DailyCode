@@ -16,7 +16,7 @@ public class WordBreak implements Problem<Pair<String, Set<String>>, List<String
     }
 
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         biDirectionGenerateWords(new ArrayList<String>(), new ArrayList<String>(), s, wordDict, result);
         return result;
     }

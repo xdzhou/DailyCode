@@ -201,7 +201,7 @@ public class SmashCode {
 
         private int disappearZone(int chainIndex, Zone ... zones) {
             int blockClearedNb = 0, colorBonus = 0, groupBonus = 0;
-            Set<Integer> colorClearedSet = new HashSet<Integer>(5);
+            Set<Integer> colorClearedSet = new HashSet<>(5);
             //disappear and fill EMPTY char
             for (Zone z : zones) {
                 if (z == null) continue;
@@ -236,7 +236,7 @@ public class SmashCode {
                 }
             }
             //find checkIndex
-            List<Integer> indexToCheck = new ArrayList<Integer>();
+            List<Integer> indexToCheck = new ArrayList<>();
             for(int line = 0; line < HEIGHT; line ++)
                 for(int column = 0; column < WIDTH; column ++) {
                     if (data[line][column] != EMPTY && data[line][column] != BLOCK) {
@@ -244,7 +244,7 @@ public class SmashCode {
                     }
                 }
             //check chain
-            List<Zone> zoneToDisappear = new ArrayList<Zone>();
+            List<Zone> zoneToDisappear = new ArrayList<>();
             while (!indexToCheck.isEmpty()) {
                 int index = indexToCheck.get(0);
                 Zone oneZone = getZoneFor(index);
@@ -360,7 +360,7 @@ public class SmashCode {
         }
 
         public void addIndex(int index) {
-            if (mIndexs == null) mIndexs = new ArrayList<Integer>();
+            if (mIndexs == null) mIndexs = new ArrayList<>();
             mIndexs.add(index);
         }
 

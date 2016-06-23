@@ -44,7 +44,7 @@ public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Bool
     @Override
     public Boolean resolve2(Integer param) {
         if (autobiographicalNumberList == null) {
-            autobiographicalNumberList = new ArrayList<Integer>();
+            autobiographicalNumberList = new ArrayList<>();
             int[] temp = new int[10];
             for (int len = 3; len <= 10; len++) {
                 Arrays.fill(temp, 0);
