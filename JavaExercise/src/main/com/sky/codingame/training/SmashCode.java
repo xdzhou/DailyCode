@@ -10,44 +10,56 @@ public class SmashCode {
     private static final int MAX_DEPTH = 8;
 
     public static void main(String args[]) {
-
         Scanner in = new Scanner(System.in);
         final ColorSet[] colors = new ColorSet[MAX_DEPTH];
-        final MapInfo mapInfo = new MapInfo();
-        GeneticAlgorithm<ColorGene> ga = new GeneticAlgorithm<>(new GeneticAlgorithm.IGAListener<ColorGene>() {
-            @Override
-            public ColorGene createNewGene(Random random) {
-                return ColorGene.getOneGene(random);
-            }
+        GameBoard myBoard = new GameBoard();
+        GameBoard oppoBoard = new GameBoard();
+        myBoard.setOppenent(oppoBoard);
 
+        GAListener myListener = new GAListener(myBoard) {
             @Override
             public float computerFitness(ColorGene gene) {
                 Integer[] data = gene.mData;
-                MapInfo clone = mapInfo.clone();
+                MapInfo clone = mBoard.mMapInfo.clone();
                 float score = 0;
                 float rate = 1f;
-                for(int i = 0; i < 8; i++) {
-                    score += rate * clone.drop(data[i * 2], data[i * 2 + 1], colors[i]);
-                    rate *= 0.9f;
-                    if (clone.isOver()) return 0;
+                float param = mValidPosition <= 3 ? 0.01f : getParam();
+                for (int i = 0; i < 8; i++) {
+                    int addScore = clone.drop(data[i * 2], data[i * 2 + 1], colors[i]);
+                    if (i <= mValidPosition) {
+                        score += addScore;
+                    } else {
+                        rate *= param;
+                        score += addScore * rate;
+                    }
+                    if (clone.isOver()) break;
                 }
                 return score;
             }
 
-            @Override
-            public ColorGene getChild(Random random, ColorGene parent1, ColorGene parent2) {
-                //TODO
-                int changIndex = random.nextInt(parent1.mData.length - 1);
-                ColorGene child = new ColorGene(new Integer[ColorGene.LEN]);
-                for(int i = 0; i < parent1.mData.length; i++) {
-                    child.mData[i] = (i <= changIndex) ? parent1.mData[i] : parent2.mData[i];
-                }
-                if (changIndex % 2 == 0 && child.mData[changIndex] == 5 && child.mData[changIndex + 1] % 2 == 0) {
-                    child.mData[changIndex] = random.nextInt(5);
-                }
-                return child;
+            private float getParam() {
+                int emptyCount = mBoard.mMapInfo.getEmptyCount();
+                return  emptyCount / (float) (WIDTH * HEIGHT);
             }
-        });
+        };
+        GeneticAlgorithm<ColorGene> myAlgo = new GeneticAlgorithm<>(myListener);
+
+        GAListener otherListener = new GAListener(oppoBoard) {
+            @Override
+            public float computerFitness(ColorGene gene) {
+                Integer[] data = gene.mData;
+                MapInfo clone = mBoard.mMapInfo.clone();
+                float score = 0;
+                float deltaScore = (18 - mBoard.mOpponentBoard.mNuisancePoints) * GameBoard.DIVIDOR;
+                for(int i = 0; i < 8; i++) {
+                    score += clone.drop(data[i * 2], data[i * 2 + 1], colors[i]);
+                    if (clone.isOver()) return 0;
+                    else if (score > deltaScore) return 8 - i;
+                }
+                return 0;
+            }
+        };
+        GeneticAlgorithm<ColorGene> otherAlgo = new GeneticAlgorithm<>(otherListener);
 
         // game loop
         while (true) {
@@ -56,20 +68,56 @@ public class SmashCode {
                 int colorB = in.nextInt(); // color of the attached block
                 colors[i] = new ColorSet((char)('0'+colorA), (char)('0'+colorB));
             }
-            int score1 = in.nextInt();
+            myBoard.setNewScore(in.nextInt());
             for (int i = 0; i < 12; i++) {
                 String row = in.next();
-                mapInfo.setLine(row, i);
+                myBoard.mMapInfo.setLine(row, i);
             }
-            int score2 = in.nextInt();
+            oppoBoard.setNewScore(in.nextInt());
             for (int i = 0; i < 12; i++) {
                 String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
+                oppoBoard.mMapInfo.setLine(row, i);
             }
-            ColorGene bestGene = ga.execute(50, 1000);
-            System.err.println("fitness : "+bestGene.getFitness());
+            System.err.println(myBoard);
+            System.err.println(oppoBoard);
+            int validStep = 8 - (int) otherAlgo.execute(50, 1000).getFitness();
+            validStep = Math.min(validStep, 7);
+            float deltaScore = (6 - myBoard.mNuisancePoints) * GameBoard.DIVIDOR;
+            float emptyRate = myBoard.mMapInfo.getEmptyCount() / (float) (WIDTH * HEIGHT);
+            System.err.println("validStep:" + validStep + ", deltaScore:" + deltaScore + ", emptyRate:" + emptyRate);
+            myListener.mValidPosition = validStep;
+            ColorGene bestGene = myAlgo.execute(50, 1000);
+            System.err.println("fitness : " + bestGene.getFitness());
             Integer[] data = bestGene.mData;
             int col = data[1] == 2 ? data[0] + 1 : data[0];
-            System.out.println(col+" "+data[1]); // "x": the column in which to drop your blocks
+            System.out.println(col + " " + data[1]); // "x": the column in which to drop your blocks
+        }
+    }
+
+    private abstract static class GAListener implements GeneticAlgorithm.IGAListener<ColorGene> {
+        protected final GameBoard mBoard;
+        protected int mValidPosition = 7;
+
+        public GAListener(GameBoard gameBoard) {
+            mBoard = gameBoard;
+        }
+
+        @Override
+        public ColorGene createNewGene(Random random) {
+            return ColorGene.getOneGene(random);
+        }
+
+        @Override
+        public ColorGene getChild(Random random, ColorGene parent1, ColorGene parent2) {
+            int changIndex = random.nextInt(parent1.mData.length - 1);
+            ColorGene child = new ColorGene(new Integer[ColorGene.LEN]);
+            for(int i = 0; i < parent1.mData.length; i++) {
+                child.mData[i] = (i <= changIndex) ? parent1.mData[i] : parent2.mData[i];
+            }
+            if (changIndex % 2 == 0 && child.mData[changIndex] == 5 && child.mData[changIndex + 1] % 2 == 0) {
+                child.mData[changIndex] = random.nextInt(5);
+            }
+            return child;
         }
     }
 
@@ -106,6 +154,33 @@ public class SmashCode {
         }
     }
 
+    private static class GameBoard {
+        private static final float DIVIDOR = 70.0f;
+        private int mCurScore;
+        private float mNuisancePoints;
+        private MapInfo mMapInfo = new MapInfo();
+
+        private GameBoard mOpponentBoard;
+
+        public void setOppenent(GameBoard oppo) {
+            mOpponentBoard = oppo;
+            oppo.mOpponentBoard = this;
+        }
+
+        public void setNewScore(int score) {
+            if (score > mCurScore) {
+                float add = (score - mCurScore) / DIVIDOR + mOpponentBoard.mNuisancePoints;
+                mOpponentBoard.mNuisancePoints = add % 6f;
+            }
+            mCurScore = score;
+        }
+
+        @Override
+        public String toString() {
+            return "score "+mCurScore+", nuisance "+mNuisancePoints;
+        }
+    }
+
     private static class MapInfo implements Cloneable{
         private static final int MIN_LIEN = 4;
 
@@ -121,16 +196,22 @@ public class SmashCode {
             }
         }
 
+        public int getEmptyCount() {
+            int count = 0;
+            for(int line = 0; line < HEIGHT; line ++) {
+                for(int column = 0; column < WIDTH; column ++) {
+                    if (data[line][column] == EMPTY) count ++;
+                }
+            }
+            return count;
+        }
+
         public int getEmptyLine(int col) {
             int lastLine = HEIGHT - 1;
             while (lastLine >= 0 && data[lastLine][col] != EMPTY) {
                 lastLine--;
             }
             return lastLine;
-        }
-
-        public char getChar(int line, int col) {
-            return data[line][col];
         }
 
         public boolean isOver() {
@@ -173,7 +254,7 @@ public class SmashCode {
             if (z1 != null || z2 != null) {
                 return disappearZone(0, z1, z2);
             } else {
-                return 0;
+                return 1;
             }
         }
 
@@ -195,7 +276,7 @@ public class SmashCode {
             if (z1 != null || z2 != null) {
                 return disappearZone(0, z1, z2);
             } else {
-                return 0;
+                return 1;
             }
         }
 

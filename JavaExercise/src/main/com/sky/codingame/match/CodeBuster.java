@@ -537,7 +537,8 @@ public class CodeBuster {
                     continue;
                 }
                 if (b.getDis(mBasePosition) > 1600) {
-                    Collections.sort(mOtherBusters, new EntityComparator(b));
+                    //Collections.sort(mOtherBusters, new EntityComparator(b));
+                    mOtherBusters.stream().sorted((b1, b2) -> (Float.compare(b.getDis(b1), b.getDis(b2))));
                     Iterator<Buster> iterator = mOtherBusters.iterator();
                     while (iterator.hasNext()) {
                         Buster otherBuster = iterator.next();
