@@ -24,7 +24,7 @@ public class FindSubStringWithAllCharTest extends CommonTest<Pair<String, Intege
     }
 
     @Override
-    protected void onOuputReady(Pair<String, Integer> input, String output) {
+    protected void onOutputReady(Pair<String, Integer> input, String output) {
         Assert.assertEquals(output.length(), (int) input.getSecond());
     }
 

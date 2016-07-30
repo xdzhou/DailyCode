@@ -6,10 +6,7 @@ import com.sky.problem.ProblemTwoSolutions;
 
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class CommonTest<T, E> {
     private Problem<T, E> mAlgoToTest;
@@ -50,28 +47,24 @@ public abstract class CommonTest<T, E> {
         if (mAlgoToTest instanceof ProblemThreeSolutions) {
             ProblemThreeSolutions<T, E> threeSolutionAlgo = (ProblemThreeSolutions<T, E>) mAlgoToTest;
 
-            onOuputReady(input, threeSolutionAlgo.resolve(input));
-            onOuputReady(input, threeSolutionAlgo.resolve2(input));
-            onOuputReady(input, threeSolutionAlgo.resolve3(input));
+            onOutputReady(input, threeSolutionAlgo.resolve(input));
+            onOutputReady(input, threeSolutionAlgo.resolve2(input));
+            onOutputReady(input, threeSolutionAlgo.resolve3(input));
         } else if (mAlgoToTest instanceof ProblemTwoSolutions) {
             ProblemTwoSolutions<T, E> twoSolutionAlgo = (ProblemTwoSolutions<T, E>) mAlgoToTest;
-            onOuputReady(input, twoSolutionAlgo.resolve(input));
-            onOuputReady(input, twoSolutionAlgo.resolve2(input));
+            onOutputReady(input, twoSolutionAlgo.resolve(input));
+            onOutputReady(input, twoSolutionAlgo.resolve2(input));
         } else {
-            onOuputReady(input, mAlgoToTest.resolve(input));
+            onOutputReady(input, mAlgoToTest.resolve(input));
         }
     }
 
-    protected void onOuputReady(T input, E output) {
+    protected void onOutputReady(T input, E output) {
     }
 
     // helper method
-    protected List<String> generateList(String... data) {
-        List<String> result = new ArrayList<String>(data.length);
-        for (String s : data) {
-            result.add(s);
-        }
-        return result;
+    protected <E> List<E> generateList(E... data) {
+        return Arrays.asList(data);
     }
 
     protected Set<String> generateSet(String... data) {

@@ -11,7 +11,7 @@ public class BinarySearch2DTest extends CommonTest<Pair<Integer[][], Integer>, P
 
     @Override
     public Problem<Pair<Integer[][], Integer>, Pair<Integer, Integer>> getAlgo() {
-        return new BinarySearch2D<Integer>();
+        return new BinarySearch2D<>();
     }
 
     @Test
@@ -22,7 +22,7 @@ public class BinarySearch2DTest extends CommonTest<Pair<Integer[][], Integer>, P
     }
 
     @Override
-    protected void onOuputReady(Pair<Integer[][], Integer> input, Pair<Integer, Integer> output) {
+    protected void onOutputReady(Pair<Integer[][], Integer> input, Pair<Integer, Integer> output) {
         Assert.assertEquals(input.getFirst()[output.getFirst()][output.getSecond()], input.getSecond());
     }
 

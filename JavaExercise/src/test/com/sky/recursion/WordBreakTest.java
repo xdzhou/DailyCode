@@ -23,7 +23,7 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
     }
 
     @Override
-    protected void onOuputReady(Pair<String, Set<String>> input, List<String> output) {
+    protected void onOutputReady(Pair<String, Set<String>> input, List<String> output) {
         if (!output.isEmpty()) {
             for (String s : output) {
                 Assert.assertEquals(input.getFirst(), s.replace(" ", ""));

@@ -18,7 +18,7 @@ public class WordLadderTest extends CommonTest<Triple<String, String, Set<String
     }
 
     @Override
-    protected void onOuputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
+    protected void onOutputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
         if (!output.isEmpty()) {
             int pathLen = output.get(0).size();
             for (List<String> paths : output) {
