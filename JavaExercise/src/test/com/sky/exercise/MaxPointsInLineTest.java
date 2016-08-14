@@ -10,13 +10,13 @@ public class MaxPointsInLineTest extends CommonTest<Point[], Integer> {
 
     @Test
     public void test() {
-        check(generateList(0, 0, 1, 1, 2, 2, 0, 0), 4);
-        check(generateList(2, 3, 3, 3, -5, 3), 3);
-        check(generateList(1, 1, 1, 1, 1, 1), 3);
-        check(generateList(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
+        check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4);
+        check(generatePoints(2, 3, 3, 3, -5, 3), 3);
+        check(generatePoints(1, 1, 1, 1, 1, 1), 3);
+        check(generatePoints(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
     }
 
-    private Point[] generateList(int... p) {
+    private Point[] generatePoints(int... p) {
         int len = p.length >>> 1;
         Point[] result = new Point[len];
 
