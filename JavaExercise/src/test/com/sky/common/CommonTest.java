@@ -16,7 +16,7 @@ public abstract class CommonTest<T, E> {
         Assert.assertNotEquals(mAlgoToTest, null);
     }
 
-    abstract public Problem<T, E> getAlgo();
+    protected abstract Problem<T, E> getAlgo();
 
     public Problem<T, E> getProblem() {
         return mAlgoToTest;
