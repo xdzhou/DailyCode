@@ -16,6 +16,7 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
         int sum = 0;
         for (int i = 0; i < param.length; i++) {
             int bribes = 0;
+            //find bigger number count in front
             int j = i - 1;
             while (j >= 0) {
                 if (param[j] > param[i]) bribes --;

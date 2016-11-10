@@ -47,7 +47,7 @@ class SkynetBridge {
     }
 
     private enum Command {
-        SPEED, SLOW, JUMP, WAIT, UP, DOWN;
+        SPEED, SLOW, JUMP, WAIT, UP, DOWN
     }
 
     private int mMin;

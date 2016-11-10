@@ -78,7 +78,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
             return null;
         } else {
             List<T> transitions = leafNode.getPossibleTransitions();
-            leafNode.mChildren = new ArrayList<MonteCarloNode<T>>(transitions.size());
+            leafNode.mChildren = new ArrayList<>(transitions.size());
             for(T t : transitions) {
                 N child = (N) leafNode.getChildForTransition(t);
                 if (child != null) {
@@ -125,8 +125,8 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
             mWin += winning;
         }
 
-        public void addChild(MonteCarloNode child) {
-            if (mChildren == null) mChildren = new ArrayList<MonteCarloNode<T>>();
+        public void addChild(MonteCarloNode<T> child) {
+            if (mChildren == null) mChildren = new ArrayList<>();
             mChildren.add(child);
         }
 
