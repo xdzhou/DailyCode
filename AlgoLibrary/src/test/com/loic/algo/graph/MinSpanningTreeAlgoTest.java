@@ -6,7 +6,6 @@ import org.jgrapht.graph.AsUndirectedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 public class MinSpanningTreeAlgoTest extends GraphTest {
     private UndirectedGraph<Integer, DefaultWeightedEdge> mUndirectedGraph;
@@ -17,7 +16,6 @@ public class MinSpanningTreeAlgoTest extends GraphTest {
         mUndirectedGraph = new AsUndirectedGraph<>(mDirectedGraphGraph);
     }
 
-    @Test
     public void test() {
         PrimAlgo<Integer> primAlgo = new PrimAlgo<>();
         primAlgo.setGraph(mUndirectedGraph);

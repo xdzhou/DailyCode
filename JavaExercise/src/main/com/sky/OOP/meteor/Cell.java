@@ -15,8 +15,11 @@ public class Cell {
     private Cell[] mNeighbours = new Cell[NEIGHBOUR_COUNT];
 
     public Cell getNeighbour(int side) {
-        if (side >= 0 && side < NEIGHBOUR_COUNT) return mNeighbours[side];
-        else throw new IllegalArgumentException("Unknown Direction : " + side);
+        if (side >= 0 && side < NEIGHBOUR_COUNT) {
+            return mNeighbours[side];
+        } else {
+            throw new IllegalArgumentException("Unknown Direction : " + side);
+        }
     }
 
     public void setNeighbour(int side, Cell cell) {

@@ -84,10 +84,6 @@ public class Board {
         }
     }
 
-    public boolean hasIsolatedIsland() {
-        return false;
-    }
-
     public BoardCell getCell(int index) {
         return boardCells[index];
     }
