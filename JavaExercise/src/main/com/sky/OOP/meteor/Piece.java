@@ -1,17 +1,14 @@
 package com.sky.OOP.meteor;
 
-/**
- * Created by xuli on 10/11/16.
- */
 public class Piece {
-    public static final int CELL_COUNT = 5;
-    public static final int PERMUTATION_COUNT = 12;
+    static final int CELL_COUNT = 5;
+    static final int PERMUTATION_COUNT = 12;
 
     private final Cell[] mCells;
     private int mCurrentMutation = 0;
     private final int mNum;
 
-    public Piece(Cell[] cells, int num) {
+    Piece(Cell[] cells, int num) {
         mCells = cells;
         mNum = num;
     }
@@ -20,7 +17,7 @@ public class Piece {
         return mNum;
     }
 
-    public Piece nextMutation() {
+    Piece nextMutation() {
         mCurrentMutation ++;
         mCurrentMutation %= PERMUTATION_COUNT;
         if (mCurrentMutation == 0 || mCurrentMutation == 6) {
@@ -32,7 +29,7 @@ public class Piece {
         return this;
     }
 
-    public Cell getCell(int index) {
+    Cell getCell(int index) {
         return mCells[index];
     }
 
@@ -48,7 +45,7 @@ public class Piece {
         }
     }
 
-    public void unProcessing() {
+    void unProcessing() {
         for (Cell cell : mCells) {
             cell.setProcessing(false);
         }

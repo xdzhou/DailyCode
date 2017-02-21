@@ -7,11 +7,11 @@ public class BoardCell extends Cell {
         return mPiece;
     }
 
-    public void setPiece(Piece piece) {
+    void setPiece(Piece piece) {
         mPiece = piece;
     }
 
-    public int getIslandCount() {
+    int getIslandCount() {
         if (mPiece != null || isProcessing()) {
             return 0;
         } else {
