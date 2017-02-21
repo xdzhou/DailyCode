@@ -50,6 +50,10 @@ class Pizza {
         return board[row][col];
     }
 
+    int getTomatoCount(Slice slice) {
+        return getTomatoCount(slice.row1, slice.col1, slice.row2, slice.col2);
+    }
+
     int getTomatoCount(int topLeftRow, int topLeftColumn, int bottomRightRow, int bottomRightColumn) {
         int count = 0;
         for (int row = topLeftRow; row <= bottomRightRow; row ++) {

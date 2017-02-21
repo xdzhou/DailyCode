@@ -2,17 +2,22 @@ package com.sky.hashcode.pizzaSlice;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private int L, H;
+    private List<Pair> dimens;
     private Solution solution;
     private boolean bestSolutionFound;
 
     public static void main(String[] args) throws FileNotFoundException {
-        new Main().start(new File("JavaExercise/src/resources/medium.in"));
+        Main main = new Main();
+        main.start(new File("JavaExercise/src/resources/medium.in"));
+        //main.start(new File("JavaExercise/src/resources/example.in"));
+        //main.start(new File("JavaExercise/src/resources/small.in"));
     }
 
     private void start(File file) throws FileNotFoundException {
@@ -32,6 +37,7 @@ public class Main {
         scanner.close();
         solution = null;
         bestSolutionFound = false;
+        dimens = getDimenParis(2 * L);
         process(pizza, new LinkedList<>(), 0, null, null);
         System.out.println("Best Solution  (" + solution.point + ") : \n" + solution);
     }
@@ -69,12 +75,49 @@ public class Main {
             }
             int row = index / pizza.getColumnCount();
             int col = index % pizza.getColumnCount();
-            Slice newSlice = new Slice(row, col, row, col);
-            newSlice.tomatoCount = pizza.isTomato(row, col) ? 1 : 0;
 
-            process(pizza, cutSlices, index, newSlice, new LinkedList<>());
+            for (int i = 0; i < dimens.size(); i++) {
+                Pair pair = dimens.get(i);
+                Slice slice = generateSlice(row, col, pair.x, pair.y, pizza, cutSlices);
+                if (slice != null) {
+                    process(pizza, cutSlices, index, slice, new LinkedList<>());
+                }
+                if (pair.x != pair.y) {
+                    slice = generateSlice(row, col, pair.y, pair.x, pizza, cutSlices);
+                    if (slice != null) {
+                        process(pizza, cutSlices, index, slice, new LinkedList<>());
+                    }
+                }
+            }
+
             process(pizza, cutSlices, index + 1, null, null);
         }
+    }
+
+    private Slice generateSlice(int fromRow, int fromCol, int rowCount, int colCount, Pizza pizza, List<Slice> cutSlice) {
+        if (fromRow + rowCount - 1 >= pizza.getRowCount() || fromCol + colCount - 1 >= pizza.getColumnCount()) {
+            return null;
+        }
+        boolean b = pizza.areCellsAllAvailable(fromRow, fromCol, fromRow + rowCount - 1, fromCol + colCount - 1, cutSlice);
+        if (b) {
+            Slice s = new Slice(fromRow, fromCol, fromRow + rowCount - 1, fromCol + colCount - 1);
+            s.tomatoCount = pizza.getTomatoCount(s);
+            return s;
+        } else {
+            return null;
+        }
+    }
+
+    private List<Pair> getDimenParis(int size) {
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(1, size));
+        for (int i = 2; i * i <= size; i++) {
+            if (size % i == 0) {
+                int y = size / i;
+                list.add(new Pair(i, y));
+            }
+        }
+        return list;
     }
 
     private boolean canExtend(Direction dir, Slice slice, Pizza pizza, List<Slice> cuttedSlices) {
@@ -88,6 +131,15 @@ public class Main {
             default:
                 return slice.col2 + 1 < pizza.getColumnCount() &&
                         pizza.areCellsAllAvailable(slice.row1, slice.col1, slice.row2, slice.col2 + 1, cuttedSlices);
+        }
+    }
+
+    private static class Pair {
+        int x,y;
+
+        public Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
     }
 }
