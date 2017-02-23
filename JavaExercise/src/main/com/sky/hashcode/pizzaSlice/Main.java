@@ -15,9 +15,9 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         Main main = new Main();
-        main.start(new File("JavaExercise/src/resources/medium.in"));
-        //main.start(new File("JavaExercise/src/resources/example.in"));
-        //main.start(new File("JavaExercise/src/resources/small.in"));
+        main.start(new File("JavaExercise/src/resources/pizza/medium.in"));
+        //main.start(new File("JavaExercise/src/resources/pizza/example.in"));
+        //main.start(new File("JavaExercise/src/resources/pizza/small.in"));
     }
 
     private void start(File file) throws FileNotFoundException {
