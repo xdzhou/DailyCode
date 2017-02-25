@@ -1,5 +1,7 @@
 package com.sky.hashcode.streamVideo;
 
+import com.google.common.base.Preconditions;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -12,12 +14,13 @@ public class Main {
 
     private List<EndPoint> endPointList = new ArrayList<>();
     private List<Cache> cacheList = new ArrayList<>();
+    private Map<Integer, Set<Cache>> videoCacheMap = new HashMap<>();
 
     public static void main(String[] args) throws FileNotFoundException {
-        new Main().start(new File("JavaExercise/src/resources/streamVideo/me_at_the_zoo.in"));
-        new Main().start(new File("JavaExercise/src/resources/streamVideo/kittens.in"));
+        //new Main().start(new File("JavaExercise/src/resources/streamVideo/me_at_the_zoo.in"));
+        //new Main().start(new File("JavaExercise/src/resources/streamVideo/kittens.in"));
         new Main().start(new File("JavaExercise/src/resources/streamVideo/trending_today.in"));
-        new Main().start(new File("JavaExercise/src/resources/streamVideo/videos_worth_spreading.in"));
+        //new Main().start(new File("JavaExercise/src/resources/streamVideo/videos_worth_spreading.in"));
     }
 
     private void start(File file) throws FileNotFoundException {
@@ -63,34 +66,56 @@ public class Main {
         printResult(file);
     }
 
-    private Map<Integer, Set<Cache>> videoCacheMap = new HashMap<>();
-
     private void process() {
-        List<ValueElement> elements = new ArrayList<>();
+        PriorityQueue<ValueElement> priorityQueue = new PriorityQueue<>(cacheList.size() * videoSize.length);
+        ValueElement[][] valueTable = new ValueElement[cacheList.size()][videoSize.length];
         for (int cacheId = 0; cacheId < cacheList.size(); cacheId ++) {
-            elements.clear();
             for (int videoId = 0; videoId < videoSize.length; videoId ++) {
-                elements.add(computeValue(videoId, cacheId));
+                ValueElement ele = computeValue(videoId, cacheId);
+                valueTable[cacheId][videoId] = ele;
+                if (ele != null) priorityQueue.add(ele);
             }
-            Collections.sort(elements);
-            //System.out.println(elements);
-            Cache cache = cacheList.get(cacheId);
-            int maxIndex = 0;
-            while(maxIndex < elements.size()) {
-                if (cache.restCapacity >= videoSize[elements.get(maxIndex).videoId]) {
-                    cacheVideo(elements.get(maxIndex).videoId, cache);
-                    if (cache.restCapacity <= 0) {
-                        break;
+        }
+        while (!priorityQueue.isEmpty()) {
+            ValueElement best = priorityQueue.poll();
+            cacheVideo(best.videoId, best.cacheId);
+            //remove self
+            valueTable[best.cacheId][best.videoId] = null;
+            //update value
+            for (int i = 0; i < videoSize.length; i++) {
+                ValueElement ele = valueTable[best.cacheId][i];
+                if (ele != null) {
+                    ValueElement newEle = computeValue(ele.videoId, ele.cacheId);
+                    if (newEle == null) {
+                        priorityQueue.remove(ele);
+                    } else if (newEle.value != ele.value) {
+                        priorityQueue.remove(ele);
+                        priorityQueue.add(newEle);
                     }
+                    valueTable[best.cacheId][i] = newEle;
                 }
-                maxIndex++;
+            }
+            for (int i = 0; i < cacheList.size(); i++) {
+                ValueElement ele = valueTable[best.cacheId][i];
+                if (ele != null) {
+                    ValueElement newEle = computeValue(ele.videoId, ele.cacheId);
+                    if (newEle == null) {
+                        priorityQueue.remove(ele);
+                    } else if (newEle.value != ele.value) {
+                        priorityQueue.remove(ele);
+                        priorityQueue.add(newEle);
+                    }
+                    valueTable[best.cacheId][i] = newEle;
+                }
             }
         }
     }
 
-    private void cacheVideo(int videoId, Cache cache) {
+    private void cacheVideo(int videoId, int cacheId) {
+        Cache cache = cacheList.get(cacheId);
         cache.videoFilled.add(videoId);
         cache.restCapacity -= videoSize[videoId];
+        Preconditions.checkState(cache.restCapacity >= 0);
         Set<Cache> caches = videoCacheMap.get(videoId);
         if (caches == null) {
             caches = new HashSet<>();
@@ -116,7 +141,9 @@ public class Main {
         sb.delete(sb.length() - 1, sb.length());
         sb.insert(0, '\n');
         sb.insert(0, cacheUsedCount);
+
         System.out.println(sb.toString());
+
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(file.getAbsolutePath().replace(".in", ".out"));
@@ -131,14 +158,19 @@ public class Main {
     }
 
     private ValueElement computeValue(int videoId, int cacheId) {
-        double value = 0;
-        for (EndPoint endPoint : endPointList) {
-            int latency = cacheToEndLatency[cacheId][endPoint.id];
-            if (latency > 0 && endPoint.videoRequestMap.containsKey(videoId) && !isUseless(videoId, endPoint, latency)) {
-                value += endPoint.videoRequestMap.get(videoId) * (centerToEndLatency[endPoint.id] - latency);
+        double value = 0d;
+        if (videoSize[videoId] <= cacheList.get(cacheId).restCapacity) {
+            for (EndPoint endPoint : endPointList) {
+                int latency = cacheToEndLatency[cacheId][endPoint.id];
+                if (latency > 0 &&
+                        endPoint.videoRequestMap.containsKey(videoId) &&
+                        !isUseless(videoId, endPoint, latency)) {
+                    value += endPoint.videoRequestMap.get(videoId) * (centerToEndLatency[endPoint.id] - latency);
+                }
             }
+            Preconditions.checkState(value >= 0);
         }
-        return new ValueElement(videoId, value / (double) videoSize[videoId]);
+        return value == 0d ? null :new ValueElement(videoId, cacheId, value / (double) videoSize[videoId]);
     }
 
     private boolean isUseless(int videoId, EndPoint endPoint, int curLatency) {
@@ -155,10 +187,12 @@ public class Main {
 
     private static class ValueElement implements Comparable<ValueElement> {
         private int videoId;
+        private int cacheId;
         private double value;
 
-        public ValueElement(int videoId, double value) {
+        private ValueElement(int videoId, int cacheId, double value) {
             this.videoId = videoId;
+            this.cacheId = cacheId;
             this.value = value;
         }
 
