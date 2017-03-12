@@ -54,4 +54,9 @@ class Slice {
         int size = size();
         return size <= H && tomatoCount >= L && size - tomatoCount >= L;
     }
+
+    boolean neverCut(int L, int H) {
+        int size = size();
+        return H - size < L - tomatoCount || H - size < L - size + tomatoCount;
+    }
 }

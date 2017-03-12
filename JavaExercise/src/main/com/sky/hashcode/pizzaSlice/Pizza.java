@@ -77,6 +77,19 @@ class Pizza {
         return true;
     }
 
+    int getRestAvailableCellCount(int from, List<Slice> cutSlices) {
+        int size = size();
+        int count = 0;
+        for(int i = from; i < size; i++) {
+            int row = i / columnCount;
+            int col = i % columnCount;
+            if (isCellAvailable(row, col, cutSlices)) {
+                count ++;
+            }
+        }
+        return count;
+    }
+
     private boolean isCellAvailable(int row, int column, List<Slice> cutSlices) {
         for (Slice slice : cutSlices) {
             if (slice.include(row, column)) {
