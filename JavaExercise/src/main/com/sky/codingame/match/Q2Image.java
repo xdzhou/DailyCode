@@ -19,12 +19,12 @@ public class Q2Image {
         notes.put(10, 'D');
         notes.put(11, 'C');
         String image[] = new String[100];
-        int H, W;
+        int W;
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         String[] hw = in.nextLine().split(" ");
         W = Integer.parseInt(hw[0]);
-        H = Integer.parseInt(hw[1]);
+        Integer.parseInt(hw[1]);
         String buf = in.nextLine();
         image[0] = "W 10 ";
 

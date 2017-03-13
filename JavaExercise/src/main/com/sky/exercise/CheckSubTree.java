@@ -41,10 +41,8 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
     private boolean isEqual(TreeNode<Integer> T1, TreeNode<Integer> T2) {
         if ((T1 == null && T2 == null) || T1 == T2) {
             return true;
-        } else if (T1 != null && T2 != null) {
-            if (T1.mValue.equals(T2.mValue)) {
-                return isEqual(T1.getLeftNode(), T2.getLeftNode()) && isEqual(T1.getRightNode(), T2.getRightNode());
-            }
+        } else if (T1 != null && T2 != null && T1.mValue.equals(T2.mValue)) {
+            return isEqual(T1.getLeftNode(), T2.getLeftNode()) && isEqual(T1.getRightNode(), T2.getRightNode());
         }
         return false;
     }

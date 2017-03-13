@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 
 
@@ -92,20 +94,19 @@ public class SolutionViewer extends JFrame implements ActionListener {
 
 		// Get the LightBoardCopy from the ser file.
 		LightBoardCopy lightBoardCopy = null;
-		try {
+		try  (FileInputStream fis = new FileInputStream(path)) {
 			// Issue in jdk 1.4.0
 			// http://developer.java.sun.com/developer/bugParade/bugs/4466485.html
 			//String path = this.getClass().getClassLoader().getResource(fileName).getPath();
 			//path = URLDecoder.decode(path);
-			FileInputStream fis = new FileInputStream(path);
 			ObjectInputStream bufIn = new ObjectInputStream(fis);
 			lightBoardCopy = (LightBoardCopy) bufIn.readObject();
 			bufIn.close();
 			fis.close();
 		}
-		catch (Exception e) {
+		catch (IOException | ClassNotFoundException e) {
 			System.out.println("Solution file " + path + " not found, make sure you've calculated all solutions.");
-			System.exit(0);
+			throw new RuntimeException(e);
 		}
 		return lightBoardCopy;
 	}

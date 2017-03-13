@@ -1,8 +1,17 @@
 package com.sky.codingame.training;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 import com.loic.algo.search.MonteCarlo;
-
-import java.util.*;
 
 public class VoxCodei {
 
@@ -11,7 +20,7 @@ public class VoxCodei {
         MapNode root = new MapNode();
         MonteCarlo<MapNode, Integer> algo = new MonteCarlo<>();
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         maze.mWidth = in.nextInt(); // width of the firewall grid
         maze.mHeight = in.nextInt(); // height of the firewall grid
         in.nextLine();
@@ -31,7 +40,7 @@ public class VoxCodei {
 
         // game loop
         while (true) {
-            int rounds = in.nextInt(); // number of rounds left before the end of the game
+            in.nextInt(); // number of rounds left before the end of the game
             int bombs = in.nextInt(); // number of bombs left
 
             root.mBombNb = bombs;
@@ -115,12 +124,13 @@ public class VoxCodei {
                     '}';
         }
 
+        @FunctionalInterface
         public interface IInfluenceListener {
             void onInfluenced(int position);
         }
     }
 
-    private static class BombInfo implements Cloneable, Comparable<BombInfo> {
+    private static class BombInfo implements Cloneable {
         private int mPosition;
         private int mTurnLeft = 3;
 
@@ -145,12 +155,9 @@ public class VoxCodei {
             }
             return null;
         }
-
-        @Override
-        public int compareTo(BombInfo o) {
-            return mPosition - o.mPosition;
-        }
     }
+
+    //private static final Comparator<BombInfo> BOMB_INFO_COMPARATOR = (b1, b2) -> (b1.mPosition - b2.mPosition);
 
     private static class MapNode extends MonteCarlo.MonteCarloNode<Integer> implements Cloneable {
         private int mBombNb;
@@ -226,12 +233,9 @@ public class VoxCodei {
                 if (!mBombs.isEmpty()) {
                     temp = new ArrayList<>(mSurveillances);
                     for(BombInfo bi : mBombs) {
-                        config.influenceZone(bi.mPosition, new Maze.IInfluenceListener() {
-                            @Override
-                            public void onInfluenced(int position) {
-                                int index = Collections.binarySearch(temp, position);
-                                if (index >= 0) temp.remove(index);
-                            }
+                        config.influenceZone(bi.mPosition, position -> {
+                            int index = Collections.binarySearch(temp, position);
+                            if (index >= 0) temp.remove(index);
                         });
                     }
                 } else {
@@ -245,14 +249,11 @@ public class VoxCodei {
                 }
                 final Map<Integer, Integer> candidature = new HashMap<>();
                 for(int p : temp) {
-                    config.influenceZone(p, new Maze.IInfluenceListener() {
-                        @Override
-                        public void onInfluenced(int position) {
-                            if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
-                                Integer count = candidature.get(position);
-                                if (count == null) candidature.put(position, 1);
-                                else candidature.put(position, count + 1);
-                            }
+                    config.influenceZone(p, position -> {
+                        if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
+                            Integer count = candidature.get(position);
+                            if (count == null) candidature.put(position, 1);
+                            else candidature.put(position, count + 1);
                         }
                     });
                 }
@@ -271,10 +272,7 @@ public class VoxCodei {
                 //System.err.println("maxCounts : " + maxCounts);
                 if (maxCounts.size() == 0) {
                     System.err.println("IMPOSSIBLE maxCount size : 0");
-                } else if (maxCounts.size() == 1) {
-                    mPutPosition = maxCounts.get(0);
                 } else {
-                    //TODO
                     mPutPosition = maxCounts.get(0);
                 }
             }
@@ -301,16 +299,13 @@ public class VoxCodei {
                 iterator.remove();
                 mBombs.remove(bi);
                 //System.err.println("explosion for "+bi);
-                config.influenceZone(bi.mPosition, new Maze.IInfluenceListener() {
-                    @Override
-                    public void onInfluenced(int position) {
-                        //check surveillance
-                        int index = Collections.binarySearch(mSurveillances, position);
-                        if (index >= 0) mSurveillances.remove(index);
-                        //check bomb
-                        index = binarySearchBomb(position);
-                        if (index >= 0) expositionBombs.add(mBombs.get(index));
-                    }
+                config.influenceZone(bi.mPosition, position -> {
+                    //check surveillance
+                    int index = Collections.binarySearch(mSurveillances, position);
+                    if (index >= 0) mSurveillances.remove(index);
+                    //check bomb
+                    index = binarySearchBomb(position);
+                    if (index >= 0) expositionBombs.add(mBombs.get(index));
                 });
             }
         }
@@ -351,17 +346,14 @@ public class VoxCodei {
             if (mBombNb > 0) {
                 final Set<Integer> set = new HashSet<>();
                 for(int p : mSurveillances) {
-                    maze.influenceZone(p, new Maze.IInfluenceListener() {
-                        @Override
-                        public void onInfluenced(int position) {
-                            if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
-                                set.add(position);
-                            }
+                    maze.influenceZone(p, position -> {
+                        if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
+                            set.add(position);
                         }
                     });
                 }
                 List<Integer> result = new ArrayList<>(set);
-                result.remove(mSurveillances);
+                result.removeAll(mSurveillances);
                 if (!mBombs.isEmpty()) result.add(-1);
                 return result;
             } else {

@@ -1,9 +1,10 @@
 package com.sky.codingame.training;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 public class RollerCoaster {
 
@@ -11,7 +12,7 @@ public class RollerCoaster {
         int L, C, N;
         Queue<Integer> queue = new LinkedList<>();
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         L = in.nextInt();
         C = in.nextInt();
         N = in.nextInt();
@@ -21,13 +22,13 @@ public class RollerCoaster {
         int cap;
         int nbGroup = queue.size();
         int numFlag = 1;
-        HashMap<Integer, Note> noteMap = new HashMap<>();
+        Set<Integer> noteSet = new HashSet<>();
         long resulta = 0;
         for (int i = 1; i <= C; i++) {
-            if (noteMap.containsKey(numFlag)) {
+            if (noteSet.contains(numFlag)) {
 
             } else {
-                noteMap.put(numFlag, new Note(i, resulta));
+                noteSet.add(numFlag);
             }
 
             int size = nbGroup;
@@ -49,15 +50,5 @@ public class RollerCoaster {
         }
         System.out.println(resulta);
         in.close();
-    }
-
-    private static class Note {
-        public int sizeC = 0;
-        public long totalL = 0L;
-
-        public Note(int sizeC, long totalL) {
-            this.sizeC = sizeC;
-            this.totalL = totalL;
-        }
     }
 }

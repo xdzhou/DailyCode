@@ -14,7 +14,7 @@ public class SkynetBack {
     }
 
     private void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int N = in.nextInt(); // the total number of nodes in the level, including the gateways
         Graph graph = new Graph(N);
         int L = in.nextInt(); // the number of links
@@ -44,24 +44,24 @@ public class SkynetBack {
         }
     }
 
-    private class Graph {
+    private static class Graph {
         private boolean[][] mMaps;
         Map<Integer, List<Integer>> specialPoints;
         private List<Integer> hasGates;
 
-        public Graph(int size) {
+        private Graph(int size) {
             mMaps = new boolean[size][size];
         }
 
-        public void connect(int index1, int index2) {
+        private void connect(int index1, int index2) {
             mMaps[index1][index2] = true;
         }
 
-        public void disconnect(int index1, int index2) {
+        private void disconnect(int index1, int index2) {
             mMaps[index1][index2] = false;
         }
 
-        public void putEnds(int... ends) {
+        private void putEnds(int... ends) {
             specialPoints = new HashMap<>();
             int size = mMaps.length;
             for(int end : ends) {
@@ -115,18 +115,19 @@ public class SkynetBack {
                     }
                     removeFlags[node] = true;
                 }
-                for(int multiNode : specialPoints.keySet()) {
-                    if (prevNodes[multiNode] != -1) {
-                        gate = specialPoints.get(multiNode).get(0);
-                        gatePrev = multiNode;
+                for (Map.Entry<Integer, List<Integer>> entry : specialPoints.entrySet()) {
+                    if (prevNodes[entry.getKey()] != -1) {
+                        gate = entry.getValue().get(0);
+                        gatePrev = entry.getKey();
                         System.err.println("soft link : "+gatePrev+", "+gate);
                         break;
                     }
                 }
             }
             if (gate == -1 && !specialPoints.isEmpty()) {
-                gatePrev = specialPoints.keySet().iterator().next();
-                gate = specialPoints.get(gatePrev).get(0);
+                Map.Entry<Integer, List<Integer>> entry = specialPoints.entrySet().iterator().next();
+                gatePrev = entry.getKey();
+                gate = entry.getValue().get(0);
                 System.err.println("choice multi link : "+gatePrev+", "+gate);
             }
             if (gate == -1) {

@@ -76,11 +76,14 @@ public class BigInt implements Cloneable {
 
     @Override
     public BigInt clone() {
-        BigInt newInstance = new BigInt();
-        newInstance.value = this.value;
-        if (mPrefix != null) {
-            newInstance.mPrefix = mPrefix.clone();
+        try {
+            BigInt newInstance = (BigInt) super.clone();
+            if (mPrefix != null) {
+                newInstance.mPrefix = mPrefix.clone();
+            }
+            return newInstance;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
-        return newInstance;
     }
 }

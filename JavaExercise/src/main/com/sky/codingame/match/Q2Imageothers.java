@@ -8,7 +8,7 @@ import java.util.Scanner;
 class Q2Imageothers {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int W = in.nextInt();
         int H = in.nextInt();
         boolean[][] image = buildImage(in, W, H);
@@ -46,7 +46,7 @@ class Q2Imageothers {
     }
 
     private static String computeNotes(int W, int H, boolean[][] image, List<Integer> portee) {
-        String result = "";
+        StringBuilder sb = new StringBuilder();
         int curseur = 0;
         curseur = findNote(W, H, image, portee, curseur);
         while (curseur < W) {
@@ -54,19 +54,19 @@ class Q2Imageothers {
             List<Integer> note = getNote(W, H, image, portee, curseur);
             curseur = findBeforeEndNote(W, H, image, portee, curseur);
             List<Integer> noteEnd = getNote(W, H, image, portee, curseur);
-            result += getPositionAsString(W, H, note.size() < noteEnd.size() ? note : noteEnd, portee);
-            result += isBlack(W, H, image, note.size() < noteEnd.size() ? note : noteEnd, begin, curseur) ? "Q" : "H";
+            sb.append(getPositionAsString(W, H, note.size() < noteEnd.size() ? note : noteEnd, portee));
+            sb.append(isBlack(W, H, image, note.size() < noteEnd.size() ? note : noteEnd, begin, curseur) ? "Q" : "H");
             curseur++; // findEndNote(W, H, image, portee, curseur);
             curseur = findNote(W, H, image, portee, curseur);
 
-            result += " ";
+            sb.append(' ');
         }
-        return result;
+        return sb.toString();
     }
 
     private static Boolean isBlack(int W, int H, boolean[][] image, List<Integer> note, int begin, int curseur) {
-        int milieuW = (begin + curseur) / 2;
-        int milieuH = (note.get(0) + note.get(note.size() - 1)) / 2;
+        int milieuW = (begin + curseur) >>> 1;
+        int milieuH = (note.get(0) + note.get(note.size() - 1)) >>> 1;
         return image[milieuW][milieuH];
     }
 

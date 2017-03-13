@@ -13,7 +13,7 @@ public class Q1OodsV2 {
         // int pay[];
         int totalBudget = 0;
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         N = in.nextInt();
         C = in.nextInt();
         budget = new ArrayList<>(N);

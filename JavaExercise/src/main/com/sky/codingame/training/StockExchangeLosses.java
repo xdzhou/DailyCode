@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class StockExchangeLosses {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int min;
 
         int n = in.nextInt();

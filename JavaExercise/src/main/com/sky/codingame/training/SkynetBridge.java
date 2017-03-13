@@ -8,8 +8,7 @@ import java.util.Scanner;
 class SkynetBridge {
 
     public static void main(String args[]) {
-
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int M = in.nextInt(); // the amount of motorbikes to control
         int V = in.nextInt(); // the minimum amount of motorbikes that must survive
         SkynetBridge algo = new SkynetBridge(V);

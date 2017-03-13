@@ -15,7 +15,10 @@ public class NumArray {
 
     public NumArray(int[] nums) {
         System.out.println("New NumArray with nums size : " + nums.length);
-        this.nums = nums;
+        this.nums = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            this.nums[i] = nums[i];
+        }
 
         if (nums.length > BLOCK_SIZE) {
             int blockSize = nums.length / BLOCK_SIZE;

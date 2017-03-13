@@ -3,6 +3,7 @@ package com.sky.codingame.match;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -15,7 +16,7 @@ class Smash {
     private static final int NEXT_LEN = 6;
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         GeneticAlgo algo = new GeneticAlgo();
         int[] colors = new int[8];
 
@@ -72,7 +73,7 @@ class Smash {
                     childrenGenes.remove(0);
                 }
                 //get best in parent
-                Collections.sort(mGenes);
+                Collections.sort(mGenes, GENE_COMPARATOR);
                 Gene bestGene = mGenes.get(POPULATION - 1);
                 if (bestGene.mFitness >= 8 && i > 10) {
                     System.err.println("We break in generation : "+i+", with fitness : "+bestGene.mFitness);
@@ -92,7 +93,7 @@ class Smash {
                 mGenes.clear();
                 mGenes.addAll(childrenGenes);
             }
-            Collections.sort(mGenes);
+            Collections.sort(mGenes, GENE_COMPARATOR);
             return mGenes.get(POPULATION - 1).mChromosome[0];
         }
 
@@ -152,7 +153,7 @@ class Smash {
             }
         }
 
-        private static class Gene implements Comparable<Gene>, Cloneable {
+        private static class Gene implements Cloneable {
             private int[] mChromosome = new int[NEXT_LEN];
             private int mFitness;
 
@@ -176,12 +177,9 @@ class Smash {
                 }
                 return g;
             }
-
-            @Override
-            public int compareTo(Gene o) {
-                return mFitness - o.mFitness;
-            }
         }
+
+        private static final Comparator<Gene> GENE_COMPARATOR = (o1, o2) -> o1.mFitness - o2.mFitness;
     }
 
     private static class MapInfo {

@@ -9,7 +9,7 @@ public class Surface {
         int width, height, N;
         char table[][];
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         width = in.nextInt();
         height = in.nextInt();
         in.nextLine(); // don't know why

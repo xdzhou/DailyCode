@@ -13,7 +13,7 @@ public class ThorVSGiants {
         MapNode root = new MapNode();
         BruteForce<MapNode, Step> algo = new BruteForce<>();
 
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         root.curX = in.nextInt();
         root.curY = in.nextInt();
 

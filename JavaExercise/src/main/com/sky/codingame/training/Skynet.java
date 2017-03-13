@@ -11,7 +11,7 @@ public class Skynet {
     }
 
     private void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int N = in.nextInt(); // the total number of nodes in the level, including the gateways
         Graph graph = new Graph(N);
         int L = in.nextInt(); // the number of links
@@ -40,22 +40,22 @@ public class Skynet {
         }
     }
 
-    private class Graph {
+    private static class Graph {
         private boolean[][] mMaps;
 
-        public Graph(int size) {
+        private Graph(int size) {
             mMaps = new boolean[size][size];
         }
 
-        public void connect(int index1, int index2) {
+        private void connect(int index1, int index2) {
             mMaps[index1][index2] = true;
         }
 
-        public void disconnect(int index1, int index2) {
+        private void disconnect(int index1, int index2) {
             mMaps[index1][index2] = false;
         }
 
-        public int[] getShortestLastLink(int start, int... ends) {
+        private int[] getShortestLastLink(int start, int... ends) {
             int size = mMaps.length;
             List<Integer> toTouchNodes = new ArrayList<>();
             boolean[] removeFlags = new boolean[size];

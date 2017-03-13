@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -24,7 +25,7 @@ public class Main {
     }
 
     private void start(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = new Scanner(file, "UTF-8");
         videoSize = new int[scanner.nextInt()];
         int endPointCount = scanner.nextInt();
         centerToEndLatency = new int[endPointCount];
@@ -67,7 +68,7 @@ public class Main {
     }
 
     private void process() {
-        PriorityQueue<ValueElement> priorityQueue = new PriorityQueue<>(cacheList.size() * videoSize.length);
+        PriorityQueue<ValueElement> priorityQueue = new PriorityQueue<>(cacheList.size() * videoSize.length, VALUE_ELEMENT_COMPARATOR);
         ValueElement[][] valueTable = new ValueElement[cacheList.size()][videoSize.length];
         for (int cacheId = 0; cacheId < cacheList.size(); cacheId ++) {
             for (int videoId = 0; videoId < videoSize.length; videoId ++) {
@@ -146,9 +147,9 @@ public class Main {
 
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(file.getAbsolutePath().replace(".in", ".out"));
+            writer = new PrintWriter(file.getAbsolutePath().replace(".in", ".out"), "UTF-8");
             writer.print(sb.toString());
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
             if (writer != null) {
@@ -185,7 +186,7 @@ public class Main {
         return false;
     }
 
-    private static class ValueElement implements Comparable<ValueElement> {
+    private static class ValueElement {
         private int videoId;
         private int cacheId;
         private double value;
@@ -203,10 +204,7 @@ public class Main {
                     ", value=" + value +
                     '}';
         }
-
-        @Override
-        public int compareTo(ValueElement o) {
-            return Double.compare(o.value, value);
-        }
     }
+
+    private static final Comparator<ValueElement> VALUE_ELEMENT_COMPARATOR = (v1, v2) -> (Double.compare(v1.value, v2.value));
 }

@@ -9,11 +9,10 @@ public class ChargingChaos {
 
     public static void main(String[] args) {
         new ChargingChaos().start();
-
     }
 
     public void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int nbCase = in.nextInt();
         BREAKFLAG:
         for (int i = 0; i < nbCase; i++) {

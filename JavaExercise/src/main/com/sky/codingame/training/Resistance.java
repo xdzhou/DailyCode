@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Resistance {
-    HashMap<Character, String> table = new HashMap<>();
-    Node root = new Node();
-    String morse_line;
+    private HashMap<Character, String> table = new HashMap<>();
+    private Node root = new Node();
+    private String morseLine;
 
     public static void main(String args[]) {
         new Resistance().start();
@@ -16,8 +16,8 @@ public class Resistance {
         int num_words;
 
         initTable();
-        Scanner in = new Scanner(System.in);
-        morse_line = in.nextLine();
+        Scanner in = new Scanner(System.in, "UTF-8");
+        morseLine = in.nextLine();
         num_words = Integer.parseInt(in.nextLine());
         for (int i = 0; i < num_words; i++) {
             String word = in.nextLine();
@@ -35,7 +35,7 @@ public class Resistance {
     }
 
     private int getNumMsg(int position) {
-        int maxLen = morse_line.length();
+        int maxLen = morseLine.length();
         if (position == maxLen)
             return 1;
         else {
@@ -43,7 +43,7 @@ public class Resistance {
             int newPossion = position;
             Node currentNode = root;
             while (newPossion < maxLen) {
-                if (morse_line.charAt(newPossion) == '.') {
+                if (morseLine.charAt(newPossion) == '.') {
                     if (currentNode.dotNode != null) {
                         currentNode = currentNode.dotNode;
                         newPossion++;
@@ -119,7 +119,7 @@ public class Resistance {
         table.put('Z', "--..");
     }
 
-    private class Node {
+    private static class Node {
         Node dotNode = null;
         Node dasheNode = null;
         boolean isComplet = false;

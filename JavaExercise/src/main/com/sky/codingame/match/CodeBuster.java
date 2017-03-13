@@ -7,7 +7,7 @@ import java.util.*;
 public class CodeBuster {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int bustersPerPlayer = in.nextInt(); // the amount of busters you control
         int ghostCount = in.nextInt(); // the amount of ghosts on the map
         int myTeamId = in.nextInt(); // if this is 0, your base is on the top left of the map, if it is one, on the bottom right
@@ -244,7 +244,8 @@ public class CodeBuster {
 
         @Override
         public String toString() {
-            return "Buster["+mId+", state "+mState+", value "+mValue+", charge "+mChargeTurn+", trust "+mTrustValue+", "+mPosition+"]";
+            return "Buster[" + mId + ", state " + mState + ", value " + mValue +
+                    ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
         }
     }
 
@@ -260,7 +261,7 @@ public class CodeBuster {
 
         @Override
         public String toString() {
-            return "Ghost["+mId+", Stamina "+mStamina+"]";
+            return "Ghost[" + mId + ", Stamina " + mStamina + ", trapCount" + mTrapCount + "]";
         }
     }
 

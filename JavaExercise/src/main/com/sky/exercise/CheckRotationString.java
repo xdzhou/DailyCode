@@ -22,7 +22,7 @@ public class CheckRotationString implements Problem<Pair<String, String>, Boolea
         Preconditions.checkNotNull(s1);
         Preconditions.checkNotNull(s2);
 
-        return s1.length() == s2.length() ? (s1 + s1).contains(s2) : false;
+        return s1.length() == s2.length() && (s1 + s1).contains(s2);
     }
 
 }

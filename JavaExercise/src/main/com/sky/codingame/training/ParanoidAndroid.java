@@ -13,13 +13,13 @@ import java.util.Scanner;
 public class ParanoidAndroid {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         final int nbFloors = in.nextInt(); // number of floors
         final int width = in.nextInt(); // width of the area
         final int nbRounds = in.nextInt(); // maximum number of rounds
         final int exitFloor = in.nextInt(); // floor on which the exit is found
         final int exitPos = in.nextInt(); // position of the exit on its floor
-        int nbTotalClones = in.nextInt(); // number of generated clones
+        in.nextInt(); // number of generated clones
         int nbAdditionalElevators = in.nextInt(); // number of additional elevators that you can build
         System.err.println("number of elevators can be created: "+nbAdditionalElevators);
         int nbElevators = in.nextInt(); // number of elevators
@@ -193,7 +193,7 @@ public class ParanoidAndroid {
             byte[] flags = new byte[w * h];
 
             int startIndex = getIndex(startX, startY);
-            PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+            PriorityQueue<Node> priorityQueue = new PriorityQueue<>(NODE_COMPARATOR);
             List<Node> visitedNodes = new ArrayList<>();
 
             flags[startIndex] = TO_TRACE;
@@ -320,22 +320,19 @@ public class ParanoidAndroid {
             return x * mMapInfo.getWidth() + y;
         }
 
-        private static class Node implements Comparable<Node> {
+        private static class Node {
             private Node prev;
             private int index;
             private int disFromStart; // cost from start point
             private int disToEnd;     // cost to end point (estimed)
             private boolean isRight = true;
 
-            public Node(int index) {
+            private Node(int index) {
                 this.index = index;
             }
-
-            @Override
-            public int compareTo(Node o) {
-                return disFromStart + disToEnd - o.disFromStart - o.disToEnd;
-            }
         }
+
+        private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
 
         public interface IResultChecker {
             boolean isResult(int x, int y);

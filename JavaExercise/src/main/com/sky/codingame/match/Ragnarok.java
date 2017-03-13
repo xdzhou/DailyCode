@@ -1,5 +1,6 @@
 package com.sky.codingame.match;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +15,7 @@ class Ragnarok {
     }
 
     public void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         String[] p = in.nextLine().split(" ");
         int currentX = Integer.parseInt(p[0]);
         int currentY = Integer.parseInt(p[1]);
@@ -129,13 +130,13 @@ class Ragnarok {
         return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
 
-    class Position {
+    private static class Position {
         int x;
         int y;
         int length = 0;
     }
 
-    private class PositionComparator implements Comparator<Position> {
+    private static class PositionComparator implements Comparator<Position>, Serializable {
         @Override
         public int compare(Position o1, Position o2) {
             return o1.length - o2.length;

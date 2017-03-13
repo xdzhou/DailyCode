@@ -1,5 +1,6 @@
 package com.sky.codingame.training;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,7 +19,7 @@ public class SnakesLadders {
     }
 
     public void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int n = Integer.parseInt(in.nextLine());
         square = new String[n];
         for (int i = 0; i < n; i++) {
@@ -158,7 +159,7 @@ public class SnakesLadders {
         }
     }
 
-    private class NodeComparator implements Comparator<Node> {
+    private static class NodeComparator implements Comparator<Node>, Serializable {
         public int compare(Node o1, Node o2) {
             return o1.F - o2.F;
         }

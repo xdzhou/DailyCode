@@ -12,7 +12,7 @@ public class CloseMatch {
     }
 
     private void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int count = in.nextInt();
         in.nextLine();
         for (int i = 0; i < count; i++) {

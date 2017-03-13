@@ -7,20 +7,11 @@ import java.util.Scanner;
 public class Milkshakes {
 
     public static void main(String[] args) {
-        // new Milkshakes().start();
-        List<Integer> list = new ArrayList<>();
-        list.add(3);
-        list.add(2);
-        list.add(1);
-        list.remove(1);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("i=" + i + " - " + list.get(i));
-        }
+        new Milkshakes().start();
     }
 
-    public void start() {// TODO Auto-generated method stub
-
-        Scanner in = new Scanner(System.in);
+    public void start() {
+        Scanner in = new Scanner(System.in, "UTF-8");
         int numCase = in.nextInt();
         for (int i = 0; i < numCase; i++) {
             int numType = in.nextInt();
@@ -52,7 +43,8 @@ public class Milkshakes {
             }
             if (!isPossible)
                 System.out.println("Case #" + (i + 1) + " IMPOSSIBLE");
-
+            else
+                System.out.println(untreatedList);
         }
         in.close();
     }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MissiontoMarsQ1 {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int N = in.nextInt();
         int sx, sy, indi = 0;
         int px[] = new int[N];
@@ -41,10 +41,7 @@ public class MissiontoMarsQ1 {
             R = 0;
         else {
             int temp = dx / 100 - vx;
-            if (temp > 10) {
-                R = -75;
-                P = 4;
-            } else if (temp > 2000) {
+            if (temp > 2000) {
                 R = -25;
                 P = 3;
             } else if (temp > 900) {

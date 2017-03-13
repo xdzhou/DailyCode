@@ -2,7 +2,7 @@ package com.sky.hashcode.pizzaSlice;
 
 import java.util.List;
 
-class Solution implements Comparable<Solution> {
+class Solution {
     int point;
     int[][] data;
 
@@ -31,10 +31,5 @@ class Solution implements Comparable<Solution> {
             sb.append('\n');
         }
         return sb.toString();
-    }
-
-    @Override
-    public int compareTo(Solution o) {
-        return (o != null) ? point - o.point : 1;
     }
 }

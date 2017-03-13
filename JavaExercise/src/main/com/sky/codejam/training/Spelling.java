@@ -12,7 +12,7 @@ public class Spelling {
     public void start() {
         HashMap<Character, String> letteMap = new HashMap<>();
         initMap(letteMap);
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int N = in.nextInt();
         in.nextLine();
         for (int i = 0; i < N; i++) {

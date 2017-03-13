@@ -39,15 +39,14 @@ public class FindSubStringWithAllChar implements Problem<Pair<String, Integer>, 
                     break;
                 }
             }
-            if (head - tail + 1 >= N && isComplet(occurTimes)) {
-                if (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail)) {
-                    cacheHead = head;
-                    cacheTail = tail;
-                    if (cacheHead - cacheTail + 1 == N) // the shortest
+            if (head - tail + 1 >= N && isComplet(occurTimes) &&
+                    (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail))) {
+                cacheHead = head;
+                cacheTail = tail;
+                if (cacheHead - cacheTail + 1 == N) {
+                    // the shortest
                     // substring have found
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }

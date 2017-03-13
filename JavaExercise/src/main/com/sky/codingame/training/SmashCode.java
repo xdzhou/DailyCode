@@ -1,8 +1,13 @@
 package com.sky.codingame.training;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Set;
 import com.loic.algo.search.GeneticAlgorithm;
-
-import java.util.*;
 
 public class SmashCode {
     private static final int HEIGHT = 12;
@@ -10,7 +15,7 @@ public class SmashCode {
     private static final int MAX_DEPTH = 8;
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         final ColorSet[] colors = new ColorSet[MAX_DEPTH];
         GameBoard myBoard = new GameBoard();
         GameBoard oppoBoard = new GameBoard();
@@ -402,11 +407,11 @@ public class SmashCode {
 
         @Override
         public String toString() {
-            String s = "MAP : \n";
+            StringBuilder sb = new StringBuilder("MAP : \n");
             for (int i = 0; i < HEIGHT; i++) {
-                s += Arrays.toString(data[i]) + "\n";
+                sb.append(Arrays.toString(data[i])).append('\n');
             }
-            return s;
+            return sb.toString();
         }
     }
 

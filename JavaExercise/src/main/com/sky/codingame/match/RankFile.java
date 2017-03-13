@@ -22,7 +22,7 @@ public class RankFile {
     }
 
     private void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int count = in.nextInt();
         in.nextLine();
         for (int i = 0; i < count; i++) {
@@ -48,7 +48,7 @@ public class RankFile {
         flags[0] = true;
         applyRow(table, temp, 0, 0);
 
-        if (table[0][0] == table[1][0]) {
+        if (table[0][0].equals(table[1][0])) {
             applyColumn(table, temp, 2, 0);
             boolean appRow = true;
             if (temp[0][size - 1] == table[len - 1][0]) {
@@ -58,7 +58,7 @@ public class RankFile {
                 flags[len - 1] = true;
                 applyRow(table, temp, len - 1, size - 1);
             }
-            if (table[len - 2][0] == table[len - 1][0]) {
+            if (table[len - 2][0].equals(table[len - 1][0])) {
                 if (appRow) applyColumn(table, temp, len - 2, size - 1);
                 else {
                     flags[len - 2] = true;
@@ -76,7 +76,7 @@ public class RankFile {
                 applyRow(table, temp, len - 2, size - 1);
             }
         }
-
+        System.out.println("Flags : " + Arrays.toString(flags));
     }
 
     private void applyRow(Integer[][] table, int[][] temp, int num, int row) {

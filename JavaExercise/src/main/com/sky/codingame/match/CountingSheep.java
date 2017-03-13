@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CountingSheep {
+public final class CountingSheep {
 
     public static void main(String[] args) {
         new CountingSheep().start();
     }
 
     private void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         int count = in.nextInt();
         in.nextLine();
         for (int i = 0; i < count; i++) {
@@ -35,7 +35,7 @@ public class CountingSheep {
         }
     }
 
-    private class BigInt {
+    private static final class BigInt {
         boolean[] flags = new boolean[10];
         int changeCount = 0;
 

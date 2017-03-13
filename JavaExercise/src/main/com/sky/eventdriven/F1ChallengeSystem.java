@@ -1,13 +1,12 @@
 package com.sky.eventdriven;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.loic.algo.eventDrive.Event;
 import com.loic.algo.eventDrive.EventDriveSystem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * {@link http://www.geeksforgeeks.org/google-interview-question-for-java-position/}
+ * {http://www.geeksforgeeks.org/google-interview-question-for-java-position/}
  * <br>
  * The solution will be evaluated on following parameters. Object Oriented
  * Design aspects of the solution. Overall coding practices. Working test cases
@@ -98,18 +97,14 @@ public class F1ChallengeSystem extends EventDriveSystem {
                     lastCar = car;
                 }
 
-                if (car.record.dis >= maxDis) {
-                    if (champion == null || car.record.dis > champion.record.dis) {
-                        champion = car;
-                    }
+                if (car.record.dis >= maxDis &&
+                        (champion == null || car.record.dis > champion.record.dis)) {
+                    champion = car;
                 }
             }
 
-            if (lastCar.nitro()) {
-                // Log.debug("{} use nitro ...", lastCar);
-                if (lastCar.record.curSpeed < lastCar.topSpeed) {
-                    addNewEvent(new AcceleratStopEvent(event.time, lastCar));
-                }
+            if (lastCar.nitro() && lastCar.record.curSpeed < lastCar.topSpeed) {
+                addNewEvent(new AcceleratStopEvent(event.time, lastCar));
             }
         }
     }
@@ -128,15 +123,15 @@ public class F1ChallengeSystem extends EventDriveSystem {
         }
     }
 
-    private static class Car {
+    private static final class Car {
         private final int id;
         private final double topSpeed;
         private final int acceleration;
-        private final float handlingFactor = 0.8f;
+        private static final float handlingFactor = 0.8f;
 
         private CarRecord record = new CarRecord();
 
-        public Car(int id, double topSpeed, int acceleration) {
+        private Car(int id, double topSpeed, int acceleration) {
             this.id = id;
             this.topSpeed = topSpeed;
             this.acceleration = acceleration;
@@ -146,7 +141,7 @@ public class F1ChallengeSystem extends EventDriveSystem {
             return (topSpeed - record.curSpeed) / (double) acceleration;
         }
 
-        public boolean nitro() {
+        private boolean nitro() {
             if (!record.alreadyNitro) {
                 record.curSpeed = Math.min(record.curSpeed * 2, topSpeed);
                 record.alreadyNitro = true;
@@ -161,10 +156,10 @@ public class F1ChallengeSystem extends EventDriveSystem {
         }
     }
 
-    private static class AcceleratStopEvent extends Event {
+    private static final class AcceleratStopEvent extends Event {
         private Car car;
 
-        public AcceleratStopEvent(double startTime, Car car) {
+        private AcceleratStopEvent(double startTime, Car car) {
             super(startTime + car.computeAccelerateDuration());
             this.car = car;
         }
@@ -175,8 +170,8 @@ public class F1ChallengeSystem extends EventDriveSystem {
         }
     }
 
-    private static class ReassessmentEvent extends Event {
-        public ReassessmentEvent(double time) {
+    private static final class ReassessmentEvent extends Event {
+        private ReassessmentEvent(double time) {
             super(time);
         }
 

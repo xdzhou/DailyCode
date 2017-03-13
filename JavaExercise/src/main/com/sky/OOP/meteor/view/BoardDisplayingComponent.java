@@ -1,11 +1,9 @@
 package com.sky.OOP.meteor.view;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Graphics;
-
-import javax.swing.*;
-
+import java.awt.Image;
+import javax.swing.JPanel;
 
 /**
  * <p>The panel that contains the board image.
@@ -13,11 +11,9 @@ import javax.swing.*;
  * @author Kris Cardinaels - krisc@cs.kuleuven.ac.be
  */
 public class BoardDisplayingComponent extends JPanel {
-
 	protected int width=0, height=0;
 	protected BoardImage boardImage;
 	protected LightBoardCopy board;
-
 
 	/**
 	 * <p>Creates a BoardDisplayingComponent with the given LightBoardCopy.
@@ -102,13 +98,14 @@ public class BoardDisplayingComponent extends JPanel {
 	 * <p>Pains the component.
 	 */
 	public void paintComponent(Graphics g) {
-
 		if (boardImage == null) {
 			recreateAndInitiateBoardImage();
 		}
 		try {
 			g.drawImage(boardImage.getImage(), 0, 0, this);
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

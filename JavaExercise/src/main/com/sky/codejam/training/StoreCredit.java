@@ -9,7 +9,7 @@ public class StoreCredit {
     }
 
     public void start() {
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         in.useDelimiter("[ \n\r]");
         int numCase = in.nextInt();
         System.out.println();

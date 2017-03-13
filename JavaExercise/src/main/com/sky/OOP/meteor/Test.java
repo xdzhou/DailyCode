@@ -16,7 +16,10 @@ public class Test {
     private int numberOfSolutions;
 
     public Test() {
-        new File("solutions").mkdirs();
+        boolean b = new File("JavaExercise/build/solutions").mkdirs();
+        if (b) {
+            System.out.println("Create solution folder");
+        }
         mBoard = new Board();
         mPieces = new ArrayList<>(Board.CELL_COUNT / Piece.CELL_COUNT);
 
@@ -189,8 +192,9 @@ public class Test {
         mBoard.unProcessing();
         for (int i = 0; i < Board.CELL_COUNT; i++) {
             BoardCell boardCell = mBoard.getCell(i);
-            if (boardCell.getPiece() == null && !boardCell.isProcessing()) {
-                if (boardCell.getIslandCount() % Piece.CELL_COUNT != 0) return true;
+            if (boardCell.getPiece() == null && !boardCell.isProcessing()
+                    && boardCell.getIslandCount() % Piece.CELL_COUNT != 0) {
+                return true;
             }
         }
         return false;

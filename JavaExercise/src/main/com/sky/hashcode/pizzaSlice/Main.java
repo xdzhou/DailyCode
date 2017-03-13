@@ -3,6 +3,7 @@ package com.sky.hashcode.pizzaSlice;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,8 +23,10 @@ public class Main {
         main.start(new File("JavaExercise/src/resources/pizza/small.in"));
     }
 
+    private static final Comparator<Solution> SOLUTION_COMPARATOR = (s1, s2) -> (s1.point - s2.point);
+
     private void start(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = new Scanner(file, "UTF-8");
         int rowCount = scanner.nextInt();
         int colCount = scanner.nextInt();
         L = scanner.nextInt();
@@ -77,7 +80,7 @@ public class Main {
 
             if (index < 0 || from >= pizza.size() - 2 * L) {
                 Solution newSolution = new Solution(cutSlices);
-                solution = newSolution.compareTo(solution) > 0 ? newSolution : solution;
+                solution = SOLUTION_COMPARATOR.compare(newSolution, solution) > 0 ? newSolution : solution;
                 //System.out.println("Solution Found (" + newSolution.point + ") : \n" + newSolution);
                 bestSolutionFound = solution.point >= potentialMaxPoint;
                 return;
