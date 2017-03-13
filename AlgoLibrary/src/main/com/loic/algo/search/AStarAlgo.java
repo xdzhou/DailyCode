@@ -1,12 +1,12 @@
 package com.loic.algo.search;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * KeyWorld : Path finding
@@ -78,7 +78,7 @@ public class AStarAlgo {
         int[] prev = new int[w * h];
         byte[] flags = new byte[prev.length];
         int startIndex = getIndex(startX, startY);
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<Node>();
+        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(NODE_COMPARATOR);
 
         prev[startIndex] = -1;
         flags[startIndex] = TO_TRACE;
@@ -171,7 +171,7 @@ public class AStarAlgo {
         return x * mMapInfo.getWidth() + y;
     }
 
-    private static class Node implements Comparable<Node>{
+    private static class Node {
         private int index;
         private int disFromStart; // cost from start point
         private int disToEnd;     // cost to end point (estimed)
@@ -179,12 +179,9 @@ public class AStarAlgo {
         public Node(int index) {
             this.index = index;
         }
-
-        @Override
-        public int compareTo(Node o) {
-            return disFromStart + disToEnd - o.disFromStart - o.disToEnd;
-        }
     }
+
+    private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
 
     public interface IResultChecker {
         boolean isResult(int x, int y);

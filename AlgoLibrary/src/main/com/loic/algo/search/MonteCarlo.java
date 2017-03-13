@@ -18,7 +18,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
         mMaxDepth = maxDepth;
         for(int i = 0; i < simulationCount; i++) {
             process();
-            if (mRoot.mWin == mRoot.mSimulationCount) break;
+            if (Float.compare(mRoot.mWin, mRoot.mSimulationCount) == 0) break;
         }
     }
 
@@ -63,7 +63,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
                 break;
             } else {
                 double value = (child.mWin / (float) child.mSimulationCount + C * Math.sqrt(Math.log(parent.mSimulationCount) / (float) child.mSimulationCount));
-                if (value > best || (value == best && mRandom.nextBoolean())) {
+                if (value > best || (Double.compare(value, best) == 0 && mRandom.nextBoolean())) {
                     best = value;
                     bestChild = child;
                 }

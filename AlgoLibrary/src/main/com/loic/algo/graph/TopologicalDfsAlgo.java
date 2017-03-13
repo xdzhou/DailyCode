@@ -61,10 +61,8 @@ public class TopologicalDfsAlgo implements TopologicalSortAlgo<Integer> {
             visitFlag[pointIndex] = true;
             inTraceFlag[pointIndex] = true;
             for (DefaultWeightedEdge edge : mGraph.edgesOf(pointIndex)) {
-                if (mGraph.getEdgeTarget(edge) == pointIndex) {
-                    if (visit(mGraph.getEdgeSource(edge))) {
-                        return true;
-                    }
+                if (mGraph.getEdgeTarget(edge) == pointIndex && visit(mGraph.getEdgeSource(edge))) {
+                    return true;
                 }
             }
             inTraceFlag[pointIndex] = false;

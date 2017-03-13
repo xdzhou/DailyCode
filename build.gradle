@@ -1,5 +1,24 @@
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'findbugs'
+    apply plugin: 'pmd'
+
+    findbugs {
+        sourceSets = [sourceSets.main]
+        reportsDir = file("$project.buildDir/reports/findbugs")
+        effort = "max"
+    }
+
+    pmd {
+        sourceSets = [sourceSets.main]
+        reportsDir = file("$project.buildDir/reports/pmd")
+        ruleSets = [
+                'java-basic'
+        ]
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
        mavenCentral()

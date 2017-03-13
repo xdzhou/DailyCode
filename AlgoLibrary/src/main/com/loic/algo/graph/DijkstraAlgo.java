@@ -34,13 +34,13 @@ public class DijkstraAlgo implements ShortestPathAlgo<Integer> {
         int[] prev = new int[vertexSet.size()];
         // open list
         Set<Integer> openList = new HashSet<>();
-        for (Integer node : vertexSet) {
+        for (int node : vertexSet) {
             dist[node] = (node == startNode) ? 0 : UNKNOWN_DIS;
             prev[node] = (node == startNode) ? startNode : -1;
         }
         openList.add(startNode);
         while (!openList.isEmpty()) {
-            Integer nodeWithMinDis = getNodeWithMinDis(openList, dist);
+            int nodeWithMinDis = getNodeWithMinDis(openList, dist);
             if (nodeWithMinDis == endNode) {
                 break;
             }

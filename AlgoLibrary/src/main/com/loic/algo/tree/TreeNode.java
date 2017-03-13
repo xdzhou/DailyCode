@@ -5,12 +5,30 @@ import com.google.common.base.Preconditions;
 import java.util.Arrays;
 
 public class TreeNode<T> {
-    public T mValue;
-    public TreeNode<T> mLeftNode;
-    public TreeNode<T> mRightNode;
+    public final T mValue;
+    private TreeNode<T> mLeftNode;
+    private TreeNode<T> mRightNode;
 
-    public TreeNode(T mValue) {
+    private TreeNode(T mValue, TreeNode<T> mLeftNode, TreeNode<T> mRightNode) {
         this.mValue = mValue;
+        this.mLeftNode = mLeftNode;
+        this.mRightNode = mRightNode;
+    }
+
+    public TreeNode<T> getLeftNode() {
+        return mLeftNode;
+    }
+
+    public void setLeftNode(TreeNode<T> mLeftNode) {
+        this.mLeftNode = mLeftNode;
+    }
+
+    public TreeNode<T> getRightNode() {
+        return mRightNode;
+    }
+
+    public void setRightNode(TreeNode<T> mRightNode) {
+        this.mRightNode = mRightNode;
     }
 
     public static <T> TreeNode<T> generateBinaryTree(T[] arrays) {
@@ -21,13 +39,14 @@ public class TreeNode<T> {
 
     private static <T> TreeNode<T> generateBinaryTree(T[] arrays, int from, int to) {
         if (from == to) {
-            return new TreeNode<T>(arrays[from]);
+            return new TreeNode<>(arrays[from], null, null);
         }
         int mid = from + ((from + to) >>> 1);
-        TreeNode<T> root = new TreeNode<T>(arrays[mid]);
-        root.mLeftNode = generateBinaryTree(arrays, from, mid - 1);
-        root.mRightNode = generateBinaryTree(arrays, mid + 1, to);
-        return root;
+        T value = arrays[mid];
+        TreeNode<T> left = generateBinaryTree(arrays, from, mid - 1);
+        TreeNode<T> right = generateBinaryTree(arrays, mid + 1, to);
+
+        return new TreeNode<>(value, left, right);
     }
 
 }

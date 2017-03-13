@@ -5,7 +5,7 @@ import com.loic.algo.tree.TreeNode;
 import com.sky.problem.ProblemTwoSolutions;
 
 /**
- * {@link http://www.geeksforgeeks.org/check-binary-tree-subtree-another-binary-tree-set-2/}
+ * { http://www.geeksforgeeks.org/check-binary-tree-subtree-another-binary-tree-set-2/}
  * <br>
  * You have two very large binary trees: T1, with millions of nodes, and T2,
  * with hundreds of nodes. Create an algorithm to decide if T2 is a subtree of
@@ -32,7 +32,7 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
             if (isequal) {
                 return true;
             } else {
-                return isSubTree(T1.mLeftNode, T2) || isSubTree(T1.mRightNode, T2);
+                return isSubTree(T1.getLeftNode(), T2) || isSubTree(T1.getRightNode(), T2);
             }
         }
         return false;
@@ -43,7 +43,7 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
             return true;
         } else if (T1 != null && T2 != null) {
             if (T1.mValue.equals(T2.mValue)) {
-                return isEqual(T1.mLeftNode, T2.mLeftNode) && isEqual(T1.mRightNode, T2.mRightNode);
+                return isEqual(T1.getLeftNode(), T2.getLeftNode()) && isEqual(T1.getRightNode(), T2.getRightNode());
             }
         }
         return false;
@@ -70,7 +70,7 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
         if (tree == null) {
             return replaceNull;
         } else {
-            return getInOrder(tree.mLeftNode, replaceNull) + tree.mValue + getInOrder(tree.mRightNode, replaceNull);
+            return getInOrder(tree.getLeftNode(), replaceNull) + tree.mValue + getInOrder(tree.getRightNode(), replaceNull);
         }
     }
 
@@ -78,7 +78,7 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
         if (tree == null) {
             return replaceNull;
         } else {
-            return tree.mValue + getPreOrder(tree.mLeftNode, replaceNull) + getPreOrder(tree.mRightNode, replaceNull);
+            return tree.mValue + getPreOrder(tree.getLeftNode(), replaceNull) + getPreOrder(tree.getRightNode(), replaceNull);
         }
     }
 }

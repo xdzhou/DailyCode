@@ -16,22 +16,22 @@ public class DCbst2DoubleLinkedList<T> implements Problem<TreeNode<T>, TreeNode<
     private TreeNode<T> changeToLinkList(TreeNode<T> node) {
         if (node == null) {
             return null;
-        } else if (node.mLeftNode == null && node.mRightNode == null) {
+        } else if (node.getLeftNode() == null && node.getRightNode() == null) {
             return node;
         } else {
-            TreeNode<T> leftLinkList = changeToLinkList(node.mLeftNode);
-            TreeNode<T> rightLinkList = changeToLinkList(node.mRightNode);
+            TreeNode<T> leftLinkList = changeToLinkList(node.getLeftNode());
+            TreeNode<T> rightLinkList = changeToLinkList(node.getRightNode());
             TreeNode<T> retVal = leftLinkList == null ? node : leftLinkList;
-            while (leftLinkList != null && leftLinkList.mRightNode != null) {
-                leftLinkList = leftLinkList.mRightNode;
+            while (leftLinkList != null && leftLinkList.getRightNode() != null) {
+                leftLinkList = leftLinkList.getRightNode();
             }
-            node.mLeftNode = leftLinkList;
-            node.mRightNode = rightLinkList;
+            node.setLeftNode(leftLinkList);
+            node.setRightNode(rightLinkList);
             if (leftLinkList != null) {
-                leftLinkList.mRightNode = node;
+                leftLinkList.setRightNode(node);
             }
             if (rightLinkList != null) {
-                rightLinkList.mLeftNode = node;
+                rightLinkList.setLeftNode(node);
             }
             return retVal;
         }

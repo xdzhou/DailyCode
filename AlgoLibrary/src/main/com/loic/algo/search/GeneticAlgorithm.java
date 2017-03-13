@@ -1,5 +1,6 @@
 package com.loic.algo.search;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
@@ -96,8 +97,10 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
         protected float mFitness;
         public final E[] mData;
 
+        @SuppressWarnings("unchecked")
         public Gene(E[] data) {
-            mData = data;
+            mData = (E[]) Array.newInstance(data.getClass().getComponentType(), data.length);
+            System.arraycopy( data, 0, mData, 0, data.length );
         }
 
         protected boolean isOver() {

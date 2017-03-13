@@ -114,7 +114,7 @@ public class RubikCube {
                         retVal[curIndex++] = cube;
                     }
                     break;
-                case 3:
+                default:
                     if (cube.isPresentIn(dir.relativeSide)) {
                         retVal[curIndex++] = cube;
                     }
