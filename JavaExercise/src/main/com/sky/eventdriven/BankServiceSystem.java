@@ -1,12 +1,11 @@
 package com.sky.eventdriven;
 
-import com.loic.algo.eventDrive.Event;
-import com.loic.algo.eventDrive.EventDriveSystem;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import com.loic.algo.eventDrive.Event;
+import com.loic.algo.eventDrive.EventDriveSystem;
 
 public class BankServiceSystem extends EventDriveSystem {
     Random r = new Random();
@@ -39,22 +38,22 @@ public class BankServiceSystem extends EventDriveSystem {
             c.serviceDuration = Math.abs((r.nextInt() + 10) % 20);
             int win = getAvailableWindow();
             if (win >= 0) {
-                Log.debug("T : {} - client : {} arrives, and will be serviced in window {}", event.time, c, win);
+                Log.debug("T : {} - client : {} arrives, and will be serviced in window {}", event.getTime(), c, win);
                 windows[win] = false;
-                addNewEvent(new LeaveEvent(c, event.time + c.serviceDuration, win));
+                addNewEvent(new LeaveEvent(c, event.getTime() + c.serviceDuration, win));
             } else {
-                Log.debug("T : {} - client : {} arrives, and will wait in queue", event.time, c);
+                Log.debug("T : {} - client : {} arrives, and will wait in queue", event.getTime(), c);
                 mQueue.add(c);
             }
         } else if (event instanceof LeaveEvent) {
-            Log.debug("T : {} - client : {} leave", event.time, ((LeaveEvent) event).client);
+            Log.debug("T : {} - client : {} leave", event.getTime(), ((LeaveEvent) event).client);
 
             int win = ((LeaveEvent) event).winNum;
             Client clientInWait = mQueue.poll();
             if (clientInWait != null) {
-                Log.debug("T : {} - client : {} stop waiting, and will be serviced in window {}", event.time,
+                Log.debug("T : {} - client : {} stop waiting, and will be serviced in window {}", event.getTime(),
                         clientInWait, win);
-                addNewEvent(new LeaveEvent(clientInWait, event.time + clientInWait.serviceDuration, win));
+                addNewEvent(new LeaveEvent(clientInWait, event.getTime() + clientInWait.serviceDuration, win));
             } else {
                 windows[win] = true;
             }
@@ -87,11 +86,12 @@ public class BankServiceSystem extends EventDriveSystem {
         }
     }
 
-    private static class ArriveEvent extends Event {
-        private Client client;
+    private static class ArriveEvent implements Event {
+        private final double time;
+        private final Client client;
 
-        public ArriveEvent(Client client, double time) {
-            super(time);
+        private ArriveEvent(Client client, double time) {
+            this.time = time;
             this.client = client;
         }
 
@@ -99,14 +99,20 @@ public class BankServiceSystem extends EventDriveSystem {
         public boolean isValid() {
             return true;
         }
+
+        @Override
+        public double getTime() {
+            return time;
+        }
     }
 
-    private static class LeaveEvent extends Event {
-        private Client client;
+    private static class LeaveEvent implements Event {
+        private final double time;
+        private final Client client;
         private int winNum;
 
         public LeaveEvent(Client client, double time, int win) {
-            super(time);
+            this.time = time;
             this.client = client;
             this.winNum = win;
         }
@@ -114,6 +120,11 @@ public class BankServiceSystem extends EventDriveSystem {
         @Override
         public boolean isValid() {
             return true;
+        }
+
+        @Override
+        public double getTime() {
+            return time;
         }
     }
 

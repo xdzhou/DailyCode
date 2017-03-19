@@ -69,29 +69,29 @@ public class F1ChallengeSystem extends EventDriveSystem {
     protected void processEvent(Event event) {
         if (event instanceof AcceleratStopEvent) {
             Car car = ((AcceleratStopEvent) event).car;
-            double duration = (event.time - car.record.recordTime);
-            car.record.recordTime = event.time;
+            double duration = (event.getTime() - car.record.recordTime);
+            car.record.recordTime = event.getTime();
             car.record.dis += (car.record.curSpeed * duration + 0.5f * car.acceleration * duration * duration);
             car.record.curSpeed = car.topSpeed;
             // Log.debug("Time :{} - {} stop accelerat and in top speed
             // now",event.time, car);
         } else if (event instanceof ReassessmentEvent) {
-            addNewEvent(new ReassessmentEvent(event.time + 2));
+            addNewEvent(new ReassessmentEvent(event.getTime() + 2));
             // Log.debug("new rea-ssessment Event at time : {}", event.time);
             Car lastCar = mCarsList.get(0);
             for (Car car : mCarsList) {
-                double duration = (event.time - car.record.recordTime);
+                double duration = (event.getTime() - car.record.recordTime);
                 if (car.record.curSpeed < car.topSpeed) {
                     car.record.dis += (car.record.curSpeed * duration + 0.5d * car.acceleration * duration * duration);
-                    car.record.curSpeed += car.acceleration * (event.time - car.record.recordTime);
+                    car.record.curSpeed += car.acceleration * (event.getTime() - car.record.recordTime);
                 } else {
                     car.record.dis += car.topSpeed * duration;
                 }
-                car.record.curSpeed *= car.handlingFactor;
-                car.record.recordTime = event.time;
+                car.record.curSpeed *= Car.HANDLING_FACTOR;
+                car.record.recordTime = event.getTime();
                 // Log.debug("new record for {}", car);
 
-                addNewEvent(new AcceleratStopEvent(event.time, car));
+                addNewEvent(new AcceleratStopEvent(event.getTime(), car));
 
                 if (car.record.dis < lastCar.record.dis) {
                     lastCar = car;
@@ -104,7 +104,7 @@ public class F1ChallengeSystem extends EventDriveSystem {
             }
 
             if (lastCar.nitro() && lastCar.record.curSpeed < lastCar.topSpeed) {
-                addNewEvent(new AcceleratStopEvent(event.time, lastCar));
+                addNewEvent(new AcceleratStopEvent(event.getTime(), lastCar));
             }
         }
     }
@@ -124,10 +124,11 @@ public class F1ChallengeSystem extends EventDriveSystem {
     }
 
     private static final class Car {
+        private static final float HANDLING_FACTOR = 0.8f;
+
         private final int id;
         private final double topSpeed;
         private final int acceleration;
-        private static final float handlingFactor = 0.8f;
 
         private CarRecord record = new CarRecord();
 
@@ -156,11 +157,12 @@ public class F1ChallengeSystem extends EventDriveSystem {
         }
     }
 
-    private static final class AcceleratStopEvent extends Event {
+    private static final class AcceleratStopEvent implements Event {
+        private final double time;
         private Car car;
 
         private AcceleratStopEvent(double startTime, Car car) {
-            super(startTime + car.computeAccelerateDuration());
+            time = startTime + car.computeAccelerateDuration();
             this.car = car;
         }
 
@@ -168,17 +170,28 @@ public class F1ChallengeSystem extends EventDriveSystem {
         public boolean isValid() {
             return Math.abs(car.computeAccelerateDuration() - this.time + car.record.recordTime) < 0.0000001d;
         }
+
+        @Override
+        public double getTime() {
+            return time;
+        }
     }
 
-    private static final class ReassessmentEvent extends Event {
+    private static final class ReassessmentEvent implements Event {
+        private final double time;
+
         private ReassessmentEvent(double time) {
-            super(time);
+            this.time = time;
         }
 
         @Override
         public boolean isValid() {
             return true;
         }
-    }
 
+        @Override
+        public double getTime() {
+            return time;
+        }
+    }
 }

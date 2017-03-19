@@ -1,16 +1,10 @@
 package com.loic.algo.eventDrive;
 
-public abstract class Event implements Comparable<Event> {
-    public final double time;
+import java.util.Comparator;
 
-    public Event(double time) {
-        this.time = time;
-    }
+public interface Event {
+    Comparator<Event> COMPARATOR = (e1, e2) -> (Double.compare(e1.getTime(), e2.getTime()));
 
-    public abstract boolean isValid();
-
-    @Override
-    public int compareTo(Event o) {
-        return Double.compare(time, o.time);
-    }
+    boolean isValid();
+    double getTime();
 }
