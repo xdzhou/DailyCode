@@ -1,7 +1,7 @@
 package com.loic.algo.common;
 
 public class Triple<T, E, K> {
-    private Pair<T, E> pair;
+    private final Pair<T, E> pair;
     private K third;
 
     public Triple(T first, E second, K third) {

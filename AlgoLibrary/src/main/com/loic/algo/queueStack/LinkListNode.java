@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 public class LinkListNode<T> {
     private static final Logger Log = LoggerFactory.getLogger(LinkListNode.class);
 
-    public T mValue;
-    public LinkListNode<T> mNext;
+    private T mValue;
+    private LinkListNode<T> mNext;
 
     public LinkListNode(T value) {
         this.mValue = value;

@@ -18,9 +18,9 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         Main main = new Main();
-        //main.start(new File("JavaExercise/src/resources/pizza/medium.in"));
-        //main.start(new File("JavaExercise/src/resources/pizza/example.in"));
-        main.start(new File("JavaExercise/src/resources/pizza/small.in"));
+        //main.start(new File("src/resources/pizza/medium.in"));
+        //main.start(new File("src/resources/pizza/example.in"));
+        main.start(new File("src/resources/pizza/small.in"));
     }
 
     private static final Comparator<Solution> SOLUTION_COMPARATOR = (s1, s2) -> (s1.point - s2.point);
