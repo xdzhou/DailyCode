@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         //new Main().start(new File("JavaExercise/src/resources/streamVideo/me_at_the_zoo.in"));
         //new Main().start(new File("JavaExercise/src/resources/streamVideo/kittens.in"));
-        new Main().start(new File("JavaExercise/src/resources/streamVideo/trending_today.in"));
+        new Main().start(new File("src/main/resources/hashcode/streamVideo/trending_today.in"));
         //new Main().start(new File("JavaExercise/src/resources/streamVideo/videos_worth_spreading.in"));
     }
 

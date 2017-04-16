@@ -20,7 +20,7 @@ public class Main {
         Main main = new Main();
         //main.start(new File("src/resources/pizza/medium.in"));
         //main.start(new File("src/resources/pizza/example.in"));
-        main.start(new File("src/resources/pizza/small.in"));
+        main.start(new File("src/main/resources/hashcode/pizzaSlice/small.in"));
     }
 
     private static final Comparator<Solution> SOLUTION_COMPARATOR = (s1, s2) -> (s1.point - s2.point);

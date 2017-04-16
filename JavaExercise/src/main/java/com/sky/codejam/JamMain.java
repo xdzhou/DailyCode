@@ -26,7 +26,7 @@ public class JamMain {
             resolverClassName = "com.sky.codejam.training." + resolverClassName;
         }
         if (!inputDicName.startsWith("src/")) {
-            inputDicName = "src/resources/codejam/" + inputDicName;
+            inputDicName = "src/main/resources/codejam/" + inputDicName;
         }
         try {
             Resolver resolver = Resolver.class.cast(Class.forName(resolverClassName).newInstance());

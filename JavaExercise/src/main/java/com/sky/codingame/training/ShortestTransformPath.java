@@ -20,18 +20,8 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 
     private Map<T, HashSet<T>> treeMap;
-    private Comparator<Pair<Integer, Integer>> longestPathComparator = new Comparator<Pair<Integer, Integer>>() {
-        @Override
-        public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
-            return o2.getFirst().compareTo(o1.getFirst());
-        }
-    };
-    private Comparator<Pair<Integer, Integer>> depthComparator = new Comparator<Pair<Integer, Integer>>() {
-        @Override
-        public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
-            return o2.getSecond().compareTo(o1.getSecond());
-        }
-    };
+    private Comparator<Pair<Integer, Integer>> longestPathComparator = (o1, o2) -> o2.getFirst().compareTo(o1.getFirst());
+    private Comparator<Pair<Integer, Integer>> depthComparator = (o1, o2) -> o2.getSecond().compareTo(o1.getSecond());
 
     public ShortestTransformPath() {
         treeMap = new HashMap<>();
@@ -75,10 +65,10 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
 
             return new Pair<>(longPath, depth);
         } else {
-            Collections.sort(childrenResult, longestPathComparator);
+            childrenResult.sort(longestPathComparator);
             int childLongPath = childrenResult.get(0).getFirst();
 
-            Collections.sort(childrenResult, depthComparator);
+            childrenResult.sort(depthComparator);
             int maxDepth0 = childrenResult.get(0).getSecond();
             int maxDepth1 = childrenResult.get(1).getSecond();
 
