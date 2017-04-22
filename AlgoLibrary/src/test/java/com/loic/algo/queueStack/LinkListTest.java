@@ -22,7 +22,7 @@ public class LinkListTest {
         System.out.println(noCyclyNode1.printList());
         LinkListNode<Integer> reversNode = noCyclyNode1.reverse();
         System.out.println(reversNode.printList());
-        Assert.assertEquals(noCyclyNode1.mNext, null);
+        Assert.assertEquals(noCyclyNode1.getNext(), null);
         noCyclyNode1 = reversNode.reverse();
 
         cyclyNode = new LinkListNode<>(1);

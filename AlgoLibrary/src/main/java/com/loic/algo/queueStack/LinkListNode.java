@@ -15,6 +15,10 @@ public class LinkListNode<T> {
         this.mValue = value;
     }
 
+    public LinkListNode<T> getNext() {
+        return mNext;
+    }
+
     /**
      * remove a node in this linked list
      *

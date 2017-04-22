@@ -13,11 +13,7 @@ public class MaxPQTest {
 
     @BeforeClass
     public void beforeClass() {
-        Comparator<Double> cmp = new Comparator<Double>() {
-            public int compare(Double o1, Double o2) {
-                return (int) (o2 - o1);
-            }
-        };
+        Comparator<Double> cmp = (o1, o2) -> (int) (o2 - o1);
         pq_java = new PriorityQueue<>(N, cmp);
         pq_my = new MaxPQ<>(Double.class, N);
         for (int i = 0; i < N; i++) {

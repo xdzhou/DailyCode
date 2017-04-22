@@ -13,7 +13,7 @@ public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
 
     private void chargeData(String fileIn) {
         ShortestTransformPath<Integer> algo = (ShortestTransformPath<Integer>) getProblem();
-        String floder = "src/resources/com/sky/codingame/training";
+        String floder = "src/test/resources/codingame/";
         try {
             algo.clear();
             Scanner in = new Scanner(new File(floder + File.separator + fileIn));
@@ -63,30 +63,6 @@ public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
     public void test6() {
         chargeData("ShortestTransformPathIn6.txt");
         check(null, 7);
-    }
-
-    @Test
-    public void test7() {
-        chargeData("ShortestTransformPathIn7.txt");
-        check(null, 15);
-    }
-
-    @Test
-    public void test8() {
-        chargeData("ShortestTransformPathIn8.txt");
-        check(null, 9);
-    }
-
-    @Test
-    public void test9() {
-        chargeData("ShortestTransformPathIn9.txt");
-        check(null, 15);
-    }
-
-    @Test
-    public void test10() {
-        chargeData("ShortestTransformPathIn10.txt");
-        check(null, 5);
     }
 
     @Override

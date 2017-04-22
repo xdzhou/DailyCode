@@ -41,7 +41,7 @@ public class JamMain {
                 System.out.println("Starting resolve input file : " + input.getName());
                 PrintWriter writer = new PrintWriter(input.getAbsolutePath().replace(".in", ".out"), "UTF-8");
 
-                Scanner in = new Scanner(input);
+                Scanner in = new Scanner(input, "UTF-8");
                 int count = in.nextInt();
                 in.nextLine();
                 for (int i = 0; i < count; i++) {

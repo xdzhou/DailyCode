@@ -124,8 +124,8 @@ public class ChargingChaos {
         copyL2.addAll(l2);
         for (int index : specialIndex) {
             for (int i = 0; i < copyL1.size(); i++) {
-                copyL1.set(i, copyL1.get(i) & (0xFFFFFFFF ^ (1 << (L - 1 - index))));
-                copyL2.set(i, copyL2.get(i) & (0xFFFFFFFF ^ (1 << (L - 1 - index))));
+                copyL1.set(i, copyL1.get(i) & (~(1 << (L - 1 - index))));
+                copyL2.set(i, copyL2.get(i) & (~(1 << (L - 1 - index))));
             }
         }
         boolean b = isListEqual(copyL1, copyL2);
