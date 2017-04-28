@@ -1,8 +1,12 @@
 package com.sky.codingame.training;
 
-import com.loic.algo.search.BruteForce;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
 
-import java.util.*;
+import com.loic.algo.search.BruteForce;
 
 public class ThorVSGiants {
     private static final int mHeight = 18;
@@ -37,10 +41,30 @@ public class ThorVSGiants {
         }
     }
 
-    private static class Maze {
-        private int mTotalGiant = -1;
+    private enum Step {
+        STRIKE(0, 0),
+        //WAIT(0,0),
 
+        N(0, -1),
+        NE(1, -1),
+        E(1, 0),
+        SE(1, 1),
+        S(0, 1),
+        SW(-1, 1),
+        W(-1, 0),
+        NW(-1, -1);
+
+        private int deltaX, deltaY;
+
+        Step(int deltaX, int deltaY) {
+            this.deltaX = deltaX;
+            this.deltaY = deltaY;
+        }
+    }
+
+    private static class Maze {
         private static Maze mInstance;
+        private int mTotalGiant = -1;
 
         public static Maze getInstance() {
             if (mInstance == null) mInstance = new Maze();
@@ -96,16 +120,16 @@ public class ThorVSGiants {
             curX += step.deltaX;
             curY += step.deltaY;
             if (arounds != null) {
-                System.err.println("strike giants : "+arounds.size());
+                System.err.println("strike giants : " + arounds.size());
                 giants.removeAll(arounds);
-                strikeNb --;
+                strikeNb--;
             }
             moveGiants();
         }
 
         private List<Integer> giantsAround() {
             List<Integer> retVal = new ArrayList<>();
-            for(int index : giants) {
+            for (int index : giants) {
                 int x = index / mHeight;
                 int y = index % mHeight;
                 if (Math.abs(curX - x) <= 4 && Math.abs(curY - y) <= 4) {
@@ -117,7 +141,7 @@ public class ThorVSGiants {
 
         public void moveGiants() {
             //Collections.sort(giants, mComparator);
-            for(int i = 0, size = giants.size(); i < size; i++) {
+            for (int i = 0, size = giants.size(); i < size; i++) {
                 int index = giants.get(i);
                 int x = index / mHeight;
                 int y = index % mHeight;
@@ -138,11 +162,11 @@ public class ThorVSGiants {
         public float heuristic() {
             float fitness;
             if (isLose()) fitness = Integer.MIN_VALUE;
-            else if(isWin()) fitness = Integer.MAX_VALUE;
+            else if (isWin()) fitness = Integer.MAX_VALUE;
             else {
                 int maxValue = mWidth + mHeight;
                 fitness = (Maze.getInstance().mTotalGiant - giants.size()) * maxValue;
-                for (int i = 0; i <giants.size(); i++) {
+                for (int i = 0; i < giants.size(); i++) {
                     int level = getLevel(giants.get(i));
                     if (level <= 4) fitness += (maxValue - 1);
                     else fitness += (mWidth + mHeight - getDis(giants.get(i)));
@@ -181,32 +205,11 @@ public class ThorVSGiants {
 
         private String printGiant() {
             StringBuilder sb = new StringBuilder("[");
-            for(int index : giants) {
+            for (int index : giants) {
                 sb.append(index / mHeight).append(',').append(index % mHeight).append("  ");
             }
             sb.append(']');
             return sb.toString();
-        }
-    }
-
-    private enum Step {
-        STRIKE(0, 0),
-        //WAIT(0,0),
-
-        N(0, -1),
-        NE(1, -1),
-        E(1, 0),
-        SE(1, 1),
-        S(0, 1),
-        SW(-1, 1),
-        W(-1, 0),
-        NW(-1, -1);
-
-        private int deltaX, deltaY;
-
-        Step(int deltaX, int deltaY) {
-            this.deltaX = deltaX;
-            this.deltaY = deltaY;
         }
     }
 }

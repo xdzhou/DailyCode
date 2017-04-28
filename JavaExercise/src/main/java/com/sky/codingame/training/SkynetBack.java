@@ -45,8 +45,8 @@ public class SkynetBack {
     }
 
     private static class Graph {
-        private boolean[][] mMaps;
         Map<Integer, List<Integer>> specialPoints;
+        private boolean[][] mMaps;
         private List<Integer> hasGates;
 
         private Graph(int size) {
@@ -64,11 +64,11 @@ public class SkynetBack {
         private void putEnds(int... ends) {
             specialPoints = new HashMap<>();
             int size = mMaps.length;
-            for(int end : ends) {
+            for (int end : ends) {
                 for (int i = 0; i < size; i++) {
-                    if (mMaps[end][i] ) {
+                    if (mMaps[end][i]) {
                         List<Integer> gates = specialPoints.get(i);
-                        if(gates == null){
+                        if (gates == null) {
                             gates = new ArrayList<>();
                             specialPoints.put(i, gates);
                         }
@@ -77,21 +77,21 @@ public class SkynetBack {
                 }
             }
             hasGates = new ArrayList<>(specialPoints.keySet());
-            for(Integer key : hasGates) {
+            for (Integer key : hasGates) {
                 if (specialPoints.get(key).size() <= 1) {
                     specialPoints.remove(key);
                 }
             }
-            System.err.println("Special Map : "+specialPoints);
+            System.err.println("Special Map : " + specialPoints);
         }
 
         private int[] passNodeWithGate(int start, int... ends) {
             int gate = -1, gatePrev = -1;
-            for(int endGate : ends) {
+            for (int endGate : ends) {
                 if (mMaps[endGate][start]) {
                     gate = endGate;
                     gatePrev = start;
-                    System.err.println("Direct link : "+gatePrev+", "+gate);
+                    System.err.println("Direct link : " + gatePrev + ", " + gate);
                     break;
                 }
             }
@@ -103,7 +103,7 @@ public class SkynetBack {
                 Arrays.fill(prevNodes, -1);
                 toTouchNodes.add(start);
 
-                while (! toTouchNodes.isEmpty()) {
+                while (!toTouchNodes.isEmpty()) {
                     int node = toTouchNodes.remove(0);
                     if (!removeFlags[node]) {
                         for (int i = 0; i < size; i++) {
@@ -119,7 +119,7 @@ public class SkynetBack {
                     if (prevNodes[entry.getKey()] != -1) {
                         gate = entry.getValue().get(0);
                         gatePrev = entry.getKey();
-                        System.err.println("soft link : "+gatePrev+", "+gate);
+                        System.err.println("soft link : " + gatePrev + ", " + gate);
                         break;
                     }
                 }
@@ -128,14 +128,14 @@ public class SkynetBack {
                 Map.Entry<Integer, List<Integer>> entry = specialPoints.entrySet().iterator().next();
                 gatePrev = entry.getKey();
                 gate = entry.getValue().get(0);
-                System.err.println("choice multi link : "+gatePrev+", "+gate);
+                System.err.println("choice multi link : " + gatePrev + ", " + gate);
             }
             if (gate == -1) {
                 gatePrev = hasGates.get(0);
-                for(int endGate : ends) {
+                for (int endGate : ends) {
                     if (mMaps[endGate][gatePrev]) {
                         gate = endGate;
-                        System.err.println("choice single link : "+gatePrev+", "+gate);
+                        System.err.println("choice single link : " + gatePrev + ", " + gate);
                         break;
                     }
                 }

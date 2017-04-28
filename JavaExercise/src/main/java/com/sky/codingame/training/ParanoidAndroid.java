@@ -1,7 +1,6 @@
 package com.sky.codingame.training;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,13 +20,13 @@ public class ParanoidAndroid {
         final int exitPos = in.nextInt(); // position of the exit on its floor
         in.nextInt(); // number of generated clones
         int nbAdditionalElevators = in.nextInt(); // number of additional elevators that you can build
-        System.err.println("number of elevators can be created: "+nbAdditionalElevators);
+        System.err.println("number of elevators can be created: " + nbAdditionalElevators);
         int nbElevators = in.nextInt(); // number of elevators
         final Map<Integer, List<Integer>> elevatorMap = new HashMap<>(nbElevators);
         for (int i = 0; i < nbElevators; i++) {
             int elevatorFloor = in.nextInt(); // floor on which this elevator is found
             int elevatorPos = in.nextInt(); // position of the elevator on its floor
-            if(elevatorMap.containsKey(elevatorFloor)) {
+            if (elevatorMap.containsKey(elevatorFloor)) {
                 elevatorMap.get(elevatorFloor).add(elevatorPos);
             } else {
                 List<Integer> pos = new ArrayList<>();
@@ -36,9 +35,9 @@ public class ParanoidAndroid {
             }
         }
 
-        System.err.println("elevatorMap : "+elevatorMap);
+        System.err.println("elevatorMap : " + elevatorMap);
 
-        final MapInfo mapInfo = new MapInfo(nbFloors, width, elevatorMap) ;
+        final MapInfo mapInfo = new MapInfo(nbFloors, width, elevatorMap);
 
         final AStarAlgo algo = new AStarAlgo(mapInfo);
 
@@ -52,31 +51,31 @@ public class ParanoidAndroid {
             String direction = in.next(); // direction of the leading clone: LEFT or RIGHT
 
             if (elePos == null) {
-                System.err.println("Start point : " + cloneFloor+", "+clonePos);
+                System.err.println("Start point : " + cloneFloor + ", " + clonePos);
                 final List<Integer> hasEleFloors = new ArrayList<>();
-                for(Integer floor : elevatorMap.keySet()) {
-                    if (floor < exitFloor ) hasEleFloors.add(floor);
+                for (Integer floor : elevatorMap.keySet()) {
+                    if (floor < exitFloor) hasEleFloors.add(floor);
                 }
                 int elevatorAdd = nbAdditionalElevators - (exitFloor - hasEleFloors.size());
                 List<Integer> path = null;
                 if (elevatorAdd < 0) {
                     System.err.println("IMPOSSIBLE");
-                } else if(elevatorAdd == 0) {
+                } else if (elevatorAdd == 0) {
                     path = algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
                 } else {
                     if (elevatorAdd > hasEleFloors.size()) elevatorAdd = hasEleFloors.size();
                     List<Integer> ignoreList = new ArrayList<>(elevatorAdd);
 
                     class Iterator {
-                        List<Integer> fill(List<Integer> ignoreList, int startIndex, int count){
+                        List<Integer> fill(List<Integer> ignoreList, int startIndex, int count) {
                             if (count == 0) {
-                                System.err.println("check ignore list : "+ignoreList);
+                                System.err.println("check ignore list : " + ignoreList);
                                 mapInfo.setIgnoreFloors(ignoreList);
                                 return algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
-                            } else if(hasEleFloors.size() - startIndex >= count){
+                            } else if (hasEleFloors.size() - startIndex >= count) {
                                 int len = hasEleFloors.size() - startIndex - count + 1;
                                 List<Integer> retVal = null;
-                                for(int i = startIndex; i < startIndex +len && retVal == null; i++){
+                                for (int i = startIndex; i < startIndex + len && retVal == null; i++) {
                                     ignoreList.add(hasEleFloors.get(i));
                                     retVal = fill(ignoreList, i + 1, count - 1);
                                     ignoreList.remove(ignoreList.size() - 1);
@@ -91,14 +90,14 @@ public class ParanoidAndroid {
 
                 elePos = new int[nbFloors];
                 elePos[exitFloor] = exitPos;
-                if(path == null){
+                if (path == null) {
                     System.err.println("IMPOSSIBLE");
                 } else {
-                    for(int i = 0; i + 2 < path.size(); i+=2) {
-                        if(path.get(i + 2) + 1 == path.get(i) && path.get(i + 1) == path.get(i + 3)) {
+                    for (int i = 0; i + 2 < path.size(); i += 2) {
+                        if (path.get(i + 2) + 1 == path.get(i) && path.get(i + 1) == path.get(i + 3)) {
                             int floor = nbFloors - 1 - path.get(i);
                             elePos[floor] = path.get(i + 1);
-                            System.err.println("find elevator : "+floor+", "+elePos[floor]);
+                            System.err.println("find elevator : " + floor + ", " + elePos[floor]);
                         }
                     }
                 }
@@ -107,15 +106,14 @@ public class ParanoidAndroid {
             String action;
             if (cloneFloor < 0)
                 action = "WAIT";
-            else if(!eleCreated[cloneFloor] && elePos[cloneFloor] == clonePos && (!elevatorMap.containsKey(cloneFloor) || !elevatorMap.get(cloneFloor).contains(clonePos))) {
+            else if (!eleCreated[cloneFloor] && elePos[cloneFloor] == clonePos && (!elevatorMap.containsKey(cloneFloor) || !elevatorMap.get(cloneFloor).contains(clonePos))) {
                 eleCreated[cloneFloor] = true;
                 action = "ELEVATOR";
-            }
-            else if (elePos[cloneFloor] > clonePos && direction.equals("LEFT"))
+            } else if (elePos[cloneFloor] > clonePos && direction.equals("LEFT"))
                 action = "BLOCK";
             else if (elePos[cloneFloor] < clonePos && direction.equals("RIGHT"))
                 action = "BLOCK";
-            else if (clonePos == 0 || clonePos == width -1)
+            else if (clonePos == 0 || clonePos == width - 1)
                 action = "BLOCK";
             else
                 action = "WAIT";
@@ -158,11 +156,11 @@ public class ParanoidAndroid {
             if (isValidPosition(fromX, fromY) && isValidPosition(toX, toY) && (fromX == toX || fromY == toY)) {
                 int floor = nbFloors - 1 - fromX;
                 if (fromX == toX + 1) { //up
-                    return ! elevatorMap.containsKey(floor) || (ignoreFloors != null && ignoreFloors.contains(floor)) || elevatorMap.get(floor).contains(fromY);
-                } else if(fromX == toX - 1) { //down
+                    return !elevatorMap.containsKey(floor) || (ignoreFloors != null && ignoreFloors.contains(floor)) || elevatorMap.get(floor).contains(fromY);
+                } else if (fromX == toX - 1) { //down
                     return false;
-                } else if (elevatorMap.containsKey(floor)){
-                    return ! elevatorMap.get(floor).contains(fromY);
+                } else if (elevatorMap.containsKey(floor)) {
+                    return !elevatorMap.get(floor).contains(fromY);
                 }
                 return true;
             }
@@ -180,7 +178,7 @@ public class ParanoidAndroid {
         private static final byte UNKNOWN = 0;
         private static final byte TRACED = 1;
         private static final byte TO_TRACE = 2;
-
+        private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
         private IMapInfo mMapInfo;
 
         public AStarAlgo(IMapInfo mMapInfo) {
@@ -201,15 +199,15 @@ public class ParanoidAndroid {
             startNode.disToEnd = mMapInfo.getEstimateDis(startX, startY, endX, endY);
             priorityQueue.add(startNode);
             int endIndex = getIndex(endX, endY);
-            while (! priorityQueue.isEmpty()) {
+            while (!priorityQueue.isEmpty()) {
                 Node node = priorityQueue.poll();
 
                 if (node.disFromStart + node.disToEnd > maxLen) {
                     System.err.println("max length exceed ...");
                     return null;
                 }
-                if (node.index == endIndex){
-                    System.err.println("max length : "+maxLen+", node len : "+node.disFromStart);
+                if (node.index == endIndex) {
+                    System.err.println("max length : " + maxLen + ", node len : " + node.disFromStart);
                     return getPath(node);
                 }
                 int x = node.index / w;
@@ -264,7 +262,7 @@ public class ParanoidAndroid {
                     if (existNode.isRight == isRight && node.disFromStart + cost < existNode.disFromStart) {
                         existNode.disFromStart = node.disFromStart + cost;
                         existNode.prev = node;
-                    } else if(existNode.isRight != isRight) {
+                    } else if (existNode.isRight != isRight) {
                         Node newNode = new Node(existNode.index);
                         newNode.isRight = isRight;
                         newNode.disFromStart = node.disFromStart + cost;
@@ -275,7 +273,7 @@ public class ParanoidAndroid {
                     priorityQueue.add(existNode);
                 } else if (node.index / mMapInfo.getWidth() == x + 1) { //up
                     Node visit = getVisiteNode(visitedNodes, index);
-                    if (visit != null && visit.isRight != isRight){
+                    if (visit != null && visit.isRight != isRight) {
                         Node newNode = new Node(index);
                         newNode.isRight = isRight;
                         newNode.disFromStart = node.disFromStart + cost;
@@ -288,8 +286,8 @@ public class ParanoidAndroid {
             }
         }
 
-        private Node getVisiteNode(List<Node> list , int index) {
-            for(Node n : list){
+        private Node getVisiteNode(List<Node> list, int index) {
+            for (Node n : list) {
                 if (n.index == index) return n;
             }
             return null;
@@ -300,7 +298,7 @@ public class ParanoidAndroid {
             Iterator<Node> iterator = priorityQueue.iterator();
             while (iterator.hasNext()) {
                 Node n = iterator.next();
-                if(n.index == index) {
+                if (n.index == index) {
                     if (n.isRight == isRight) {
                         iterator.remove();
                         return n;
@@ -320,6 +318,20 @@ public class ParanoidAndroid {
             return x * mMapInfo.getWidth() + y;
         }
 
+        public interface IResultChecker {
+            boolean isResult(int x, int y);
+        }
+
+        public interface IMapInfo {
+            int getHeight();
+
+            int getWidth();
+
+            boolean reachable(int fromX, int fromY, int toX, int toY);
+
+            int getEstimateDis(int x1, int y1, int x2, int y2);
+        }
+
         private static class Node {
             private Node prev;
             private int index;
@@ -330,19 +342,6 @@ public class ParanoidAndroid {
             private Node(int index) {
                 this.index = index;
             }
-        }
-
-        private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
-
-        public interface IResultChecker {
-            boolean isResult(int x, int y);
-        }
-
-        public interface IMapInfo {
-            int getHeight();
-            int getWidth();
-            boolean reachable(int fromX, int fromY, int toX, int toY);
-            int getEstimateDis(int x1, int y1, int x2, int y2);
         }
     }
 }

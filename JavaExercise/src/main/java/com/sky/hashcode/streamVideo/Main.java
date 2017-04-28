@@ -1,18 +1,26 @@
 package com.sky.hashcode.streamVideo;
 
-import com.google.common.base.Preconditions;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.util.Set;
+
+import com.google.common.base.Preconditions;
 
 public class Main {
+    private static final Comparator<ValueElement> VALUE_ELEMENT_COMPARATOR = (v1, v2) -> (Double.compare(v1.value, v2.value));
     private int[][] cacheToEndLatency;
     private int[] centerToEndLatency;
     private int[] videoSize;
-
     private List<EndPoint> endPointList = new ArrayList<>();
     private List<Cache> cacheList = new ArrayList<>();
     private Map<Integer, Set<Cache>> videoCacheMap = new HashMap<>();
@@ -42,13 +50,13 @@ public class Main {
             videoSize[i] = scanner.nextInt();
         }
         scanner.nextLine();
-        for(int i = 0; i < endPointCount; i++) {
+        for (int i = 0; i < endPointCount; i++) {
             EndPoint endPoint = new EndPoint(i);
             endPointList.add(endPoint);
             centerToEndLatency[i] = scanner.nextInt();
             int connectedCacheCount = scanner.nextInt();
             scanner.nextLine();
-            for (int j = 0; j < connectedCacheCount; j ++) {
+            for (int j = 0; j < connectedCacheCount; j++) {
                 int cacheId = scanner.nextInt();
                 int latency = scanner.nextInt();
                 cacheToEndLatency[cacheId][i] = latency;
@@ -70,8 +78,8 @@ public class Main {
     private void process() {
         PriorityQueue<ValueElement> priorityQueue = new PriorityQueue<>(cacheList.size() * videoSize.length, VALUE_ELEMENT_COMPARATOR);
         ValueElement[][] valueTable = new ValueElement[cacheList.size()][videoSize.length];
-        for (int cacheId = 0; cacheId < cacheList.size(); cacheId ++) {
-            for (int videoId = 0; videoId < videoSize.length; videoId ++) {
+        for (int cacheId = 0; cacheId < cacheList.size(); cacheId++) {
+            for (int videoId = 0; videoId < videoSize.length; videoId++) {
                 ValueElement ele = computeValue(videoId, cacheId);
                 valueTable[cacheId][videoId] = ele;
                 if (ele != null) priorityQueue.add(ele);
@@ -129,8 +137,8 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         int cacheUsedCount = 0;
         for (int i = 0; i < cacheList.size(); i++) {
-            if (! cacheList.get(i).videoFilled.isEmpty()) {
-                cacheUsedCount ++;
+            if (!cacheList.get(i).videoFilled.isEmpty()) {
+                cacheUsedCount++;
                 sb.append(i).append(' ');
                 for (int videoId : cacheList.get(i).videoFilled) {
                     sb.append(videoId).append(' ');
@@ -171,7 +179,7 @@ public class Main {
             }
             Preconditions.checkState(value >= 0);
         }
-        return value == 0d ? null :new ValueElement(videoId, cacheId, value / (double) videoSize[videoId]);
+        return value == 0d ? null : new ValueElement(videoId, cacheId, value / (double) videoSize[videoId]);
     }
 
     private boolean isUseless(int videoId, EndPoint endPoint, int curLatency) {
@@ -205,6 +213,4 @@ public class Main {
                     '}';
         }
     }
-
-    private static final Comparator<ValueElement> VALUE_ELEMENT_COMPARATOR = (v1, v2) -> (Double.compare(v1.value, v2.value));
 }

@@ -1,9 +1,9 @@
 package com.sky.recursion;
 
-import com.sky.problem.Problem;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sky.problem.Problem;
 
 public class EightQueens implements Problem<Void, Integer> {
 

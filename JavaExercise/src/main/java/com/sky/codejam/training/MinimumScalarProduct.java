@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
 import com.sky.codejam.Resolver;
 
 public class MinimumScalarProduct implements Resolver {

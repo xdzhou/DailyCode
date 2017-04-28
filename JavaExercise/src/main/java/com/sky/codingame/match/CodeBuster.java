@@ -1,10 +1,50 @@
 package com.sky.codingame.match;
 
-import com.loic.algo.array.ArrayUtils;
-
 import java.util.*;
 
+import com.loic.algo.array.ArrayUtils;
+
 public class CodeBuster {
+
+    private static final int HEIGHT = 9001;
+    private static final int WIDTH = 16001;
+    private final int mTeamId;
+    private final List<Ghost> mGhosts;
+    private final List<Buster> mMyBusters;
+    private final List<Buster> mOtherBusters;
+    private final GameInfo mGameInfo;
+    private final Coord mBasePosition;
+    private final Coord mOpponentBasePosition;
+    private final Coord[] mZoneCenters = new Coord[18];
+    private final boolean[] mZonePassed = new boolean[18];
+    private Random mRandom = new Random(new Date().getTime());
+    private int mDefenderCount = 0;
+    public CodeBuster(int teamId, int busterCount, int ghostCount) {
+        mTeamId = teamId;
+        mMyBusters = new ArrayList<>(busterCount);
+        mOtherBusters = new ArrayList<>(busterCount);
+        mGhosts = new ArrayList<>(ghostCount);
+        mGameInfo = new GameInfo();
+        mGameInfo.mGhostCount = ghostCount;
+
+        if (mTeamId == 0) {
+            mBasePosition = new Coord(0, 0);
+            mOpponentBasePosition = new Coord(WIDTH - 1, HEIGHT - 1);
+        } else {
+            mBasePosition = new Coord(WIDTH - 1, HEIGHT - 1);
+            mOpponentBasePosition = new Coord(0, 0);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 6; j++) {
+                int x = 1500 + j * 3000;
+                if (j == 5) x = 15500;
+                mZoneCenters[i * 6 + j] = new Coord(x, 1500 + i * 3000);
+            }
+        }
+        if (mTeamId == 0) mZonePassed[0] = true;
+        else mZonePassed[mZonePassed.length - 1] = true;
+    }
 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in, "UTF-8");
@@ -33,56 +73,12 @@ public class CodeBuster {
         }
     }
 
-    private static final int HEIGHT = 9001;
-    private static final int WIDTH = 16001;
-
-    private final int mTeamId;
-    private final List<Ghost> mGhosts;
-    private final List<Buster> mMyBusters;
-    private final List<Buster> mOtherBusters;
-
-    private final GameInfo mGameInfo;
-
-    private Random mRandom = new Random(new Date().getTime());
-    private int mDefenderCount = 0;
-    private final Coord mBasePosition;
-    private final Coord mOpponentBasePosition;
-    private final Coord[] mZoneCenters = new Coord[18];
-    private final boolean[] mZonePassed = new boolean[18];
-
-    public CodeBuster(int teamId, int busterCount, int ghostCount) {
-        mTeamId = teamId;
-        mMyBusters = new ArrayList<>(busterCount);
-        mOtherBusters = new ArrayList<>(busterCount);
-        mGhosts = new ArrayList<>(ghostCount);
-        mGameInfo = new GameInfo();
-        mGameInfo.mGhostCount = ghostCount;
-
-        if (mTeamId == 0) {
-            mBasePosition = new Coord(0, 0);
-            mOpponentBasePosition = new Coord(WIDTH - 1, HEIGHT - 1);
-        } else {
-            mBasePosition = new Coord(WIDTH - 1, HEIGHT - 1);
-            mOpponentBasePosition = new Coord(0, 0);
-        }
-
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 6; j++) {
-                int x = 1500 + j * 3000;
-                if (j == 5) x = 15500;
-                mZoneCenters[i * 6 + j] = new Coord(x, 1500 + i * 3000);
-            }
-        }
-        if (mTeamId == 0) mZonePassed[0] = true;
-        else mZonePassed[mZonePassed.length - 1] = true;
-    }
-
     private void onPointSearched(Coord other) {
-        for(int i = 0; i < mZoneCenters.length; i++) {
+        for (int i = 0; i < mZoneCenters.length; i++) {
             Coord p = mZoneCenters[i];
             if (p.getDis(other) < 111) {
                 mZonePassed[i] = true;
-                System.err.println("PASS zone "+i+", "+p);
+                System.err.println("PASS zone " + i + ", " + p);
                 break;
             }
         }
@@ -99,7 +95,7 @@ public class CodeBuster {
 
     private Buster getBusterById(int id, int team) {
         List<Buster> searchList = (team == mTeamId) ? mMyBusters : mOtherBusters;
-        for(Buster buster : searchList) {
+        for (Buster buster : searchList) {
             if (buster.mId == id) return buster;
         }
         Buster b = new Buster(id);
@@ -128,7 +124,7 @@ public class CodeBuster {
     }
 
     private void beforeRefresh() {
-        for(Ghost ghost : mGhosts) {
+        for (Ghost ghost : mGhosts) {
             ghost.mInMemory = true; // last turn's ghost, we remember it
         }
     }
@@ -143,13 +139,13 @@ public class CodeBuster {
             entity = ghost;
         } else if (type == 0 || type == 1) {
             Buster buster = getBusterById(entityId, type);
-            buster.mChargeTurn ++;
+            buster.mChargeTurn++;
             buster.mState = state;
             buster.mValue = value;
             if (type != mTeamId) {
                 int trustValue;
                 if (buster.mState == 2) trustValue = value;
-                else if (buster.mState == 3)  trustValue = 9;
+                else if (buster.mState == 3) trustValue = 9;
                 else trustValue = 4;
                 if (trustValue < 3) trustValue = 3;
                 buster.updateTrust(trustValue);
@@ -165,7 +161,7 @@ public class CodeBuster {
     }
 
     private void afterRefresh() {
-        if(mGameInfo.mBaseCaptureInfluence > 0) mGameInfo.mBaseCaptureInfluence --;
+        if (mGameInfo.mBaseCaptureInfluence > 0) mGameInfo.mBaseCaptureInfluence--;
         Iterator<Buster> iterator = mOtherBusters.iterator();
         while (iterator.hasNext()) {
             Buster b = iterator.next();
@@ -179,9 +175,9 @@ public class CodeBuster {
         Iterator<Ghost> ghostIterator = mGhosts.iterator();
         while (ghostIterator.hasNext()) {
             Ghost ghost = ghostIterator.next();
-            if(ghost.mInMemory) {
+            if (ghost.mInMemory) {
                 boolean closeToMyBuster = false;
-                for(int i = 0; i < mMyBusters.size() && !closeToMyBuster; i++) {
+                for (int i = 0; i < mMyBusters.size() && !closeToMyBuster; i++) {
                     if (ghost.getDis(mMyBusters.get(i)) < 2200) {
                         closeToMyBuster = true;
                     }
@@ -193,215 +189,11 @@ public class CodeBuster {
         mGameInfo.newTurnStart();
     }
 
-    private class Buster extends Entity {
-        private int mState;
-        private int mValue;
-
-        private int mChargeTurn = 20;
-        private int mTrustValue = 10;
-
-        public Buster(int id) {
-            mId = id;
-        }
-
-        public void updateTrust(int value) {
-            mTrustValue = value;
-        }
-
-        public void dishonesty() {
-            mTrustValue --;
-        }
-
-        public float getBustCost(Ghost ghost) {
-            return (getDis(ghost) + ghost.getDis(mBasePosition)) / 800f + ghost.mStamina;
-        }
-
-        public Coord awayFrom(Buster b) {
-            Coord coord = mPosition.extendTo(b.mPosition, -800);
-            if (getDis(coord) <= 799) {
-                /*
-                if (coord.x == 0 || coord.x == 16000) {
-                    float deltaY = (float) Math.sqrt(800 * 800 - (coord.x - mPosition.x) * (coord.x - mPosition.x));
-                    if (b.mPosition.getDis(coord.x, mPosition.y + deltaY) > b.mPosition.getDis(coord.x, mPosition.y - deltaY)) {
-                        coord.y = (int) (mPosition.y + deltaY);
-                    } else {
-                        coord.y = (int) (mPosition.y - deltaY);
-                    }
-                } else {
-                    float deltaX = (float) Math.sqrt(800 * 800 - (coord.y - mPosition.y) * (coord.y - mPosition.y));
-                    if (b.mPosition.getDis(mPosition.x + deltaX, coord.y) > b.mPosition.getDis(mPosition.x - deltaX, coord.y)) {
-                        coord.x = (int) (mPosition.x + deltaX);
-                    } else {
-                        coord.x = (int) (mPosition.x - deltaX);
-                    }
-                }
-                */
-                coord.x = mBasePosition.x;
-                coord.y = mBasePosition.y;
-            }
-            return coord;
-        }
-
-        @Override
-        public String toString() {
-            return "Buster[" + mId + ", state " + mState + ", value " + mValue +
-                    ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
-        }
-    }
-
-    private static class Ghost extends Entity {
-        private int mStamina;
-        private int mTrapCount;
-
-        private boolean mInMemory = false;
-
-        public Ghost(int id) {
-            mId = id;
-        }
-
-        @Override
-        public String toString() {
-            return "Ghost[" + mId + ", Stamina " + mStamina + ", trapCount" + mTrapCount + "]";
-        }
-    }
-
-    private abstract static class Entity {
-        protected int mId;   // entity id
-        protected Coord mPosition = new Coord();  // position
-
-        public float getDis(Entity other) {
-            return mPosition.getDis(other.mPosition);
-        }
-
-        public float getDis(Coord other) {
-            return mPosition.getDis(other);
-        }
-
-        public String moveToMe() {
-            return mPosition.moveToMe();
-        }
-
-        public boolean isSamePosition(Entity e) {
-            return mPosition.x == e.mPosition.x && mPosition.y == e.mPosition.y;
-        }
-    }
-
-    private static class Coord {
-        int x, y;
-        public Coord() {
-            this(0, 0);
-        }
-
-        public Coord(int x, int y) {
-            reset(x, y);
-        }
-
-        public void reset(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public float getDis(Coord other) {
-            return getDis(other.x, other.y);
-        }
-
-        public float getDis(float dx, float dy) {
-            return (float) Math.sqrt((x - dx) * (x - dx) + (y - dy) * (y - dy));
-        }
-
-        public String moveToMe() {
-            return "MOVE "+x+" "+y;
-        }
-
-        public Coord extendTo(Coord direction, float len) {
-            return extendTo(direction, len, false);
-        }
-
-        public Coord extendTo(Coord direction, float len, boolean nullable) {
-            float rate = len / getDis(direction);
-            int dx, dy;
-            dx = x + (int) ((direction.x - x) * rate);
-            dy = y + (int) ((direction.y - y) * rate);
-            if (nullable && (dx < 0 || dx >= WIDTH || dy < 0 || dy >= HEIGHT)) {
-                return null;
-            }
-            if (dx < 0) dx = 0;
-            if (dx >= WIDTH) dx = WIDTH - 1;
-            if (dy < 0) dy = 0;
-            if (dy >= HEIGHT) dy = HEIGHT -1;
-            return new Coord(dx, dy);
-        }
-
-        @Override
-        public String toString() {
-            return "("+x+","+y+")";
-        }
-    }
-
-    private static class GameInfo {
-        //current turn info
-        private int mAcceptCost = 10;
-        private int mTurnRest = 401;
-        private int mGhostCount;
-        private int mGhostCaught;
-        private Buster mNeedHelpBuster;
-        private int mGhostCarring;
-        private Map<Buster, Buster> mCloseOpponent = new HashMap<>();
-        private int mBaseCaptureInfluence;
-
-        //last turn info
-        private int mLastBustCount = 0;
-
-        public void newTurnStart() {
-            mTurnRest --;
-            mAcceptCost += (mLastBustCount == 0 ? 1f : 0.4f);
-            mLastBustCount = 0;
-            mNeedHelpBuster = null;
-            mGhostCarring = 0;
-        }
-
-        @Override
-        public String toString() {
-            return "{AcceptCost=" + mAcceptCost +
-                    ", TurnRest=" + mTurnRest +
-                    ", GhostCount=" + mGhostCount +
-                    ", GhostCaught=" + mGhostCaught +
-                    ", NeedHelpBuster=" + mNeedHelpBuster +
-                    ", LastBustCount=" + mLastBustCount +
-                    ", GhostCarring=" + mGhostCarring +
-                    '}';
-        }
-    }
-
-    private static class EntityComparator implements Comparator<Entity> {
-        private final Entity mFrom;
-        public EntityComparator (Entity e) {
-            mFrom = e;
-        }
-
-        @Override
-        public int compare(Entity o1, Entity o2) {
-            return Float.compare(mFrom.getDis(o1), mFrom.getDis(o2));
-        }
-    }
-
-    private static class GhostComparator implements Comparator<Ghost> {
-        private final Buster mFrom;
-        public GhostComparator (Buster b) {
-            mFrom = b;
-        }
-
-        @Override
-        public int compare(Ghost o1, Ghost o2) {
-            return Float.compare(mFrom.getBustCost(o1), mFrom.getBustCost(o2));
-        }
-    }
-
     private String releaseGhost(Buster buster) {
         System.err.println(buster + " need release A ghost " + buster.mValue);
         if (buster.getDis(mBasePosition) > 1600) {
             if (!mOtherBusters.isEmpty()) {
-                for(Buster b : mOtherBusters) {
+                for (Buster b : mOtherBusters) {
                     if (b.mState != 2 && buster.getDis(b) < 2500) {
                         Coord p = buster.awayFrom(b);
                         System.err.println("Find opponent buster nearby, go away...");
@@ -412,7 +204,7 @@ public class CodeBuster {
             if (mGameInfo.mTurnRest <= 50 && mGameInfo.mGhostCaught + mGameInfo.mGhostCarring >= mGameInfo.mGhostCount / 2) {
                 boolean hasObstacle = false;
                 Coord coord = new Coord(0, 9000);
-                for(Buster b : mOtherBusters) {
+                for (Buster b : mOtherBusters) {
                     if (b.getDis(coord) < 2500) {
                         hasObstacle = true;
                         break;
@@ -432,9 +224,9 @@ public class CodeBuster {
 
     private String trapGhost(Buster buster, Ghost ghost) {
         float dis = buster.getDis(ghost);
-        System.err.println(buster+" will trap "+ghost);
+        System.err.println(buster + " will trap " + ghost);
         if (dis <= 1760 && dis >= 900) {
-            return "BUST "+ghost.mId;
+            return "BUST " + ghost.mId;
         } else if (dis > 1760) {
             return ghost.moveToMe();
         } else {
@@ -483,22 +275,22 @@ public class CodeBuster {
         int searchIndex = getUnSearchedPoint(buster, toSearchIndex);
         if (searchIndex < 0) throw new RuntimeException("ERROR : no zone to search...");
         Coord p = mZoneCenters[searchIndex];
-        System.err.println(buster+" will search ghost at point "+p);
-        return "MOVE "+p.x+" "+p.y;
+        System.err.println(buster + " will search ghost at point " + p);
+        return "MOVE " + p.x + " " + p.y;
     }
 
     private String trapOtherBuster(Buster myBuster, Buster otherBuster) {
-        System.err.println(myBuster+" will trapOtherBuster \n: "+otherBuster);
+        System.err.println(myBuster + " will trapOtherBuster \n: " + otherBuster);
         if (myBuster.mChargeTurn >= 20) {
             myBuster.mChargeTurn = 0;
-            return "STUN "+otherBuster.mId;
+            return "STUN " + otherBuster.mId;
         } else {
             return otherBuster.moveToMe();
         }
     }
 
     private boolean hasGhostAtSamePosition(Buster buster) {
-        for(Ghost ghost : mGhosts) {
+        for (Ghost ghost : mGhosts) {
             if (ghost.isSamePosition(buster)) return true;
         }
         return false;
@@ -506,7 +298,7 @@ public class CodeBuster {
 
     private int getUnSearchZoneCount() {
         int count = 0;
-        for(boolean b : mZonePassed) {
+        for (boolean b : mZonePassed) {
             if (!b) count++;
         }
         return count;
@@ -514,14 +306,13 @@ public class CodeBuster {
 
     private void printMap(List<Integer> toSearchIndex) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 6; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 6; j++) {
                 int index = i * 6 + j;
                 if (toSearchIndex.contains(index)) {
                     sb.append('M');
-                    if (mZonePassed[index]) throw  new RuntimeException("ERROR is true ????");
-                }
-                else if(mZonePassed[index]) sb.append('O');
+                    if (mZonePassed[index]) throw new RuntimeException("ERROR is true ????");
+                } else if (mZonePassed[index]) sb.append('O');
                 else sb.append('X');
             }
             sb.append('\n');
@@ -530,9 +321,9 @@ public class CodeBuster {
     }
 
     private void analyse() {
-        for(Buster b : mMyBusters) {
+        for (Buster b : mMyBusters) {
             if (b.mState == 1) {
-                mGameInfo.mGhostCarring ++;
+                mGameInfo.mGhostCarring++;
                 if (mGameInfo.mBaseCaptureInfluence > 0) {
                     mGameInfo.mNeedHelpBuster = b;
                     continue;
@@ -547,7 +338,7 @@ public class CodeBuster {
                         float dis = b.getDis(otherBuster);
                         if (dis <= 2200) {
                             mGameInfo.mNeedHelpBuster = b;
-                            System.err.println("HELP for "+b);
+                            System.err.println("HELP for " + b);
                             break;
                         }
                     }
@@ -558,25 +349,25 @@ public class CodeBuster {
 
     public void process() {
         System.err.println(mGameInfo);
-        System.err.println("MyBusters:"+mMyBusters);
-        System.err.println("OtherBusters:"+mOtherBusters);
-        System.err.println("Ghosts:"+mGhosts);
+        System.err.println("MyBusters:" + mMyBusters);
+        System.err.println("OtherBusters:" + mOtherBusters);
+        System.err.println("Ghosts:" + mGhosts);
 
         analyse();
 
         int count = getUnSearchZoneCount();
         List<Integer> toSearchIndex = new ArrayList<>();
         mDefenderCount = 0;
-        for(int i = 0; i < mMyBusters.size(); i++) {
+        for (int i = 0; i < mMyBusters.size(); i++) {
             System.out.println(treat(mMyBusters.get(i), i, toSearchIndex, count));
         }
 
         mGameInfo.mCloseOpponent.clear();
-        for(int i = 0; i < mMyBusters.size(); i++) {
+        for (int i = 0; i < mMyBusters.size(); i++) {
             Buster myBuster = mMyBusters.get(i);
             if (myBuster.mState == 2) continue;
             Buster single = null;
-            for(Buster b : mOtherBusters) {
+            for (Buster b : mOtherBusters) {
                 if (myBuster.getDis(b) < 1760) {
                     if (single == null) single = b;
                     else {
@@ -602,7 +393,7 @@ public class CodeBuster {
             return buster.moveToMe();
         }
         if (buster.mState == 1 && buster.getDis(mBasePosition) <= 1600) {
-            mGameInfo.mGhostCaught ++;
+            mGameInfo.mGhostCaught++;
             mGameInfo.mLastBustCount++;
             removeGhostById(buster.mValue);
             return "RELEASE";
@@ -616,11 +407,11 @@ public class CodeBuster {
                 if (Math.abs(otherBuster.mState) == 2) continue;
                 float dis = buster.getDis(otherBuster);
                 if (dis <= 1760) {
-                    if (buster.mChargeTurn >= 20 ) {
+                    if (buster.mChargeTurn >= 20) {
                         otherBuster.mState = -2;
                         buster.mChargeTurn = 0;
                         System.err.println("Find opponent buster, Stun it...");
-                        return "STUN "+otherBuster.mId;
+                        return "STUN " + otherBuster.mId;
                     } else if (buster.mState == 1 && otherBuster.mChargeTurn > 15) {
                         Coord p = buster.awayFrom(otherBuster);
                         System.err.println("Find opponent buster too close, go away...");
@@ -641,14 +432,14 @@ public class CodeBuster {
         if (buster.mState == 1) return releaseGhost(buster);
 
         //catch opponent buster
-        if (! mOtherBusters.isEmpty()) {
+        if (!mOtherBusters.isEmpty()) {
             Collections.sort(mOtherBusters, new EntityComparator(buster));
             int curIndex = 0;
             while (curIndex < mOtherBusters.size()) {
                 Buster otherBuster = mOtherBusters.get(curIndex);
                 if (buster.getDis(otherBuster) <= 1760) {
                     if (hasGhostAtSamePosition(buster)) return trapOtherBuster(buster, otherBuster);
-                    else if(otherBuster.mState == 1 && (otherBuster.getDis(mOpponentBasePosition) / 800f - 2 + buster.mChargeTurn >= 20)) {
+                    else if (otherBuster.mState == 1 && (otherBuster.getDis(mOpponentBasePosition) / 800f - 2 + buster.mChargeTurn >= 20)) {
                         return trapOtherBuster(buster, otherBuster);
                     }
                 }
@@ -657,7 +448,7 @@ public class CodeBuster {
         }
         //help our buster
         if (mGameInfo.mNeedHelpBuster != null) {
-            System.err.println(buster+" will help "+mGameInfo.mNeedHelpBuster+", move to it");
+            System.err.println(buster + " will help " + mGameInfo.mNeedHelpBuster + ", move to it");
             return mGameInfo.mNeedHelpBuster.moveToMe();
         }
         //check trap ghost
@@ -675,10 +466,10 @@ public class CodeBuster {
             if (cost <= mGameInfo.mAcceptCost || closeGhost.mStamina == 0) {
                 return trapGhost(buster, closeGhost);
             } else {
-                System.err.println("Not enough time or Give up trapping ghost, cost "+cost+", acceptCost "+mGameInfo.mAcceptCost);
+                System.err.println("Not enough time or Give up trapping ghost, cost " + cost + ", acceptCost " + mGameInfo.mAcceptCost);
             }
-        } else if (!mOtherBusters.isEmpty()){
-            for(Buster b : mOtherBusters) {
+        } else if (!mOtherBusters.isEmpty()) {
+            for (Buster b : mOtherBusters) {
                 if (b.mState == 3 && b.mTrustValue >= 8) {
                     return b.moveToMe();
                 }
@@ -689,15 +480,15 @@ public class CodeBuster {
             return searchGhost(buster, toSearchIndex);
         }
         //defend last ghost
-        if (mGameInfo.mGhostCarring == 1 && mGameInfo.mGhostCaught + 1 >= mGameInfo.mGhostCount / 2 ) {
+        if (mGameInfo.mGhostCarring == 1 && mGameInfo.mGhostCaught + 1 >= mGameInfo.mGhostCount / 2) {
             Buster carringBust = null;
-            for(Buster b : mMyBusters) {
+            for (Buster b : mMyBusters) {
                 if (b.mState == 1) {
                     carringBust = b;
                     break;
                 }
             }
-            System.err.println("defend last ghost for Buster : "+carringBust);
+            System.err.println("defend last ghost for Buster : " + carringBust);
             if (carringBust != null) return carringBust.moveToMe();
         }
         if (mDefenderCount >= 2) {
@@ -710,18 +501,225 @@ public class CodeBuster {
             //move to opponent's base
             float dis = buster.getDis(mOpponentBasePosition);
             if (dis <= 2600) {
-                mDefenderCount ++;
+                mDefenderCount++;
                 double curAngle = mRandom.nextFloat() * Math.PI / 2;
                 int dx = (int) (2500 * Math.cos(curAngle));
                 int dy = (int) (2500 * Math.sin(curAngle));
                 if (mTeamId == 0) {
                     dx = 16000 - dx;
-                    dy = 9000 -dy;
+                    dy = 9000 - dy;
                 }
-                return "MOVE "+dx+" "+dy;
+                return "MOVE " + dx + " " + dy;
             } else {
                 return mOpponentBasePosition.moveToMe();
             }
+        }
+    }
+
+    private static class Ghost extends Entity {
+        private int mStamina;
+        private int mTrapCount;
+
+        private boolean mInMemory = false;
+
+        public Ghost(int id) {
+            mId = id;
+        }
+
+        @Override
+        public String toString() {
+            return "Ghost[" + mId + ", Stamina " + mStamina + ", trapCount" + mTrapCount + "]";
+        }
+    }
+
+    private abstract static class Entity {
+        protected int mId;   // entity id
+        protected Coord mPosition = new Coord();  // position
+
+        public float getDis(Entity other) {
+            return mPosition.getDis(other.mPosition);
+        }
+
+        public float getDis(Coord other) {
+            return mPosition.getDis(other);
+        }
+
+        public String moveToMe() {
+            return mPosition.moveToMe();
+        }
+
+        public boolean isSamePosition(Entity e) {
+            return mPosition.x == e.mPosition.x && mPosition.y == e.mPosition.y;
+        }
+    }
+
+    private static class Coord {
+        int x, y;
+
+        public Coord() {
+            this(0, 0);
+        }
+
+        public Coord(int x, int y) {
+            reset(x, y);
+        }
+
+        public void reset(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public float getDis(Coord other) {
+            return getDis(other.x, other.y);
+        }
+
+        public float getDis(float dx, float dy) {
+            return (float) Math.sqrt((x - dx) * (x - dx) + (y - dy) * (y - dy));
+        }
+
+        public String moveToMe() {
+            return "MOVE " + x + " " + y;
+        }
+
+        public Coord extendTo(Coord direction, float len) {
+            return extendTo(direction, len, false);
+        }
+
+        public Coord extendTo(Coord direction, float len, boolean nullable) {
+            float rate = len / getDis(direction);
+            int dx, dy;
+            dx = x + (int) ((direction.x - x) * rate);
+            dy = y + (int) ((direction.y - y) * rate);
+            if (nullable && (dx < 0 || dx >= WIDTH || dy < 0 || dy >= HEIGHT)) {
+                return null;
+            }
+            if (dx < 0) dx = 0;
+            if (dx >= WIDTH) dx = WIDTH - 1;
+            if (dy < 0) dy = 0;
+            if (dy >= HEIGHT) dy = HEIGHT - 1;
+            return new Coord(dx, dy);
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x + "," + y + ")";
+        }
+    }
+
+    private static class GameInfo {
+        //current turn info
+        private int mAcceptCost = 10;
+        private int mTurnRest = 401;
+        private int mGhostCount;
+        private int mGhostCaught;
+        private Buster mNeedHelpBuster;
+        private int mGhostCarring;
+        private Map<Buster, Buster> mCloseOpponent = new HashMap<>();
+        private int mBaseCaptureInfluence;
+
+        //last turn info
+        private int mLastBustCount = 0;
+
+        public void newTurnStart() {
+            mTurnRest--;
+            mAcceptCost += (mLastBustCount == 0 ? 1f : 0.4f);
+            mLastBustCount = 0;
+            mNeedHelpBuster = null;
+            mGhostCarring = 0;
+        }
+
+        @Override
+        public String toString() {
+            return "{AcceptCost=" + mAcceptCost +
+                    ", TurnRest=" + mTurnRest +
+                    ", GhostCount=" + mGhostCount +
+                    ", GhostCaught=" + mGhostCaught +
+                    ", NeedHelpBuster=" + mNeedHelpBuster +
+                    ", LastBustCount=" + mLastBustCount +
+                    ", GhostCarring=" + mGhostCarring +
+                    '}';
+        }
+    }
+
+    private static class EntityComparator implements Comparator<Entity> {
+        private final Entity mFrom;
+
+        public EntityComparator(Entity e) {
+            mFrom = e;
+        }
+
+        @Override
+        public int compare(Entity o1, Entity o2) {
+            return Float.compare(mFrom.getDis(o1), mFrom.getDis(o2));
+        }
+    }
+
+    private static class GhostComparator implements Comparator<Ghost> {
+        private final Buster mFrom;
+
+        public GhostComparator(Buster b) {
+            mFrom = b;
+        }
+
+        @Override
+        public int compare(Ghost o1, Ghost o2) {
+            return Float.compare(mFrom.getBustCost(o1), mFrom.getBustCost(o2));
+        }
+    }
+
+    private class Buster extends Entity {
+        private int mState;
+        private int mValue;
+
+        private int mChargeTurn = 20;
+        private int mTrustValue = 10;
+
+        public Buster(int id) {
+            mId = id;
+        }
+
+        public void updateTrust(int value) {
+            mTrustValue = value;
+        }
+
+        public void dishonesty() {
+            mTrustValue--;
+        }
+
+        public float getBustCost(Ghost ghost) {
+            return (getDis(ghost) + ghost.getDis(mBasePosition)) / 800f + ghost.mStamina;
+        }
+
+        public Coord awayFrom(Buster b) {
+            Coord coord = mPosition.extendTo(b.mPosition, -800);
+            if (getDis(coord) <= 799) {
+                /*
+                if (coord.x == 0 || coord.x == 16000) {
+                    float deltaY = (float) Math.sqrt(800 * 800 - (coord.x - mPosition.x) * (coord.x - mPosition.x));
+                    if (b.mPosition.getDis(coord.x, mPosition.y + deltaY) > b.mPosition.getDis(coord.x, mPosition.y - deltaY)) {
+                        coord.y = (int) (mPosition.y + deltaY);
+                    } else {
+                        coord.y = (int) (mPosition.y - deltaY);
+                    }
+                } else {
+                    float deltaX = (float) Math.sqrt(800 * 800 - (coord.y - mPosition.y) * (coord.y - mPosition.y));
+                    if (b.mPosition.getDis(mPosition.x + deltaX, coord.y) > b.mPosition.getDis(mPosition.x - deltaX, coord.y)) {
+                        coord.x = (int) (mPosition.x + deltaX);
+                    } else {
+                        coord.x = (int) (mPosition.x - deltaX);
+                    }
+                }
+                */
+                coord.x = mBasePosition.x;
+                coord.y = mBasePosition.y;
+            }
+            return coord;
+        }
+
+        @Override
+        public String toString() {
+            return "Buster[" + mId + ", state " + mState + ", value " + mValue +
+                    ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
         }
     }
 }

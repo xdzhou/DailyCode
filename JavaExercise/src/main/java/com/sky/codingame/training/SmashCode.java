@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+
 import com.loic.algo.search.GeneticAlgorithm;
 
 public class SmashCode {
@@ -44,7 +45,7 @@ public class SmashCode {
 
             private float getParam() {
                 int emptyCount = mBoard.mMapInfo.getEmptyCount();
-                return  emptyCount / (float) (WIDTH * HEIGHT);
+                return emptyCount / (float) (WIDTH * HEIGHT);
             }
         };
         GeneticAlgorithm<ColorGene> myAlgo = new GeneticAlgorithm<>(myListener);
@@ -56,7 +57,7 @@ public class SmashCode {
                 MapInfo clone = mBoard.mMapInfo.clone();
                 float score = 0;
                 float deltaScore = (18 - mBoard.mOpponentBoard.mNuisancePoints) * GameBoard.DIVIDOR;
-                for(int i = 0; i < 8; i++) {
+                for (int i = 0; i < 8; i++) {
                     score += clone.drop(data[i * 2], data[i * 2 + 1], colors[i]);
                     if (clone.isOver()) return 0;
                     else if (score > deltaScore) return 8 - i;
@@ -71,7 +72,7 @@ public class SmashCode {
             for (int i = 0; i < 8; i++) {
                 int colorA = in.nextInt(); // color of the first block
                 int colorB = in.nextInt(); // color of the attached block
-                colors[i] = new ColorSet((char)('0'+colorA), (char)('0'+colorB));
+                colors[i] = new ColorSet((char) ('0' + colorA), (char) ('0' + colorB));
             }
             myBoard.setNewScore(in.nextInt());
             for (int i = 0; i < 12; i++) {
@@ -116,7 +117,7 @@ public class SmashCode {
         public ColorGene getChild(Random random, ColorGene parent1, ColorGene parent2) {
             int changIndex = random.nextInt(parent1.mData.length - 1);
             ColorGene child = new ColorGene(new Integer[ColorGene.LEN]);
-            for(int i = 0; i < parent1.mData.length; i++) {
+            for (int i = 0; i < parent1.mData.length; i++) {
                 child.mData[i] = (i <= changIndex) ? parent1.mData[i] : parent2.mData[i];
             }
             if (changIndex % 2 == 0 && child.mData[changIndex] == 5 && child.mData[changIndex + 1] % 2 == 0) {
@@ -133,6 +134,18 @@ public class SmashCode {
             super(data);
         }
 
+        public static ColorGene getOneGene(Random random) {
+            Integer[] data = new Integer[LEN];
+            for (int i = 0; i < 8; i++) {
+                int rotate = random.nextInt(4);
+                int col = (rotate == 0 || rotate == 2) ? random.nextInt(5) : random.nextInt(6);
+                data[i * 2] = col;
+                data[i * 2 + 1] = rotate;
+            }
+            //System.err.println("score : " + Arrays.toString(data));
+            return new ColorGene(data);
+        }
+
         @Override
         protected void mutation(Random random) {
             int index = random.nextInt(LEN);
@@ -144,18 +157,6 @@ public class SmashCode {
                     mData[index - 1] = random.nextInt(5);
                 }
             }
-        }
-
-        public static ColorGene getOneGene(Random random) {
-            Integer[] data = new Integer[LEN];
-            for(int i = 0; i < 8; i++) {
-                int rotate = random.nextInt(4);
-                int col = (rotate == 0 || rotate == 2) ? random.nextInt(5) : random.nextInt(6);
-                data[i * 2] = col;
-                data[i * 2 + 1] = rotate;
-            }
-            //System.err.println("score : " + Arrays.toString(data));
-            return new ColorGene(data);
         }
     }
 
@@ -182,11 +183,11 @@ public class SmashCode {
 
         @Override
         public String toString() {
-            return "score "+mCurScore+", nuisance "+mNuisancePoints;
+            return "score " + mCurScore + ", nuisance " + mNuisancePoints;
         }
     }
 
-    private static class MapInfo implements Cloneable{
+    private static class MapInfo implements Cloneable {
         private static final int MIN_LIEN = 4;
 
         private static final char EMPTY = '.';
@@ -196,16 +197,16 @@ public class SmashCode {
         private boolean isOver = false;
 
         private void setLine(String s, int line) {
-            for(int column = 0; column < WIDTH; column ++) {
+            for (int column = 0; column < WIDTH; column++) {
                 data[line][column] = s.charAt(column);
             }
         }
 
         public int getEmptyCount() {
             int count = 0;
-            for(int line = 0; line < HEIGHT; line ++) {
-                for(int column = 0; column < WIDTH; column ++) {
-                    if (data[line][column] == EMPTY) count ++;
+            for (int line = 0; line < HEIGHT; line++) {
+                for (int column = 0; column < WIDTH; column++) {
+                    if (data[line][column] == EMPTY) count++;
                 }
             }
             return count;
@@ -274,7 +275,7 @@ public class SmashCode {
             Zone z1, z2 = null;
             z1 = getZoneFor(lastLine, col);
             if (z1 != null && z1.size() < MIN_LIEN) z1 = null;
-            if (! colorSet.sameColor()) {
+            if (!colorSet.sameColor()) {
                 z2 = getZoneFor(lastLine - 1, col);
                 if (z2 != null && z2.size() < MIN_LIEN) z2 = null;
             }
@@ -285,7 +286,7 @@ public class SmashCode {
             }
         }
 
-        private int disappearZone(int chainIndex, Zone ... zones) {
+        private int disappearZone(int chainIndex, Zone... zones) {
             int blockClearedNb = 0, colorBonus = 0, groupBonus = 0;
             Set<Integer> colorClearedSet = new HashSet<>(5);
             //disappear and fill EMPTY char
@@ -294,7 +295,7 @@ public class SmashCode {
                 blockClearedNb += z.size();
                 colorClearedSet.add(z.mColor - '0');
                 groupBonus += (z.size() <= 10 ? z.size() - 4 : 8);
-                for(int index : z.mIndexs) {
+                for (int index : z.mIndexs) {
                     int x = index / WIDTH;
                     int y = index % WIDTH;
                     data[x][y] = EMPTY;
@@ -308,23 +309,23 @@ public class SmashCode {
 
             //reform and find checkIndex
             for (int column = 0; column < WIDTH; column++) {
-                int line  = getEmptyLine(column);
+                int line = getEmptyLine(column);
                 if (line >= 1) {
                     int topLine = line - 1;
                     while (topLine >= 0) {
                         if (data[topLine][column] != EMPTY) {
                             data[line][column] = data[topLine][column];
                             data[topLine][column] = EMPTY;
-                            line --;
+                            line--;
                         }
-                        topLine --;
+                        topLine--;
                     }
                 }
             }
             //find checkIndex
             List<Integer> indexToCheck = new ArrayList<>();
-            for(int line = 0; line < HEIGHT; line ++)
-                for(int column = 0; column < WIDTH; column ++) {
+            for (int line = 0; line < HEIGHT; line++)
+                for (int column = 0; column < WIDTH; column++) {
                     if (data[line][column] != EMPTY && data[line][column] != BLOCK) {
                         indexToCheck.add(getIndex(line, column));
                     }
@@ -344,7 +345,7 @@ public class SmashCode {
             int chainPower = chainIndex == 0 ? 0 : 1 << (2 + chainIndex);
             int score = 10 * blockClearedNb * (Math.max(1, Math.min(999, colorBonus + groupBonus + chainPower)));
             //System.err.println("Score "+score+", chainPower "+chainPower+", chainIndex "+chainIndex);
-            if (! zoneToDisappear.isEmpty()) {
+            if (!zoneToDisappear.isEmpty()) {
                 score += disappearZone(chainIndex + 1, zoneToDisappear.toArray(new Zone[zoneToDisappear.size()]));
             }
             return score;
@@ -389,13 +390,13 @@ public class SmashCode {
         }
 
         @Override
-        protected MapInfo clone(){
+        protected MapInfo clone() {
             try {
                 MapInfo m = (MapInfo) super.clone();
                 m.isOver = false;
                 m.data = new char[HEIGHT][WIDTH];
-                for(int line = 0; line < HEIGHT; line ++)
-                    for(int column = 0; column < WIDTH; column ++) {
+                for (int line = 0; line < HEIGHT; line++)
+                    for (int column = 0; column < WIDTH; column++) {
                         m.data[line][column] = data[line][column];
                     }
                 return m;

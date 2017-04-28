@@ -109,6 +109,12 @@ public class SnakesLadders {
         return null;
     }
 
+    private static class NodeComparator implements Comparator<Node>, Serializable {
+        public int compare(Node o1, Node o2) {
+            return o1.F - o2.F;
+        }
+    }
+
     private class Node {
         int position;
         int G; // cost from start point
@@ -156,12 +162,6 @@ public class SnakesLadders {
 
         void updateF() {
             F = G + H;
-        }
-    }
-
-    private static class NodeComparator implements Comparator<Node>, Serializable {
-        public int compare(Node o1, Node o2) {
-            return o1.F - o2.F;
         }
     }
 }

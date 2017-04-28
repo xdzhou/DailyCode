@@ -23,7 +23,7 @@ public class GetDigits {
 
     private void treat(String str, int index) {
         List<Character> chars = new ArrayList<>(str.length());
-        for(int i = 0; i < str.length(); i++){
+        for (int i = 0; i < str.length(); i++) {
             chars.add(str.charAt(i));
         }
         Collections.sort(chars);
@@ -42,14 +42,14 @@ public class GetDigits {
         //third round
         if (chars.size() > 0) {
             int count = chars.size() / 4;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
                 results.add(9);
         }
 
         Collections.sort(results);
         StringBuilder sb = new StringBuilder();
         sb.append("Case #").append(index).append(": ");
-        for(int i = 0; i < results.size(); i++) {
+        for (int i = 0; i < results.size(); i++) {
             sb.append(results.get(i));
         }
         System.out.println(sb.toString());
@@ -57,7 +57,7 @@ public class GetDigits {
 
     private boolean checkNum(List<Character> chars, char specialChar, String numStr) {
         if (Collections.binarySearch(chars, specialChar) >= 0) {
-            for(int i = 0; i < numStr.length(); i++) {
+            for (int i = 0; i < numStr.length(); i++) {
                 chars.remove(Character.valueOf(numStr.charAt(i)));
             }
             return true;

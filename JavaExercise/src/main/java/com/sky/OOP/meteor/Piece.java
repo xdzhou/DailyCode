@@ -5,8 +5,8 @@ public class Piece {
     static final int PERMUTATION_COUNT = 12;
 
     private final Cell[] mCells;
-    private int mCurrentMutation = 0;
     private final int mNum;
+    private int mCurrentMutation = 0;
 
     Piece(Cell[] cells, int num) {
         mCells = cells;
@@ -18,7 +18,7 @@ public class Piece {
     }
 
     Piece nextMutation() {
-        mCurrentMutation ++;
+        mCurrentMutation++;
         mCurrentMutation %= PERMUTATION_COUNT;
         if (mCurrentMutation == 0 || mCurrentMutation == 6) {
             rotatePiece();

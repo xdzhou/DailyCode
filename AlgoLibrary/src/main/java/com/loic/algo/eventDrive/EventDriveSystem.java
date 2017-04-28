@@ -1,9 +1,9 @@
 package com.loic.algo.eventDrive;
 
+import java.util.PriorityQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.PriorityQueue;
 
 public abstract class EventDriveSystem {
     protected static final Logger Log = LoggerFactory.getLogger(EventDriveSystem.class);

@@ -1,10 +1,10 @@
 package com.loic.algo.graph;
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class TopologicalSortAlgoTest extends GraphTest {
 

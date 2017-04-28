@@ -1,9 +1,9 @@
 package com.loic.algo.graph;
 
+import java.util.List;
+
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
-
-import java.util.List;
 
 /*
  * @URL : http://blog.csdn.net/dm_vincent/article/details/7714519

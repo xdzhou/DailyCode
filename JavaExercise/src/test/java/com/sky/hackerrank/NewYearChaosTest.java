@@ -13,8 +13,8 @@ public class NewYearChaosTest extends CommonTest<Integer[], String> {
 
     @Test
     public void test() {
-        check(transform(2,1,5,3,4), "3");
-        check(transform(2,5,1,3,4), NewYearChaos.NO_ANSWER);
-        check(transform(2,7,3,9,8,6,5,4,1));
+        check(transform(2, 1, 5, 3, 4), "3");
+        check(transform(2, 5, 1, 3, 4), NewYearChaos.NO_ANSWER);
+        check(transform(2, 7, 3, 9, 8, 6, 5, 4, 1));
     }
 }

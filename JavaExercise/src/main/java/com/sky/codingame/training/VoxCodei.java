@@ -1,16 +1,7 @@
 package com.sky.codingame.training;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+
 import com.loic.algo.search.MonteCarlo;
 
 public class VoxCodei {
@@ -26,7 +17,7 @@ public class VoxCodei {
         in.nextLine();
         for (int i = 0; i < maze.mHeight; i++) {
             String mapRow = in.nextLine(); // one line of the firewall grid
-            for(int j = 0; j < mapRow.length(); j++) {
+            for (int j = 0; j < mapRow.length(); j++) {
                 char c = mapRow.charAt(j);
                 if (c == '@') {
                     root.mSurveillances.add(i * maze.mWidth + j);
@@ -50,18 +41,17 @@ public class VoxCodei {
                 System.out.println("WAIT");
             } else {
                 int p = bestChild.mPutPosition;
-                System.out.println(p/maze.mWidth + " " + p%maze.mWidth);
+                System.out.println(p / maze.mWidth + " " + p % maze.mWidth);
             }
             root = bestChild;
         }
     }
 
     private static class Maze {
+        private static Maze mInstance;
         private int mHeight, mWidth;
         private List<Integer> mIndestructibles = new ArrayList<>();
         private int mTotalPoint;
-
-        private static Maze mInstance;
 
         public static Maze getInstance() {
             if (mInstance == null) mInstance = new Maze();
@@ -74,42 +64,42 @@ public class VoxCodei {
             short delta = 1;
             int index;
             //up
-            while(delta <= 3) {
+            while (delta <= 3) {
                 index = getValidIndex(x - delta, y);
                 if (index >= 0) listener.onInfluenced(index);
                 else break;
-                delta ++;
+                delta++;
             }
             delta = 1;
             //down
-            while(delta <= 3) {
+            while (delta <= 3) {
                 index = getValidIndex(x + delta, y);
                 if (index >= 0) listener.onInfluenced(index);
                 else break;
-                delta ++;
+                delta++;
             }
             delta = 1;
             //left
-            while(delta <= 3) {
+            while (delta <= 3) {
                 index = getValidIndex(x, y - delta);
                 if (index >= 0) listener.onInfluenced(index);
                 else break;
-                delta ++;
+                delta++;
             }
             delta = 1;
             //right
-            while(delta <= 3) {
+            while (delta <= 3) {
                 index = getValidIndex(x, y + delta);
                 if (index >= 0) listener.onInfluenced(index);
                 else break;
-                delta ++;
+                delta++;
             }
         }
 
         private int getValidIndex(int x, int y) {
             if (x >= 0 && x < mHeight && y >= 0 && y < mWidth) {
                 int index = x * mWidth + y;
-                if (! mIndestructibles.contains(index)) return index;
+                if (!mIndestructibles.contains(index)) return index;
             }
             return -1;
         }
@@ -135,7 +125,7 @@ public class VoxCodei {
         private int mTurnLeft = 3;
 
         public void oneTurn() {
-            mTurnLeft --;
+            mTurnLeft--;
         }
 
         @Override
@@ -170,7 +160,7 @@ public class VoxCodei {
         public float heuristic() {
             if (isLose()) {
                 return 0;
-            } else if(isWin()) {
+            } else if (isWin()) {
                 return 1;
             } else {
                 Maze maze = Maze.getInstance();
@@ -196,7 +186,7 @@ public class VoxCodei {
         @Override
         protected void applyTransition(Integer transition) {
             Set<BombInfo> expositionBombs = new HashSet<>();
-            for(BombInfo bi : mBombs) {
+            for (BombInfo bi : mBombs) {
                 bi.oneTurn();
                 if (bi.mTurnLeft == 0) expositionBombs.add(bi);
             }
@@ -204,7 +194,7 @@ public class VoxCodei {
             if (expositionBombs.size() == 1) {
                 explosionBomb(expositionBombs);
             } else if (expositionBombs.size() > 1) {
-                System.err.println("IMPOSSIBLE bomb size : "+expositionBombs.size());
+                System.err.println("IMPOSSIBLE bomb size : " + expositionBombs.size());
             }
             if (transition >= 0) {
                 mPutPosition = transition;
@@ -216,23 +206,23 @@ public class VoxCodei {
         }
 
         private void putOneBomb() {
-            if (mBombNb <= 0) System.err.println("IMPOSSIBLE, bomb count " +mBombNb);
+            if (mBombNb <= 0) System.err.println("IMPOSSIBLE, bomb count " + mBombNb);
             Maze config = Maze.getInstance();
             if (mSurveillances.isEmpty()) {
                 //success, find a random position
                 int size = config.mWidth * config.mHeight;
-                for(int i = 0; i < size; i++) {
+                for (int i = 0; i < size; i++) {
                     if (!config.mIndestructibles.contains(i) && binarySearchBomb(i) < 0) {
                         mPutPosition = i;
                         break;
                     }
                 }
-                System.err.println("random position " +mPutPosition);
+                System.err.println("random position " + mPutPosition);
             } else {
                 final List<Integer> temp;
                 if (!mBombs.isEmpty()) {
                     temp = new ArrayList<>(mSurveillances);
-                    for(BombInfo bi : mBombs) {
+                    for (BombInfo bi : mBombs) {
                         config.influenceZone(bi.mPosition, position -> {
                             int index = Collections.binarySearch(temp, position);
                             if (index >= 0) temp.remove(index);
@@ -243,12 +233,12 @@ public class VoxCodei {
                 }
                 if (temp.isEmpty()) {
                     //use bombs as target
-                    for(BombInfo bi : mBombs) {
+                    for (BombInfo bi : mBombs) {
                         temp.add(bi.mPosition);
                     }
                 }
                 final Map<Integer, Integer> candidature = new HashMap<>();
-                for(int p : temp) {
+                for (int p : temp) {
                     config.influenceZone(p, position -> {
                         if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
                             Integer count = candidature.get(position);
@@ -260,7 +250,7 @@ public class VoxCodei {
                 //System.err.println("candidature : " + candidature);
                 List<Integer> maxCounts = new ArrayList<>();
                 int maxCount = 0;
-                for(Map.Entry<Integer, Integer> entry : candidature.entrySet()) {
+                for (Map.Entry<Integer, Integer> entry : candidature.entrySet()) {
                     if (entry.getValue() == maxCount) {
                         maxCounts.add(entry.getKey());
                     } else if (entry.getValue() > maxCount) {
@@ -283,7 +273,7 @@ public class VoxCodei {
         }
 
         private void addBomb(BombInfo bi) {
-            if(mBombs.isEmpty()) {
+            if (mBombs.isEmpty()) {
                 mBombs.add(bi);
             } else {
                 mBombs.add(~binarySearchBomb(bi.mPosition), bi);
@@ -345,7 +335,7 @@ public class VoxCodei {
             Maze maze = Maze.getInstance();
             if (mBombNb > 0) {
                 final Set<Integer> set = new HashSet<>();
-                for(int p : mSurveillances) {
+                for (int p : mSurveillances) {
                     maze.influenceZone(p, position -> {
                         if (Collections.binarySearch(mSurveillances, position) < 0 && binarySearchBomb(position) < 0) {
                             set.add(position);
@@ -362,11 +352,11 @@ public class VoxCodei {
         }
 
         @Override
-        protected MapNode clone(){
+        protected MapNode clone() {
             MapNode n = (MapNode) super.clone();
             n.mSurveillances = new ArrayList<>(mSurveillances);
             n.mBombs = new ArrayList<>(mBombs.size());
-            for(BombInfo bi : mBombs) {
+            for (BombInfo bi : mBombs) {
                 n.mBombs.add(bi.clone());
             }
             n.mPutPosition = -1;

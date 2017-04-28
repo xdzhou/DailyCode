@@ -2,7 +2,6 @@ package com.sky.greedy;
 
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.annotations.Test;
 
 public class MinComposeNumTest extends CommonTest<Integer[], String> {

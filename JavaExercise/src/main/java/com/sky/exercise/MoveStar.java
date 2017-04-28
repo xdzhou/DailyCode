@@ -42,12 +42,12 @@ public class MoveStar implements ProblemTwoSolutions<String, String> {
         char[] values = param.toCharArray();
         int charIndex = values.length - 1;
         while (charIndex >= 0 && values[charIndex] != '*') {
-            charIndex --;
+            charIndex--;
         }
         int nextIndex = charIndex - 1;
         while (nextIndex >= 0) {
-            if (values[nextIndex] != '*') values[charIndex --] = values[nextIndex];
-            nextIndex --;
+            if (values[nextIndex] != '*') values[charIndex--] = values[nextIndex];
+            nextIndex--;
         }
         while (charIndex >= 0) values[charIndex--] = '*';
         return new String(values);

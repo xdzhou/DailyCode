@@ -1,11 +1,5 @@
 package com.sky.graph;
 
-import com.loic.algo.common.Triple;
-import com.sky.problem.Problem;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import com.loic.algo.common.Triple;
+import com.sky.problem.Problem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Given two words (beginWord and endWord), and a dictionary's word list, find

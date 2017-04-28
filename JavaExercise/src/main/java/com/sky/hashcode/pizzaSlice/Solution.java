@@ -15,7 +15,7 @@ class Solution {
             data[index][1] = slice.col1;
             data[index][2] = slice.row2;
             data[index][3] = slice.col2;
-            index ++;
+            index++;
         }
     }
 
@@ -23,8 +23,8 @@ class Solution {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(data.length).append('\n');
-        for (int row = 0; row < data.length; row ++) {
-            for(int col = 0; col < 4; col ++) {
+        for (int row = 0; row < data.length; row++) {
+            for (int col = 0; col < 4; col++) {
                 sb.append(data[row][col]).append(' ');
             }
             sb.delete(sb.length() - 1, sb.length());

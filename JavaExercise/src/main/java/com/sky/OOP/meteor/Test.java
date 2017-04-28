@@ -1,11 +1,15 @@
 package com.sky.OOP.meteor;
 
-import com.sky.OOP.meteor.view.LightBoardCopy;
-
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.sky.OOP.meteor.view.LightBoardCopy;
 
 /**
  * http://www.ibm.com/developerworks/cn/java/j-javaoptimization/index.html
@@ -24,7 +28,7 @@ public class Test {
         mPieces = new ArrayList<>(Board.CELL_COUNT / Piece.CELL_COUNT);
 
         Cell cell[] = new Cell[50];
-        for (int i=0; i<cell.length; i++) {
+        for (int i = 0; i < cell.length; i++) {
             cell[i] = new Cell();
         }
 
@@ -135,12 +139,12 @@ public class Test {
         cell[48].setNeighbour(Cell.SOUTH_EAST, cell[49]);
 
         Cell[] cells;
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             cells = new Cell[5];
             for (int j = 0; j < 5; j++) {
                 cells[j] = cell[(i * 5) + j];
             }
-            Piece newPiece = new Piece(cells,i);
+            Piece newPiece = new Piece(cells, i);
             //newPiece.generateAllPermutations(board);
             mPieces.add(newPiece);
         }
@@ -155,7 +159,7 @@ public class Test {
 
         System.out.println("Stopping " + Test.class.getName() + "  " + new Date());
         System.out.println(solver.numberOfSolutions + " solutions found.");
-        System.out.println("Run time: " + (System.currentTimeMillis()-time));
+        System.out.println("Run time: " + (System.currentTimeMillis() - time));
     }
 
     public void resolve() {
@@ -201,11 +205,11 @@ public class Test {
     }
 
     private void puzzleSolved() {
-		// Print out the solution number and time.
-		numberOfSolutions++;
-		System.out.println(numberOfSolutions + " - " + new Date());
+        // Print out the solution number and time.
+        numberOfSolutions++;
+        System.out.println(numberOfSolutions + " - " + new Date());
 
-		// Serialize the found solution.
+        // Serialize the found solution.
         String fileName = "solutions/" + numberOfSolutions + ".ser";
 
         try {
@@ -217,5 +221,5 @@ public class Test {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-	}
+    }
 }

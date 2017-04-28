@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static final Comparator<Solution> SOLUTION_COMPARATOR = (s1, s2) -> (s1.point - s2.point);
     private int L, H;
     private List<Pair> dimens;
     private Solution solution;
@@ -23,8 +24,6 @@ public class Main {
         main.start(new File("src/main/resources/hashcode/pizzaSlice/small.in"));
     }
 
-    private static final Comparator<Solution> SOLUTION_COMPARATOR = (s1, s2) -> (s1.point - s2.point);
-
     private void start(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file, "UTF-8");
         int rowCount = scanner.nextInt();
@@ -36,10 +35,10 @@ public class Main {
         int tomatoCount = 0;
         for (int i = 0; i < rowCount; i++) {
             String data = scanner.nextLine();
-            for(int j = 0; j < colCount; j++) {
+            for (int j = 0; j < colCount; j++) {
                 boolean isTomato = data.charAt(j) == 'T';
                 pizza.setData(i, j, isTomato);
-                if (isTomato) tomatoCount ++;
+                if (isTomato) tomatoCount++;
             }
         }
         potentialMaxPoint = Math.min(pizza.size(), Math.min(tomatoCount / L, (pizza.size() - tomatoCount) / L) * H);
@@ -49,12 +48,12 @@ public class Main {
         dimens = getDimenParis(2 * L);
         callCount = 0;
         process(pizza, new LinkedList<>(), 0, null, null);
-        System.out.println("Call count : "+ callCount);
+        System.out.println("Call count : " + callCount);
         System.out.println("Best Solution  (" + solution.point + ") : \n" + solution);
     }
 
     private void process(Pizza pizza, List<Slice> cutSlices, int from, Slice changingSlice, List<Direction> directions) {
-        callCount ++;
+        callCount++;
         if (bestSolutionFound) return;
         if (changingSlice != null) {
             if (changingSlice.isValid(L, H)) {
@@ -63,7 +62,7 @@ public class Main {
                 cutSlices.remove(cutSlices.size() - 1);
             }
             if (changingSlice.size() < H && !changingSlice.neverCut(L, H)) {
-                Direction[] dirs = (directions.isEmpty() || directions.get(directions.size() - 1) == Direction.RIGHT) ? Direction.values() : new Direction[] {Direction.DOWN};
+                Direction[] dirs = (directions.isEmpty() || directions.get(directions.size() - 1) == Direction.RIGHT) ? Direction.values() : new Direction[]{Direction.DOWN};
                 for (Direction dir : dirs) {
                     if (canExtend(dir, changingSlice, pizza, cutSlices)) {
                         changingSlice.extend(dir, pizza);
@@ -164,7 +163,7 @@ public class Main {
     }
 
     private static class Pair {
-        int x,y;
+        int x, y;
 
         public Pair(int x, int y) {
             this.x = x;

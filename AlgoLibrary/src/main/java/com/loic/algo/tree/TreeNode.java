@@ -1,8 +1,8 @@
 package com.loic.algo.tree;
 
-import com.google.common.base.Preconditions;
-
 import java.util.Arrays;
+
+import com.google.common.base.Preconditions;
 
 public class TreeNode<T> {
     public final T mValue;
@@ -12,22 +12,6 @@ public class TreeNode<T> {
     private TreeNode(T mValue, TreeNode<T> mLeftNode, TreeNode<T> mRightNode) {
         this.mValue = mValue;
         this.mLeftNode = mLeftNode;
-        this.mRightNode = mRightNode;
-    }
-
-    public TreeNode<T> getLeftNode() {
-        return mLeftNode;
-    }
-
-    public void setLeftNode(TreeNode<T> mLeftNode) {
-        this.mLeftNode = mLeftNode;
-    }
-
-    public TreeNode<T> getRightNode() {
-        return mRightNode;
-    }
-
-    public void setRightNode(TreeNode<T> mRightNode) {
         this.mRightNode = mRightNode;
     }
 
@@ -47,6 +31,22 @@ public class TreeNode<T> {
         TreeNode<T> right = generateBinaryTree(arrays, mid + 1, to);
 
         return new TreeNode<>(value, left, right);
+    }
+
+    public TreeNode<T> getLeftNode() {
+        return mLeftNode;
+    }
+
+    public void setLeftNode(TreeNode<T> mLeftNode) {
+        this.mLeftNode = mLeftNode;
+    }
+
+    public TreeNode<T> getRightNode() {
+        return mRightNode;
+    }
+
+    public void setRightNode(TreeNode<T> mRightNode) {
+        this.mRightNode = mRightNode;
     }
 
 }

@@ -1,10 +1,10 @@
 package com.sky.dynamicProgramming;
 
-import com.sky.problem.ProblemTwoSolutions;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.sky.problem.ProblemTwoSolutions;
 
 /**
  * LongestIncreasingSubsequence 一个序列有N个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度。

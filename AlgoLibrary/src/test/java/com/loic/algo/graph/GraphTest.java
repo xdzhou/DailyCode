@@ -10,7 +10,7 @@ public class GraphTest {
 
     public void init() {
         /*
-		 * @see graph image
+         * @see graph image
 		 * http://my.csdn.net/uploads/201207/04/1341373589_4609.png
 		 */
         mDirectedGraphGraph = new DefaultDirectedGraph<>(DefaultWeightedEdge.class);

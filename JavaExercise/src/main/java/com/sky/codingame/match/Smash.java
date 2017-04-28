@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Stack;
 
 class Smash {
     private static final int HEIGHT = 12;
@@ -43,10 +42,9 @@ class Smash {
         private static final int POPULATION = 16;
         private static final int GENERATION = 100;
         private static final float PV = 1 / 10f;
-
+        private static final Comparator<Gene> GENE_COMPARATOR = (o1, o2) -> o1.mFitness - o2.mFitness;
         private List<Gene> mGenes = new ArrayList<>(POPULATION);
         private Random mRandom = new Random(new Date().getTime());
-
         private MapInfo mMapInfo = new MapInfo();
 
         public int start(int[] nextColors) {
@@ -76,13 +74,13 @@ class Smash {
                 Collections.sort(mGenes, GENE_COMPARATOR);
                 Gene bestGene = mGenes.get(POPULATION - 1);
                 if (bestGene.mFitness >= 8 && i > 10) {
-                    System.err.println("We break in generation : "+i+", with fitness : "+bestGene.mFitness);
+                    System.err.println("We break in generation : " + i + ", with fitness : " + bestGene.mFitness);
                     break;
                 }
                 childrenGenes.add(mGenes.get(POPULATION - 1));
                 //
                 fitnessSomme = 0;
-                for(int index = 0; index < childrenGenes.size() - 1; index ++) {
+                for (int index = 0; index < childrenGenes.size() - 1; index++) {
                     Gene child = childrenGenes.get(index);
                     if (mRandom.nextFloat() < PV) {
                         child.set(mRandom.nextInt(NEXT_LEN), mRandom.nextInt(WIDTH - 1) + 1);
@@ -117,7 +115,7 @@ class Smash {
                     Gene child1 = parent1.clone();
                     Gene child2 = parent2.clone();
                     int pos = mRandom.nextInt(NEXT_LEN - 1);
-                    for(int index = pos + 1; index < NEXT_LEN; index++) {
+                    for (int index = pos + 1; index < NEXT_LEN; index++) {
                         int temp = child1.mChromosome[index];
                         child1.mChromosome[index] = child2.mChromosome[index];
                         child2.mChromosome[index] = temp;
@@ -138,7 +136,7 @@ class Smash {
                 temp += (gene.mFitness / (float) fitnessSomme);
                 if (temp >= taux) return gene;
             }
-            System.err.println("Oops, getOneGene error..." + taux+", temp : " +temp);
+            System.err.println("Oops, getOneGene error..." + taux + ", temp : " + temp);
             return null;
         }
 
@@ -148,7 +146,7 @@ class Smash {
             int[] chromosome = g.mChromosome;
             for (int i = 0; i < NEXT_LEN; i++) {
                 int weight = mMapInfo.drop(chromosome[i], nextColors[i]);
-                if (weight < 0) System.err.println("Fitness < 0 : "+Arrays.toString(chromosome));
+                if (weight < 0) System.err.println("Fitness < 0 : " + Arrays.toString(chromosome));
                 g.mFitness += weight;
             }
         }
@@ -157,29 +155,27 @@ class Smash {
             private int[] mChromosome = new int[NEXT_LEN];
             private int mFitness;
 
-            public void set(int index, int value) {
-                mChromosome[index] = value;
-            }
-
             public static Gene create(Random random) {
                 Gene retVal = new Gene();
-                for(int i = 0; i < NEXT_LEN; i++) {
+                for (int i = 0; i < NEXT_LEN; i++) {
                     retVal.mChromosome[i] = random.nextInt(WIDTH);
                 }
                 return retVal;
             }
 
+            public void set(int index, int value) {
+                mChromosome[index] = value;
+            }
+
             @Override
             protected Gene clone() throws CloneNotSupportedException {
                 Gene g = (Gene) super.clone();
-                for (int i = 0; i < NEXT_LEN; i ++) {
+                for (int i = 0; i < NEXT_LEN; i++) {
                     g.mChromosome[i] = mChromosome[i];
                 }
                 return g;
             }
         }
-
-        private static final Comparator<Gene> GENE_COMPARATOR = (o1, o2) -> o1.mFitness - o2.mFitness;
     }
 
     private static class MapInfo {
@@ -187,9 +183,8 @@ class Smash {
 
         private static final char EMPTY = '.';
         private static final char BLOCK = '0';
-
-        private String[] lines = new String[HEIGHT];
         private final char[][] data = new char[HEIGHT][WIDTH];
+        private String[] lines = new String[HEIGHT];
 
         public void initLine(int line, String row) {
             lines[line] = row;
@@ -197,10 +192,10 @@ class Smash {
 
         private int resetData() {
             int size = 0;
-            for(int line = 0; line < HEIGHT; line ++)
-                for(int column = 0; column < WIDTH; column ++) {
+            for (int line = 0; line < HEIGHT; line++)
+                for (int column = 0; column < WIDTH; column++) {
                     data[line][column] = lines[line].charAt(column);
-                    if (data[line][column] != '.') size ++;
+                    if (data[line][column] != '.') size++;
                 }
             return size;
         }
@@ -227,13 +222,13 @@ class Smash {
             }
         }
 
-        private int disappearZone(int[] topBound, int[] bottomBound, Zone ... zones) {
+        private int disappearZone(int[] topBound, int[] bottomBound, Zone... zones) {
             int retVal = 0;
             Arrays.fill(topBound, -1);
             Arrays.fill(bottomBound, -1);
             for (Zone z : zones) {
                 retVal += z.size();
-                for(int index : z.mIndexs) {
+                for (int index : z.mIndexs) {
                     int x = index / WIDTH;
                     int y = index % WIDTH;
                     if (topBound[y] == -1) {
@@ -251,7 +246,7 @@ class Smash {
             for (int column = 0; column < WIDTH; column++) {
                 if (topBound[column] != -1) {
                     int len = bottomBound[column] - topBound[column] + 1;
-                    for (int line = bottomBound[column]; line >= 0; line --) {
+                    for (int line = bottomBound[column]; line >= 0; line--) {
                         data[line][column] = line - len >= 0 ? data[line - len][column] : EMPTY;
                         if (data[line][column] != EMPTY && data[line][column] != BLOCK) {
                             indexToCheck.add(getIndex(line, column));
@@ -271,7 +266,7 @@ class Smash {
                     System.err.println("IMPOSSIBLE, no zone");
                 }
             }
-            if (! zoneToDisappear.isEmpty()) {
+            if (!zoneToDisappear.isEmpty()) {
                 retVal += disappearZone(topBound, bottomBound, zoneToDisappear.toArray(new Zone[zoneToDisappear.size()]));
             }
             return retVal;

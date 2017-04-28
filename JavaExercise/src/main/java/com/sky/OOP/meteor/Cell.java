@@ -30,12 +30,12 @@ class Cell {
         }
     }
 
-    void setProcessing(boolean processing) {
-        mProcessing = processing;
-    }
-
     boolean isProcessing() {
         return mProcessing;
+    }
+
+    void setProcessing(boolean processing) {
+        mProcessing = processing;
     }
 
     void flip() {

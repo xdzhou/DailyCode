@@ -1,10 +1,10 @@
 package com.loic.algo.search;
 
-import org.junit.Test;
-import org.testng.Assert;
-
 import java.util.Arrays;
 import java.util.Random;
+
+import org.junit.Test;
+import org.testng.Assert;
 
 /*
  * 旅行推销员问题（Travelling Salesman Problem， 又称为旅行商问题、货郎担问题、TSP问题）
@@ -24,10 +24,10 @@ public class GeneticAlgorithmTest {
             public TSPGene createNewGene(Random random) {
                 Integer[] data = new Integer[len];
                 Arrays.fill(data, -1);
-                for(int i = 0; i < len; i++) {
+                for (int i = 0; i < len; i++) {
                     int position = random.nextInt(len);
-                    while(data[position] != -1) {
-                        position ++;
+                    while (data[position] != -1) {
+                        position++;
                         position %= len;
                     }
                     data[position] = i;
@@ -74,7 +74,7 @@ public class GeneticAlgorithmTest {
 
         TSPGene gene = ga.execute(30, 1000);
         Assert.assertTrue(gene != null);
-        Integer[] result = new Integer[] {6, 7, 1, 0, 2, 3, 4, 5};
+        Integer[] result = new Integer[]{6, 7, 1, 0, 2, 3, 4, 5};
         Assert.assertEquals(gene.mData, result);
     }
 

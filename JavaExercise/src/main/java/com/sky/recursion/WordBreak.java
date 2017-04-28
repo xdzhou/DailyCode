@@ -1,12 +1,12 @@
 package com.sky.recursion;
 
-import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
 
 public class WordBreak implements Problem<Pair<String, Set<String>>, List<String>> {
     @Override

@@ -1,13 +1,12 @@
 package com.sky.codingame.training;
 
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
-
-import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import com.sky.common.CommonTest;
+import com.sky.problem.Problem;
+import org.testng.annotations.Test;
 
 public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
 

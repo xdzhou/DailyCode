@@ -1,11 +1,10 @@
 package com.sky.exercise;
 
-import com.sky.problem.Problem;
+import java.util.Objects;
 
+import com.sky.problem.Problem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Objects;
 
 /**
  * {@link http://www.geeksforgeeks.org/print-all-jumping-numbers-smaller-than-or-equal-to-a-given-value/}

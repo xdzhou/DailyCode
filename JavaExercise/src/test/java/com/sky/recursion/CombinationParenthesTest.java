@@ -2,7 +2,6 @@ package com.sky.recursion;
 
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.annotations.Test;
 
 public class CombinationParenthesTest extends CommonTest<Integer, Integer> {

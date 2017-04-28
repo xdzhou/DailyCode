@@ -1,7 +1,10 @@
 package com.loic.algo.search;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
     private static final int MAX_SAME_FITNESS_GENERATION = 7;
@@ -11,11 +14,11 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
     private final Random mRandom;
     private final float mParamMutationRate;
 
-    public GeneticAlgorithm (IGAListener<G> listener) {
+    public GeneticAlgorithm(IGAListener<G> listener) {
         this(listener, DEFAULT_MUTATION_RATE);
     }
 
-    public GeneticAlgorithm (IGAListener<G> listener, float mutationRate) {
+    public GeneticAlgorithm(IGAListener<G> listener, float mutationRate) {
         mListener = listener;
         mRandom = new Random(new Date().getTime());
         mParamMutationRate = mutationRate;
@@ -30,9 +33,9 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
         int bestGeneCount = 0;
 
         List<G> children = new ArrayList<>(population);
-        for(int generation = 0; generation < simulationCount; generation ++) {
+        for (int generation = 0; generation < simulationCount; generation++) {
             if (candidatures.isEmpty()) { //first generation
-                for(int i = 0; i < population; i++) {
+                for (int i = 0; i < population; i++) {
                     G gene = mListener.createNewGene(mRandom);
                     gene.mFitness = mListener.computerFitness(gene);
                     candidatures.add(gene);
@@ -63,7 +66,7 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
                 curBestFitness = bestGene.mFitness;
                 bestGeneCount = 1;
             } else {
-                bestGeneCount ++;
+                bestGeneCount++;
             }
             if (bestGene.isOver() || bestGeneCount >= MAX_SAME_FITNESS_GENERATION) break;
         }
@@ -74,7 +77,7 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
     private G select(float totalFitness, List<G> candidatures) {
         float value = mRandom.nextFloat() * totalFitness;
         float temp = 0;
-        for(G gene : candidatures) {
+        for (G gene : candidatures) {
             temp += gene.mFitness;
             if (value <= temp) return gene;
         }
@@ -83,24 +86,26 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
 
     private G getChild(G parent1, G parent2) {
         G child = mListener.getChild(mRandom, parent1, parent2);
-        if(mRandom.nextFloat() < mParamMutationRate) child.mutation(mRandom);
+        if (mRandom.nextFloat() < mParamMutationRate) child.mutation(mRandom);
         return child;
     }
 
     public interface IGAListener<G extends GeneticAlgorithm.Gene> {
         G createNewGene(Random random);
+
         float computerFitness(G gene);
+
         G getChild(Random random, G parent1, G parent2);
     }
 
     public abstract static class Gene<E> implements Comparable<Gene<E>> {
-        protected float mFitness;
         public final E[] mData;
+        protected float mFitness;
 
         @SuppressWarnings("unchecked")
         public Gene(E[] data) {
             mData = (E[]) Array.newInstance(data.getClass().getComponentType(), data.length);
-            System.arraycopy( data, 0, mData, 0, data.length );
+            System.arraycopy(data, 0, mData, 0, data.length);
         }
 
         protected boolean isOver() {

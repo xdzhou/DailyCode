@@ -1,12 +1,14 @@
 package com.sky.common;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.sky.problem.Problem;
 import com.sky.problem.ProblemThreeSolutions;
 import com.sky.problem.ProblemTwoSolutions;
-
 import org.testng.Assert;
-
-import java.util.*;
 
 public abstract class CommonTest<T, E> {
     private Problem<T, E> mAlgoToTest;

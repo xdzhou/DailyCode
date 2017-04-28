@@ -1,10 +1,10 @@
 package com.sky.exercise;
 
-import com.loic.algo.array.ArrayUtils;
-import com.sky.problem.ProblemTwoSolutions;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.loic.algo.array.ArrayUtils;
+import com.sky.problem.ProblemTwoSolutions;
 
 /**
  * 我们把只包含因子2、3 和5 的数称作丑数（Ugly Number）。例如6、8 都是丑数， 但14 不是，因为它包含因子7。习惯上我们把1

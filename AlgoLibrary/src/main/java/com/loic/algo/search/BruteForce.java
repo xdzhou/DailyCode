@@ -12,7 +12,7 @@ public class BruteForce<N extends BruteForce.BruteForceNode<T>, T> {
         } else {
             float best = Float.NEGATIVE_INFINITY;
             N bestChild = null;
-            for(T transition : root.getPossibleTransitions()) {
+            for (T transition : root.getPossibleTransitions()) {
                 N child = (N) root.getChildForTransition(transition);
                 if (child != null) {
                     float value = process(child, depth - 1);

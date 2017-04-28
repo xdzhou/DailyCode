@@ -3,7 +3,6 @@ package com.sky.exercise;
 import com.loic.algo.common.Point;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.annotations.Test;
 
 public class MaxPointsInLineTest extends CommonTest<Point[], Integer> {

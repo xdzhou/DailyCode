@@ -1,11 +1,10 @@
 package com.sky.OOP;
 
-import com.loic.algo.common.Pair;
+import java.util.Arrays;
 
+import com.loic.algo.common.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 public class RubikCube {
     private static final Logger Log = LoggerFactory.getLogger(RubikCube.class);

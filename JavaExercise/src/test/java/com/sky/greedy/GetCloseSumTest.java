@@ -3,7 +3,6 @@ package com.sky.greedy;
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.annotations.Test;
 
 public class GetCloseSumTest extends CommonTest<Pair<Integer[], Integer[]>, Integer> {

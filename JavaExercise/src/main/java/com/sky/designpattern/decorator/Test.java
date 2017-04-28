@@ -17,9 +17,9 @@ public class Test {
         loggedComponent = (Component) Proxy.newProxyInstance(scrollBarBlackBoardTextView.getClass().getClassLoader(), new Class[]{Component.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                System.out.println("Log : proxy : before do "+method);
+                System.out.println("Log : proxy : before do " + method);
                 Object obj = method.invoke(scrollBarBlackBoardTextView, args);
-                System.out.println("Log : proxy : after do "+method);
+                System.out.println("Log : proxy : after do " + method);
                 return obj;
             }
         });

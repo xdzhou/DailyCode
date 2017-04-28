@@ -1,17 +1,15 @@
 package com.sky.codingame.training;
 
-import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
+import com.loic.algo.common.Pair;
+import com.sky.problem.Problem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610

@@ -16,7 +16,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
         mRoot = root;
         mRoot.mChildren = null;
         mMaxDepth = maxDepth;
-        for(int i = 0; i < simulationCount; i++) {
+        for (int i = 0; i < simulationCount; i++) {
             process();
             if (Float.compare(mRoot.mWin, mRoot.mSimulationCount) == 0) break;
         }
@@ -26,7 +26,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
         List<N> path = selection();
         N leafNode = path.get(path.size() - 1);
         N selectedNode = null;
-        if (leafNode != mRoot && leafNode.mSimulationCount == 0 ) {
+        if (leafNode != mRoot && leafNode.mSimulationCount == 0) {
             selectedNode = leafNode;
             path.remove(path.size() - 1);
         } else {
@@ -45,7 +45,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
     private List<N> selection() {
         List<N> path = new ArrayList<N>();
         N curNode = mRoot;
-        while (curNode.getChildren() != null && ! curNode.getChildren().isEmpty()) {
+        while (curNode.getChildren() != null && !curNode.getChildren().isEmpty()) {
             path.add(curNode);
             curNode = getBestChild(curNode);
         }
@@ -57,7 +57,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
     public N getBestChild(N parent) {
         double best = Double.NEGATIVE_INFINITY;
         MonteCarloNode bestChild = null;
-        for(MonteCarloNode child : parent.getChildren()) {
+        for (MonteCarloNode child : parent.getChildren()) {
             if (child.mSimulationCount == 0) {
                 bestChild = child;
                 break;
@@ -79,7 +79,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
         } else {
             List<T> transitions = leafNode.getPossibleTransitions();
             leafNode.mChildren = new ArrayList<>(transitions.size());
-            for(T t : transitions) {
+            for (T t : transitions) {
                 N child = (N) leafNode.getChildForTransition(t);
                 if (child != null) {
                     leafNode.addChild(child);
@@ -110,7 +110,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
     }
 
     private void backPropagation(float winning, List<N> path) {
-        for(N n : path) {
+        for (N n : path) {
             n.applyWinning(winning);
         }
     }
@@ -121,7 +121,7 @@ public class MonteCarlo<N extends MonteCarlo.MonteCarloNode<T>, T> {
         List<MonteCarloNode<T>> mChildren;
 
         public void applyWinning(float winning) {
-            mSimulationCount ++;
+            mSimulationCount++;
             mWin += winning;
         }
 

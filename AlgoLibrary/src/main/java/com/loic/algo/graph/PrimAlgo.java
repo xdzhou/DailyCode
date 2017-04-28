@@ -1,15 +1,15 @@
 package com.loic.algo.graph;
 
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
+
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PrimAlgo<T> implements MinSpanningTreeAlgo<T> {
     private static final Logger Log = LoggerFactory.getLogger(PrimAlgo.class);

@@ -28,7 +28,7 @@ public class CloseMatch {
 
         int dif = 0;
         int difIndex = 0;
-        for(int i = 0; i < score1.length(); i++) {
+        for (int i = 0; i < score1.length(); i++) {
             if (result[0].charAt(i) != result[1].charAt(i)) {
                 dif = result[0].charAt(i) - result[1].charAt(i);
                 difIndex = i;
@@ -42,17 +42,17 @@ public class CloseMatch {
                     str2[difIndex - 1] = (char) ('0' + (result[1].charAt(difIndex - 1) - '0' + 1));
                     str1[difIndex - 1] = result[0].charAt(difIndex - 1);
                     result = compute(str1, str2);
-                } else if (dif < 0 && nextDif <0 && result[0].charAt(difIndex - 1) - '0' < 9) {
+                } else if (dif < 0 && nextDif < 0 && result[0].charAt(difIndex - 1) - '0' < 9) {
                     str1[difIndex - 1] = (char) ('0' + (result[0].charAt(difIndex - 1) - '0' + 1));
                     str2[difIndex - 1] = result[1].charAt(difIndex - 1);
                     result = compute(str1, str2);
                 }
-            } else if(Math.abs(dif) > 5) {
-                if(dif > 0 && result[1].charAt(difIndex - 1) - '0' < 9)  {
+            } else if (Math.abs(dif) > 5) {
+                if (dif > 0 && result[1].charAt(difIndex - 1) - '0' < 9) {
                     str2[difIndex - 1] = (char) ('0' + (result[1].charAt(difIndex - 1) - '0' + 1));
                     str1[difIndex - 1] = result[0].charAt(difIndex - 1);
                     result = compute(str1, str2);
-                } else if(dif < 0 && result[0].charAt(difIndex - 1) - '0' < 9) {
+                } else if (dif < 0 && result[0].charAt(difIndex - 1) - '0' < 9) {
                     str1[difIndex - 1] = (char) ('0' + (result[0].charAt(difIndex - 1) - '0' + 1));
                     str2[difIndex - 1] = result[1].charAt(difIndex - 1);
                     result = compute(str1, str2);
@@ -61,11 +61,11 @@ public class CloseMatch {
         }
 
 
-        System.out.println("Case #" + index + ": "+result[0]+ " "+result[1]);
+        System.out.println("Case #" + index + ": " + result[0] + " " + result[1]);
     }
 
     private int getDif(String str1, String str2, int startIndex) {
-        for(int i = startIndex; i < str1.length(); i++) {
+        for (int i = startIndex; i < str1.length(); i++) {
             if (str1.charAt(i) != str2.charAt(i)) return str1.charAt(i) - str2.charAt(i);
         }
         return 0;

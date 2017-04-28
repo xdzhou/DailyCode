@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 public class AStarAlgoTest {
     @Test
     public void test() {
-        final String[] maps = new String[] {
+        final String[] maps = new String[]{
                 "##############################",
                 "#T...........................#",
                 "##...........................#",

@@ -1,9 +1,9 @@
 package com.sky.hackerrank;
 
+import java.util.Arrays;
+
 import com.google.common.base.Preconditions;
 import com.sky.problem.ProblemTwoSolutions;
-
-import java.util.Arrays;
 
 /**
  * URL : https://www.hackerrank.com/challenges/bigger-is-greater
@@ -17,9 +17,9 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
         if (param.length() <= 1) return NO_ANSWER;
         char[] datas = param.toCharArray();
         int curIndex = datas.length - 2;
-        while(curIndex >= 0) {
+        while (curIndex >= 0) {
             if (datas[curIndex] < datas[curIndex + 1]) break;
-            curIndex --;
+            curIndex--;
         }
         if (curIndex < 0) {
             return NO_ANSWER;
@@ -34,7 +34,7 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
             }
 
             int changeIndex = Arrays.binarySearch(datas, curIndex + 1, datas.length, datas[curIndex]);
-            if (changeIndex < 0) changeIndex = - changeIndex - 1;
+            if (changeIndex < 0) changeIndex = -changeIndex - 1;
             else changeIndex++;
             char c = datas[curIndex];
             datas[curIndex] = datas[changeIndex];

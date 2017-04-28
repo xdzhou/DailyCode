@@ -3,7 +3,6 @@ package com.sky.exercise;
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

@@ -1,9 +1,9 @@
 package com.sky.recursion;
 
+import java.util.LinkedList;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.LinkedList;
 
 public class InvertStackTest {
     @Test

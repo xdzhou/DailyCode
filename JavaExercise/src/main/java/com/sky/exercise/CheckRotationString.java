@@ -1,10 +1,10 @@
 package com.sky.exercise;
 
+import java.util.Objects;
+
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Pair;
 import com.sky.problem.Problem;
-
-import java.util.Objects;
 
 /**
  * 假设你有一个isSubstring函数，可以检测一个字符串是否是另一个字符串的子串。

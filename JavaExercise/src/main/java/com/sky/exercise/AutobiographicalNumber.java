@@ -1,14 +1,13 @@
 package com.sky.exercise;
 
-import com.google.common.base.Preconditions;
-import com.sky.problem.ProblemTwoSolutions;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.base.Preconditions;
+import com.sky.problem.ProblemTwoSolutions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 给你10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数 要求下排每个数都是先前上排那十个数在下排出现的次数。 上排的十个数如下：

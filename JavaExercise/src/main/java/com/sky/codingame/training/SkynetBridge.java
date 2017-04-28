@@ -7,13 +7,21 @@ import java.util.Scanner;
 
 class SkynetBridge {
 
+    private int mMin;
+    private String[] mLanes;
+
+    public SkynetBridge(int min) {
+        mMin = min;
+        mLanes = new String[4];
+    }
+
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in, "UTF-8");
         int M = in.nextInt(); // the amount of motorbikes to control
         int V = in.nextInt(); // the minimum amount of motorbikes that must survive
         SkynetBridge algo = new SkynetBridge(V);
         algo.mLanes[0] = in.next();
-        System.err.println("len : "+ algo.mLanes[0].length());
+        System.err.println("len : " + algo.mLanes[0].length());
         System.err.println(algo.mLanes[0]);
         algo.mLanes[1] = in.next();
         System.err.println(algo.mLanes[1]);
@@ -45,18 +53,6 @@ class SkynetBridge {
         //algo.test();
     }
 
-    private enum Command {
-        SPEED, SLOW, JUMP, WAIT, UP, DOWN
-    }
-
-    private int mMin;
-    private String[] mLanes;
-
-    public SkynetBridge(int min) {
-        mMin = min;
-        mLanes = new String[4];
-    }
-
     public void test() {
         mMin = 1;
         mLanes[0] = ".............................0..0....";
@@ -75,13 +71,13 @@ class SkynetBridge {
     }
 
     private List<Command> find(int curSpeed, int curX, List<Integer> curY, List<Command> commands) {
-        System.err.println("speed: "+curSpeed+", X: " + curX + ", Ys: " + curY + ", commands: " + commands);
+        System.err.println("speed: " + curSpeed + ", X: " + curX + ", Ys: " + curY + ", commands: " + commands);
         if (curY.size() >= mMin) {
             if (curX > mLanes[0].length()) {
                 return commands;
             } else {
                 List<Command> retVal = null;
-                for(int i = 0; i <= 5 && retVal == null; i++) {
+                for (int i = 0; i <= 5 && retVal == null; i++) {
                     Command com = Command.values()[i];
                     if (com == Command.UP && curY.contains(0)) continue;
                     if (com == Command.DOWN && curY.contains(3)) continue;
@@ -109,14 +105,14 @@ class SkynetBridge {
             int y = iterator.next();
             if (hasHole(curX, y, speed, com)) iterator.remove();
         }
-        if(com == Command.DOWN) addDelta(curY, 1);
-        if(com == Command.UP) addDelta(curY, -1);
+        if (com == Command.DOWN) addDelta(curY, 1);
+        if (com == Command.UP) addDelta(curY, -1);
         return curY;
     }
 
     private void addDelta(List<Integer> curY, int delta) {
-        if (curY != null && ! curY.isEmpty()) {
-            for(int i = 0; i < curY.size(); i++) {
+        if (curY != null && !curY.isEmpty()) {
+            for (int i = 0; i < curY.size(); i++) {
                 curY.set(i, curY.get(i) + delta);
             }
         }
@@ -144,7 +140,7 @@ class SkynetBridge {
             int len = mLanes[y].length();
             if (endX >= len) endX = len - 1;
             if (startX >= len) startX = len - 1;
-            for(int i = startX; i <= endX; i++) {
+            for (int i = startX; i <= endX; i++) {
                 if (mLanes[y].charAt(i) == '0') {
                     System.err.println("has hole for y:" + y + ", startX:" + startX + ", endX:" + endX);
                     return true;
@@ -152,5 +148,9 @@ class SkynetBridge {
             }
         }
         return false;
+    }
+
+    private enum Command {
+        SPEED, SLOW, JUMP, WAIT, UP, DOWN
     }
 }

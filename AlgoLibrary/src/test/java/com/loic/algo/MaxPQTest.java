@@ -1,10 +1,10 @@
 package com.loic.algo;
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-
 import java.util.Comparator;
 import java.util.PriorityQueue;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 
 public class MaxPQTest {
     private int N = 100;

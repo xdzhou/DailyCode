@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ public class AStarAlgo {
     private static final byte UNKNOWN = 0;
     private static final byte TRACED = 1;
     private static final byte TO_TRACE = 2;
-
+    private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
     private IMapInfo mMapInfo;
 
     public AStarAlgo(IMapInfo mMapInfo) {
@@ -40,7 +41,7 @@ public class AStarAlgo {
         PriorityQueue<Node> priorityQueue = new PriorityQueue<Node>();
         Node startNode = new Node(startIndex);
         priorityQueue.add(startNode);
-        while (! priorityQueue.isEmpty()) {
+        while (!priorityQueue.isEmpty()) {
             Node node = priorityQueue.poll();
             int x = node.index / w;
             int y = node.index % w;
@@ -48,7 +49,7 @@ public class AStarAlgo {
             if (node.disFromStart > maxLen) {
                 Log.info("max length exceed ...");
                 return null;
-            } else if (checker.isResult(x, y)){
+            } else if (checker.isResult(x, y)) {
                 return getPath(prev, node.index);
             }
             //
@@ -86,12 +87,12 @@ public class AStarAlgo {
         startNode.disToEnd = mMapInfo.getEstimateDis(startX, startY, endX, endY);
         priorityQueue.add(startNode);
         int endIndex = getIndex(endX, endY);
-        while (! priorityQueue.isEmpty()) {
+        while (!priorityQueue.isEmpty()) {
             Node node = priorityQueue.poll();
             if (node.disFromStart > maxLen) {
                 Log.info("max length exceed ...");
                 return null;
-            } else if (node.index == endIndex){
+            } else if (node.index == endIndex) {
                 return getPath(prev, endIndex);
             }
             int x = node.index / w;
@@ -102,10 +103,14 @@ public class AStarAlgo {
             if (mMapInfo.reachable(x, y, x, y - 1)) treat(x, y - 1, node, priorityQueue, flags, prev, endX, endY);
             if (mMapInfo.reachable(x, y, x, y + 1)) treat(x, y + 1, node, priorityQueue, flags, prev, endX, endY);
             //
-            if (mMapInfo.reachable(x, y, x - 1, y - 1)) treat(x - 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
-            if (mMapInfo.reachable(x, y, x + 1, y + 1)) treat(x + 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
-            if (mMapInfo.reachable(x, y, x + 1, y - 1)) treat(x + 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
-            if (mMapInfo.reachable(x, y, x - 1, y + 1)) treat(x - 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x - 1, y - 1))
+                treat(x - 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x + 1, y + 1))
+                treat(x + 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x + 1, y - 1))
+                treat(x + 1, y - 1, node, priorityQueue, flags, prev, endX, endY);
+            if (mMapInfo.reachable(x, y, x - 1, y + 1))
+                treat(x - 1, y + 1, node, priorityQueue, flags, prev, endX, endY);
 
             flags[node.index] = TRACED;
         }
@@ -159,7 +164,7 @@ public class AStarAlgo {
         Iterator<Node> iterator = priorityQueue.iterator();
         while (iterator.hasNext()) {
             Node n = iterator.next();
-            if(n.index == index) {
+            if (n.index == index) {
                 iterator.remove();
                 return n;
             }
@@ -171,6 +176,20 @@ public class AStarAlgo {
         return x * mMapInfo.getWidth() + y;
     }
 
+    public interface IResultChecker {
+        boolean isResult(int x, int y);
+    }
+
+    public interface IMapInfo {
+        int getHeight();
+
+        int getWidth();
+
+        boolean reachable(int fromX, int fromY, int toX, int toY);
+
+        int getEstimateDis(int x1, int y1, int x2, int y2);
+    }
+
     private static class Node {
         private int index;
         private int disFromStart; // cost from start point
@@ -179,18 +198,5 @@ public class AStarAlgo {
         public Node(int index) {
             this.index = index;
         }
-    }
-
-    private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
-
-    public interface IResultChecker {
-        boolean isResult(int x, int y);
-    }
-
-    public interface IMapInfo {
-        int getHeight();
-        int getWidth();
-        boolean reachable(int fromX, int fromY, int toX, int toY);
-        int getEstimateDis(int x1, int y1, int x2, int y2);
     }
 }

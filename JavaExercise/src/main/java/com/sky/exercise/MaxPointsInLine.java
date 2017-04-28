@@ -1,13 +1,12 @@
 package com.sky.exercise;
 
-import com.loic.algo.common.Point;
-import com.sky.problem.Problem;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.loic.algo.common.Point;
+import com.sky.problem.Problem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Given n points on a 2D plane, find the maximum number of points that lie on

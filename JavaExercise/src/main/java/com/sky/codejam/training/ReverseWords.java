@@ -1,6 +1,7 @@
 package com.sky.codejam.training;
 
 import java.util.Scanner;
+
 import com.sky.codejam.Resolver;
 
 public class ReverseWords implements Resolver {

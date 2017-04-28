@@ -2,7 +2,6 @@ package com.sky.divideConquer;
 
 import com.loic.algo.common.Pair;
 import com.sky.problem.Problem;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

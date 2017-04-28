@@ -56,10 +56,10 @@ class Pizza {
 
     int getTomatoCount(int topLeftRow, int topLeftColumn, int bottomRightRow, int bottomRightColumn) {
         int count = 0;
-        for (int row = topLeftRow; row <= bottomRightRow; row ++) {
-            for (int column = topLeftColumn; column <= bottomRightColumn; column ++) {
+        for (int row = topLeftRow; row <= bottomRightRow; row++) {
+            for (int column = topLeftColumn; column <= bottomRightColumn; column++) {
                 if (board[row][column]) {
-                    count ++;
+                    count++;
                 }
             }
         }
@@ -67,8 +67,8 @@ class Pizza {
     }
 
     boolean areCellsAllAvailable(int topLeftRow, int topLeftColumn, int bottomRightRow, int bottomRightColumn, List<Slice> cutSlices) {
-        for (int row = topLeftRow; row <= bottomRightRow; row ++) {
-            for (int column = topLeftColumn; column <= bottomRightColumn; column ++) {
+        for (int row = topLeftRow; row <= bottomRightRow; row++) {
+            for (int column = topLeftColumn; column <= bottomRightColumn; column++) {
                 if (!isCellAvailable(row, column, cutSlices)) {
                     return false;
                 }
@@ -80,11 +80,11 @@ class Pizza {
     int getRestAvailableCellCount(int from, List<Slice> cutSlices) {
         int size = size();
         int count = 0;
-        for(int i = from; i < size; i++) {
+        for (int i = from; i < size; i++) {
             int row = i / columnCount;
             int col = i % columnCount;
             if (isCellAvailable(row, col, cutSlices)) {
-                count ++;
+                count++;
             }
         }
         return count;

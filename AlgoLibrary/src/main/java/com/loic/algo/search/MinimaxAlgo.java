@@ -9,7 +9,9 @@ public class MinimaxAlgo<T> {
 
     public interface INodeInfo<T> {
         boolean isTerminal(T node);
+
         boolean isForAdversary(T node);
+
         Iterator<T> getChildren(T Node);
     }
 }

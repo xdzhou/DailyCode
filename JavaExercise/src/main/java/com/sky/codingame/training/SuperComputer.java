@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class SuperComputer {
 
+    private static final Comparator<Task> TASK_COMPARATOR = (o1, o2) -> o1.fin - o2.fin;
+
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in, "UTF-8");
         int nb = 0;
@@ -36,6 +38,4 @@ public class SuperComputer {
         private int debut = 0;
         private int fin = 0;
     }
-
-    private static final Comparator<Task> TASK_COMPARATOR = (o1, o2) -> o1.fin - o2.fin;
 }

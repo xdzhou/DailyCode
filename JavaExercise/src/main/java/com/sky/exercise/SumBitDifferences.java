@@ -1,9 +1,9 @@
 package com.sky.exercise;
 
+import java.util.Objects;
+
 import com.loic.algo.BitUtils;
 import com.sky.problem.ProblemTwoSolutions;
-
-import java.util.Objects;
 
 /**
  * Sum of bit differences among all pairs<br>

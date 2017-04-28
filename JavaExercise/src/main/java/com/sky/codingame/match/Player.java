@@ -95,7 +95,7 @@ public class Player {
     }
 
     private static final class Coor {
-        private final int x,y;
+        private final int x, y;
 
         private Coor(int x, int y) {
             this.x = x;
@@ -109,7 +109,8 @@ public class Player {
 
     private static class EntityComparator implements Comparator<Entity> {
         private final Entity mFrom;
-        public EntityComparator (Entity e) {
+
+        public EntityComparator(Entity e) {
             mFrom = e;
         }
 

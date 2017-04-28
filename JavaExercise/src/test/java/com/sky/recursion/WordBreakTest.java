@@ -1,14 +1,13 @@
 package com.sky.recursion;
 
+import java.util.List;
+import java.util.Set;
+
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
 import com.sky.problem.Problem;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.Set;
 
 public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<String>> {
 

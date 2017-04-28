@@ -1,11 +1,11 @@
 package com.sky.exercise;
 
-import com.sky.problem.Problem;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.sky.problem.Problem;
 
 /**
  * Remove the minimum number of invalid parentheses in order to make the input
