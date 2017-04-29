@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-public class SearchPath {
-    private final ImmutableList<Transition> path;
+public class SearchPath<Trans extends Transition> {
+    private final ImmutableList<Trans> path;
 
-    public SearchPath(Transition... transitions) {
+    public SearchPath(Trans... transitions) {
         path = ImmutableList.copyOf(transitions);
     }
 
-    public SearchPath(List<Transition> transitions) {
+    public SearchPath(List<Trans> transitions) {
         path = ImmutableList.copyOf(transitions);
     }
 
@@ -19,7 +19,7 @@ public class SearchPath {
         return path.size();
     }
 
-    List<Transition> getTransitions() {
+    public List<Trans> getTransitions() {
         return path;
     }
 

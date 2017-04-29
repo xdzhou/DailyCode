@@ -14,36 +14,34 @@ import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 
 public class BruteForce implements PathFinder {
-    private final Map<State, Pair<Transition, State>> transitionMap = Maps.newHashMap();
 
     @Override
-    public SearchPath find(State root, int maxDeep) {
+    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
         Objects.requireNonNull(root, "Root state is mandatory");
         Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
 
-        process(root, maxDeep);
+        Map<State<Trans>, Pair<Trans, State>> transitionMap = Maps.newHashMap();
+        process(root, maxDeep, transitionMap);
 
-        List<Transition> transitions = Lists.newArrayList();
-        Pair<Transition, State> pair = transitionMap.get(root);
+        List<Trans> transitions = Lists.newArrayList();
+        Pair<Trans, State> pair = transitionMap.get(root);
         while (pair != null) {
             transitions.add(pair.first());
             pair = transitionMap.get(pair.second());
         }
-
-        transitionMap.clear();
-        return new SearchPath(transitions);
+        return new SearchPath<>(transitions);
     }
 
-    private double process(State state, int deep) {
+    private <Trans extends Transition> double process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {
         if (deep == 0 || state.nextPossibleTransitions().isEmpty()) {
             return state.heuristic();
         } else {
             double best = Double.MIN_VALUE;
-            Transition bestTransition = null;
+            Trans bestTransition = null;
             State bestChildState = null;
-            for(Transition transition : state.nextPossibleTransitions()) {
+            for(Trans transition : state.nextPossibleTransitions()) {
                 State nextState = state.apply(transition);
-                double fitness = process(nextState, deep - 1);
+                double fitness = process(nextState, deep - 1, transitionMap);
                 if (fitness > best) {
                     best = fitness;
                     bestTransition = transition;

@@ -2,8 +2,19 @@ package com.loic.algo.search.core;
 
 import java.util.List;
 
-public interface State {
+import com.google.common.base.Preconditions;
+
+public interface State<Trans extends Transition> {
+
     double heuristic();
-    State apply(Transition transition);
-    List<Transition> nextPossibleTransitions();
+
+    default boolean isOver() {
+        double fitness = heuristic();
+        Preconditions.checkState(fitness >= 0 && fitness <= 1, "Fitness should between 0 and 1");
+        return Double.compare(0, fitness) == 0 || Double.compare(1, fitness) == 0;
+    }
+
+    State apply(Trans transition);
+    List<Trans> nextPossibleTransitions();
+
 }

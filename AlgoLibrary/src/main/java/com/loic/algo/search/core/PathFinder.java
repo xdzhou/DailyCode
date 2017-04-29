@@ -1,5 +1,5 @@
 package com.loic.algo.search.core;
 
 public interface PathFinder {
-    SearchPath find(State root, int maxDeep);
+    <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep);
 }

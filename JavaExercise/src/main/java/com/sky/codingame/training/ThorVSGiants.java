@@ -6,7 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import com.loic.algo.search.BruteForce;
+import com.loic.algo.search.core.SearchPath;
+import com.loic.algo.search.core.State;
+import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.impl.BruteForce;
 
 public class ThorVSGiants {
     private static final int mHeight = 18;
@@ -14,8 +17,7 @@ public class ThorVSGiants {
 
     public static void main(String args[]) {
         Maze maze = Maze.getInstance();
-        MapNode root = new MapNode();
-        BruteForce<MapNode, Step> algo = new BruteForce<>();
+        MapState root = new MapState();
 
         Scanner in = new Scanner(System.in, "UTF-8");
         root.curX = in.nextInt();
@@ -34,14 +36,14 @@ public class ThorVSGiants {
                 int Y = in.nextInt();
                 root.giants.add(X * mHeight + Y);
             }
-            algo.execute(root, 5);
-            String nextStep = (root.getBestChild() != null) ? root.getBestChild().getTransition().toString() : "STRIKE";
-            root = (MapNode) root.getBestChild();
+            SearchPath<Step> path = new BruteForce().find(root, 5);
+            String nextStep = path.getTransitions().get(0).toString();
+            root = (MapState) root.apply(path.getTransitions().get(0));
             System.out.println(nextStep);
         }
     }
 
-    private enum Step {
+    private enum Step implements Transition {
         STRIKE(0, 0),
         //WAIT(0,0),
 
@@ -72,7 +74,7 @@ public class ThorVSGiants {
         }
     }
 
-    private static class MapNode extends BruteForce.BruteForceNode<Step> implements Cloneable {
+    private static class MapState implements State<Step>, Cloneable {
         private int round = 0;
         private int strikeNb;
         private int curX, curY;
@@ -84,7 +86,7 @@ public class ThorVSGiants {
         }
 
         @Override
-        public List<Step> getPossibleTransitions() {
+        public List<Step> nextPossibleTransitions() {
             List<Step> result = Arrays.asList(Step.values());
             Iterator<Step> iterator = result.iterator();
             while (iterator.hasNext()) {
@@ -113,9 +115,14 @@ public class ThorVSGiants {
 
         //return next child MapNode
         @Override
-        public void applyTransition(Step step) {
+        public State apply(Step transition) {
+            MapState clone = clone();
+            clone.applyStep(transition);
+            return clone;
+        }
+
+        private void applyStep(Step step) {
             List<Integer> arounds = giantsAround();
-            mTransition = step;
             round = round + 1;
             curX += step.deltaX;
             curY += step.deltaY;
@@ -159,10 +166,10 @@ public class ThorVSGiants {
         }
 
         @Override
-        public float heuristic() {
+        public double heuristic() {
             float fitness;
-            if (isLose()) fitness = Integer.MIN_VALUE;
-            else if (isWin()) fitness = Integer.MAX_VALUE;
+            if (isLose()) fitness = 0;
+            else if (isWin()) fitness = 1;
             else {
                 int maxValue = mWidth + mHeight;
                 fitness = (Maze.getInstance().mTotalGiant - giants.size()) * maxValue;
@@ -171,6 +178,7 @@ public class ThorVSGiants {
                     if (level <= 4) fitness += (maxValue - 1);
                     else fitness += (mWidth + mHeight - getDis(giants.get(i)));
                 }
+                fitness /= (float) maxValue;
             }
             return fitness;
         }
@@ -186,16 +194,20 @@ public class ThorVSGiants {
         }
 
         @Override
-        protected MapNode clone() {
-            MapNode n = (MapNode) super.clone();
+        protected MapState clone() {
+            MapState n = null;
+            try {
+                n = (MapState) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
             n.giants = new ArrayList<>(giants);
             return n;
         }
 
         @Override
         public String toString() {
-            return "{step=" + mTransition +
-                    ", round=" + round +
+            return "{round=" + round +
                     ", strikeNb=" + strikeNb +
                     ", curX=" + curX +
                     ", curY=" + curY +
