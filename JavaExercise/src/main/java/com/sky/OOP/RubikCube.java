@@ -17,12 +17,12 @@ public class RubikCube {
     public static RubikCube getPrefectRubikCube() {
         RubikCube rubikCube = new RubikCube();
         // top:yellow bellow:red left:green right:orange front:blue behind:white
-        Pair<Color, Side> topPair = Pair.create(Color.Yellow, Side.Top);
-        Pair<Color, Side> bellowPair = Pair.create(Color.Red, Side.Bellow);
-        Pair<Color, Side> leftPair = Pair.create(Color.Green, Side.Left);
-        Pair<Color, Side> rightPair = Pair.create(Color.Orange, Side.Right);
-        Pair<Color, Side> frontPair = Pair.create(Color.Blue, Side.Front);
-        Pair<Color, Side> behindPair = Pair.create(Color.White, Side.Behind);
+        Pair<Color, Side> topPair = Pair.of(Color.Yellow, Side.Top);
+        Pair<Color, Side> bellowPair = Pair.of(Color.Red, Side.Bellow);
+        Pair<Color, Side> leftPair = Pair.of(Color.Green, Side.Left);
+        Pair<Color, Side> rightPair = Pair.of(Color.Orange, Side.Right);
+        Pair<Color, Side> frontPair = Pair.of(Color.Blue, Side.Front);
+        Pair<Color, Side> behindPair = Pair.of(Color.White, Side.Behind);
         // top level 3
         rubikCube.mSubCubes[0] = new SubCube(topPair.clone(), leftPair.clone(), frontPair.clone());
         rubikCube.mSubCubes[1] = new SubCube(topPair.clone(), leftPair.clone(), behindPair.clone());
@@ -177,19 +177,21 @@ public class RubikCube {
         }
 
         public void transform(Side[] from, Side[] to) {
+            int index = 0;
             for (Pair<Color, Side> colorPair : colorPairs) {
                 for (int i = 0; i < from.length; i++) {
-                    if (colorPair.getSecond() == from[i]) {
-                        colorPair.setSecond(to[i]);
+                    if (colorPair.second() == from[i]) {
+                        colorPairs[index] = Pair.of(colorPair.first(), to[i]);
                         break;
                     }
                 }
+                index++;
             }
         }
 
         public boolean isPresentIn(Side dir) {
             for (Pair<Color, Side> colorPair : colorPairs) {
-                if (colorPair.getSecond() == dir) {
+                if (colorPair.second() == dir) {
                     return true;
                 }
             }
@@ -198,8 +200,8 @@ public class RubikCube {
 
         public Color getColorForSide(Side dir) {
             for (Pair<Color, Side> colorPair : colorPairs) {
-                if (colorPair.getSecond() == dir) {
-                    return colorPair.getFirst();
+                if (colorPair.second() == dir) {
+                    return colorPair.first();
                 }
             }
             return Color.UnKnownColor;

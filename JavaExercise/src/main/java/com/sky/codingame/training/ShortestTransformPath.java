@@ -18,8 +18,8 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 
     private Map<T, HashSet<T>> treeMap;
-    private Comparator<Pair<Integer, Integer>> longestPathComparator = (o1, o2) -> o2.getFirst().compareTo(o1.getFirst());
-    private Comparator<Pair<Integer, Integer>> depthComparator = (o1, o2) -> o2.getSecond().compareTo(o1.getSecond());
+    private Comparator<Pair<Integer, Integer>> longestPathComparator = (o1, o2) -> o2.first().compareTo(o1.first());
+    private Comparator<Pair<Integer, Integer>> depthComparator = (o1, o2) -> o2.second().compareTo(o1.second());
 
     public ShortestTransformPath() {
         treeMap = new HashMap<>();
@@ -35,7 +35,7 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
     }
 
     public int getShortestTransformPathLength() {
-        int longPath = getLongestPath(treeMap.keySet().iterator().next()).getFirst();
+        int longPath = getLongestPath(treeMap.keySet().iterator().next()).first();
         return (longPath + 1) / 2;
     }
 
@@ -47,7 +47,7 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
         HashSet<T> children = treeMap.get(node);
         treeMap.remove(node);
         if (children == null || children.isEmpty()) {
-            return new Pair<>(0, 0);
+            return Pair.of(0, 0);
         }
         ArrayList<Pair<Integer, Integer>> childrenResult = new ArrayList<>(children.size());
         for (T child : children) {
@@ -56,23 +56,23 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
             }
         }
         if (childrenResult.isEmpty()) {
-            return new Pair<>(0, 0);
+            return Pair.of(0, 0);
         } else if (childrenResult.size() == 1) {
-            int depth = 1 + childrenResult.get(0).getSecond();
-            int longPath = Math.max(depth, childrenResult.get(0).getFirst());
+            int depth = 1 + childrenResult.get(0).second();
+            int longPath = Math.max(depth, childrenResult.get(0).first());
 
-            return new Pair<>(longPath, depth);
+            return Pair.of(longPath, depth);
         } else {
             childrenResult.sort(longestPathComparator);
-            int childLongPath = childrenResult.get(0).getFirst();
+            int childLongPath = childrenResult.get(0).first();
 
             childrenResult.sort(depthComparator);
-            int maxDepth0 = childrenResult.get(0).getSecond();
-            int maxDepth1 = childrenResult.get(1).getSecond();
+            int maxDepth0 = childrenResult.get(0).second();
+            int maxDepth1 = childrenResult.get(1).second();
 
             int longPath = Math.max(maxDepth0 + maxDepth1 + 2, childLongPath);
 
-            return new Pair<>(longPath, maxDepth0 + 1);
+            return Pair.of(longPath, maxDepth0 + 1);
         }
     }
 

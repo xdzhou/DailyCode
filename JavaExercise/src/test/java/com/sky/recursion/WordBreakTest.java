@@ -13,9 +13,9 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
 
     @Test
     public void test() {
-        check(Pair.create("catsanddog", generateSet("cat", "cats", "and", "sand", "dog")));
+        check(Pair.of("catsanddog", generateSet("cat", "cats", "and", "sand", "dog")));
 
-        check(Pair.create(
+        check(Pair.of(
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
                 generateSet("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa",
                         "aaaaaaaaaa")));
@@ -25,7 +25,7 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
     protected void onOutputReady(Pair<String, Set<String>> input, List<String> output) {
         if (!output.isEmpty()) {
             for (String s : output) {
-                Assert.assertEquals(input.getFirst(), s.replace(" ", ""));
+                Assert.assertEquals(input.first(), s.replace(" ", ""));
             }
         }
     }

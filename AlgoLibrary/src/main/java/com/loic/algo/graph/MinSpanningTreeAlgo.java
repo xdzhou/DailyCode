@@ -7,9 +7,9 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 
 public interface MinSpanningTreeAlgo<T> {
     // set a graph to algo
-    public void setGraph(UndirectedGraph<T, DefaultWeightedEdge> graph);
+    void setGraph(UndirectedGraph<T, DefaultWeightedEdge> graph);
 
-    public Set<DefaultWeightedEdge> generateMinSpanningTree();
+    Set<DefaultWeightedEdge> generateMinSpanningTree();
 
-    public double getTotalWeight();
+    double getTotalWeight();
 }

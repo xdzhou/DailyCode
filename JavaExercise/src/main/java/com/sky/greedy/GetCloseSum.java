@@ -18,7 +18,7 @@ public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer>
     @Override
     public Integer resolve(Pair<Integer[], Integer[]> param) {
         Objects.requireNonNull(param);
-        return swithAndGetCloseSum(param.getFirst(), param.getSecond());
+        return swithAndGetCloseSum(param.first(), param.second());
     }
 
     public int swithAndGetCloseSum(Integer[] listA, Integer[] listB) {

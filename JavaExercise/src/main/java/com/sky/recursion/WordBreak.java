@@ -12,7 +12,7 @@ public class WordBreak implements Problem<Pair<String, Set<String>>, List<String
     @Override
     public List<String> resolve(Pair<String, Set<String>> param) {
         Objects.requireNonNull(param);
-        return wordBreak(param.getFirst(), param.getSecond());
+        return wordBreak(param.first(), param.second());
     }
 
     public List<String> wordBreak(String s, Set<String> wordDict) {

@@ -24,8 +24,8 @@ public class TrailingZeros implements ProblemTwoSolutions<Integer, Integer> {
             int factore5 = 0;
             for (int i = 5; i <= n; i++) {
                 Pair<Integer, Integer> pair = factorization25(i);
-                factore2 += pair.getFirst();
-                factore5 += pair.getSecond();
+                factore2 += pair.first();
+                factore5 += pair.second();
             }
             return Math.min(factore2, factore5);
         }
@@ -43,7 +43,7 @@ public class TrailingZeros implements ProblemTwoSolutions<Integer, Integer> {
             factore5++;
             curNum /= 5;
         }
-        return Pair.create(factore2, factore5);
+        return Pair.of(factore2, factore5);
     }
 
     // 因子2出现频率远大于5，因此只需求出因子5出现的次数

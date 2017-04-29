@@ -15,7 +15,7 @@ public class DivideTwoIntegers implements Problem<Pair<Integer, Integer>, Intege
 
     @Override
     public Integer resolve(Pair<Integer, Integer> param) {
-        return divide(param.getFirst(), param.getSecond());
+        return divide(param.first(), param.second());
     }
 
     public int divide(int a, int b) {

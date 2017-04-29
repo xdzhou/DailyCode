@@ -12,8 +12,8 @@ import org.testng.annotations.Test;
 public class WordLadderTest extends CommonTest<Triple<String, String, Set<String>>, List<List<String>>> {
     @Test
     public void test() {
-        check(Triple.create("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")));
-        check(Triple.create("hot", "dog", generateSet("hot", "dot", "dog")));
+        check(Triple.of("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")));
+        check(Triple.of("hot", "dog", generateSet("hot", "dot", "dog")));
     }
 
     @Override
@@ -22,8 +22,8 @@ public class WordLadderTest extends CommonTest<Triple<String, String, Set<String
             int pathLen = output.get(0).size();
             for (List<String> paths : output) {
                 Assert.assertEquals(pathLen, paths.size());
-                Assert.assertEquals(input.getFirst(), paths.get(0));
-                Assert.assertEquals(input.getSecond(), paths.get(paths.size() - 1));
+                Assert.assertEquals(input.first(), paths.get(0));
+                Assert.assertEquals(input.second(), paths.get(paths.size() - 1));
             }
         }
     }

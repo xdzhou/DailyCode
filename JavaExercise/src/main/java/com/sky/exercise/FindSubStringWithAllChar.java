@@ -11,7 +11,7 @@ public class FindSubStringWithAllChar implements Problem<Pair<String, Integer>, 
 
     @Override
     public String resolve(Pair<String, Integer> param) {
-        return findAllChar(param.getFirst(), param.getSecond());
+        return findAllChar(param.first(), param.second());
     }
 
     // Tips:需要一个数组存储各个数字出现的次数，使用head和tail

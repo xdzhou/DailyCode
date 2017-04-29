@@ -9,7 +9,7 @@ import com.loic.algo.eventDrive.Event;
 import com.loic.algo.eventDrive.EventDriveSystem;
 
 public class BankServiceSystem extends EventDriveSystem {
-    Random r = new Random();
+    private Random r = new Random();
     private boolean[] windows;
     private Queue<Client> mQueue;
 

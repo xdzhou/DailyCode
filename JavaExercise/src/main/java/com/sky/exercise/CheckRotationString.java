@@ -15,7 +15,7 @@ public class CheckRotationString implements Problem<Pair<String, String>, Boolea
     @Override
     public Boolean resolve(Pair<String, String> param) {
         Objects.requireNonNull(param);
-        return isRotionString(param.getFirst(), param.getSecond());
+        return isRotionString(param.first(), param.second());
     }
 
     private boolean isRotionString(String s1, String s2) {

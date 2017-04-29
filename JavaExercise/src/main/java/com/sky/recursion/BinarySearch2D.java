@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
  * @link http://www.hawstein.com/posts/9.6.html
  */
 public class BinarySearch2D<K extends Comparable<K>> implements Problem<Pair<K[][], K>, Pair<Integer, Integer>> {
-    public static final Pair<Integer, Integer> UNFOUND = Pair.create(-1, -1);
+    public static final Pair<Integer, Integer> UNFOUND = Pair.of(-1, -1);
     private static final Logger Log = LoggerFactory.getLogger(BinarySearch2D.class);
 
     @Override
     public Pair<Integer, Integer> resolve(Pair<K[][], K> param) {
         Objects.requireNonNull(param);
-        return binarySearch2D(param.getFirst(), param.getSecond());
+        return binarySearch2D(param.first(), param.second());
     }
 
     public Pair<Integer, Integer> binarySearch2D(K[][] table, K value) {
@@ -78,7 +78,7 @@ public class BinarySearch2D<K extends Comparable<K>> implements Problem<Pair<K[]
 
     private Pair<Integer, Integer> checkValue(K[][] table, K value, int line, int row) {
         if (value.equals(table[line][row])) {
-            return Pair.create(line, row);
+            return Pair.of(line, row);
         } else {
             return UNFOUND;
         }

@@ -28,7 +28,7 @@ public class WordLadder implements Problem<Triple<String, String, Set<String>>, 
     @Override
     public List<List<String>> resolve(Triple<String, String, Set<String>> param) {
         Objects.requireNonNull(param);
-        return findLadders(param.getFirst(), param.getSecond(), param.getThird());
+        return findLadders(param.first(), param.second(), param.third());
     }
 
     private List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {

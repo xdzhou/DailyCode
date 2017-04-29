@@ -152,7 +152,7 @@ public class CodeBuster {
             }
             entity = buster;
         } else {
-            throw new RuntimeException("create entity for type " + type + " ???");
+            throw new RuntimeException("of entity for type " + type + " ???");
         }
         entity.mPosition.reset(x, y);
         if ((entity instanceof Buster) && mMyBusters.contains(entity)) {

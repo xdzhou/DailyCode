@@ -8,10 +8,10 @@ import org.testng.annotations.Test;
 public class CheckRotationStringTest extends CommonTest<Pair<String, String>, Boolean> {
     @Test
     public void test() {
-        check(Pair.create("sqf", "123"), false);
-        check(Pair.create("12345", "45123"), true);
-        check(Pair.create("12345", "12"), false);
-        check(Pair.create("azert", "ertaz"), true);
+        check(Pair.of("sqf", "123"), false);
+        check(Pair.of("12345", "45123"), true);
+        check(Pair.of("12345", "12"), false);
+        check(Pair.of("azert", "ertaz"), true);
     }
 
     @Override

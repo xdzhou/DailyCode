@@ -1,32 +1,24 @@
 package com.loic.algo.common;
 
 public class Pair<T, E> implements Cloneable {
-    private T first;
-    private E second;
+    private final T first;
+    private final E second;
 
-    public Pair(T first, E second) {
+    private Pair(T first, E second) {
         this.first = first;
         this.second = second;
     }
 
-    public static <T, E> Pair<T, E> create(T first, E second) {
+    public static <T, E> Pair<T, E> of(T first, E second) {
         return new Pair<>(first, second);
     }
 
-    public T getFirst() {
+    public T first() {
         return first;
     }
 
-    public void setFirst(T first) {
-        this.first = first;
-    }
-
-    public E getSecond() {
+    public E second() {
         return second;
-    }
-
-    public void setSecond(E second) {
-        this.second = second;
     }
 
     @Override
@@ -34,9 +26,8 @@ public class Pair<T, E> implements Cloneable {
         try {
             return (Pair<T, E>) super.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override

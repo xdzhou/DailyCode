@@ -15,9 +15,9 @@ public class Knapsack implements Problem<Triple<Integer, Integer[], Integer[]>, 
     @Override
     public Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
         Objects.requireNonNull(param);
-        Preconditions.checkArgument(param.getSecond().length == param.getThird().length,
+        Preconditions.checkArgument(param.second().length == param.third().length,
                 "weight.length != value.length");
-        return getMaxValue(param.getFirst(), param.getSecond(), param.getThird());
+        return getMaxValue(param.first(), param.second(), param.third());
     }
 
     private int getMaxValue(int capacity, Integer[] weight, Integer[] value) {
