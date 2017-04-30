@@ -33,7 +33,7 @@ public class BruteForce implements PathFinder {
     }
 
     private <Trans extends Transition> double process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {
-        if (deep == 0 || state.nextPossibleTransitions().isEmpty()) {
+        if (deep == 0 || state.isTerminal()) {
             return state.heuristic();
         } else {
             double best = Double.MIN_VALUE;

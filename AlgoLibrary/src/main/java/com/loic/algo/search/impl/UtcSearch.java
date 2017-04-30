@@ -63,10 +63,9 @@ public class UtcSearch implements PathFinder {
         }
     }
 
-
     private void expansionSimulation(List<StateNode<Info>> path) {
         StateNode<Info> leafNode = path.get(path.size() - 1);
-        if (leafNode.state().heuristic() != 0 && path.size() - 1 < maxDeep) {
+        if (!leafNode.state().isTerminal() && path.size() - 1 < maxDeep) {
             List<Transition> transitions = leafNode.state().nextPossibleTransitions();
             int childIndex = mRandom.nextInt(transitions.size());
             Transition selectedTrans = transitions.get(childIndex);

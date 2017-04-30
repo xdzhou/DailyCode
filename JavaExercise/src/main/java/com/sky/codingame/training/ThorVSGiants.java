@@ -81,7 +81,7 @@ public class ThorVSGiants {
         private List<Integer> giants = new ArrayList<>();
 
         @Override
-        public boolean isOver() {
+        public boolean isTerminal() {
             return isLose() || isWin();
         }
 
