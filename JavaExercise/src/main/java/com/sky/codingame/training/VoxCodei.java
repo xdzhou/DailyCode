@@ -2,14 +2,17 @@ package com.sky.codingame.training;
 
 import java.util.*;
 
-import com.loic.algo.search.MonteCarlo;
+import com.google.common.collect.Lists;
+import com.loic.algo.search.core.State;
+import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.impl.UtcSearch;
 
 public class VoxCodei {
 
     public static void main(String args[]) {
         Maze maze = Maze.getInstance();
         MapNode root = new MapNode();
-        MonteCarlo<MapNode, Integer> algo = new MonteCarlo<>();
+        UtcSearch algo = new UtcSearch(3000);
 
         Scanner in = new Scanner(System.in, "UTF-8");
         maze.mWidth = in.nextInt(); // width of the firewall grid
@@ -35,15 +38,14 @@ public class VoxCodei {
             int bombs = in.nextInt(); // number of bombs left
 
             root.mBombNb = bombs;
-            algo.execute(root, 3000, 10);
-            MapNode bestChild = algo.getBestChild(root);
-            if (bestChild.getTransition() == -1) {
+            int pos = algo.find(root, 10).getTransitions().get(0).pos;
+
+            if (pos == -1) {
                 System.out.println("WAIT");
             } else {
-                int p = bestChild.mPutPosition;
-                System.out.println(p / maze.mWidth + " " + p % maze.mWidth);
+                System.out.println(pos / maze.mWidth + " " + pos % maze.mWidth);
             }
-            root = bestChild;
+            root = root.apply(Step.of(pos));
         }
     }
 
@@ -149,7 +151,17 @@ public class VoxCodei {
 
     //private static final Comparator<BombInfo> BOMB_INFO_COMPARATOR = (b1, b2) -> (b1.mPosition - b2.mPosition);
 
-    private static class MapNode extends MonteCarlo.MonteCarloNode<Integer> implements Cloneable {
+    private static class Step implements Transition {
+        int pos;
+
+        public static Step of(int pos) {
+            Step step = new Step();
+            step.pos = pos;
+            return step;
+        }
+    }
+
+    private static class MapNode implements State<Step>, Cloneable {
         private int mBombNb;
         private List<Integer> mSurveillances = new ArrayList<>();
         private List<BombInfo> mBombs = new ArrayList<>();
@@ -157,7 +169,7 @@ public class VoxCodei {
         private int mPutPosition = -1;
 
         @Override
-        public float heuristic() {
+        public double heuristic() {
             if (isLose()) {
                 return 0;
             } else if (isWin()) {
@@ -184,7 +196,13 @@ public class VoxCodei {
         }
 
         @Override
-        protected void applyTransition(Integer transition) {
+        public MapNode apply(Step transition) {
+            MapNode copy = clone();
+            copy.applyTransition(transition.pos);
+            return copy;
+        }
+
+        private void applyTransition(Integer transition) {
             Set<BombInfo> expositionBombs = new HashSet<>();
             for (BombInfo bi : mBombs) {
                 bi.oneTurn();
@@ -318,7 +336,7 @@ public class VoxCodei {
         }
 
         @Override
-        public boolean isOver() {
+        public boolean isTerminal() {
             return isLose() || isWin();
         }
 
@@ -331,7 +349,7 @@ public class VoxCodei {
         }
 
         @Override
-        public List<Integer> getPossibleTransitions() {
+        public List<Step> nextPossibleTransitions() {
             Maze maze = Maze.getInstance();
             if (mBombNb > 0) {
                 final Set<Integer> set = new HashSet<>();
@@ -345,15 +363,20 @@ public class VoxCodei {
                 List<Integer> result = new ArrayList<>(set);
                 result.removeAll(mSurveillances);
                 if (!mBombs.isEmpty()) result.add(-1);
-                return result;
+                return Lists.transform(result, Step::of);
             } else {
-                return Arrays.asList(-1);
+                return Arrays.asList(Step.of(-1));
             }
         }
 
         @Override
         protected MapNode clone() {
-            MapNode n = (MapNode) super.clone();
+            MapNode n = null;
+            try {
+                n = (MapNode) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
             n.mSurveillances = new ArrayList<>(mSurveillances);
             n.mBombs = new ArrayList<>(mBombs.size());
             for (BombInfo bi : mBombs) {
@@ -369,8 +392,7 @@ public class VoxCodei {
                     ",BombNb=" + mBombNb +
                     ", Surveillances=" + mSurveillances +
                     ", Bombs=" + mBombs +
-                    ", PutPosition=" + mPutPosition +
-                    ", Step=" + getTransition();
+                    ", PutPosition=" + mPutPosition;
         }
     }
 }

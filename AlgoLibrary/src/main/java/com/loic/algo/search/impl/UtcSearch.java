@@ -29,7 +29,7 @@ public class UtcSearch implements PathFinder {
     }
 
     @Override
-    public SearchPath find(State root, int maxDeep) {
+    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
         Preconditions.checkState(maxDeep > 0, "maxDeep have be more than 0");
 
         StateNode<Info> rootNode = new StateNode<>(root, null, new Info());
@@ -39,15 +39,15 @@ public class UtcSearch implements PathFinder {
             process(rootNode);
         }
 
-        List<Transition> list = Lists.newArrayList();
+        List<Trans> list = Lists.newArrayList();
         StateNode<Info> curNode = rootNode;
         do {
             StateNode<Info> bestChild = getBestChild(curNode);
-            list.add(bestChild.getAppliedTransition());
+            list.add((Trans)bestChild.getAppliedTransition());
             curNode = bestChild;
         } while (curNode.children().size() == curNode.state().nextPossibleTransitions().size());
 
-        return new SearchPath(list);
+        return new SearchPath<>(list);
     }
 
     private void process(StateNode<Info> rootNode) {
@@ -89,7 +89,7 @@ public class UtcSearch implements PathFinder {
         return path;
     }
 
-    public StateNode<Info> getBestChild(StateNode<Info> parent) {
+    private StateNode<Info> getBestChild(StateNode<Info> parent) {
         double best = Double.NEGATIVE_INFINITY;
         StateNode<Info> bestChild = null;
         for (StateNode<Info> child : parent.children()) {

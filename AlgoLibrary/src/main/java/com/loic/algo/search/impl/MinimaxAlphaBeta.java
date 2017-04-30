@@ -19,7 +19,10 @@ public class MinimaxAlphaBeta implements PathFinder {
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
 
-        return new SearchPath(bestTrans);
+        SearchPath path = new SearchPath(bestTrans);
+        root = null;
+        bestTrans = null;
+        return path;
     }
 
     private double alphaBeta(State state, int deep, double alpha, double beta, boolean maxPlayer) {
