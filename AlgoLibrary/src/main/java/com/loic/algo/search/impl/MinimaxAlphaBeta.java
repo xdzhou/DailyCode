@@ -2,6 +2,7 @@ package com.loic.algo.search.impl;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
 import com.loic.algo.search.core.PathFinder;
 import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
@@ -16,6 +17,7 @@ public class MinimaxAlphaBeta implements PathFinder {
 
     @Override
     public SearchPath find(State root, int maxDeep) {
+        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
 

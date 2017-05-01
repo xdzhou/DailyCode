@@ -37,6 +37,7 @@ public class UtcSearch implements PathFinder {
 
         for (int i = 0; i < simulateCount; i++) {
             process(rootNode);
+            if (Double.compare(rootNode.info().winCount, rootNode.info().simuCount) == 0) break;
         }
 
         List<Trans> list = Lists.newArrayList();
@@ -45,7 +46,7 @@ public class UtcSearch implements PathFinder {
             StateNode<Info> bestChild = getBestChild(curNode);
             list.add((Trans)bestChild.getAppliedTransition());
             curNode = bestChild;
-        } while (curNode.children().size() == curNode.state().nextPossibleTransitions().size());
+        } while (!curNode.state().isTerminal() && curNode.children().size() == curNode.state().nextPossibleTransitions().size());
 
         return new SearchPath<>(list);
     }
@@ -72,6 +73,7 @@ public class UtcSearch implements PathFinder {
             StateNode<Info> child = leafNode.getChild(selectedTrans);
             if (child == null) {
                 child = new StateNode<>(leafNode.state().apply(selectedTrans), selectedTrans, new Info());
+                leafNode.addChild(child);
             }
             path.add(child);
             expansionSimulation(path);
@@ -81,7 +83,7 @@ public class UtcSearch implements PathFinder {
     private List<StateNode<Info>> selection(StateNode<Info> rootNode) {
         List<StateNode<Info>> path = Lists.newArrayList();
         StateNode<Info> curNode = rootNode;
-        while (curNode.children().size() == curNode.state().nextPossibleTransitions().size()) {
+        while (!curNode.state().isTerminal() && curNode.children().size() == curNode.state().nextPossibleTransitions().size()) {
             path.add(curNode);
             curNode = getBestChild(curNode);
         }

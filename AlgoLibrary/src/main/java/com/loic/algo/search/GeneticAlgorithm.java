@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.base.Preconditions;
+
 public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
     private static final int MAX_SAME_FITNESS_GENERATION = 7;
     private static final float DEFAULT_MUTATION_RATE = 0.1f;
@@ -45,7 +47,7 @@ public class GeneticAlgorithm<G extends GeneticAlgorithm.Gene> {
                     }
                 }
             } else {
-                if (bestGene == null) throw new RuntimeException("best Gene is null");
+                Preconditions.checkState(bestGene != null, "best Gene is null");
                 children.clear();
                 children.add(bestGene);
                 float tempTotalFitness = bestGene.mFitness;

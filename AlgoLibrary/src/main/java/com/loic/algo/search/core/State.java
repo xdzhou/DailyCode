@@ -11,7 +11,7 @@ public interface State<Trans extends Transition> {
     default boolean isTerminal() {
         double fitness = heuristic();
         Preconditions.checkState(fitness >= 0 && fitness <= 1, "Fitness should between 0 and 1");
-        return Double.compare(0, fitness) == 0 || Double.compare(1, fitness) == 0;
+        return Double.compare(0, fitness) == 0 || nextPossibleTransitions().isEmpty();
     }
 
     State apply(Trans transition);

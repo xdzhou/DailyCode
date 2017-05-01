@@ -38,7 +38,7 @@ public class ThorVSGiants {
             }
             SearchPath<Step> path = new BruteForce().find(root, 5);
             String nextStep = path.getTransitions().get(0).toString();
-            root = (MapState) root.apply(path.getTransitions().get(0));
+            root = root.apply(path.getTransitions().get(0));
             System.out.println(nextStep);
         }
     }
@@ -115,7 +115,7 @@ public class ThorVSGiants {
 
         //return next child MapNode
         @Override
-        public State apply(Step transition) {
+        public MapState apply(Step transition) {
             MapState clone = clone();
             clone.applyStep(transition);
             return clone;
