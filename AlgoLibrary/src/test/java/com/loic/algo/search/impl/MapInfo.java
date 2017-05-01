@@ -1,6 +1,8 @@
 package com.loic.algo.search.impl;
 
 public interface MapInfo {
+    void setStartPosition(int pos);
+
     int getEndPos();
 
     int getWidth();

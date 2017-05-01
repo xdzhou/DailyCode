@@ -36,7 +36,7 @@ public class MapInfoFactory {
 
             height ++;
         }
-        return new MapInfoImpl(width, height, passFlag, startPos, endPos);
+        return new MapInfoImpl(width, height, passFlag, endPos);
     }
 
     private static final class MapInfoImpl implements MapInfo {
@@ -45,13 +45,17 @@ public class MapInfoFactory {
         private int endX, endY;
         private int minDis;
 
-        private MapInfoImpl(int width, int height, boolean[] passFlag, int startPos, int endPos) {
+        private MapInfoImpl(int width, int height, boolean[] passFlag, int endPos) {
             this.width = width;
             this.height = height;
             this.passFlag = passFlag;
             endX = endPos / width;
             endY = endPos % width;
-            minDis = Math.abs(endX - (startPos / width)) + Math.abs(endY - (startPos % width));
+        }
+
+        @Override
+        public void setStartPosition(int pos) {
+            minDis = Math.abs(endX - (pos / width)) + Math.abs(endY - (pos % width));
         }
 
         @Override

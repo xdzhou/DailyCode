@@ -1,8 +1,16 @@
 package com.loic.algo.search;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import com.loic.algo.search.core.SearchPath;
+import com.loic.algo.search.core.State;
+import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.impl.GeneticAlgorithm;
 import org.junit.Test;
 import org.testng.Assert;
 
@@ -16,81 +24,101 @@ public class GeneticAlgorithmTest {
 
     @Test
     public void test() {
-        final int[] x = {0, 1, 2, 2, 2, 1, 0, 0};
-        final int[] y = {0, 0, 0, 1, 2, 2, 2, 1};
+        int[] x = {0, 1, 2, 2, 2, 1, 0, 0};
+        int[] y = {0, 0, 0, 1, 2, 2, 2, 1};
+
         final int len = x.length;
-        GeneticAlgorithm<TSPGene> ga = new GeneticAlgorithm<>(new GeneticAlgorithm.IGAListener<TSPGene>() {
-            @Override
-            public TSPGene createNewGene(Random random) {
-                Integer[] data = new Integer[len];
-                Arrays.fill(data, -1);
-                for (int i = 0; i < len; i++) {
-                    int position = random.nextInt(len);
-                    while (data[position] != -1) {
-                        position++;
-                        position %= len;
-                    }
-                    data[position] = i;
-                }
-                return new TSPGene(data);
-            }
+        GeneticAlgorithm ga = new GeneticAlgorithm();
 
-            @Override
-            public float computerFitness(TSPGene gene) {
-                double f = 0;
-                for (int i = 0; i < len; i++) {
-                    f += distancePoints(x[gene.mData[i]], y[gene.mData[i]], x[gene.mData[(i + 1) % len]], y[gene.mData[(i + 1) % len]]);
-                }
+        CityInfo cityInfo = new CityInfo(x, y);
+        SearchPath<Step> path = ga.find(new TspState(cityInfo, 0), 7);
 
-                return (float) (MAX_FITNESS - f);
-            }
-
-            private double distancePoints(int x1, int y1, int x2, int y2) {
-                return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-            }
-
-            @Override
-            public TSPGene getChild(Random random, TSPGene parent1, TSPGene parent2) {
-                int position = random.nextInt(len - 1);
-                Integer[] chro1 = new Integer[len];
-                for (int i = 0; i <= position; i++) {
-                    chro1[i] = parent1.mData[i];
-                }
-                int indi = position + 1;
-                for (int i = 0; i < len; i++) {
-                    boolean flag = false;
-                    int g = parent2.mData[i];
-                    for (int j = 0; j <= position; j++) {
-                        if (chro1[j] == g) {
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (!flag) chro1[indi++] = g;
-                }
-                return new TSPGene(chro1);
-            }
-        });
-
-        TSPGene gene = ga.execute(30, 1000);
-        Assert.assertTrue(gene != null);
-        Integer[] result = new Integer[]{6, 7, 1, 0, 2, 3, 4, 5};
-        Assert.assertEquals(gene.mData, result);
+        Integer[] result = new Integer[]{1, 2, 3, 4, 5, 6, 7};
+        System.out.println(path.getTransitions());
+        Assert.assertEquals(result.length, path.deep());
     }
 
-    private static class TSPGene extends GeneticAlgorithm.Gene<Integer> {
+    private static final class CityInfo {
+        private final int[] x, y;
 
-        public TSPGene(Integer[] data) {
-            super(data);
+        private CityInfo(int[] x, int[] y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    private static final class Step implements Transition {
+        private final int num;
+
+        private Step(int num) {
+            this.num = num;
         }
 
         @Override
-        protected void mutation(Random random) {
-            int p1 = random.nextInt(mData.length);
-            int p2 = random.nextInt(mData.length);
-            int temp = mData[p1];
-            mData[p1] = mData[p2];
-            mData[p2] = temp;
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Step step = (Step) o;
+
+            return num == step.num;
+        }
+
+        @Override
+        public int hashCode() {
+            return num;
+        }
+
+        @Override
+        public String toString() {
+            return "num=" + num;
+        }
+    }
+
+    private static final class TspState implements State<Step> {
+        private final CityInfo cityInfo;
+        private List<Integer> path;
+
+        private TspState(CityInfo cityInfo) {
+            this.cityInfo = cityInfo;
+        }
+
+        private TspState(CityInfo cityInfo, Integer... path) {
+            this.cityInfo = cityInfo;
+            this.path = Arrays.asList(path);
+        }
+
+        @Override
+        public double heuristic() {
+            double f = 0;
+            for (int i = 0; i < path.size(); i++) {
+                int from = path.get(i);
+                int to = path.get((i + 1) % path.size());
+                f += distance(cityInfo.x[from], cityInfo.y[from], cityInfo.x[to], cityInfo.y[to]);
+            }
+
+            return MAX_FITNESS - f;
+        }
+
+        private double distance(int x1, int y1, int x2, int y2) {
+            return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        }
+
+        @Override
+        public TspState apply(Step transition) {
+            TspState child = new TspState(cityInfo);
+            List<Integer> list = new ArrayList<>(path);
+            list.add(transition.num);
+            child.path = list;
+            return child;
+        }
+
+        @Override
+        public List<Step> nextPossibleTransitions() {
+            return IntStream.range(0, cityInfo.x.length)
+                    .filter(num -> !path.contains(num))
+                    .mapToObj(Step::new)
+                    .collect(Collectors.toList());
         }
     }
 }

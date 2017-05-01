@@ -21,6 +21,10 @@ public class PathState implements State<Direction> {
         this.path = new ArrayList<>(path);
     }
 
+    public void asRoot() {
+        mapInfo.setStartPosition(path.get(path.size() - 1));
+    }
+
     @Override
     public boolean isTerminal() {
         return mapInfo.getEndPos() == path.get(path.size() - 1) ||
