@@ -7,10 +7,6 @@ AlgoLibrary
 -----------
 A useful Java Algo Library, with some date structure and search algorithm
 
-* [Sorting algorithm][1]
-* [Genetic algorithm(GA)][3]
-* [Dynamic programming][4]
-* [A* search algorithm][5]
 
 JavaExercise
 ------------
