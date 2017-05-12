@@ -32,24 +32,41 @@ public class BruteForce implements PathFinder {
         return new SearchPath<>(transitions);
     }
 
-    private <Trans extends Transition> double process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {
-        if (deep == 0 || state.isTerminal()) {
-            return state.heuristic();
+    private <Trans extends Transition> FitnessAndDepth process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {
+        if (deep <= 0 || state.isTerminal()) {
+            return new FitnessAndDepth(state.heuristic(), 0);
         } else {
-            double best = Double.MIN_VALUE;
+            //double best = Double.NEGATIVE_INFINITY;
+            FitnessAndDepth best = null;
             Trans bestTransition = null;
             State bestChildState = null;
             for(Trans transition : state.nextPossibleTransitions()) {
                 State nextState = state.apply(transition);
-                double fitness = process(nextState, deep - 1, transitionMap);
-                if (fitness > best) {
-                    best = fitness;
+                FitnessAndDepth preResult = process(nextState, deep - 1, transitionMap);
+                if (best == null || preResult.compareTo(best) > 0) {
+                    best = preResult;
                     bestTransition = transition;
                     bestChildState = nextState;
                 }
             }
             transitionMap.put(state, Pair.of(bestTransition, bestChildState));
-            return best;
+            return new FitnessAndDepth(best.fitness, best.depth + 1);
+        }
+    }
+
+    private static class FitnessAndDepth implements Comparable<FitnessAndDepth> {
+        private double fitness;
+        private int depth;
+
+        public FitnessAndDepth(double fitness, int depth) {
+            this.fitness = fitness;
+            this.depth = depth;
+        }
+
+        @Override
+        public int compareTo(FitnessAndDepth o) {
+            int fitnessCompare = Double.compare(fitness, o.fitness);
+            return fitnessCompare == 0 ? Integer.compare(o.depth, depth) : fitnessCompare;
         }
     }
 }

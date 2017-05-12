@@ -9,14 +9,16 @@ import com.google.common.collect.Lists;
 import com.loic.algo.search.core.PathFinder;
 import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.StateNode;
 import com.loic.algo.search.core.Transition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * UCT（Upper Confidence Bound for Trees） algorithm – the most popular algorithm in the MCTS family
  */
 public class UtcSearch implements PathFinder {
-    private static final float C = (float) Math.sqrt(2);
+    private static final Logger LOG = LoggerFactory.getLogger(UtcSearch.class);
+    private static final double C = Math.sqrt(2);
 
     private final Random mRandom = new Random(new Date().getTime());
     private final int simulateCount;
@@ -92,30 +94,39 @@ public class UtcSearch implements PathFinder {
     }
 
     private StateNode<Info> getBestChild(StateNode<Info> parent) {
+        if (parent.children().size() == 1) return parent.children().get(0);
         double best = Double.NEGATIVE_INFINITY;
         StateNode<Info> bestChild = null;
+        Info[] childInfo = new Info[parent.children().size()];
+        int index = 0;
         for (StateNode<Info> child : parent.children()) {
-            if (child.info().simuCount == 0) {
-                throw new IllegalStateException("SimuCount could not be 0");
-            } else {
-                double value = (child.info().winCount / (double) child.info().simuCount + C * Math.sqrt(Math.log(parent.info().simuCount) / (double) child.info().simuCount));
-                if (value > best || (Double.compare(value, best) == 0 && mRandom.nextBoolean())) {
-                    best = value;
-                    bestChild = child;
-                }
+            Preconditions.checkArgument(child.info().simuCount > 0, "SimuCount could not be 0");
+            childInfo[index++] = child.info();
+            double value = (child.info().winCount / (double) child.info().simuCount + C * Math.sqrt(Math.log(parent.info().simuCount) / (double) child.info().simuCount));
+            if (value > best || (Double.compare(value, best) == 0 && mRandom.nextBoolean())) {
+                best = value;
+                bestChild = child;
             }
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("best child: {}, all child info: {}", bestChild.info(), childInfo);
         }
         return bestChild;
     }
 
 
     private static final class Info {
-        double winCount = 0f;
-        int simuCount = 0;
+        private double winCount = 0f;
+        private int simuCount = 0;
 
         public void appendWin(double winning) {
             simuCount++;
             winCount += winning;
+        }
+
+        @Override
+        public String toString() {
+            return "" + winCount + '/' + simuCount;
         }
     }
 }

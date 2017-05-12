@@ -1,12 +1,14 @@
-package com.loic.algo.search.core;
+package com.loic.algo.search.impl;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import com.google.common.collect.Lists;
+import com.loic.algo.search.core.State;
+import com.loic.algo.search.core.Transition;
 
-public class StateNode<T> {
+class StateNode<T> {
     private final State state;
     private final Transition appliedTransition;
 

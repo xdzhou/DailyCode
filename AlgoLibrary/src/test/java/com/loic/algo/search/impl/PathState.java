@@ -33,11 +33,12 @@ public class PathState implements State<Direction> {
 
     @Override
     public double heuristic() {
-        if (nextPossibleTransitions().isEmpty()) return 0;
         int pos = path.get(path.size() - 1);
         int line = pos / mapInfo.getWidth();
         int col = pos % mapInfo.getWidth();
-        return mapInfo.heuristicToEnd(path.size(), line, col);
+        double fitness = mapInfo.heuristicToEnd(path.size(), line, col);
+        if (fitness != 1 && nextPossibleTransitions().isEmpty()) return 0;
+        return fitness;
     }
 
     @Override

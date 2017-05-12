@@ -16,7 +16,7 @@ public class MinimaxAlphaBeta implements PathFinder {
     private Transition bestTrans;
 
     @Override
-    public SearchPath find(State root, int maxDeep) {
+    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
         Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
@@ -32,7 +32,7 @@ public class MinimaxAlphaBeta implements PathFinder {
             return state.heuristic();
         }
         if (maxPlayer) {
-            double best = Double.MIN_VALUE;
+            double best = Double.NEGATIVE_INFINITY;
             List<Transition> transitions = state.nextPossibleTransitions();
             for(Transition trans : transitions) {
                 double childValue = alphaBeta(state.apply(trans), deep - 1, alpha, beta, false);

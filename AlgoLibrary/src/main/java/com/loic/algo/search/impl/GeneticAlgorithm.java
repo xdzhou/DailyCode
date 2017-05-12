@@ -26,7 +26,7 @@ public class GeneticAlgorithm implements PathFinder {
         double totalFitness = 0;
         Gene bestGene = null;
 
-        double curBestFitness = Double.MIN_VALUE;
+        double curBestFitness = Double.NEGATIVE_INFINITY;
         int bestGeneCount = 0;
 
         List<Gene> children = new ArrayList<>(population);
@@ -138,9 +138,6 @@ public class GeneticAlgorithm implements PathFinder {
         Gene gene = new Gene(trans, curState.heuristic());
         return gene;
     }
-
-
-
 
 
     private static final class Gene {
