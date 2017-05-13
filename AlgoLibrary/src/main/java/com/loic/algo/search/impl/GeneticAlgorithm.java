@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.base.Preconditions;
-import com.loic.algo.search.core.PathFinder;
-import com.loic.algo.search.core.SearchPath;
+import com.google.common.collect.ImmutableList;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.core.TreeSearch;
 
-public class GeneticAlgorithm implements PathFinder {
+public class GeneticAlgorithm implements TreeSearch {
     private static final int MAX_SAME_FITNESS_GENERATION = 7;
     private static final float DEFAULT_MUTATION_RATE = 0.1f;
 
@@ -21,7 +21,7 @@ public class GeneticAlgorithm implements PathFinder {
     private int simuCount = 100;
 
     @Override
-    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
+    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
         List<Gene> candidatures = new ArrayList<>(population);
         double totalFitness = 0;
         Gene bestGene = null;
@@ -68,15 +68,15 @@ public class GeneticAlgorithm implements PathFinder {
         }
         Preconditions.checkState(bestGene != null, "returned best Gene is null");
 
-        List<Transition> list = new ArrayList<>(bestGene.trans.length);
+        List<Trans> list = new ArrayList<>(bestGene.trans.length);
         for (Transition tran : bestGene.trans) {
             if (tran != null) {
-                list.add(tran);
+                list.add((Trans)tran);
             } else {
                 break;
             }
         }
-        return new SearchPath(list);
+        return ImmutableList.copyOf(list);
     }
 
     private Gene generateChild(State root, Gene parent1, Gene parent2) {
@@ -116,7 +116,7 @@ public class GeneticAlgorithm implements PathFinder {
 
     private Gene select(double totalFitness, List<Gene> candidatures) {
         double value = random.nextDouble() * totalFitness;
-        float temp = 0;
+        double temp = 0;
         for (Gene gene : candidatures) {
             temp += gene.fitness;
             if (value <= temp) return gene;

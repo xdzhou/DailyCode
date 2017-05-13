@@ -5,18 +5,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.loic.algo.common.Pair;
-import com.loic.algo.search.core.PathFinder;
-import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.core.TreeSearch;
 
-public class BruteForce implements PathFinder {
+public class BruteForce implements TreeSearch {
 
     @Override
-    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
+    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
         Objects.requireNonNull(root, "Root state is mandatory");
         Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
 
@@ -29,7 +29,7 @@ public class BruteForce implements PathFinder {
             transitions.add(pair.first());
             pair = transitionMap.get(pair.second());
         }
-        return new SearchPath<>(transitions);
+        return ImmutableList.copyOf(transitions);
     }
 
     private <Trans extends Transition> FitnessAndDepth process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {

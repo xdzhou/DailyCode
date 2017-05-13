@@ -3,28 +3,27 @@ package com.loic.algo.search.impl;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
-import com.loic.algo.search.core.PathFinder;
-import com.loic.algo.search.core.SearchPath;
+import com.google.common.collect.ImmutableList;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.core.TreeSearch;
 
 /**
  * KeyWord : game theory, decision theory, DFS
  */
-public class MinimaxAlphaBeta implements PathFinder {
+public class MinimaxAlphaBeta implements TreeSearch {
     private State root;
     private Transition bestTrans;
 
     @Override
-    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
+    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
         Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
 
-        SearchPath path = new SearchPath(bestTrans);
         root = null;
         bestTrans = null;
-        return path;
+        return ImmutableList.of((Trans) bestTrans);
     }
 
     private double alphaBeta(State state, int deep, double alpha, double beta, boolean maxPlayer) {

@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.loic.algo.search.core.PathFinder;
-import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.core.TreeSearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
  * UCT（Upper Confidence Bound for Trees） algorithm – the most popular algorithm in the MCTS family
  */
-public class UtcSearch implements PathFinder {
+public class UtcSearch implements TreeSearch {
     private static final Logger LOG = LoggerFactory.getLogger(UtcSearch.class);
     private static final double C = Math.sqrt(2);
 
@@ -31,7 +31,7 @@ public class UtcSearch implements PathFinder {
     }
 
     @Override
-    public <Trans extends Transition> SearchPath<Trans> find(State<Trans> root, int maxDeep) {
+    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
         Preconditions.checkState(maxDeep > 0, "maxDeep have be more than 0");
 
         StateNode<Info> rootNode = new StateNode<>(root, null, new Info());
@@ -50,7 +50,7 @@ public class UtcSearch implements PathFinder {
             curNode = bestChild;
         } while (!curNode.state().isTerminal() && curNode.children().size() == curNode.state().nextPossibleTransitions().size());
 
-        return new SearchPath<>(list);
+        return ImmutableList.copyOf(list);
     }
 
     private void process(StateNode<Info> rootNode) {

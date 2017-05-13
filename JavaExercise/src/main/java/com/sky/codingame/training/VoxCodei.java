@@ -38,7 +38,7 @@ public class VoxCodei {
             int bombs = in.nextInt(); // number of bombs left
 
             root.mBombNb = bombs;
-            int pos = algo.find(root, 10).getTransitions().get(0).pos;
+            int pos = algo.find(root, 10).get(0).pos;
 
             if (pos == -1) {
                 System.out.println("WAIT");

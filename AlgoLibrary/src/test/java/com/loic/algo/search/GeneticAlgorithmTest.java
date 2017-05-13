@@ -3,11 +3,9 @@ package com.loic.algo.search;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.GeneticAlgorithm;
@@ -31,11 +29,11 @@ public class GeneticAlgorithmTest {
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         CityInfo cityInfo = new CityInfo(x, y);
-        SearchPath<Step> path = ga.find(new TspState(cityInfo, 0), 7);
+        List<Step> path = ga.find(new TspState(cityInfo, 0), 7);
 
         Integer[] result = new Integer[]{1, 2, 3, 4, 5, 6, 7};
-        System.out.println(path.getTransitions());
-        Assert.assertEquals(result.length, path.deep());
+        System.out.println(path);
+        Assert.assertEquals(result.length, path.size());
     }
 
     private static final class CityInfo {

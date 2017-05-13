@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import com.loic.algo.search.core.SearchPath;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.BruteForce;
@@ -36,9 +35,9 @@ public class ThorVSGiants {
                 int Y = in.nextInt();
                 root.giants.add(X * mHeight + Y);
             }
-            SearchPath<Step> path = new BruteForce().find(root, 5);
-            String nextStep = path.getTransitions().get(0).toString();
-            root = root.apply(path.getTransitions().get(0));
+            Step step = new BruteForce().find(root, 5).get(0);
+            String nextStep = step.toString();
+            root = root.apply(step);
             System.out.println(nextStep);
         }
     }

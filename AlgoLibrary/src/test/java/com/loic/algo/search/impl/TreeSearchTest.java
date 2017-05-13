@@ -2,15 +2,13 @@ package com.loic.algo.search.impl;
 
 import java.util.List;
 
-import com.loic.algo.search.core.PathFinder;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import com.loic.algo.search.core.TreeSearch;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
-public class PathFinderTest {
+public class TreeSearchTest {
     @BeforeTest
     public void before() {
         //Logger.getRootLogger().setLevel(Level.TRACE);
@@ -60,13 +58,13 @@ public class PathFinderTest {
         Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root).size() >= 24);
     }
 
-    private List<Direction> testAlgo(PathFinder algo, PathState root) {
+    private List<Direction> testAlgo(TreeSearch algo, PathState root) {
         List<Direction> list = Lists.newArrayList();
 
         PathState state = root;
         while (!state.isTerminal()) {
             state.asRoot();
-            Direction transition = algo.find(state, 10).getTransitions().get(0);
+            Direction transition = algo.find(state, 10).get(0);
             list.add(transition);
             state = state.apply(transition);
         }
