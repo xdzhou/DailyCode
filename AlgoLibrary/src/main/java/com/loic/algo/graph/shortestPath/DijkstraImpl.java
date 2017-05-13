@@ -2,14 +2,8 @@ package com.loic.algo.graph.shortestPath;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.BiFunction;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -19,12 +13,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
- * Dijkstra算法使用了广度优先搜索解决非负权有向图的单源最短路径问题，算法最终得到一个最短路径树。
+ * default disHeuristic : Dijkstra search algo
+ * custom  disHeuristic : AStar search algo
  */
 public class DijkstraImpl implements IShortestPath {
     private static final Logger LOG = LoggerFactory.getLogger(DijkstraImpl.class);
 
     private static final double CLOSE_FLAG = -1d;
+
+    private final BiFunction<Object, Object, Double> disHeuristic;
+
+    public DijkstraImpl() {
+        //Dijkstra algo
+        this.disHeuristic = (n1, n2) -> 0d;
+    }
+
+    public DijkstraImpl(BiFunction<Object, Object, Double> disHeuristic) {
+        //AStar algo
+        this.disHeuristic = Objects.requireNonNull(disHeuristic);
+        LOG.debug("AStart search Activated");
+    }
 
     @Override
     public <N> List<N> search(ValueGraph<N, Double> valueGraph, N startNode, N endNode) {
@@ -41,8 +49,14 @@ public class DijkstraImpl implements IShortestPath {
         Set<N> openList = new HashSet<>();
         openList.add(startNode);
 
+        Comparator<N> nodeComparator = (o1, o2) -> {
+            double dis1 = disFromSourceMap.get(o1) + disHeuristic.apply(o1, endNode);
+            double dis2 = disFromSourceMap.get(o2) + disHeuristic.apply(o2, endNode);
+            return Double.compare(dis1, dis2);
+        };
+
         while (!openList.isEmpty()) {
-            N selectNode = getNodeWithMinDis(openList, disFromSourceMap);
+            N selectNode = getNodeWithMinDis(openList, nodeComparator);
             if (selectNode.equals(endNode)) {
                 break;
             }
@@ -79,7 +93,7 @@ public class DijkstraImpl implements IShortestPath {
         }
     }
 
-    private <N> N getNodeWithMinDis(Set<N> openList, Map<N, Double> disFromSourceMap) {
+    private <N> N getNodeWithMinDis(Set<N> openList, Comparator<N> nodeComparator) {
         if (openList.size() == 1) {
             return openList.iterator().next();
         }
@@ -87,7 +101,7 @@ public class DijkstraImpl implements IShortestPath {
         Iterator<N> iterator = openList.iterator();
         while (openList.iterator().hasNext()) {
             N node = iterator.next();
-            if (selectNode == null || disFromSourceMap.get(node) < disFromSourceMap.get(selectNode)) {
+            if (selectNode == null || nodeComparator.compare(node, selectNode) < 0) {
                 selectNode = node;
             }
         }
