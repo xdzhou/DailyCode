@@ -1,5 +1,6 @@
 package com.loic.algo.search;
 
+import com.loic.algo.graph.shortestPath.AStarImpl;
 import org.testng.annotations.Test;
 
 public class AStarAlgoTest {
@@ -22,7 +23,7 @@ public class AStarAlgoTest {
                 "?????????????????????????...C#",
                 "??????????????????????????####"
         };
-        AStarAlgo.IMapInfo mapInfo = new AStarAlgo.IMapInfo() {
+        AStarImpl.IMapInfo mapInfo = new AStarImpl.IMapInfo() {
             @Override
             public int getHeight() {
                 return maps.length;
@@ -62,9 +63,9 @@ public class AStarAlgoTest {
             }
         };
 
-        AStarAlgo algo = new AStarAlgo(mapInfo);
+        AStarImpl algo = new AStarImpl(mapInfo);
         algo.search(13, 28, 1, 1);
-        algo.search(0, 0, new AStarAlgo.IResultChecker() {
+        algo.search(0, 0, new AStarImpl.IResultChecker() {
             @Override
             public boolean isResult(int x, int y) {
                 return maps[x].charAt(y) == '?';

@@ -1,4 +1,4 @@
-package com.loic.algo.search;
+package com.loic.algo.graph.shortestPath;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 /**
  * KeyWorld : Path finding
  */
-public class AStarAlgo {
-    private static final Logger Log = LoggerFactory.getLogger(AStarAlgo.class.getSimpleName());
+public class AStarImpl {
+    private static final Logger Log = LoggerFactory.getLogger(AStarImpl.class.getSimpleName());
 
     private static final byte UNKNOWN = 0;
     private static final byte TRACED = 1;
@@ -21,7 +21,7 @@ public class AStarAlgo {
     private static final Comparator<Node> NODE_COMPARATOR = (o1, o2) -> o1.disFromStart + o1.disToEnd - o2.disFromStart - o2.disToEnd;
     private IMapInfo mMapInfo;
 
-    public AStarAlgo(IMapInfo mMapInfo) {
+    public AStarImpl(IMapInfo mMapInfo) {
         this.mMapInfo = mMapInfo;
     }
 

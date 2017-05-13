@@ -14,7 +14,3 @@ test {
     useTestNG()
     include '**/Test*.*'
 }
-
-dependencies {
-    compile 'org.jgrapht:jgrapht-core:0.9.1'
-}
