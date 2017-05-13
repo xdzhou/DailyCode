@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TopologicalSortAlgoTest extends GraphTest {
+public class TopologicalSortAlgoTest {
 
     @BeforeClass
     public void beforeClass() {
