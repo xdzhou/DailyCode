@@ -3,6 +3,7 @@ package com.loic.algo.graph.shortestPath;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,7 +27,7 @@ public class DijkstraImpl implements IShortestPath {
     private static final double CLOSE_FLAG = -1d;
 
     @Override
-    public <N> List<N> shortestPath(ValueGraph<N, Double> valueGraph, N startNode, N endNode) {
+    public <N> List<N> search(ValueGraph<N, Double> valueGraph, N startNode, N endNode) {
         LOG.debug("try find shortest path from {} to {} ...", startNode, endNode);
         Set<N> nodes = valueGraph.nodes();
         checkArgument(nodes.contains(startNode), "startPoint not exist!");
@@ -65,7 +66,7 @@ public class DijkstraImpl implements IShortestPath {
 
         if (!preNodeMap.containsKey(endNode)) {
             LOG.debug("no path found");
-            return null;
+            return Collections.emptyList();
         } else {
             List<N> path = new ArrayList<>();
             N curNode = endNode;
