@@ -36,6 +36,7 @@ public class DijkstraImpl implements IShortestPath {
 
     @Override
     public <N> List<N> search(ValueGraph<N, Double> valueGraph, N startNode, N endNode) {
+        Objects.requireNonNull(valueGraph);
         LOG.debug("try find shortest path from {} to {} ...", startNode, endNode);
         Set<N> nodes = valueGraph.nodes();
         checkArgument(nodes.contains(startNode), "startPoint not exist!");

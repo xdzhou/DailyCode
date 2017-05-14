@@ -1,6 +1,7 @@
 package com.loic.algo.search.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -17,7 +18,9 @@ public class MinimaxAlphaBeta implements TreeSearch {
 
     @Override
     public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
+        Objects.requireNonNull(root, "Root state is mandatory");
         Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
 

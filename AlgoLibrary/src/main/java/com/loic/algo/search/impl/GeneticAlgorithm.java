@@ -3,6 +3,7 @@ package com.loic.algo.search.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import com.google.common.base.Preconditions;
@@ -22,6 +23,9 @@ public class GeneticAlgorithm implements TreeSearch {
 
     @Override
     public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
+        Objects.requireNonNull(root, "Root state is mandatory");
+        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+
         List<Gene> candidatures = new ArrayList<>(population);
         double totalFitness = 0;
         Gene bestGene = null;

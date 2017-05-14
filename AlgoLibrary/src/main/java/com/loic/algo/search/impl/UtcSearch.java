@@ -2,6 +2,7 @@ package com.loic.algo.search.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import com.google.common.base.Preconditions;
@@ -32,7 +33,8 @@ public class UtcSearch implements TreeSearch {
 
     @Override
     public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
-        Preconditions.checkState(maxDeep > 0, "maxDeep have be more than 0");
+        Objects.requireNonNull(root, "Root state is mandatory");
+        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
 
         StateNode<Info> rootNode = new StateNode<>(root, null, new Info());
         this.maxDeep = maxDeep;
