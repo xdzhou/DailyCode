@@ -64,7 +64,7 @@ public class GeneticAlgorithm implements TreeSearch {
                 bestGeneCount++;
             }
             //fixme bestGene.isOver()
-            //if (bestGeneCount >= MAX_SAME_FITNESS_GENERATION) break;
+            if (bestGeneCount >= MAX_SAME_FITNESS_GENERATION) break;
         }
         Preconditions.checkState(bestGene != null, "returned best Gene is null");
 

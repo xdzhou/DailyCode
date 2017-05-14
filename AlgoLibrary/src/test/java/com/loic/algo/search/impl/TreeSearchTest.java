@@ -25,6 +25,7 @@ public class TreeSearchTest {
 
         Assert.assertEquals(testAlgo(new BruteForce(), root).size(), 7);
         Assert.assertEquals(testAlgo(new UtcSearch(1000), root).size(), 7);
+        Assert.assertEquals(testAlgo(new AStarImpl(), root).size(), 7);
         Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root).size() >= 7);
     }
 
@@ -40,6 +41,7 @@ public class TreeSearchTest {
 
         Assert.assertEquals(testAlgo(new BruteForce(), root).size(), 16);
         Assert.assertEquals(testAlgo(new UtcSearch(1000), root).size(), 16);
+        Assert.assertEquals(testAlgo(new AStarImpl(), root).size(), 16);
         Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root).size() >= 16);
     }
 
@@ -55,6 +57,7 @@ public class TreeSearchTest {
 
         Assert.assertEquals(24, testAlgo(new BruteForce(), root).size());
         Assert.assertEquals(testAlgo(new UtcSearch(1000), root).size(), 24);
+        Assert.assertEquals(testAlgo(new AStarImpl(), root).size(), 24);
         Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root).size() >= 24);
     }
 
