@@ -1,10 +1,13 @@
 package com.loic.algo.search.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -72,14 +75,10 @@ public class GeneticAlgorithm implements TreeSearch {
         }
         Preconditions.checkState(bestGene != null, "returned best Gene is null");
 
-        List<Trans> list = new ArrayList<>(bestGene.trans.length);
-        for (Transition tran : bestGene.trans) {
-            if (tran != null) {
-                list.add((Trans)tran);
-            } else {
-                break;
-            }
-        }
+        List<Trans> list = Arrays.stream(bestGene.trans)
+                .filter(Objects::nonNull)
+                .map(t -> (Trans)t)
+                .collect(Collectors.toList());
         return ImmutableList.copyOf(list);
     }
 
@@ -107,15 +106,8 @@ public class GeneticAlgorithm implements TreeSearch {
     }
 
     protected Transition[] merge(int changeIndex, Transition[] trans1, Transition[] trans2) {
-        Transition[] children = new Transition[trans1.length];
-        for (int i = 0; i < children.length; i++) {
-            if (i <= changeIndex) {
-                children[i] = trans1[i];
-            } else {
-                children[i] = trans2[i];
-            }
-        }
-        return children;
+        return Stream.concat(Stream.of(trans1).limit(changeIndex + 1), Stream.of(trans2).skip(changeIndex + 1))
+                .toArray(l -> new Transition[l]);
     }
 
     private Gene select(double totalFitness, List<Gene> candidatures) {
@@ -150,6 +142,7 @@ public class GeneticAlgorithm implements TreeSearch {
 
         private Gene(Transition[] trans, double fitness) {
             this.trans = trans;
+            Preconditions.checkState(fitness >= 0, "fitness need positive");
             this.fitness = fitness;
         }
     }

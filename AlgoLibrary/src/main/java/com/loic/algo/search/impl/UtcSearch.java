@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /*
  * UCT（Upper Confidence Bound for Trees） algorithm – the most popular algorithm in the MCTS family
+ * 0 <= heuristic <= 1
  */
 public class UtcSearch implements TreeSearch {
     private static final Logger LOG = LoggerFactory.getLogger(UtcSearch.class);
@@ -59,13 +60,9 @@ public class UtcSearch implements TreeSearch {
         List<StateNode<Info>> path = selection(rootNode);
         expansionSimulation(path);
         double fitness = path.get(path.size() - 1).state().heuristic();
-        backPropagation(fitness, path);
-    }
-
-    private void backPropagation(double winning, List<StateNode<Info>> path) {
-        for (StateNode<Info> node : path) {
-            node.info().appendWin(winning);
-        }
+        Preconditions.checkState(fitness >= 0 && fitness <= 1, "heuristic function need return fitness 0 -> 1");
+        //backPropagation
+        path.forEach(n -> n.info().appendWin(fitness));
     }
 
     private void expansionSimulation(List<StateNode<Info>> path) {

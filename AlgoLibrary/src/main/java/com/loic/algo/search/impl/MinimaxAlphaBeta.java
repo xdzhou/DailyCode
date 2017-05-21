@@ -24,9 +24,10 @@ public class MinimaxAlphaBeta implements TreeSearch {
         this.root = root;
         alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
 
+        List<Trans> path = ImmutableList.of((Trans) bestTrans);
         root = null;
         bestTrans = null;
-        return ImmutableList.of((Trans) bestTrans);
+        return path;
     }
 
     private double alphaBeta(State state, int deep, double alpha, double beta, boolean maxPlayer) {

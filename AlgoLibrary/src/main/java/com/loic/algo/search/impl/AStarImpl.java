@@ -35,18 +35,21 @@ public class AStarImpl implements TreeSearch {
                 bestState = stateAndTrans;
                 break;
             }
-            for (Trans trans : stateAndTrans.state.nextPossibleTransitions()) {
-                State<Trans> newState = stateAndTrans.state.apply(trans);
-                int len = stateAndTrans.trans == null ? 1 : stateAndTrans.trans.length + 1;
-                Trans[] newTrans = (Trans[]) Array.newInstance(trans.getClass(), len);
-                if (len > 1) {
-                    System.arraycopy(stateAndTrans.trans, 0, newTrans, 0, len - 1);
-                }
-                newTrans[len - 1] = trans;
-                StateAndTrans<Trans> newItem = new StateAndTrans<>(newState, newTrans);
-                priorityQueue.add(newItem);
-                LOG.debug("add {} to queue, with fitness {}", Arrays.toString(newItem.trans), newItem.fitness);
-            }
+            stateAndTrans.state.nextPossibleTransitions().stream()
+                    .map(t -> {
+                        State<Trans> newState = stateAndTrans.state.apply(t);
+                        int len = stateAndTrans.trans == null ? 1 : stateAndTrans.trans.length + 1;
+                        Trans[] newTrans = (Trans[]) Array.newInstance(t.getClass(), len);
+                        if (len > 1) {
+                            System.arraycopy(stateAndTrans.trans, 0, newTrans, 0, len - 1);
+                        }
+                        newTrans[len - 1] = t;
+
+                        return new StateAndTrans<>(newState, newTrans);
+                    }).forEach(item -> {
+                        priorityQueue.add(item);
+                        LOG.debug("add {} to queue, with fitness {}", Arrays.toString(item.trans), item.fitness);
+                    });
         }
 
         return ImmutableList.copyOf(bestState.trans);
