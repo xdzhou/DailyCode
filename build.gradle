@@ -1,6 +1,7 @@
 subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
+    apply plugin: 'jacoco'
 
     pmd {
         sourceSets = [sourceSets.main]
@@ -46,6 +47,13 @@ subprojects {
     tasks.withType(Test) {
         scanForTestClasses = false
         include "**/*Test.class" // whatever Ant pattern matches your test class files
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
     }
 
     dependencies {
