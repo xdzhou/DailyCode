@@ -1,9 +1,17 @@
 package com.sky.codingame.training;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.UtcSearch;
@@ -350,7 +358,7 @@ public class VoxCodei {
         }
 
         @Override
-        public List<Step> nextPossibleTransitions() {
+        public Set<Step> nextPossibleTransitions() {
             Maze maze = Maze.getInstance();
             if (mBombNb > 0) {
                 final Set<Integer> set = new HashSet<>();
@@ -361,17 +369,12 @@ public class VoxCodei {
                         }
                     });
                 }
-                List<Integer> result = new ArrayList<>(set);
-                result.removeAll(mSurveillances);
-                if (!mBombs.isEmpty()) result.add(-1);
-                return Lists.transform(result, new Function<Integer, Step>() {
-                    @Override
-                    public Step apply(Integer input) {
-                        return Step.of(input);
-                    }
-                });
+
+                set.removeAll(mSurveillances);
+                if (!mBombs.isEmpty()) set.add(-1);
+                return set.stream().map(Step::of).collect(Collectors.toSet());
             } else {
-                return Arrays.asList(Step.of(-1));
+                return Sets.newHashSet(Step.of(-1));
             }
         }
 

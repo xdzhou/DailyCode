@@ -3,6 +3,7 @@ package com.loic.algo.search;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -112,11 +113,11 @@ public class GeneticAlgorithmTest {
         }
 
         @Override
-        public List<Step> nextPossibleTransitions() {
+        public Set<Step> nextPossibleTransitions() {
             return IntStream.range(0, cityInfo.x.length)
                     .filter(num -> !path.contains(num))
                     .mapToObj(Step::new)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         }
     }
 }

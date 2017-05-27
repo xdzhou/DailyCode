@@ -3,8 +3,9 @@ package com.loic.algo.search.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.loic.algo.search.core.State;
 
 public class PathState implements State<Direction> {
@@ -69,7 +70,7 @@ public class PathState implements State<Direction> {
     }
 
     @Override
-    public List<Direction> nextPossibleTransitions() {
+    public Set<Direction> nextPossibleTransitions() {
         int pos = path.get(path.size() - 1);
         int line = pos / mapInfo.getWidth();
         int col = pos % mapInfo.getWidth();
@@ -78,7 +79,7 @@ public class PathState implements State<Direction> {
         if (reachable(line + 1, col)) directions.add(Direction.DOWN);
         if (reachable(line, col - 1)) directions.add(Direction.LEFT);
         if (reachable(line, col + 1)) directions.add(Direction.RIGHT);
-        return ImmutableList.copyOf(directions);
+        return ImmutableSet.copyOf(directions);
     }
 
     private boolean reachable(int posX, int posY) {

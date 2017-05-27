@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.core.TreeSearch;
@@ -89,7 +90,7 @@ public class GeneticAlgorithm implements TreeSearch {
         State curState = root;
         for (int i = 0; i < trans.length; i++) {
             if (curState.isTerminal() || trans[i] == null) break;
-            List<Transition> list = curState.nextPossibleTransitions();
+            List<Transition> list = TreeSearchUtils.asStringSort(curState.nextPossibleTransitions());
 
             if (list.indexOf(trans[i]) < 0) {
                 trans[i] = list.get(random.nextInt(list.size()));
@@ -126,7 +127,7 @@ public class GeneticAlgorithm implements TreeSearch {
         State curState = root;
         for (int i = 0; i < deep; i++) {
             if (curState.isTerminal()) break;
-            List<Transition> possibleTrans = curState.nextPossibleTransitions();
+            List<Transition> possibleTrans = TreeSearchUtils.asStringSort(curState.nextPossibleTransitions());
             trans[i] = possibleTrans.get(random.nextInt(possibleTrans.size()));
             curState = curState.apply(trans[i]);
         }

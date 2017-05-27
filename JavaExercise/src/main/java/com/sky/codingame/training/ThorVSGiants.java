@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
+import com.google.common.collect.Sets;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.BruteForce;
@@ -85,8 +87,8 @@ public class ThorVSGiants {
         }
 
         @Override
-        public List<Step> nextPossibleTransitions() {
-            List<Step> result = Arrays.asList(Step.values());
+        public Set<Step> nextPossibleTransitions() {
+            Set<Step> result = Sets.newHashSet(Step.values());
             Iterator<Step> iterator = result.iterator();
             while (iterator.hasNext()) {
                 Step step = iterator.next();

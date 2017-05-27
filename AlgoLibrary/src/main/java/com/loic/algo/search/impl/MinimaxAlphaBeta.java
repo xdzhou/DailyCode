@@ -2,6 +2,7 @@ package com.loic.algo.search.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -36,7 +37,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
         }
         if (maxPlayer) {
             double best = Double.NEGATIVE_INFINITY;
-            List<Transition> transitions = state.nextPossibleTransitions();
+            Set<Transition> transitions = state.nextPossibleTransitions();
             for(Transition trans : transitions) {
                 double childValue = alphaBeta(state.apply(trans), deep - 1, alpha, beta, false);
                 if (childValue > best) {
@@ -51,7 +52,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
             return best;
         } else {
             double best = Double.MAX_VALUE;
-            List<Transition> transitions = state.nextPossibleTransitions();
+            Set<Transition> transitions = state.nextPossibleTransitions();
             for(Transition trans : transitions) {
                 best = Math.min(best, alphaBeta(state.apply(trans), deep - 1, alpha, beta, true));
                 beta = Math.min(beta, best);

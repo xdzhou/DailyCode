@@ -1,6 +1,6 @@
 package com.loic.algo.search.core;
 
-import java.util.List;
+import java.util.Set;
 
 public interface State<Trans extends Transition> {
 
@@ -12,6 +12,6 @@ public interface State<Trans extends Transition> {
     }
 
     State apply(Trans transition);
-    List<Trans> nextPossibleTransitions();
+    Set<Trans> nextPossibleTransitions();
 
 }

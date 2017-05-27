@@ -8,6 +8,7 @@ import java.util.Random;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.core.TreeSearch;
@@ -68,7 +69,7 @@ public class UtcSearch implements TreeSearch {
     private void expansionSimulation(List<StateNode<Info>> path) {
         StateNode<Info> leafNode = path.get(path.size() - 1);
         if (!leafNode.state().isTerminal() && path.size() - 1 < maxDeep) {
-            List<Transition> transitions = leafNode.state().nextPossibleTransitions();
+            List<Transition> transitions = TreeSearchUtils.asStringSort(leafNode.state().nextPossibleTransitions());
             int childIndex = mRandom.nextInt(transitions.size());
             Transition selectedTrans = transitions.get(childIndex);
             StateNode<Info> child = leafNode.getChild(selectedTrans);
