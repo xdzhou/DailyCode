@@ -159,6 +159,12 @@ public class VoxCodei {
             step.pos = pos;
             return step;
         }
+
+        public static Step of(Integer pos) {
+            Step step = new Step();
+            step.pos = pos;
+            return step;
+        }
     }
 
     private static class MapNode implements State<Step>, Cloneable {
