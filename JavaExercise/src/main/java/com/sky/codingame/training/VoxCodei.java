@@ -363,7 +363,7 @@ public class VoxCodei {
                 List<Integer> result = new ArrayList<>(set);
                 result.removeAll(mSurveillances);
                 if (!mBombs.isEmpty()) result.add(-1);
-                return Lists.transform(result, Step::of);
+                return Lists.transform(result, i -> Step.of(i));
             } else {
                 return Arrays.asList(Step.of(-1));
             }

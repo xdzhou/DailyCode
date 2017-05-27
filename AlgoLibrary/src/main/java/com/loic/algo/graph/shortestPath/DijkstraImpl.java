@@ -50,11 +50,7 @@ public class DijkstraImpl implements IShortestPath {
         Set<N> openList = new HashSet<>();
         openList.add(startNode);
 
-        Comparator<N> nodeComparator = (o1, o2) -> {
-            double dis1 = disFromSourceMap.get(o1) + disHeuristic.apply(o1, endNode);
-            double dis2 = disFromSourceMap.get(o2) + disHeuristic.apply(o2, endNode);
-            return Double.compare(dis1, dis2);
-        };
+        Comparator<N> nodeComparator = nodeComparator = Comparator.comparingDouble(o -> disFromSourceMap.get(o) + disHeuristic.apply(o, endNode));
 
         while (!openList.isEmpty()) {
             N selectNode = getNodeWithMinDis(openList, nodeComparator);
