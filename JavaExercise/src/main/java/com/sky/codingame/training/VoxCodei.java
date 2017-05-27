@@ -2,6 +2,7 @@ package com.sky.codingame.training;
 
 import java.util.*;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.loic.algo.search.core.State;
 import com.loic.algo.search.core.Transition;
@@ -155,12 +156,6 @@ public class VoxCodei {
         int pos;
 
         public static Step of(int pos) {
-            Step step = new Step();
-            step.pos = pos;
-            return step;
-        }
-
-        public static Step of(Integer pos) {
             Step step = new Step();
             step.pos = pos;
             return step;
@@ -369,7 +364,12 @@ public class VoxCodei {
                 List<Integer> result = new ArrayList<>(set);
                 result.removeAll(mSurveillances);
                 if (!mBombs.isEmpty()) result.add(-1);
-                return Lists.transform(result, i -> Step.of(i));
+                return Lists.transform(result, new Function<Integer, Step>() {
+                    @Override
+                    public Step apply(Integer input) {
+                        return Step.of(input);
+                    }
+                });
             } else {
                 return Arrays.asList(Step.of(-1));
             }
