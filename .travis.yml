@@ -5,7 +5,7 @@ jdk:
 
 script:
   - gradle build
-  - gradle codeCoverageReport
+  - gradle jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 4a022527-9f76-43ed-a135-9e18afc93dd6
