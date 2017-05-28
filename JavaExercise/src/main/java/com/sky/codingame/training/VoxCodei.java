@@ -12,8 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.UtcSearch;
 
 public class VoxCodei {
@@ -160,7 +158,7 @@ public class VoxCodei {
 
     //private static final Comparator<BombInfo> BOMB_INFO_COMPARATOR = (b1, b2) -> (b1.mPosition - b2.mPosition);
 
-    private static class Step implements Transition {
+    private static class Step {
         int pos;
 
         public static Step of(int pos) {

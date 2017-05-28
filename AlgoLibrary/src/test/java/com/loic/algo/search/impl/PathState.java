@@ -2,13 +2,15 @@ package com.loic.algo.search.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import com.loic.algo.search.core.State;
+import com.loic.algo.search.core.HeuristicStrategy;
+import com.loic.algo.search.core.TransitionStrategy;
 
-public class PathState implements State<Direction> {
+public class PathState implements State<Direction>, HeuristicStrategy<Direction>, TransitionStrategy {
     private final MapInfo mapInfo;
     private final List<Integer> path;
 
@@ -24,12 +26,6 @@ public class PathState implements State<Direction> {
 
     public void asRoot() {
         mapInfo.setStartPosition(path.get(path.size() - 1));
-    }
-
-    @Override
-    public boolean isTerminal() {
-        return mapInfo.getEndPos() == path.get(path.size() - 1) ||
-                nextPossibleTransitions().isEmpty();
     }
 
     @Override
@@ -71,6 +67,7 @@ public class PathState implements State<Direction> {
 
     @Override
     public Set<Direction> nextPossibleTransitions() {
+        if (mapInfo.getEndPos() == path.get(path.size() - 1)) return Collections.emptySet();
         int pos = path.get(path.size() - 1);
         int line = pos / mapInfo.getWidth();
         int col = pos % mapInfo.getWidth();
@@ -87,5 +84,15 @@ public class PathState implements State<Direction> {
             return mapInfo.reachable(posX, posY);
         }
         return false;
+    }
+
+    @Override
+    public double heuristic(State<Direction> state, int depth) {
+        return 0;
+    }
+
+    @Override
+    public <Trans> Set<Trans> generate(State<Trans> state) {
+        return null;
     }
 }

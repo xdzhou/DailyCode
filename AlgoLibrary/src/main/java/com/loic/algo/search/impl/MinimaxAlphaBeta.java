@@ -1,64 +1,63 @@
 package com.loic.algo.search.impl;
 
-import java.util.List;
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
+
+import java.util.Optional;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
+import com.loic.algo.common.Pair;
+import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 
 /**
  * KeyWord : game theory, decision theory, DFS
  */
 public class MinimaxAlphaBeta implements TreeSearch {
-    private State root;
-    private Transition bestTrans;
 
     @Override
-    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
-        Objects.requireNonNull(root, "Root state is mandatory");
-        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+        requireNonNull(root, "Root state is mandatory");
+        requireNonNull(param, "SearchParam is mandatory");
 
-        this.root = root;
-        alphaBeta(root, maxDeep, Double.MIN_VALUE, Double.MAX_VALUE, true);
+        Pair<Trans, Double> result = alphaBeta(param, root, 0, Double.MIN_VALUE, Double.MAX_VALUE, true);
 
-        List<Trans> path = ImmutableList.of((Trans) bestTrans);
-        root = null;
-        bestTrans = null;
-        return path;
+        return Optional.ofNullable(result.first());
     }
 
-    private double alphaBeta(State state, int deep, double alpha, double beta, boolean maxPlayer) {
-        if(deep <= 0 || state.isTerminal()) {
-            return state.heuristic();
+    private <Trans, State> Pair<Trans, Double> alphaBeta(SearchParam<Trans, State> param, State state, int depth, double alpha, double beta, boolean maxPlayer) {
+        Set<Trans> transitions = param.transitionStrategy().generate(state);
+
+        if(depth > param.getMaxDepth() || transitions.isEmpty()) {
+            double fitness = param.heuristicStrategy().heuristic(state, depth);
+            return Pair.of(null, fitness);
         }
+
         if (maxPlayer) {
             double best = Double.NEGATIVE_INFINITY;
-            Set<Transition> transitions = state.nextPossibleTransitions();
-            for(Transition trans : transitions) {
-                double childValue = alphaBeta(state.apply(trans), deep - 1, alpha, beta, false);
-                if (childValue > best) {
-                    best = childValue;
-                    if (root == state) {
-                        bestTrans = trans;
-                    }
+            Trans bestTrans = null;
+            for(Trans trans : transitions) {
+                Pair<Trans, Double> childValue = alphaBeta(param, param.applyStrategy().apply(state, trans), depth + 1, alpha, beta, false);
+                if (childValue.second() > best) {
+                    best = childValue.second();
+                    bestTrans = trans;
                 }
                 alpha = Math.max(alpha, best);
                 if(best <= alpha) break;
             }
-            return best;
+            return Pair.of(bestTrans, best);
         } else {
             double best = Double.MAX_VALUE;
-            Set<Transition> transitions = state.nextPossibleTransitions();
-            for(Transition trans : transitions) {
-                best = Math.min(best, alphaBeta(state.apply(trans), deep - 1, alpha, beta, true));
+            Trans bestTrans = null;
+            for(Trans trans : transitions) {
+                Pair<Trans, Double> childValue = alphaBeta(param, param.applyStrategy().apply(state, trans), depth + 1, alpha, beta, true);
+                if (childValue.second() < best) {
+                    best = childValue.second();
+                    bestTrans = trans;
+                }
                 beta = Math.min(beta, best);
                 if(best <= alpha) break;
             }
-            return best;
+            return Pair.of(bestTrans, best);
         }
     }
 }

@@ -1,15 +1,12 @@
 package com.sky.codingame.training;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.BruteForce;
 
 public class ThorVSGiants {
@@ -44,7 +41,7 @@ public class ThorVSGiants {
         }
     }
 
-    private enum Step implements Transition {
+    private enum Step {
         STRIKE(0, 0),
         //WAIT(0,0),
 

@@ -7,8 +7,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
 import com.loic.algo.search.impl.GeneticAlgorithm;
 import org.junit.Test;
 import org.testng.Assert;
@@ -46,7 +44,7 @@ public class GeneticAlgorithmTest {
         }
     }
 
-    private static final class Step implements Transition {
+    private static final class Step {
         private final int num;
 
         private Step(int num) {

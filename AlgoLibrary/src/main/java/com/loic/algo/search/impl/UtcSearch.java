@@ -1,16 +1,19 @@
 package com.loic.algo.search.impl;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
+import com.loic.algo.search.TimeoutException;
+import com.loic.algo.search.Timer;
 import com.loic.algo.search.TreeSearchUtils;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,66 +29,62 @@ public class UtcSearch implements TreeSearch {
     private final Random mRandom = new Random(new Date().getTime());
     private final int simulateCount;
 
-    private int maxDeep;
-
     public UtcSearch(int simulateCount) {
         Preconditions.checkState(simulateCount > 0, "simulate count have be more than 0");
         this.simulateCount = simulateCount;
     }
 
     @Override
-    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
-        Objects.requireNonNull(root, "Root state is mandatory");
-        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+        requireNonNull(root, "Root state is mandatory");
+        requireNonNull(param, "SearchParam is mandatory");
 
-        StateNode<Info> rootNode = new StateNode<>(root, null, new Info());
-        this.maxDeep = maxDeep;
-
+        StateNode<Trans, State, Info> rootNode = new StateNode<>(root, null,null, new Info());
+        Timer timer = new Timer();
+        timer.startTimer(param.timerDuration());
         for (int i = 0; i < simulateCount; i++) {
-            process(rootNode);
-            if (Double.compare(rootNode.info().winCount, rootNode.info().simuCount) == 0) break;
+            try {
+                timer.checkTime();
+            } catch (TimeoutException e) {
+                break;
+            }
+            process(param, rootNode);
         }
 
-        List<Trans> list = Lists.newArrayList();
-        StateNode<Info> curNode = rootNode;
-        do {
-            StateNode<Info> bestChild = getBestChild(curNode);
-            list.add((Trans)bestChild.getAppliedTransition());
-            curNode = bestChild;
-        } while (!curNode.state().isTerminal() && curNode.children().size() == curNode.state().nextPossibleTransitions().size());
-
-        return ImmutableList.copyOf(list);
+        return Optional.ofNullable(getBestChild(rootNode).getAppliedTransition());
     }
 
-    private void process(StateNode<Info> rootNode) {
-        List<StateNode<Info>> path = selection(rootNode);
-        expansionSimulation(path);
-        double fitness = path.get(path.size() - 1).state().heuristic();
+    private <Trans, State> void process(SearchParam<Trans, State> param, StateNode<Trans, State, Info> rootNode) {
+        List<StateNode<Trans, State, Info>> path = selection(param, rootNode);
+        expansionSimulation(param, path);
+        int depth = path.size() - 1;
+        double fitness = param.heuristicStrategy().heuristic(path.get(depth).state(), depth);
         Preconditions.checkState(fitness >= 0 && fitness <= 1, "heuristic function need return fitness 0 -> 1");
         //backPropagation
         path.forEach(n -> n.info().appendWin(fitness));
     }
 
-    private void expansionSimulation(List<StateNode<Info>> path) {
-        StateNode<Info> leafNode = path.get(path.size() - 1);
-        if (!leafNode.state().isTerminal() && path.size() - 1 < maxDeep) {
-            List<Transition> transitions = TreeSearchUtils.asStringSort(leafNode.state().nextPossibleTransitions());
+    private <Trans, State> void expansionSimulation(SearchParam<Trans, State> param, List<StateNode<Trans, State, Info>> path) {
+        StateNode<Trans, State, Info> leafNode = path.get(path.size() - 1);
+        List<Trans> transitions = TreeSearchUtils.asStringSort(param.transitionStrategy().generate(leafNode.state()));
+        if (!transitions.isEmpty() && path.size() - 1 < param.getMaxDepth()) {
             int childIndex = mRandom.nextInt(transitions.size());
-            Transition selectedTrans = transitions.get(childIndex);
-            StateNode<Info> child = leafNode.getChild(selectedTrans);
+            Trans selectedTrans = transitions.get(childIndex);
+            StateNode<Trans, State, Info> child = leafNode.getChild(selectedTrans);
             if (child == null) {
-                child = new StateNode<>(leafNode.state().apply(selectedTrans), selectedTrans, new Info());
+                child = new StateNode<>(param.applyStrategy().apply(leafNode.state(), selectedTrans), leafNode, selectedTrans, new Info());
                 leafNode.addChild(child);
             }
             path.add(child);
-            expansionSimulation(path);
+            expansionSimulation(param, path);
         }
     }
 
-    private List<StateNode<Info>> selection(StateNode<Info> rootNode) {
-        List<StateNode<Info>> path = Lists.newArrayList();
-        StateNode<Info> curNode = rootNode;
-        while (!curNode.state().isTerminal() && curNode.children().size() == curNode.state().nextPossibleTransitions().size()) {
+    private <Trans, State> List<StateNode<Trans, State, Info>> selection(SearchParam<Trans, State> param, StateNode<Trans, State, Info> rootNode) {
+        List<StateNode<Trans, State, Info>> path = new ArrayList<>();
+        StateNode<Trans, State, Info> curNode = rootNode;
+        Set<Trans> transList;
+        while (curNode.children().size() == (transList = param.transitionStrategy().generate(curNode.state())).size() && !transList.isEmpty()) {
             path.add(curNode);
             curNode = getBestChild(curNode);
         }
@@ -93,13 +92,13 @@ public class UtcSearch implements TreeSearch {
         return path;
     }
 
-    private StateNode<Info> getBestChild(StateNode<Info> parent) {
+    private <Trans, State> StateNode<Trans, State, Info> getBestChild(StateNode<Trans, State, Info> parent) {
         if (parent.children().size() == 1) return parent.children().get(0);
         double best = Double.NEGATIVE_INFINITY;
-        StateNode<Info> bestChild = null;
+        StateNode<Trans, State, Info> bestChild = null;
         Info[] childInfo = new Info[parent.children().size()];
         int index = 0;
-        for (StateNode<Info> child : parent.children()) {
+        for (StateNode<Trans, State, Info> child : parent.children()) {
             Preconditions.checkArgument(child.info().simuCount > 0, "SimuCount could not be 0");
             childInfo[index++] = child.info();
             double value = (child.info().winCount / (double) child.info().simuCount + C * Math.sqrt(Math.log(parent.info().simuCount) / (double) child.info().simuCount));

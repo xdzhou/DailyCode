@@ -70,7 +70,7 @@ public class TreeSearchTest {
         PathState state = root;
         while (!state.isTerminal()) {
             state.asRoot();
-            Direction transition = algo.find(state, 10).get(0);
+            Direction transition = algo.find(state, null).get();
             list.add(transition);
             state = state.apply(transition);
         }

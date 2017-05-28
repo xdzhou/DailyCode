@@ -1,19 +1,20 @@
 package com.loic.algo.search.impl;
 
+import static com.loic.algo.search.TreeSearchUtils.asStringSort;
+import static java.util.Objects.requireNonNull;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.loic.algo.search.TreeSearchUtils;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.TimeoutException;
+import com.loic.algo.search.Timer;
+import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 
 public class GeneticAlgorithm implements TreeSearch {
@@ -21,27 +22,35 @@ public class GeneticAlgorithm implements TreeSearch {
     private static final float DEFAULT_MUTATION_RATE = 0.1f;
 
     private final Random random = new Random(new Date().getTime());
+    private final Timer timer = new Timer();
 
     private int population = 100;
     private int simuCount = 100;
 
     @Override
-    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
-        Objects.requireNonNull(root, "Root state is mandatory");
-        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+        requireNonNull(root, "Root state is mandatory");
+        requireNonNull(param, "SearchParam is mandatory");
 
-        List<Gene> candidatures = new ArrayList<>(population);
+        List<Gene<Trans>> candidatures = new ArrayList<>(population);
         double totalFitness = 0;
-        Gene bestGene = null;
+        Gene<Trans> bestGene = null;
 
         double curBestFitness = Double.NEGATIVE_INFINITY;
         int bestGeneCount = 0;
 
-        List<Gene> children = new ArrayList<>(population);
+        List<Gene<Trans>> children = new ArrayList<>(population);
+        timer.startTimer(param.timerDuration());
+
         for (int generation = 0; generation < simuCount; generation++) {
+            try {
+                timer.checkTime();
+            } catch (TimeoutException e) {
+                break;
+            }
             if (candidatures.isEmpty()) { //first generation
                 for (int i = 0; i < population; i++) {
-                    Gene gene = newGene(root, maxDeep);
+                    Gene<Trans> gene = newGene(param, root, param.getMaxDepth());
                     candidatures.add(gene);
                     totalFitness += gene.fitness;
                     if (bestGene == null || bestGene.fitness < gene.fitness) {
@@ -54,7 +63,7 @@ public class GeneticAlgorithm implements TreeSearch {
                 children.add(bestGene);
                 double tempTotalFitness = bestGene.fitness;
                 while (children.size() < population) {
-                    Gene child = generateChild(root, select(totalFitness, candidatures), select(totalFitness, candidatures));
+                    Gene<Trans> child = generateChild(param, root, select(totalFitness, candidatures), select(totalFitness, candidatures));
                     children.add(child);
                     tempTotalFitness += child.fitness;
                     if (bestGene.fitness < child.fitness) {
@@ -76,26 +85,23 @@ public class GeneticAlgorithm implements TreeSearch {
         }
         Preconditions.checkState(bestGene != null, "returned best Gene is null");
 
-        List<Trans> list = Arrays.stream(bestGene.trans)
-                .filter(Objects::nonNull)
-                .map(t -> (Trans)t)
-                .collect(Collectors.toList());
-        return ImmutableList.copyOf(list);
+        return Optional.ofNullable(bestGene.trans[0]);
     }
 
-    private Gene generateChild(State root, Gene parent1, Gene parent2) {
+    private <Trans, State> Gene<Trans> generateChild(SearchParam<Trans, State> param, State root, Gene<Trans> parent1, Gene<Trans> parent2) {
         int changeIndex = random.nextInt(parent1.trans.length -1);
-        Transition[] trans = merge(changeIndex, parent1.trans, parent2.trans);
+        Trans[] trans = merge(changeIndex, parent1.trans, parent2.trans);
 
         State curState = root;
+        int depth = 0;
         for (int i = 0; i < trans.length; i++) {
-            if (curState.isTerminal() || trans[i] == null) break;
-            List<Transition> list = TreeSearchUtils.asStringSort(curState.nextPossibleTransitions());
-
+            List<Trans> list = asStringSort(param.transitionStrategy().generate(curState));
+            if (list.isEmpty()) break;
             if (list.indexOf(trans[i]) < 0) {
                 trans[i] = list.get(random.nextInt(list.size()));
             }
-            curState = curState.apply(trans[i]);
+            curState = param.applyStrategy().apply(curState, trans[i]);
+            depth ++;
         }
         //fixme mutation
         if (random.nextFloat() < DEFAULT_MUTATION_RATE) {
@@ -103,15 +109,15 @@ public class GeneticAlgorithm implements TreeSearch {
             //trans[mutationIndex] = transitions.get(random.nextInt(transitions.size()));
         }
 
-        return new Gene(trans, curState.heuristic());
+        return new Gene<>(trans, param.heuristicStrategy().heuristic(curState, depth));
     }
 
-    protected Transition[] merge(int changeIndex, Transition[] trans1, Transition[] trans2) {
+    protected <Trans> Trans[] merge(int changeIndex, Trans[] trans1, Trans[] trans2) {
         return Stream.concat(Stream.of(trans1).limit(changeIndex + 1), Stream.of(trans2).skip(changeIndex + 1))
-                .toArray(l -> new Transition[l]);
+                .toArray(l -> (Trans[]) Array.newInstance(trans1[0].getClass(), l));
     }
 
-    private Gene select(double totalFitness, List<Gene> candidatures) {
+    private <Trans> Gene<Trans> select(double totalFitness, List<Gene<Trans>> candidatures) {
         double value = random.nextDouble() * totalFitness;
         double temp = 0;
         for (Gene gene : candidatures) {
@@ -121,27 +127,31 @@ public class GeneticAlgorithm implements TreeSearch {
         throw new RuntimeException("select gene failed");
     }
 
-    private Gene newGene(State root, int deep) {
-        Transition[] trans = new Transition[deep];
-
+    private <Trans, State> Gene<Trans> newGene(SearchParam<Trans, State> param, State root, int maxDepth) {
+        Trans[] trans = null;
         State curState = root;
-        for (int i = 0; i < deep; i++) {
-            if (curState.isTerminal()) break;
-            List<Transition> possibleTrans = TreeSearchUtils.asStringSort(curState.nextPossibleTransitions());
+        int depth = 0;
+
+        for (int i = 0; i < maxDepth; i++) {
+            List<Trans> possibleTrans = asStringSort(param.transitionStrategy().generate(curState));
+            if (possibleTrans.isEmpty()) break;
+            if (trans == null) {
+                trans = (Trans[]) Array.newInstance(possibleTrans.get(0).getClass(), maxDepth);
+            }
             trans[i] = possibleTrans.get(random.nextInt(possibleTrans.size()));
-            curState = curState.apply(trans[i]);
+            curState = param.applyStrategy().apply(curState, trans[i]);
+            depth ++;
         }
 
-        Gene gene = new Gene(trans, curState.heuristic());
-        return gene;
+        return new Gene<>(trans, param.heuristicStrategy().heuristic(curState, depth));
     }
 
 
-    private static final class Gene {
-        private final Transition[] trans;
+    private static final class Gene<Trans> {
+        private final Trans[] trans;
         private final double fitness;
 
-        private Gene(Transition[] trans, double fitness) {
+        private Gene(Trans[] trans, double fitness) {
             this.trans = trans;
             Preconditions.checkState(fitness >= 0, "fitness need positive");
             this.fitness = fitness;
