@@ -3,6 +3,7 @@ package com.loic.algo.search.impl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Optional;
+import java.util.Set;
 
 import com.loic.algo.common.Pair;
 import com.loic.algo.search.core.SearchParam;
@@ -25,7 +26,8 @@ public class BruteForce implements TreeSearch {
             return Pair.of(null, param.heuristicStrategy().heuristic(state, depth));
         } else {
             Pair<Trans, Double> best = null;
-            for(Trans transition : param.transitionStrategy().generate(state)) {
+            Set<Trans> transitions = param.transitionStrategy().generate(state);
+            for(Trans transition : transitions) {
                 State nextState = param.applyStrategy().apply(state, transition);
                 Pair<Trans, Double> preResult = process(param, nextState, depth + 1);
                 if (best == null || Double.compare(preResult.second(), best.second()) > 0) {

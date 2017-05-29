@@ -52,7 +52,7 @@ public class SearchParam<Trans, State> {
         return new SearchParam<>(maxDepth, timerDuration, applyStrategy, heuristicStrategy, transitionStrategy);
     }
 
-    public static <Trans, S> Builder<Trans, S> builder() {
+    public static <Trans, State> Builder<Trans, State> builder() {
         return new Builder<>();
     }
 
