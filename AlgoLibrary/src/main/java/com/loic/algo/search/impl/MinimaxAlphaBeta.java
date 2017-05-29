@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.loic.algo.common.Pair;
+import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 
@@ -18,6 +19,9 @@ public class MinimaxAlphaBeta implements TreeSearch {
     public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
+
+        Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
+        if (next != null) return next;
 
         Pair<Trans, Double> result = alphaBeta(param, root, 0, Double.MIN_VALUE, Double.MAX_VALUE, true);
 

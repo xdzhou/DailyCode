@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import com.google.common.base.Preconditions;
 import com.loic.algo.search.TimeoutException;
 import com.loic.algo.search.Timer;
+import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 
@@ -31,6 +32,9 @@ public class GeneticAlgorithm implements TreeSearch {
     public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
+
+        Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
+        if (next != null) return next;
 
         List<Gene<Trans>> candidatures = new ArrayList<>(population);
         double totalFitness = 0;

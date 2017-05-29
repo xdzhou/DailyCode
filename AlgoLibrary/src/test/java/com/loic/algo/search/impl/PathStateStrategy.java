@@ -63,7 +63,7 @@ public class PathStateStrategy implements ApplyStrategy<Direction, PathState>, H
         int col = pos % mapInfo.getWidth();
         double fitness = mapInfo.heuristicToEnd(path.size(), line, col);
         if (fitness != 1 && generate(pathState).isEmpty()) return 0;
-        return fitness * Math.pow(0.5, depth);
+        return fitness * Math.pow(0.8, depth);
     }
 
     @Override

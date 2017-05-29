@@ -10,7 +10,7 @@ public class Timer {
     }
 
     public void checkTime() throws TimeoutException {
-        if (startTime > 0 && System.nanoTime() > timeout) {
+        if (startTime > 0 && timeout > 0 && System.nanoTime() > timeout) {
             throw new TimeoutException();
         }
     }

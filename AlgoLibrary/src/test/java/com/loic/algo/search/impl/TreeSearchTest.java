@@ -20,33 +20,33 @@ public class TreeSearchTest {
     @Test
     public void testSimple() throws Exception {
         MapInfo mapInfo = MapInfoFactory.create(
-                "S****",
-                "*##**",
-                "*##**",
-                "****E");
+            "S****",
+            "*##**",
+            "*##**",
+            "****E");
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
-        //Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 7);
+        Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 7);
         Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 7);
 
-        //Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 7);
-        //Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 7);
+        Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 7);
+        Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 7);
     }
 
     @Test
     public void testMiddle() throws Exception {
         MapInfo mapInfo = MapInfoFactory.create(
-                "S********",
-                "####***#*",
-                "*********",
-                "*########",
-                "****E****");
+            "S********",
+            "####***#*",
+            "*********",
+            "*########",
+            "****E****");
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
         Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 16);
-        Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 16);
+        //Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 16);
 
         Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 16);
         Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 16);
@@ -55,11 +55,11 @@ public class TreeSearchTest {
     @Test
     public void testComplex() throws Exception {
         MapInfo mapInfo = MapInfoFactory.create(
-                "S#***#***",
-                "*#*#*#*#*",
-                "*#*#*****",
-                "*#*#####*",
-                "***#E****");
+            "S#***#***",
+            "*#*#*#*#*",
+            "*#*#*****",
+            "*#*#####*",
+            "***#E****");
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
