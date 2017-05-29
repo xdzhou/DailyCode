@@ -1,8 +1,8 @@
 package com.loic.algo.search.core;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface TreeSearch {
     //find a series of transition to go to a better state
-    <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep);
+    <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param);
 }

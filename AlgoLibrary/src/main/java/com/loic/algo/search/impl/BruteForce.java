@@ -1,72 +1,47 @@
 package com.loic.algo.search.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import java.util.Optional;
+import java.util.Set;
+
 import com.loic.algo.common.Pair;
-import com.loic.algo.search.core.State;
-import com.loic.algo.search.core.Transition;
+import com.loic.algo.search.TreeSearchUtils;
+import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 
 public class BruteForce implements TreeSearch {
 
     @Override
-    public <Trans extends Transition> List<Trans> find(State<Trans> root, int maxDeep) {
-        Objects.requireNonNull(root, "Root state is mandatory");
-        Preconditions.checkState(maxDeep > 0, "Max deep must bigger than 0");
+    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+        requireNonNull(root, "Root state is mandatory");
+        requireNonNull(param, "SearchParam is mandatory");
 
-        Map<State<Trans>, Pair<Trans, State>> transitionMap = Maps.newHashMap();
-        process(root, maxDeep, transitionMap);
+        Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
+        if (next != null) return next;
 
-        List<Trans> transitions = Lists.newArrayList();
-        Pair<Trans, State> pair = transitionMap.get(root);
-        while (pair != null) {
-            transitions.add(pair.first());
-            pair = transitionMap.get(pair.second());
-        }
-        return ImmutableList.copyOf(transitions);
+        Pair<Trans, Double> best = process(param, root, 0);
+
+        return Optional.ofNullable(best.first());
     }
 
-    private <Trans extends Transition> FitnessAndDepth process(State<Trans> state, int deep, Map<State<Trans>, Pair<Trans, State>> transitionMap) {
-        if (deep <= 0 || state.isTerminal()) {
-            return new FitnessAndDepth(state.heuristic(), 0);
+    private <Trans, State> Pair<Trans, Double> process(SearchParam<Trans, State> param, State state, int depth) {
+        if (depth > param.getMaxDepth()) {
+            return Pair.of(null, param.heuristicStrategy().heuristic(state, depth));
         } else {
-            //double best = Double.NEGATIVE_INFINITY;
-            FitnessAndDepth best = null;
-            Trans bestTransition = null;
-            State bestChildState = null;
-            for(Trans transition : state.nextPossibleTransitions()) {
-                State nextState = state.apply(transition);
-                FitnessAndDepth preResult = process(nextState, deep - 1, transitionMap);
-                if (best == null || preResult.compareTo(best) > 0) {
-                    best = preResult;
-                    bestTransition = transition;
-                    bestChildState = nextState;
+            Pair<Trans, Double> best = null;
+            Set<Trans> transitions = param.transitionStrategy().generate(state);
+            for(Trans transition : transitions) {
+                State nextState = param.applyStrategy().apply(state, transition);
+                Pair<Trans, Double> preResult = process(param, nextState, depth + 1);
+                if (best == null || Double.compare(preResult.second(), best.second()) > 0) {
+                    best = Pair.of(transition, preResult.second());
                 }
             }
-            transitionMap.put(state, Pair.of(bestTransition, bestChildState));
-            return new FitnessAndDepth(best.fitness, best.depth + 1);
-        }
-    }
-
-    private static class FitnessAndDepth implements Comparable<FitnessAndDepth> {
-        private double fitness;
-        private int depth;
-
-        public FitnessAndDepth(double fitness, int depth) {
-            this.fitness = fitness;
-            this.depth = depth;
-        }
-
-        @Override
-        public int compareTo(FitnessAndDepth o) {
-            int fitnessCompare = Double.compare(fitness, o.fitness);
-            return fitnessCompare == 0 ? Integer.compare(o.depth, depth) : fitnessCompare;
+            if (best == null) {
+                best = Pair.of(null, param.heuristicStrategy().heuristic(state, depth));
+            }
+            return best;
         }
     }
 }
