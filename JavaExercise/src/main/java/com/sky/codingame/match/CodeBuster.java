@@ -19,6 +19,7 @@ public class CodeBuster {
     private final boolean[] mZonePassed = new boolean[18];
     private Random mRandom = new Random(new Date().getTime());
     private int mDefenderCount = 0;
+
     public CodeBuster(int teamId, int busterCount, int ghostCount) {
         mTeamId = teamId;
         mMyBusters = new ArrayList<>(busterCount);
@@ -631,13 +632,13 @@ public class CodeBuster {
         @Override
         public String toString() {
             return "{AcceptCost=" + mAcceptCost +
-                    ", TurnRest=" + mTurnRest +
-                    ", GhostCount=" + mGhostCount +
-                    ", GhostCaught=" + mGhostCaught +
-                    ", NeedHelpBuster=" + mNeedHelpBuster +
-                    ", LastBustCount=" + mLastBustCount +
-                    ", GhostCarring=" + mGhostCarring +
-                    '}';
+                ", TurnRest=" + mTurnRest +
+                ", GhostCount=" + mGhostCount +
+                ", GhostCaught=" + mGhostCaught +
+                ", NeedHelpBuster=" + mNeedHelpBuster +
+                ", LastBustCount=" + mLastBustCount +
+                ", GhostCarring=" + mGhostCarring +
+                '}';
         }
     }
 
@@ -719,7 +720,7 @@ public class CodeBuster {
         @Override
         public String toString() {
             return "Buster[" + mId + ", state " + mState + ", value " + mValue +
-                    ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
+                ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
         }
     }
 }

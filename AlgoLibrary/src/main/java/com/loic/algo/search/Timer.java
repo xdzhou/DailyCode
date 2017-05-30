@@ -6,7 +6,7 @@ public class Timer {
 
     public void startTimer(double durationInMilliseconds) {
         startTime = System.nanoTime();
-        timeout = startTime + (long)(durationInMilliseconds * 1000000);
+        timeout = startTime + (long) (durationInMilliseconds * 1000000);
     }
 
     public void checkTime() throws TimeoutException {

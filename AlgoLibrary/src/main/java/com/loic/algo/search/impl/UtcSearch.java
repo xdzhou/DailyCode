@@ -42,7 +42,7 @@ public class UtcSearch implements TreeSearch {
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
         if (next != null) return next;
 
-        StateNode<Trans, State, Info> rootNode = new StateNode<>(root, null,null, new Info());
+        StateNode<Trans, State, Info> rootNode = new StateNode<>(root, null, null, new Info());
         Timer timer = new Timer();
         timer.startTimer(param.timerDuration());
         for (int i = 0; i < simulateCount; i++) {

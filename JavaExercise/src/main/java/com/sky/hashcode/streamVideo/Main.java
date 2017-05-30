@@ -172,8 +172,8 @@ public class Main {
             for (EndPoint endPoint : endPointList) {
                 int latency = cacheToEndLatency[cacheId][endPoint.id];
                 if (latency > 0 &&
-                        endPoint.videoRequestMap.containsKey(videoId) &&
-                        !isUseless(videoId, endPoint, latency)) {
+                    endPoint.videoRequestMap.containsKey(videoId) &&
+                    !isUseless(videoId, endPoint, latency)) {
                     value += endPoint.videoRequestMap.get(videoId) * (centerToEndLatency[endPoint.id] - latency);
                 }
             }
@@ -208,9 +208,9 @@ public class Main {
         @Override
         public String toString() {
             return "{" +
-                    "videoId=" + videoId +
-                    ", value=" + value +
-                    '}';
+                "videoId=" + videoId +
+                ", value=" + value +
+                '}';
         }
     }
 }

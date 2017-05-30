@@ -40,7 +40,7 @@ public class FindSubStringWithAllChar implements Problem<Pair<String, Integer>, 
                 }
             }
             if (head - tail + 1 >= N && isComplet(occurTimes) &&
-                    (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail))) {
+                (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail))) {
                 cacheHead = head;
                 cacheTail = tail;
                 if (cacheHead - cacheTail + 1 == N) {

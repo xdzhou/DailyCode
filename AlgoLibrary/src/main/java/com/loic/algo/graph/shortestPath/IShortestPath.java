@@ -10,5 +10,5 @@ import com.google.common.graph.ValueGraph;
 public interface IShortestPath {
     // solves the source-target shortest path problem
     // return empty list if no path found
-    <N> List<N> search(ValueGraph<N,Double> valueGraph, N startNode, N endNode);
+    <N> List<N> search(ValueGraph<N, Double> valueGraph, N startNode, N endNode);
 }

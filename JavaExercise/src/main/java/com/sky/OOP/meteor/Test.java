@@ -197,7 +197,7 @@ public class Test {
         for (int i = 0; i < Board.CELL_COUNT; i++) {
             BoardCell boardCell = mBoard.getCell(i);
             if (boardCell.getPiece() == null && !boardCell.isProcessing()
-                    && boardCell.getIslandCount() % Piece.CELL_COUNT != 0) {
+                && boardCell.getIslandCount() % Piece.CELL_COUNT != 0) {
                 return true;
             }
         }

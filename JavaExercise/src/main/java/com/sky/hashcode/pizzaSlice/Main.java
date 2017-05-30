@@ -153,12 +153,12 @@ public class Main {
         switch (dir) {
             case DOWN:
                 return slice.row2 + 1 < pizza.getRowCount() &&
-                        slice.size() + (slice.col2 - slice.col1 + 1) <= H &&
-                        pizza.areCellsAllAvailable(slice.row1, slice.col1, slice.row2 + 1, slice.col2, cutSlices);
+                    slice.size() + (slice.col2 - slice.col1 + 1) <= H &&
+                    pizza.areCellsAllAvailable(slice.row1, slice.col1, slice.row2 + 1, slice.col2, cutSlices);
             default:
                 return slice.col2 + 1 < pizza.getColumnCount() &&
-                        slice.size() + (slice.row2 - slice.row1 + 1) <= H &&
-                        pizza.areCellsAllAvailable(slice.row1, slice.col1, slice.row2, slice.col2 + 1, cutSlices);
+                    slice.size() + (slice.row2 - slice.row1 + 1) <= H &&
+                    pizza.areCellsAllAvailable(slice.row1, slice.col1, slice.row2, slice.col2 + 1, cutSlices);
         }
     }
 

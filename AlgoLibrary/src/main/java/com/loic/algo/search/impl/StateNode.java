@@ -60,8 +60,8 @@ class StateNode<Trans, State, T> {
 
     public StateNode<Trans, State, T> getChild(Trans appliedTransition) {
         Objects.requireNonNull(appliedTransition);
-        for(StateNode<Trans, State, T> child : children()) {
-            if(appliedTransition.equals(child.appliedTransition)) {
+        for (StateNode<Trans, State, T> child : children()) {
+            if (appliedTransition.equals(child.appliedTransition)) {
                 return child;
             }
         }

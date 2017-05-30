@@ -48,8 +48,8 @@ public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer>
             while (cursor1 < listA.length && cursor2 < listA.length) {
                 int delta = listA[cursor1] - listB[cursor2];
                 if (minLimite < delta && delta < maxLimite &&
-                        ((switchIndex1 < 0) || (Math.abs(base - delta) < Math
-                                .abs(base - (listA[switchIndex1] - listB[switchIndex2]))))) {
+                    ((switchIndex1 < 0) || (Math.abs(base - delta) < Math
+                        .abs(base - (listA[switchIndex1] - listB[switchIndex2]))))) {
                     switchIndex1 = cursor1;
                     switchIndex2 = cursor2;
                 }

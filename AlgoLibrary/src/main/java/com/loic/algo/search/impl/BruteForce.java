@@ -31,7 +31,7 @@ public class BruteForce implements TreeSearch {
         } else {
             Pair<Trans, Double> best = null;
             Set<Trans> transitions = param.transitionStrategy().generate(state);
-            for(Trans transition : transitions) {
+            for (Trans transition : transitions) {
                 State nextState = param.applyStrategy().apply(state, transition);
                 Pair<Trans, Double> preResult = process(param, nextState, depth + 1);
                 if (best == null || Double.compare(preResult.second(), best.second()) > 0) {

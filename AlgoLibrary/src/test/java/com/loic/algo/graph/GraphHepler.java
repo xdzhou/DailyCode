@@ -12,9 +12,9 @@ public class GraphHepler {
 	 */
     public static Graph<Integer> directedGraph() {
         MutableGraph<Integer> mutableGraph = GraphBuilder.directed()
-                .allowsSelfLoops(false)
-                .expectedNodeCount(13)
-                .build();
+            .allowsSelfLoops(false)
+            .expectedNodeCount(13)
+            .build();
         mutableGraph.putEdge(0, 6);
         mutableGraph.putEdge(2, 0);
         mutableGraph.putEdge(0, 1);
@@ -35,9 +35,9 @@ public class GraphHepler {
 
     public static Graph<Integer> cycleDirectedGraph() {
         MutableGraph<Integer> mutableGraph = GraphBuilder.directed()
-                .allowsSelfLoops(false)
-                .expectedNodeCount(3)
-                .build();
+            .allowsSelfLoops(false)
+            .expectedNodeCount(3)
+            .build();
         mutableGraph.putEdge(0, 1);
         mutableGraph.putEdge(1, 2);
         mutableGraph.putEdge(2, 0);

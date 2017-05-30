@@ -13,7 +13,7 @@ public class MapInfoFactory {
         int endPos = -1;
         boolean[] passFlag = new boolean[data.length * data[0].length()];
         Arrays.fill(passFlag, true);
-        for(String lineData : data) {
+        for (String lineData : data) {
             if (width > 0) {
                 Preconditions.checkState(width == lineData.length(), "Map Data have different width");
             } else {
@@ -34,7 +34,7 @@ public class MapInfoFactory {
                 }
             }
 
-            height ++;
+            height++;
         }
         return new MapInfoImpl(width, height, passFlag, endPos);
     }
@@ -80,7 +80,7 @@ public class MapInfoFactory {
         @Override
         public double heuristicToEnd(int lengthPassed, int posX, int posY) {
             if (posX == endX && posY == endY) return 1;
-            return minDis / (double)(lengthPassed + Math.abs(posX - endX) + Math.abs(posY - endY));
+            return minDis / (double) (lengthPassed + Math.abs(posX - endX) + Math.abs(posY - endY));
         }
     }
 

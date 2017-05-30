@@ -31,7 +31,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
     private <Trans, State> Pair<Trans, Double> alphaBeta(SearchParam<Trans, State> param, State state, int depth, double alpha, double beta, boolean maxPlayer) {
         Set<Trans> transitions = param.transitionStrategy().generate(state);
 
-        if(depth > param.getMaxDepth() || transitions.isEmpty()) {
+        if (depth > param.getMaxDepth() || transitions.isEmpty()) {
             double fitness = param.heuristicStrategy().heuristic(state, depth);
             return Pair.of(null, fitness);
         }
@@ -39,27 +39,27 @@ public class MinimaxAlphaBeta implements TreeSearch {
         if (maxPlayer) {
             double best = Double.NEGATIVE_INFINITY;
             Trans bestTrans = null;
-            for(Trans trans : transitions) {
+            for (Trans trans : transitions) {
                 Pair<Trans, Double> childValue = alphaBeta(param, param.applyStrategy().apply(state, trans), depth + 1, alpha, beta, false);
                 if (childValue.second() > best) {
                     best = childValue.second();
                     bestTrans = trans;
                 }
                 alpha = Math.max(alpha, best);
-                if(best <= alpha) break;
+                if (best <= alpha) break;
             }
             return Pair.of(bestTrans, best);
         } else {
             double best = Double.MAX_VALUE;
             Trans bestTrans = null;
-            for(Trans trans : transitions) {
+            for (Trans trans : transitions) {
                 Pair<Trans, Double> childValue = alphaBeta(param, param.applyStrategy().apply(state, trans), depth + 1, alpha, beta, true);
                 if (childValue.second() < best) {
                     best = childValue.second();
                     bestTrans = trans;
                 }
                 beta = Math.min(beta, best);
-                if(best <= alpha) break;
+                if (best <= alpha) break;
             }
             return Pair.of(bestTrans, best);
         }

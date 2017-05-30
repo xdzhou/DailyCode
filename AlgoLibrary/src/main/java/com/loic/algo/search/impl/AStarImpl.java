@@ -15,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AStarImpl implements TreeSearch {
-    private final Timer timer = new Timer();
     private static final Logger LOG = LoggerFactory.getLogger(AStarImpl.class);
+    private final Timer timer = new Timer();
 
     @Override
     public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {

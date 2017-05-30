@@ -58,7 +58,7 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
         TreeNode<Integer> T2 = param[1];
         String replaceNull = "$";
         if (getInOrder(T1, replaceNull).contains(getInOrder(T2, replaceNull))
-                && getPreOrder(T1, replaceNull).contains(getPreOrder(T2, replaceNull))) {
+            && getPreOrder(T1, replaceNull).contains(getPreOrder(T2, replaceNull))) {
             return true;
         }
         return false;

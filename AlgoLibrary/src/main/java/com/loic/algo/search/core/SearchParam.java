@@ -5,11 +5,11 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.base.Preconditions;
 
 public class SearchParam<Trans, State> {
-    private int maxDepth;
-    private long timerDuration;
     private final ApplyStrategy<Trans, State> applyStrategy;
     private final HeuristicStrategy<State> heuristicStrategy;
     private final TransitionStrategy<Trans, State> transitionStrategy;
+    private int maxDepth;
+    private long timerDuration;
 
     private SearchParam(int maxDepth,
                         long timerDuration,
@@ -22,6 +22,10 @@ public class SearchParam<Trans, State> {
         this.applyStrategy = requireNonNull(applyStrategy);
         this.heuristicStrategy = requireNonNull(heuristicStrategy);
         this.transitionStrategy = requireNonNull(transitionStrategy);
+    }
+
+    public static <Trans, State> Builder<Trans, State> builder() {
+        return new Builder<>();
     }
 
     public int getMaxDepth() {
@@ -51,11 +55,6 @@ public class SearchParam<Trans, State> {
     public SearchParam<Trans, State> map(TransitionStrategy<Trans, State> transitionStrategy) {
         return new SearchParam<>(maxDepth, timerDuration, applyStrategy, heuristicStrategy, transitionStrategy);
     }
-
-    public static <Trans, State> Builder<Trans, State> builder() {
-        return new Builder<>();
-    }
-
 
     public static class Builder<Trans, State> {
         private int maxDepth = 10;

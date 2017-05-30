@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.graph.Graph;
 import com.google.common.graph.Graphs;
@@ -35,8 +34,8 @@ public class TopologicalDfsImpl implements ITopologicalSort {
 
         //find all nodes whose out degree is 0
         List<N> outDegreeZero = graph.nodes().stream()
-                .filter(node -> graph.outDegree(node) == 0)
-                .collect(Collectors.toList());
+            .filter(node -> graph.outDegree(node) == 0)
+            .collect(Collectors.toList());
 
         List<N> results = new ArrayList<>();
         Set<N> visitedNodes = new HashSet<>();

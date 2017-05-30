@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.loic.algo.search.impl.GeneticAlgorithm;
-import org.junit.Test;
-import org.testng.Assert;
 
 /*
  * 旅行推销员问题（Travelling Salesman Problem， 又称为旅行商问题、货郎担问题、TSP问题）
@@ -110,9 +108,9 @@ public class GeneticAlgorithmTest {
 
         public Set<Step> nextPossibleTransitions() {
             return IntStream.range(0, cityInfo.x.length)
-                    .filter(num -> !path.contains(num))
-                    .mapToObj(Step::new)
-                    .collect(Collectors.toSet());
+                .filter(num -> !path.contains(num))
+                .mapToObj(Step::new)
+                .collect(Collectors.toSet());
         }
     }
 }

@@ -28,7 +28,7 @@ public class MinSpanningTreeTest {
 
     //https://zh.wikipedia.org/wiki/%E6%99%AE%E6%9E%97%E5%A7%86%E7%AE%97%E6%B3%95#/media/File:Prim_Algorithm_7.svg
     private ValueGraph<Integer, Double> valueGraph() {
-        MutableValueGraph<Integer, Double> graph =  ValueGraphBuilder.undirected().expectedNodeCount(7).build();
+        MutableValueGraph<Integer, Double> graph = ValueGraphBuilder.undirected().expectedNodeCount(7).build();
         graph.putEdgeValue(0, 1, 7d);
         graph.putEdgeValue(0, 3, 5d);
         graph.putEdgeValue(1, 3, 9d);

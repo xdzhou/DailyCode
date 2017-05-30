@@ -33,16 +33,16 @@ public class PathStateStrategy implements ApplyStrategy<Direction, PathState>, H
         int col = pos % mapInfo.getWidth();
         switch (direction) {
             case UP:
-                line --;
+                line--;
                 break;
             case DOWN:
-                line ++;
+                line++;
                 break;
             case LEFT:
-                col --;
+                col--;
                 break;
             case RIGHT:
-                col ++;
+                col++;
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown direction : " + direction);

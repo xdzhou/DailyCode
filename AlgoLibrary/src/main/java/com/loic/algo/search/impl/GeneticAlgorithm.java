@@ -93,7 +93,7 @@ public class GeneticAlgorithm implements TreeSearch {
     }
 
     private <Trans, State> Gene<Trans> generateChild(SearchParam<Trans, State> param, State root, Gene<Trans> parent1, Gene<Trans> parent2) {
-        int changeIndex = random.nextInt(parent1.trans.length -1);
+        int changeIndex = random.nextInt(parent1.trans.length - 1);
         Trans[] trans = merge(changeIndex, parent1.trans, parent2.trans);
 
         State curState = root;
@@ -105,7 +105,7 @@ public class GeneticAlgorithm implements TreeSearch {
                 trans[i] = list.get(random.nextInt(list.size()));
             }
             curState = param.applyStrategy().apply(curState, trans[i]);
-            depth ++;
+            depth++;
         }
         //fixme mutation
         if (random.nextFloat() < DEFAULT_MUTATION_RATE) {
@@ -118,7 +118,7 @@ public class GeneticAlgorithm implements TreeSearch {
 
     protected <Trans> Trans[] merge(int changeIndex, Trans[] trans1, Trans[] trans2) {
         return Stream.concat(Stream.of(trans1).limit(changeIndex + 1), Stream.of(trans2).skip(changeIndex + 1))
-                .toArray(l -> (Trans[]) Array.newInstance(trans1[0].getClass(), l));
+            .toArray(l -> (Trans[]) Array.newInstance(trans1[0].getClass(), l));
     }
 
     private <Trans> Gene<Trans> select(double totalFitness, List<Gene<Trans>> candidatures) {
@@ -144,7 +144,7 @@ public class GeneticAlgorithm implements TreeSearch {
             }
             trans[i] = possibleTrans.get(random.nextInt(possibleTrans.size()));
             curState = param.applyStrategy().apply(curState, trans[i]);
-            depth ++;
+            depth++;
         }
 
         return new Gene<>(trans, param.heuristicStrategy().heuristic(curState, depth));
