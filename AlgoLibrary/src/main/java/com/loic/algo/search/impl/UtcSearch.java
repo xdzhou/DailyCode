@@ -111,9 +111,7 @@ public class UtcSearch implements TreeSearch {
                 bestChild = child;
             }
         }
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("best child: {}, all child info: {}", bestChild.info(), childInfo);
-        }
+        LOG.trace("best child: {}, all child info: {}", bestChild.info(), childInfo);
         return bestChild;
     }
 
