@@ -26,6 +26,24 @@ public class Triple<T, E, K> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Triple<?, ?, ?> triple = (Triple<?, ?, ?>) o;
+
+        if (pair != null ? !pair.equals(triple.pair) : triple.pair != null) return false;
+        return third != null ? third.equals(triple.third) : triple.third == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = pair != null ? pair.hashCode() : 0;
+        result = 31 * result + (third != null ? third.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "[" + pair.first() + ", " + pair.second() + ", " + third + "]";
     }
