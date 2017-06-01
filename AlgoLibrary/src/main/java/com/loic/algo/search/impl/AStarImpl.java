@@ -52,8 +52,8 @@ public class AStarImpl implements TreeSearch {
                     .peek(priorityQueue::add)
                     .reduce(Double.NEGATIVE_INFINITY, (best, node) -> Math.max(best, node.info()), Math::max);
                 if (bestChild != Double.NEGATIVE_INFINITY) {
-                    updateParent(curNode, bestChild);
                     curNode.setInfo(bestChild);
+                    updateInfo(curNode.parent());
                 }
             }
         }
@@ -63,10 +63,13 @@ public class AStarImpl implements TreeSearch {
             .map(StateNode::getAppliedTransition);
     }
 
-    private <Trans, State> void updateParent(StateNode<Trans, State, Double> node, double best) {
-        if (node != null && node.info() != null && Double.compare(node.info(), best) < 0) {
-            node.setInfo(best);
-            updateParent(node.parent(), best);
+    private <Trans, State> void updateInfo(StateNode<Trans, State, Double> node) {
+        if (node != null) {
+            double bestChild = node.children().stream()
+                .reduce(Double.NEGATIVE_INFINITY, (best, n) -> Math.max(best, n.info()), Math::max);
+            node.setInfo(bestChild);
+
+            updateInfo(node.parent());
         }
     }
 
