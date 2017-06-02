@@ -15,7 +15,11 @@ public class TreeNode<T> {
         this.mRightNode = mRightNode;
     }
 
-    public static <T> TreeNode<T> generateBinaryTree(T[] arrays) {
+    public static  <T> TreeNode<T> of(T value) {
+        return new TreeNode<>(value, null, null);
+    }
+
+    public static <T> TreeNode<T> generateBinaryTree(T... arrays) {
         Preconditions.checkNotNull(arrays);
         Arrays.sort(arrays);
         return generateBinaryTree(arrays, 0, arrays.length - 1);
@@ -24,8 +28,10 @@ public class TreeNode<T> {
     private static <T> TreeNode<T> generateBinaryTree(T[] arrays, int from, int to) {
         if (from == to) {
             return new TreeNode<>(arrays[from], null, null);
+        } else if (from >= to) {
+            return null;
         }
-        int mid = from + ((from + to) >>> 1);
+        int mid = (from + to) >>> 1;
         T value = arrays[mid];
         TreeNode<T> left = generateBinaryTree(arrays, from, mid - 1);
         TreeNode<T> right = generateBinaryTree(arrays, mid + 1, to);
@@ -33,19 +39,23 @@ public class TreeNode<T> {
         return new TreeNode<>(value, left, right);
     }
 
-    public TreeNode<T> getLeftNode() {
+    public T value() {
+        return mValue;
+    }
+
+    public TreeNode<T> left() {
         return mLeftNode;
     }
 
-    public void setLeftNode(TreeNode<T> mLeftNode) {
+    public void setLeft(TreeNode<T> mLeftNode) {
         this.mLeftNode = mLeftNode;
     }
 
-    public TreeNode<T> getRightNode() {
+    public TreeNode<T> right() {
         return mRightNode;
     }
 
-    public void setRightNode(TreeNode<T> mRightNode) {
+    public void setRight(TreeNode<T> mRightNode) {
         this.mRightNode = mRightNode;
     }
 

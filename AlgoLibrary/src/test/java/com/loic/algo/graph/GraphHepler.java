@@ -3,7 +3,9 @@ package com.loic.algo.graph;
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
+import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraph;
+import com.google.common.graph.ValueGraphBuilder;
 
 public class GraphHepler {
     /*
@@ -45,6 +47,16 @@ public class GraphHepler {
     }
 
     public static ValueGraph<Integer, Double> valueGraph() {
-        return null;
+        MutableValueGraph<Integer, Double> mutableValueGraph = ValueGraphBuilder.undirected()
+            .allowsSelfLoops(false)
+            .expectedNodeCount(6)
+            .build();
+        mutableValueGraph.putEdgeValue(0, 1, 1.1d);
+        mutableValueGraph.putEdgeValue(2, 1, 1d);
+        mutableValueGraph.putEdgeValue(0, 4, 3d);
+        mutableValueGraph.putEdgeValue(2, 4, 1d);
+        mutableValueGraph.putEdgeValue(2, 3, 3d);
+        mutableValueGraph.putEdgeValue(4, 3, 1d);
+        return mutableValueGraph;
     }
 }

@@ -151,13 +151,6 @@ public class SortAlgo {
         return c1.compareTo(c2) < 0;
     }
 
-    public static <T extends Comparable<T>> void show(T[] a) {
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(a[i] + " ");
-        }
-        System.out.println();
-    }
-
     // check if the list is sorted (from samll to big)
     public static <T extends Comparable<T>> boolean isSorted(T[] a) {
         for (int i = 1; i < a.length; i++) {

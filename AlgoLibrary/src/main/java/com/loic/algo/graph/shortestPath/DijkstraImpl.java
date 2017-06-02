@@ -96,7 +96,7 @@ public class DijkstraImpl implements IShortestPath {
         }
         N selectNode = null;
         Iterator<N> iterator = openList.iterator();
-        while (openList.iterator().hasNext()) {
+        while (iterator.hasNext()) {
             N node = iterator.next();
             if (selectNode == null || nodeComparator.compare(node, selectNode) < 0) {
                 selectNode = node;
