@@ -19,13 +19,13 @@ public class TreeNode<T> {
         return new TreeNode<>(value, null, null);
     }
 
-    public static <T> TreeNode<T> generateBinaryTree(T... arrays) {
+    public static <T> TreeNode<T> binaryTree(T... arrays) {
         Preconditions.checkNotNull(arrays);
         Arrays.sort(arrays);
-        return generateBinaryTree(arrays, 0, arrays.length - 1);
+        return binaryTree(arrays, 0, arrays.length - 1);
     }
 
-    private static <T> TreeNode<T> generateBinaryTree(T[] arrays, int from, int to) {
+    private static <T> TreeNode<T> binaryTree(T[] arrays, int from, int to) {
         if (from == to) {
             return new TreeNode<>(arrays[from], null, null);
         } else if (from >= to) {
@@ -33,8 +33,8 @@ public class TreeNode<T> {
         }
         int mid = (from + to) >>> 1;
         T value = arrays[mid];
-        TreeNode<T> left = generateBinaryTree(arrays, from, mid - 1);
-        TreeNode<T> right = generateBinaryTree(arrays, mid + 1, to);
+        TreeNode<T> left = binaryTree(arrays, from, mid - 1);
+        TreeNode<T> right = binaryTree(arrays, mid + 1, to);
 
         return new TreeNode<>(value, left, right);
     }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import com.sky.problem.Problem;
 import com.sky.problem.ProblemThreeSolutions;
@@ -58,6 +59,22 @@ public abstract class CommonTest<T, E> {
             onOutputReady(input, twoSolutionAlgo.resolve2(input));
         } else {
             onOutputReady(input, mAlgoToTest.resolve(input));
+        }
+    }
+
+    protected void check(T input, BiConsumer<T, E> consumer) {
+        if (mAlgoToTest instanceof ProblemThreeSolutions) {
+            ProblemThreeSolutions<T, E> threeSolutionAlgo = (ProblemThreeSolutions<T, E>) mAlgoToTest;
+
+            consumer.accept(input, threeSolutionAlgo.resolve(input));
+            consumer.accept(input, threeSolutionAlgo.resolve2(input));
+            consumer.accept(input, threeSolutionAlgo.resolve3(input));
+        } else if (mAlgoToTest instanceof ProblemTwoSolutions) {
+            ProblemTwoSolutions<T, E> twoSolutionAlgo = (ProblemTwoSolutions<T, E>) mAlgoToTest;
+            consumer.accept(input, twoSolutionAlgo.resolve(input));
+            consumer.accept(input, twoSolutionAlgo.resolve2(input));
+        } else {
+            consumer.accept(input, mAlgoToTest.resolve(input));
         }
     }
 

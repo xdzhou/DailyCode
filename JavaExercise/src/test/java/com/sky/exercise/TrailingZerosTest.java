@@ -14,7 +14,7 @@ public class TrailingZerosTest extends CommonTest<Integer, Integer> {
     @Test
     public void test() {
         for (int i = 0; i < 100; i++) {
-            check(i * 6, null);
+            check(i * 6, (Integer) null);
         }
     }
 }

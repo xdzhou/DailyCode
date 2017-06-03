@@ -8,7 +8,7 @@ public class TreeNodeTest {
 
     @Test
     public void testCompleteBinary() {
-        TreeNode<Integer> node = TreeNode.generateBinaryTree(1, 2, 3);
+        TreeNode<Integer> node = TreeNode.binaryTree(1, 2, 3);
 
         assertEquals(node.value(), Integer.valueOf(2));
         assertEquals(node.left().value(), Integer.valueOf(1));
@@ -17,7 +17,7 @@ public class TreeNodeTest {
 
     @Test
     public void testPartBinary() {
-        TreeNode<Integer> node = TreeNode.generateBinaryTree(1, 2, 3, 4);
+        TreeNode<Integer> node = TreeNode.binaryTree(1, 2, 3, 4);
 
         assertEquals(node.value(), Integer.valueOf(2));
         assertEquals(node.left().value(), Integer.valueOf(1));

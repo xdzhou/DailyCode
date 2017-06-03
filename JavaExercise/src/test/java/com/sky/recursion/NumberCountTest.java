@@ -13,8 +13,8 @@ public class NumberCountTest extends CommonTest<Integer, Integer[]> {
 
     @Test
     public void test() {
-        check(1235, null);
-        check(1212, null);
+        check(1235, (Integer[]) null);
+        check(1212, (Integer[]) null);
     }
 
 }
