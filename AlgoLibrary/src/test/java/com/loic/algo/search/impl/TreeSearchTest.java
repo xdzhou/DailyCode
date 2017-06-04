@@ -31,7 +31,7 @@ public class TreeSearchTest {
         Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 7);
 
         Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 7);
-        Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 7);
+        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 7);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class TreeSearchTest {
         //Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 16);
 
         Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 16);
-        Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 16);
+        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 16);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class TreeSearchTest {
         Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 24);
 
         Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 24);
-        Assert.assertTrue(testAlgo(new GeneticAlgorithm(), root, strategy).size() >= 24);
+        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 24);
     }
 
     private List<Direction> testAlgo(TreeSearch algo, PathState root, PathStateStrategy strategy) {
