@@ -1,0 +1,7 @@
+.*
+*.iml
+AlgoLibrary/build/
+AlgoLibrary/logContentFile.log
+JavaExercise/MyTest.java
+JavaExercise/build/
+JavaExercise/logContentFile.log
