@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import com.loic.algo.search.Timer;
 import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
-import com.loic.algo.search.genetic.CandidateSolver;
+import com.loic.algo.search.genetic.CandidateResolver;
 import com.loic.algo.search.genetic.GeneticAlgorithm;
 
 public class GeneticImpl implements TreeSearch {
@@ -36,12 +37,13 @@ public class GeneticImpl implements TreeSearch {
         if (next != null) return next;
 
         Resolver<Trans, State> resolver = new Resolver<>(root, param);
-        Gene<Trans> best = new GeneticAlgorithm<>(resolver).iterate(simuCount, population, 10, 50, 25);
+        Gene<Trans> best = new GeneticAlgorithm<>(resolver, resolver)
+            .iterate(simuCount, population, 10, 50, 25);
 
         return Optional.of(best.trans[0]);
     }
 
-    private static final class Resolver<Trans, State> implements CandidateSolver<Gene<Trans>> {
+    private static final class Resolver<Trans, State> implements CandidateResolver<Gene<Trans>>, Function<Gene<Trans>, Double> {
         private final State root;
         private final SearchParam<Trans, State> param;
 
@@ -69,7 +71,7 @@ public class GeneticImpl implements TreeSearch {
         }
 
         @Override
-        public double heuristic(Gene<Trans> transGene) {
+        public Double apply(Gene<Trans> transGene) {
             State curState = root;
             int depth = 0;
             for (int i = 0; i < param.getMaxDepth(); i++) {

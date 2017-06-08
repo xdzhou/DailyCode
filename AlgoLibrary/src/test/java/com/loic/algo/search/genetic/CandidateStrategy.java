@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.google.common.base.Preconditions;
 
-public class CandidateStrategy implements CandidateSolver<Combination> {
+public class CandidateStrategy implements CandidateResolver<Combination> {
     private final int bound;
     private Combination toBeFound;
 
@@ -21,16 +21,6 @@ public class CandidateStrategy implements CandidateSolver<Combination> {
     @Override
     public Combination generateRandomly(Random random) {
         return new Combination(random.nextInt(bound), random.nextInt(bound), random.nextInt(bound), random.nextInt(bound));
-    }
-
-    @Override
-    public double heuristic(Combination combination) {
-        int result = 0;
-        if (combination.first == toBeFound.first) result += 1;
-        if (combination.second == toBeFound.second) result += 1;
-        if (combination.third == toBeFound.third) result += 1;
-        if (combination.fourth == toBeFound.fourth) result += 1;
-        return result;
     }
 
     @Override
