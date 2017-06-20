@@ -1,5 +1,7 @@
 package com.loic.algo.search.genetic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +11,9 @@ public class GeneticAlgorithm<Gene> extends AbstractGenetic<Gene> {
     private final Map<Gene, Double> cache;
     private final Function<Gene, Double> heuristicFun;
 
-    public GeneticAlgorithm(CandidateResolver<Gene> resolver, Function<Gene, Double> heuristicFun) {
-        super(resolver);
-        this.heuristicFun = heuristicFun;
+    public GeneticAlgorithm(CandidateResolver<Gene> resolver, long timeout, Function<Gene, Double> heuristicFun) {
+        super(resolver, timeout);
+        this.heuristicFun = requireNonNull(heuristicFun);
         cache = new HashMap<>();
     }
 

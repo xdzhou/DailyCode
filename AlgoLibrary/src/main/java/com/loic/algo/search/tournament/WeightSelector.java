@@ -1,5 +1,6 @@
 package com.loic.algo.search.tournament;
 
+import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import java.lang.reflect.Array;
@@ -8,7 +9,6 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Range;
 import com.loic.algo.search.core.HeuristicStrategy;
 import com.loic.algo.search.core.HeuristicStrategy.Winess;
@@ -25,6 +25,7 @@ public class WeightSelector<State, Trans> {
     private TreeSearch algo;
     private State[] roots;
     private Range<Double>[] ranges;
+    private Comparator<State> stateComparator;
 
     public WeightSelector<State, Trans> withAlgo(TreeSearch algo) {
         this.algo = algo;
@@ -51,14 +52,19 @@ public class WeightSelector<State, Trans> {
         return this;
     }
 
+    public WeightSelector<State, Trans> withStateComparator(Comparator<State> stateComparator) {
+        this.stateComparator = stateComparator;
+        return this;
+    }
+
     public Double[] select() {
         requireNonNull(roots);
         requireNonNull(searchParam);
         requireNonNull(heuristicFun);
         requireNonNull(algo);
         requireNonNull(ranges);
-        Preconditions.checkState(roots.length > 0);
-        Preconditions.checkState(ranges.length > 0);
+        checkState(roots.length > 0);
+        checkState(ranges.length > 0);
 
         CombatSimulator<Double[]> simulator = new CombatSimulator<>(new WeightCandidateResolver(ranges), generateComparator());
 
@@ -91,16 +97,7 @@ public class WeightSelector<State, Trans> {
                 result[1] = state2.get();
                 state2 = algo.find(result[1], param2).map(t -> param2.applyStrategy().apply(result[1], t));
             }
-            if (!state1.isPresent() && state2.isPresent()) {
-                return param1.heuristicStrategy().winess(result[0]) == Winess.WIN ? 1 : -1;
-            } else if (!state2.isPresent() && state1.isPresent()) {
-                return param2.heuristicStrategy().winess(result[1]) == Winess.WIN ? -1 : 1;
-            } else {
-                Winess w1 = param1.heuristicStrategy().winess(result[0]);
-                Winess w2 = param1.heuristicStrategy().winess(result[1]);
-                if (w1 == w2) return 0;
-                else return w1 == Winess.WIN ? 1 : -1;
-            }
+            return stateComparator.compare(result[0], result[1]);
         };
     }
 

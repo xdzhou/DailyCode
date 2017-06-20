@@ -23,8 +23,6 @@ public class GeneticImpl implements TreeSearch {
     private static final int MAX_SAME_FITNESS_GENERATION = 7;
     private static final float DEFAULT_MUTATION_RATE = 0.1f;
 
-    private final Timer timer = new Timer();
-
     private int population = 100;
     private int simuCount = 100;
 
@@ -37,7 +35,7 @@ public class GeneticImpl implements TreeSearch {
         if (next != null) return next;
 
         Resolver<State, Trans> resolver = new Resolver<>(root, param);
-        Gene<Trans> best = new GeneticAlgorithm<>(resolver, resolver)
+        Gene<Trans> best = new GeneticAlgorithm<>(resolver, param.timerDuration(), resolver)
             .iterate(simuCount, population, 10, 50, 25);
 
         return Optional.of(best.trans[0]);

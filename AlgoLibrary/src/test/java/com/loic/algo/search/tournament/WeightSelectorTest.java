@@ -2,6 +2,7 @@ package com.loic.algo.search.tournament;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -10,11 +11,12 @@ import com.google.common.collect.Sets;
 import com.loic.algo.search.core.ApplyStrategy;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TransitionStrategy;
-import com.loic.algo.search.impl.AStarImpl;
+import com.loic.algo.search.impl.GeneticImpl;
 import org.testng.annotations.Test;
 
 public class WeightSelectorTest {
 
+    @Test
     public void test() {
         Stragety stragety = new Stragety();
 
@@ -29,15 +31,17 @@ public class WeightSelectorTest {
                 Range.closed(0d, 1d),
                 Range.closed(0d, 1d),
                 Range.closed(0d, 1d),
-                Range.closed(0d, 1d)
-                ).withHeuristicFun(((distri, depth, params) -> {
+                Range.closed(0d, 1d))
+            .withHeuristicFun(((distri, depth, params) -> {
                 int ave = distri.average();
-                return depth * params[0] + Math.abs(ave - distri.child[0]) * params[1]
+                return depth * params[0]
+                    + Math.abs(ave - distri.child[0]) * params[1]
                     + Math.abs(ave - distri.child[1]) * params[2]
                     + Math.abs(ave - distri.child[2]) * params[3]
                     + Math.abs(ave - distri.child[3]) * params[4];
             }))
-            .withAlgo(new AStarImpl())
+            .withAlgo(new GeneticImpl())
+            .withStateComparator(Comparator.comparingInt(Distri::min))
             .select();
         System.out.println(Arrays.toString(result));
     }
@@ -56,6 +60,10 @@ public class WeightSelectorTest {
                 ssum += i;
             }
             return ssum / 4;
+        }
+
+        public int min() {
+            return Arrays.stream(child).min().getAsInt();
         }
     }
 
