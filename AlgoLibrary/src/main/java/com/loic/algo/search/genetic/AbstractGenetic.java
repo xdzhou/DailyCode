@@ -21,7 +21,7 @@ public abstract class AbstractGenetic<Gene> {
     public Gene iterate(int iterationCount, int population, int selectionNumber, int mergedNumber, int mutatedNumber) {
         for (int i = 0; i < iterationCount; i++) {
             oneIteration(population, selectionNumber, mergedNumber, mutatedNumber);
-            LOG.error("after iterator {}: best gene is {}", i, populations.get(0));
+            LOG.trace("after iterator {}: best gene is {}", i, populations.get(0));
         }
         return populations.get(0);
     }

@@ -6,20 +6,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-class StateNode<Trans, State, T> {
+class StateNode<State, Trans, T> {
     private final State state;
     private final Trans appliedTransition;
     private int depth;
     private T additionalInfo;
 
-    private StateNode<Trans, State, T> parent;
-    private List<StateNode<Trans, State, T>> children;
+    private StateNode<State, Trans, T> parent;
+    private List<StateNode<State, Trans, T>> children;
 
-    public StateNode(State state, StateNode<Trans, State, T> parent, Trans appliedTransition) {
+    public StateNode(State state, StateNode<State, Trans, T> parent, Trans appliedTransition) {
         this(state, parent, appliedTransition, null);
     }
 
-    public StateNode(State state, StateNode<Trans, State, T> parent, Trans appliedTransition, T additionalInfo) {
+    public StateNode(State state, StateNode<State, Trans, T> parent, Trans appliedTransition, T additionalInfo) {
         this.state = Objects.requireNonNull(state);
         this.parent = parent;
         this.appliedTransition = appliedTransition;
@@ -31,7 +31,7 @@ class StateNode<Trans, State, T> {
         return state;
     }
 
-    public StateNode<Trans, State, T> parent() {
+    public StateNode<State, Trans, T> parent() {
         return parent;
     }
 
@@ -47,20 +47,20 @@ class StateNode<Trans, State, T> {
         return depth;
     }
 
-    public List<StateNode<Trans, State, T>> children() {
+    public List<StateNode<State, Trans, T>> children() {
         return children == null ? Collections.emptyList() : children;
     }
 
-    public void addChild(StateNode<Trans, State, T> child) {
+    public void addChild(StateNode<State, Trans, T> child) {
         if (children == null) {
             children = new ArrayList<>();
         }
         children.add(child);
     }
 
-    public StateNode<Trans, State, T> getChild(Trans appliedTransition) {
+    public StateNode<State, Trans, T> getChild(Trans appliedTransition) {
         Objects.requireNonNull(appliedTransition);
-        for (StateNode<Trans, State, T> child : children()) {
+        for (StateNode<State, Trans, T> child : children()) {
             if (appliedTransition.equals(child.appliedTransition)) {
                 return child;
             }
@@ -74,7 +74,7 @@ class StateNode<Trans, State, T> {
 
     public List<Trans> getPath() {
         List<Trans> list = new LinkedList<>();
-        StateNode<Trans, State, T> curNode = this;
+        StateNode<State, Trans, T> curNode = this;
         while (curNode != null) {
             list.add(0, curNode.appliedTransition);
             curNode = curNode.parent;

@@ -19,15 +19,15 @@ public class AStarImpl implements TreeSearch {
     private final Timer timer = new Timer();
 
     @Override
-    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+    public <State, Trans> Optional<Trans> find(State root, SearchParam<State, Trans> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
         if (next != null) return next;
 
-        StateNode<Trans, State, Double> rootNode = new StateNode<>(root, null, null);
-        PriorityQueue<StateNode<Trans, State, Double>> priorityQueue = new PriorityQueue<>((o1, o2) -> Double.compare(o2.info(), o1.info()));
+        StateNode<State, Trans, Double> rootNode = new StateNode<>(root, null, null);
+        PriorityQueue<StateNode<State, Trans, Double>> priorityQueue = new PriorityQueue<>((o1, o2) -> Double.compare(o2.info(), o1.info()));
         priorityQueue.add(rootNode);
 
         timer.startTimer(param.timerDuration());
@@ -38,7 +38,7 @@ public class AStarImpl implements TreeSearch {
                 LOG.debug("Timeout, quit loop");
                 break;
             }
-            StateNode<Trans, State, Double> curNode = priorityQueue.poll();
+            StateNode<State, Trans, Double> curNode = priorityQueue.poll();
             LOG.trace("poll state for transitions {}, with fitness {}", curNode.getPath(), curNode.info());
 
             Set<Trans> nexts = param.transitionStrategy().generate(curNode.state());
@@ -63,7 +63,7 @@ public class AStarImpl implements TreeSearch {
             .map(StateNode::getAppliedTransition);
     }
 
-    private <Trans, State> void updateInfo(StateNode<Trans, State, Double> node) {
+    private <State, Trans> void updateInfo(StateNode<State, Trans, Double> node) {
         if (node != null) {
             double bestChild = node.children().stream()
                 .reduce(Double.NEGATIVE_INFINITY, (best, n) -> Math.max(best, n.info()), Math::max);

@@ -16,7 +16,7 @@ import com.loic.algo.search.core.TreeSearch;
 public class MinimaxAlphaBeta implements TreeSearch {
 
     @Override
-    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+    public <State, Trans> Optional<Trans> find(State root, SearchParam<State, Trans> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
 
@@ -28,7 +28,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
         return Optional.ofNullable(result.first());
     }
 
-    private <Trans, State> Pair<Trans, Double> alphaBeta(SearchParam<Trans, State> param, State state, int depth, double alpha, double beta, boolean maxPlayer) {
+    private <State, Trans> Pair<Trans, Double> alphaBeta(SearchParam<State, Trans> param, State state, int depth, double alpha, double beta, boolean maxPlayer) {
         Set<Trans> transitions = param.transitionStrategy().generate(state);
 
         if (depth > param.getMaxDepth() || transitions.isEmpty()) {

@@ -22,8 +22,6 @@ public class CombatSimulatorTest {
         Assert.assertEquals(toBeFound, best);
     }
 
-
-
     public Function<Combination, Double> heuristic(Combination toBeFound) {
         return combination -> {
             int result = 0;

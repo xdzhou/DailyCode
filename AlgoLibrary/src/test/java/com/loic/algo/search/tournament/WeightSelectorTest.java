@@ -15,13 +15,12 @@ import org.testng.annotations.Test;
 
 public class WeightSelectorTest {
 
-    @Test
     public void test() {
         Stragety stragety = new Stragety();
 
         Double[] result = new WeightSelector<Distri, Integer>()
             .withRootStates(new Distri(100), new Distri(200))
-            .withSearchParam(SearchParam.<Integer, Distri>builder()
+            .withSearchParam(SearchParam.<Distri, Integer>builder()
                 .applyStrategy(stragety)
                 .transitionStrategy(stragety)
                 .maxDepth(10)
@@ -60,7 +59,7 @@ public class WeightSelectorTest {
         }
     }
 
-    private static class Stragety implements ApplyStrategy<Integer, Distri>, TransitionStrategy<Integer, Distri> {
+    private static class Stragety implements ApplyStrategy<Distri, Integer>, TransitionStrategy<Distri, Integer> {
         @Override
         public Distri apply(Distri distri, Integer integer) {
             Distri next = new Distri(distri.sum - 1);

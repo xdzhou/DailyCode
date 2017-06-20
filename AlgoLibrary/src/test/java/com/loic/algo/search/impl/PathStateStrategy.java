@@ -11,7 +11,7 @@ import com.loic.algo.search.core.HeuristicStrategy;
 import com.loic.algo.search.core.TransitionStrategy;
 import org.testng.Assert;
 
-public class PathStateStrategy implements ApplyStrategy<Direction, PathState>, HeuristicStrategy<PathState>, TransitionStrategy<Direction, PathState> {
+public class PathStateStrategy implements ApplyStrategy<PathState, Direction>, HeuristicStrategy<PathState>, TransitionStrategy<PathState, Direction> {
     private final MapInfo mapInfo;
     private int delta;
 

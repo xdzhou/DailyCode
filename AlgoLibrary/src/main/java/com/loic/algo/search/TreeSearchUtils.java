@@ -19,7 +19,7 @@ public class TreeSearchUtils {
     }
 
     //FIXME should not supposed to return null
-    public static <Trans, State> Optional<Trans> nextTrans(State state, TransitionStrategy<Trans, State> strategy) {
+    public static <State, Trans> Optional<Trans> nextTrans(State state, TransitionStrategy<State, Trans> strategy) {
         Set<Trans> trans = strategy.generate(state);
         if (trans.isEmpty()) {
             return Optional.empty();

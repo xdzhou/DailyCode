@@ -72,7 +72,7 @@ public class TreeSearchTest {
 
     private List<Direction> testAlgo(TreeSearch algo, PathState root, PathStateStrategy strategy) {
         List<Direction> list = Lists.newArrayList();
-        SearchParam<Direction, PathState> searchParam = SearchParam.<Direction, PathState>builder()
+        SearchParam<PathState, Direction> searchParam = SearchParam.<PathState, Direction>builder()
             .applyStrategy(strategy)
             .heuristicStrategy(strategy)
             .transitionStrategy(strategy)

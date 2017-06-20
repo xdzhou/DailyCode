@@ -4,18 +4,18 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.Preconditions;
 
-public class SearchParam<Trans, State> {
-    private final ApplyStrategy<Trans, State> applyStrategy;
+public class SearchParam<State, Trans> {
+    private final ApplyStrategy<State, Trans> applyStrategy;
     private final HeuristicStrategy<State> heuristicStrategy;
-    private final TransitionStrategy<Trans, State> transitionStrategy;
+    private final TransitionStrategy<State, Trans> transitionStrategy;
     private int maxDepth;
     private long timerDuration;
 
     private SearchParam(int maxDepth,
                         long timerDuration,
-                        ApplyStrategy<Trans, State> applyStrategy,
+                        ApplyStrategy<State, Trans> applyStrategy,
                         HeuristicStrategy<State> heuristicStrategy,
-                        TransitionStrategy<Trans, State> transitionStrategy) {
+                        TransitionStrategy<State, Trans> transitionStrategy) {
         Preconditions.checkState(maxDepth > 0, "Max deep must bigger than 0");
         this.maxDepth = maxDepth;
         this.timerDuration = timerDuration;
@@ -24,7 +24,7 @@ public class SearchParam<Trans, State> {
         this.transitionStrategy = requireNonNull(transitionStrategy);
     }
 
-    public static <Trans, State> Builder<Trans, State> builder() {
+    public static <State, Trans> Builder<State, Trans> builder() {
         return new Builder<>();
     }
 
@@ -36,7 +36,7 @@ public class SearchParam<Trans, State> {
         return timerDuration;
     }
 
-    public ApplyStrategy<Trans, State> applyStrategy() {
+    public ApplyStrategy<State, Trans> applyStrategy() {
         return applyStrategy;
     }
 
@@ -44,52 +44,52 @@ public class SearchParam<Trans, State> {
         return heuristicStrategy;
     }
 
-    public TransitionStrategy<Trans, State> transitionStrategy() {
+    public TransitionStrategy<State, Trans> transitionStrategy() {
         return transitionStrategy;
     }
 
-    public SearchParam<Trans, State> map(HeuristicStrategy<State> heuristicStrategy) {
+    public SearchParam<State, Trans> map(HeuristicStrategy<State> heuristicStrategy) {
         return new SearchParam<>(maxDepth, timerDuration, applyStrategy, heuristicStrategy, transitionStrategy);
     }
 
-    public SearchParam<Trans, State> map(TransitionStrategy<Trans, State> transitionStrategy) {
+    public SearchParam<State, Trans> map(TransitionStrategy<State, Trans> transitionStrategy) {
         return new SearchParam<>(maxDepth, timerDuration, applyStrategy, heuristicStrategy, transitionStrategy);
     }
 
-    public static class Builder<Trans, State> {
+    public static class Builder<State, Trans> {
         private int maxDepth = 10;
         private long timerDuration = Long.MAX_VALUE;
 
-        private ApplyStrategy<Trans, State> applyStrategy;
+        private ApplyStrategy<State, Trans> applyStrategy;
         private HeuristicStrategy<State> heuristicStrategy;
-        private TransitionStrategy<Trans, State> transitionStrategy;
+        private TransitionStrategy<State, Trans> transitionStrategy;
 
-        public Builder<Trans, State> maxDepth(int maxDepth) {
+        public Builder<State, Trans> maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
             return this;
         }
 
-        public Builder<Trans, State> timerDuration(long timerDuration) {
+        public Builder<State, Trans> timerDuration(long timerDuration) {
             this.timerDuration = timerDuration;
             return this;
         }
 
-        public Builder<Trans, State> applyStrategy(ApplyStrategy<Trans, State> strategy) {
+        public Builder<State, Trans> applyStrategy(ApplyStrategy<State, Trans> strategy) {
             this.applyStrategy = strategy;
             return this;
         }
 
-        public Builder<Trans, State> heuristicStrategy(HeuristicStrategy<State> strategy) {
+        public Builder<State, Trans> heuristicStrategy(HeuristicStrategy<State> strategy) {
             this.heuristicStrategy = strategy;
             return this;
         }
 
-        public Builder<Trans, State> transitionStrategy(TransitionStrategy<Trans, State> strategy) {
+        public Builder<State, Trans> transitionStrategy(TransitionStrategy<State, Trans> strategy) {
             this.transitionStrategy = strategy;
             return this;
         }
 
-        public SearchParam<Trans, State> build() {
+        public SearchParam<State, Trans> build() {
             return new SearchParam<>(maxDepth, timerDuration, applyStrategy, heuristicStrategy, transitionStrategy);
         }
     }

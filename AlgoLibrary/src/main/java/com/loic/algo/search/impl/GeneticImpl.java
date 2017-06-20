@@ -29,25 +29,25 @@ public class GeneticImpl implements TreeSearch {
     private int simuCount = 100;
 
     @Override
-    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+    public <State, Trans> Optional<Trans> find(State root, SearchParam<State, Trans> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
         if (next != null) return next;
 
-        Resolver<Trans, State> resolver = new Resolver<>(root, param);
+        Resolver<State, Trans> resolver = new Resolver<>(root, param);
         Gene<Trans> best = new GeneticAlgorithm<>(resolver, resolver)
             .iterate(simuCount, population, 10, 50, 25);
 
         return Optional.of(best.trans[0]);
     }
 
-    private static final class Resolver<Trans, State> implements CandidateResolver<Gene<Trans>>, Function<Gene<Trans>, Double> {
+    private static final class Resolver<State, Trans> implements CandidateResolver<Gene<Trans>>, Function<Gene<Trans>, Double> {
         private final State root;
-        private final SearchParam<Trans, State> param;
+        private final SearchParam<State, Trans> param;
 
-        private Resolver(State root, SearchParam<Trans, State> param) {
+        private Resolver(State root, SearchParam<State, Trans> param) {
             this.root = root;
             this.param = param;
         }

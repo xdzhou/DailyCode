@@ -13,7 +13,7 @@ import com.loic.algo.search.core.TreeSearch;
 public class BruteForce implements TreeSearch {
 
     @Override
-    public <Trans, State> Optional<Trans> find(State root, SearchParam<Trans, State> param) {
+    public <State, Trans> Optional<Trans> find(State root, SearchParam<State, Trans> param) {
         requireNonNull(root, "Root state is mandatory");
         requireNonNull(param, "SearchParam is mandatory");
 
@@ -25,7 +25,7 @@ public class BruteForce implements TreeSearch {
         return Optional.ofNullable(best.first());
     }
 
-    private <Trans, State> Pair<Trans, Double> process(SearchParam<Trans, State> param, State state, int depth) {
+    private <State, Trans> Pair<Trans, Double> process(SearchParam<State, Trans> param, State state, int depth) {
         if (depth > param.getMaxDepth()) {
             return Pair.of(null, param.heuristicStrategy().heuristic(state, depth));
         } else {

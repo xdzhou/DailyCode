@@ -20,7 +20,7 @@ import io.reactivex.functions.Function3;
 public class WeightSelector<State, Trans> {
     private final Random random = new Random(new Date().getTime());
 
-    private SearchParam<Trans, State> searchParam;
+    private SearchParam<State, Trans> searchParam;
     private Function3<State, Integer, Double[], Double> heuristicFun;
     private TreeSearch algo;
     private State[] roots;
@@ -36,7 +36,7 @@ public class WeightSelector<State, Trans> {
         return this;
     }
 
-    public WeightSelector<State, Trans> withSearchParam(SearchParam<Trans, State> searchParam) {
+    public WeightSelector<State, Trans> withSearchParam(SearchParam<State, Trans> searchParam) {
         this.searchParam = searchParam;
         return this;
     }
@@ -68,14 +68,14 @@ public class WeightSelector<State, Trans> {
     private Comparator<Double[]> generateComparator() {
         return (g1, g2) -> {
             State root = roots[random.nextInt(roots.length)];
-            SearchParam<Trans, State> param1 = searchParam.map((s, d) -> {
+            SearchParam<State, Trans> param1 = searchParam.map((s, d) -> {
                 try {
                     return heuristicFun.apply(s, d, g1);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
-            SearchParam<Trans, State> param2 = searchParam.map((s, d) -> {
+            SearchParam<State, Trans> param2 = searchParam.map((s, d) -> {
                 try {
                     return heuristicFun.apply(s, d, g2);
                 } catch (Exception e) {
