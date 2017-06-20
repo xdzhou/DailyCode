@@ -14,7 +14,6 @@ public class GeneticAlgorithmTest {
         strategy.setToBeFound(toBeFound);
         GeneticAlgorithm<Combination> algo = new GeneticAlgorithm<>(strategy, heuristic(toBeFound));
         Combination best = algo.iterate(100, 25, 5, 20, 20);
-        //algo.printTo(System.err);
         Assert.assertEquals(toBeFound, best);
     }
 

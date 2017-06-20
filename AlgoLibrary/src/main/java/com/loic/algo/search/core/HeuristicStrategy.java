@@ -3,11 +3,11 @@ package com.loic.algo.search.core;
 public interface HeuristicStrategy<State> {
     double heuristic(State state, int depth);
 
-    default boolean isWin(State state) {
-        return false;
+    default Winess winess(State state) {
+        return Winess.UNKNOWN;
     }
 
-    default boolean isLoss(State state) {
-        return false;
+    enum Winess {
+        WIN, LOSS, UNKNOWN
     }
 }

@@ -4,7 +4,11 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractGenetic<Gene> {
+    private final static Logger LOG = LoggerFactory.getLogger(AbstractGenetic.class);
     private final Random random = new Random(new Date().getTime());
 
     private final CandidateResolver<Gene> resolver;
@@ -17,6 +21,7 @@ public abstract class AbstractGenetic<Gene> {
     public Gene iterate(int iterationCount, int population, int selectionNumber, int mergedNumber, int mutatedNumber) {
         for (int i = 0; i < iterationCount; i++) {
             oneIteration(population, selectionNumber, mergedNumber, mutatedNumber);
+            LOG.error("after iterator {}: best gene is {}", i, populations.get(0));
         }
         return populations.get(0);
     }

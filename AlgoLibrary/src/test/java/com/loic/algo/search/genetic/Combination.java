@@ -1,10 +1,10 @@
 package com.loic.algo.search.genetic;
 
 public class Combination {
-    int first;
-    int second;
-    int third;
-    int fourth;
+    public int first;
+    public int second;
+    public int third;
+    public int fourth;
 
     public Combination(int first, int second, int third, int fourth) {
         this.first = first;

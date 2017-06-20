@@ -20,7 +20,7 @@ public class SearchParam<Trans, State> {
         this.maxDepth = maxDepth;
         this.timerDuration = timerDuration;
         this.applyStrategy = requireNonNull(applyStrategy);
-        this.heuristicStrategy = requireNonNull(heuristicStrategy);
+        this.heuristicStrategy = heuristicStrategy;
         this.transitionStrategy = requireNonNull(transitionStrategy);
     }
 
