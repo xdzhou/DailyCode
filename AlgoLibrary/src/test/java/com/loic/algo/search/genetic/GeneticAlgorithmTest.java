@@ -18,14 +18,21 @@ public class GeneticAlgorithmTest {
     }
 
 
-
     public Function<Combination, Double> heuristic(Combination toBeFound) {
         return combination -> {
             int result = 0;
-            if (combination.first == toBeFound.first) result += 1;
-            if (combination.second == toBeFound.second) result += 1;
-            if (combination.third == toBeFound.third) result += 1;
-            if (combination.fourth == toBeFound.fourth) result += 1;
+            if (combination.first == toBeFound.first) {
+                result += 1;
+            }
+            if (combination.second == toBeFound.second) {
+                result += 1;
+            }
+            if (combination.third == toBeFound.third) {
+                result += 1;
+            }
+            if (combination.fourth == toBeFound.fourth) {
+                result += 1;
+            }
             return (double) result;
         };
     }

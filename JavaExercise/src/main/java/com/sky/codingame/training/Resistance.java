@@ -36,9 +36,9 @@ public class Resistance {
 
     private int getNumMsg(int position) {
         int maxLen = morseLine.length();
-        if (position == maxLen)
+        if (position == maxLen) {
             return 1;
-        else {
+        } else {
             int nbMessage = 0;
             int newPossion = position;
             Node currentNode = root;
@@ -47,8 +47,9 @@ public class Resistance {
                     if (currentNode.dotNode != null) {
                         currentNode = currentNode.dotNode;
                         newPossion++;
-                        if (currentNode.isComplet)
+                        if (currentNode.isComplet) {
                             nbMessage += getNumMsg(newPossion);
+                        }
                     } else {
                         break;
                     }
@@ -56,8 +57,9 @@ public class Resistance {
                     if (currentNode.dasheNode != null) {
                         currentNode = currentNode.dasheNode;
                         newPossion++;
-                        if (currentNode.isComplet)
+                        if (currentNode.isComplet) {
                             nbMessage += getNumMsg(newPossion);
+                        }
                     } else {
                         break;
                     }

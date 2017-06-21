@@ -36,7 +36,9 @@ public class JamMain {
                 throw new IllegalArgumentException(inputFolder.getAbsolutePath() + " isn't a folder");
             }
             for (File input : inputFolder.listFiles()) {
-                if (!input.getName().endsWith("in")) continue;
+                if (!input.getName().endsWith("in")) {
+                    continue;
+                }
 
                 System.out.println("Starting resolve input file : " + input.getName());
                 PrintWriter writer = new PrintWriter(input.getAbsolutePath().replace(".in", ".out"), "UTF-8");

@@ -79,19 +79,31 @@ class SkynetBridge {
                 List<Command> retVal = null;
                 for (int i = 0; i <= 5 && retVal == null; i++) {
                     Command com = Command.values()[i];
-                    if (com == Command.UP && curY.contains(0)) continue;
-                    if (com == Command.DOWN && curY.contains(3)) continue;
-                    if (com == Command.SLOW && curSpeed <= 1) continue;
+                    if (com == Command.UP && curY.contains(0)) {
+                        continue;
+                    }
+                    if (com == Command.DOWN && curY.contains(3)) {
+                        continue;
+                    }
+                    if (com == Command.SLOW && curSpeed <= 1) {
+                        continue;
+                    }
                     commands.add(com);
                     int newSpeed;
-                    if (com == Command.SPEED) newSpeed = curSpeed + 1;
-                    else if (com == Command.SLOW) newSpeed = curSpeed - 1;
-                    else newSpeed = curSpeed;
+                    if (com == Command.SPEED) {
+                        newSpeed = curSpeed + 1;
+                    } else if (com == Command.SLOW) {
+                        newSpeed = curSpeed - 1;
+                    } else {
+                        newSpeed = curSpeed;
+                    }
 
                     List<Integer> newY = applyCommand(curX, newSpeed, new ArrayList<>(curY), com);
                     retVal = find(newSpeed, curX + newSpeed, newY, commands);
 
-                    if (retVal == null) commands.remove(commands.size() - 1);
+                    if (retVal == null) {
+                        commands.remove(commands.size() - 1);
+                    }
                 }
                 return retVal;
             }
@@ -103,10 +115,16 @@ class SkynetBridge {
         Iterator<Integer> iterator = curY.iterator();
         while (iterator.hasNext()) {
             int y = iterator.next();
-            if (hasHole(curX, y, speed, com)) iterator.remove();
+            if (hasHole(curX, y, speed, com)) {
+                iterator.remove();
+            }
         }
-        if (com == Command.DOWN) addDelta(curY, 1);
-        if (com == Command.UP) addDelta(curY, -1);
+        if (com == Command.DOWN) {
+            addDelta(curY, 1);
+        }
+        if (com == Command.UP) {
+            addDelta(curY, -1);
+        }
         return curY;
     }
 
@@ -125,11 +143,15 @@ class SkynetBridge {
             return hasHole(y, x + speed, x + speed);
         } else if (com == Command.UP) {
             boolean retVal = hasHole(y, x + 1, x + speed - 1);
-            if (!retVal) retVal = hasHole(y - 1, x + 1, x + speed);
+            if (!retVal) {
+                retVal = hasHole(y - 1, x + 1, x + speed);
+            }
             return retVal;
         } else if (com == Command.DOWN) {
             boolean retVal = hasHole(y, x + 1, x + speed - 1);
-            if (!retVal) retVal = hasHole(y + 1, x + 1, x + speed);
+            if (!retVal) {
+                retVal = hasHole(y + 1, x + 1, x + speed);
+            }
             return retVal;
         }
         return false;
@@ -138,8 +160,12 @@ class SkynetBridge {
     private boolean hasHole(int y, int startX, int endX) {
         if (startX <= endX) {
             int len = mLanes[y].length();
-            if (endX >= len) endX = len - 1;
-            if (startX >= len) startX = len - 1;
+            if (endX >= len) {
+                endX = len - 1;
+            }
+            if (startX >= len) {
+                startX = len - 1;
+            }
             for (int i = startX; i <= endX; i++) {
                 if (mLanes[y].charAt(i) == '0') {
                     System.err.println("has hole for y:" + y + ", startX:" + startX + ", endX:" + endX);

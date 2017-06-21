@@ -36,12 +36,14 @@ public class LCMSet {
             }
         }
         for (int i = 0; i < listA.size(); i++) {
-            if (!isLCM(commonList, listA.get(i)))
+            if (!isLCM(commonList, listA.get(i))) {
                 return "Not equal";
+            }
         }
         for (int i = 0; i < listB.size(); i++) {
-            if (!isLCM(commonList, listB.get(i)))
+            if (!isLCM(commonList, listB.get(i))) {
                 return "Not equal";
+            }
         }
         return "Equal";
     }
@@ -53,10 +55,11 @@ public class LCMSet {
                 minMulti = minCommonMultiple(minMulti, list.get(i));
             }
         }
-        if (minMulti == x)
+        if (minMulti == x) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     private int minCommonMultiple(int m, int n) {

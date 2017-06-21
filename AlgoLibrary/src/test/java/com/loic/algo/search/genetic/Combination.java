@@ -15,14 +15,24 @@ public class Combination {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Combination that = (Combination) o;
 
-        if (first != that.first) return false;
-        if (second != that.second) return false;
-        if (third != that.third) return false;
+        if (first != that.first) {
+            return false;
+        }
+        if (second != that.second) {
+            return false;
+        }
+        if (third != that.third) {
+            return false;
+        }
         return fourth == that.fourth;
     }
 

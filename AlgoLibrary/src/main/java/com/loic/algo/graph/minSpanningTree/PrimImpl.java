@@ -43,7 +43,9 @@ public class PrimImpl implements IMinSpanningTree {
             N newNode = edge.nodeU();
             if (!openList.contains(newNode)) {
                 newNode = edge.nodeV();
-                if (!openList.contains(newNode)) continue;
+                if (!openList.contains(newNode)) {
+                    continue;
+                }
             }
 
             LOG.debug("find a MinSpanTree edge : {}", edge);

@@ -14,11 +14,15 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
     @Override
     public String resolve(String param) {
         Preconditions.checkNotNull(param);
-        if (param.length() <= 1) return NO_ANSWER;
+        if (param.length() <= 1) {
+            return NO_ANSWER;
+        }
         char[] datas = param.toCharArray();
         int curIndex = datas.length - 2;
         while (curIndex >= 0) {
-            if (datas[curIndex] < datas[curIndex + 1]) break;
+            if (datas[curIndex] < datas[curIndex + 1]) {
+                break;
+            }
             curIndex--;
         }
         if (curIndex < 0) {
@@ -34,8 +38,11 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
             }
 
             int changeIndex = Arrays.binarySearch(datas, curIndex + 1, datas.length, datas[curIndex]);
-            if (changeIndex < 0) changeIndex = -changeIndex - 1;
-            else changeIndex++;
+            if (changeIndex < 0) {
+                changeIndex = -changeIndex - 1;
+            } else {
+                changeIndex++;
+            }
             char c = datas[curIndex];
             datas[curIndex] = datas[changeIndex];
             datas[changeIndex] = c;
@@ -48,15 +55,18 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
     public String resolve2(String param) {
         char[] array = param.toCharArray();
         int i = array.length - 1;
-        while (i > 0 && array[i - 1] >= array[i])
+        while (i > 0 && array[i - 1] >= array[i]) {
             i--;
-        if (i <= 0)
+        }
+        if (i <= 0) {
             return NO_ANSWER;
+        }
 
         // Find successor to pivot
         int j = array.length - 1;
-        while (array[j] <= array[i - 1])
+        while (array[j] <= array[i - 1]) {
             j--;
+        }
         char temp = array[i - 1];
         array[i - 1] = array[j];
         array[j] = temp;

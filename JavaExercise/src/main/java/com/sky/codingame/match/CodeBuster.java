@@ -39,12 +39,17 @@ public class CodeBuster {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 6; j++) {
                 int x = 1500 + j * 3000;
-                if (j == 5) x = 15500;
+                if (j == 5) {
+                    x = 15500;
+                }
                 mZoneCenters[i * 6 + j] = new Coord(x, 1500 + i * 3000);
             }
         }
-        if (mTeamId == 0) mZonePassed[0] = true;
-        else mZonePassed[mZonePassed.length - 1] = true;
+        if (mTeamId == 0) {
+            mZonePassed[0] = true;
+        } else {
+            mZonePassed[mZonePassed.length - 1] = true;
+        }
     }
 
     public static void main(String args[]) {
@@ -97,7 +102,9 @@ public class CodeBuster {
     private Buster getBusterById(int id, int team) {
         List<Buster> searchList = (team == mTeamId) ? mMyBusters : mOtherBusters;
         for (Buster buster : searchList) {
-            if (buster.mId == id) return buster;
+            if (buster.mId == id) {
+                return buster;
+            }
         }
         Buster b = new Buster(id);
         searchList.add(b);
@@ -106,7 +113,9 @@ public class CodeBuster {
 
     private Ghost getGhostById(int id) {
         for (Ghost ghost : mGhosts) {
-            if (ghost.mId == id) return ghost;
+            if (ghost.mId == id) {
+                return ghost;
+            }
         }
         Ghost ghost = new Ghost(id);
         mGhosts.add(ghost);
@@ -145,10 +154,16 @@ public class CodeBuster {
             buster.mValue = value;
             if (type != mTeamId) {
                 int trustValue;
-                if (buster.mState == 2) trustValue = value;
-                else if (buster.mState == 3) trustValue = 9;
-                else trustValue = 4;
-                if (trustValue < 3) trustValue = 3;
+                if (buster.mState == 2) {
+                    trustValue = value;
+                } else if (buster.mState == 3) {
+                    trustValue = 9;
+                } else {
+                    trustValue = 4;
+                }
+                if (trustValue < 3) {
+                    trustValue = 3;
+                }
                 buster.updateTrust(trustValue);
             }
             entity = buster;
@@ -162,12 +177,16 @@ public class CodeBuster {
     }
 
     private void afterRefresh() {
-        if (mGameInfo.mBaseCaptureInfluence > 0) mGameInfo.mBaseCaptureInfluence--;
+        if (mGameInfo.mBaseCaptureInfluence > 0) {
+            mGameInfo.mBaseCaptureInfluence--;
+        }
         Iterator<Buster> iterator = mOtherBusters.iterator();
         while (iterator.hasNext()) {
             Buster b = iterator.next();
             b.dishonesty();
-            if (b.mTrustValue <= 0) iterator.remove();
+            if (b.mTrustValue <= 0) {
+                iterator.remove();
+            }
             if (b.getDis(mBasePosition) < 2500) {
                 mGameInfo.mBaseCaptureInfluence = 6;
             }
@@ -183,7 +202,9 @@ public class CodeBuster {
                         closeToMyBuster = true;
                     }
                 }
-                if (closeToMyBuster) ghostIterator.remove();
+                if (closeToMyBuster) {
+                    ghostIterator.remove();
+                }
             }
         }
 
@@ -238,7 +259,9 @@ public class CodeBuster {
 
     private int getUnSearchedPoint(Buster buster, List<Integer> toSearchIndex) {
         int line = buster.mPosition.y / 3000;
-        if (line > 2) line = 2;
+        if (line > 2) {
+            line = 2;
+        }
         int col = buster.mPosition.x / 3000;
         int index = line * 6 + col;
         if (!mZonePassed[index] && !toSearchIndex.contains(index)) {
@@ -261,10 +284,18 @@ public class CodeBuster {
                     }
                     int x = value / 6;
                     int y = value % 6;
-                    if (x <= line) checkIndex(x - 1, y, size, list);
-                    if (y <= col) checkIndex(x, y - 1, size, list);
-                    if (y >= col) checkIndex(x, y + 1, size, list);
-                    if (x >= line) checkIndex(x + 1, y, size, list);
+                    if (x <= line) {
+                        checkIndex(x - 1, y, size, list);
+                    }
+                    if (y <= col) {
+                        checkIndex(x, y - 1, size, list);
+                    }
+                    if (y >= col) {
+                        checkIndex(x, y + 1, size, list);
+                    }
+                    if (x >= line) {
+                        checkIndex(x + 1, y, size, list);
+                    }
                 }
             }
         }
@@ -274,7 +305,9 @@ public class CodeBuster {
 
     private String searchGhost(Buster buster, List<Integer> toSearchIndex) {
         int searchIndex = getUnSearchedPoint(buster, toSearchIndex);
-        if (searchIndex < 0) throw new RuntimeException("ERROR : no zone to search...");
+        if (searchIndex < 0) {
+            throw new RuntimeException("ERROR : no zone to search...");
+        }
         Coord p = mZoneCenters[searchIndex];
         System.err.println(buster + " will search ghost at point " + p);
         return "MOVE " + p.x + " " + p.y;
@@ -292,7 +325,9 @@ public class CodeBuster {
 
     private boolean hasGhostAtSamePosition(Buster buster) {
         for (Ghost ghost : mGhosts) {
-            if (ghost.isSamePosition(buster)) return true;
+            if (ghost.isSamePosition(buster)) {
+                return true;
+            }
         }
         return false;
     }
@@ -300,7 +335,9 @@ public class CodeBuster {
     private int getUnSearchZoneCount() {
         int count = 0;
         for (boolean b : mZonePassed) {
-            if (!b) count++;
+            if (!b) {
+                count++;
+            }
         }
         return count;
     }
@@ -312,9 +349,14 @@ public class CodeBuster {
                 int index = i * 6 + j;
                 if (toSearchIndex.contains(index)) {
                     sb.append('M');
-                    if (mZonePassed[index]) throw new RuntimeException("ERROR is true ????");
-                } else if (mZonePassed[index]) sb.append('O');
-                else sb.append('X');
+                    if (mZonePassed[index]) {
+                        throw new RuntimeException("ERROR is true ????");
+                    }
+                } else if (mZonePassed[index]) {
+                    sb.append('O');
+                } else {
+                    sb.append('X');
+                }
             }
             sb.append('\n');
         }
@@ -335,7 +377,9 @@ public class CodeBuster {
                     Iterator<Buster> iterator = mOtherBusters.iterator();
                     while (iterator.hasNext()) {
                         Buster otherBuster = iterator.next();
-                        if (Math.abs(otherBuster.mState) == 2) continue;
+                        if (Math.abs(otherBuster.mState) == 2) {
+                            continue;
+                        }
                         float dis = b.getDis(otherBuster);
                         if (dis <= 2200) {
                             mGameInfo.mNeedHelpBuster = b;
@@ -366,12 +410,15 @@ public class CodeBuster {
         mGameInfo.mCloseOpponent.clear();
         for (int i = 0; i < mMyBusters.size(); i++) {
             Buster myBuster = mMyBusters.get(i);
-            if (myBuster.mState == 2) continue;
+            if (myBuster.mState == 2) {
+                continue;
+            }
             Buster single = null;
             for (Buster b : mOtherBusters) {
                 if (myBuster.getDis(b) < 1760) {
-                    if (single == null) single = b;
-                    else {
+                    if (single == null) {
+                        single = b;
+                    } else {
                         single = null;
                         break;
                     }
@@ -405,7 +452,9 @@ public class CodeBuster {
             Iterator<Buster> iterator = mOtherBusters.iterator();
             while (iterator.hasNext()) {
                 Buster otherBuster = iterator.next();
-                if (Math.abs(otherBuster.mState) == 2) continue;
+                if (Math.abs(otherBuster.mState) == 2) {
+                    continue;
+                }
                 float dis = buster.getDis(otherBuster);
                 if (dis <= 1760) {
                     if (buster.mChargeTurn >= 20) {
@@ -430,7 +479,9 @@ public class CodeBuster {
             }
         }
         //releasing & busting
-        if (buster.mState == 1) return releaseGhost(buster);
+        if (buster.mState == 1) {
+            return releaseGhost(buster);
+        }
 
         //catch opponent buster
         if (!mOtherBusters.isEmpty()) {
@@ -439,8 +490,9 @@ public class CodeBuster {
             while (curIndex < mOtherBusters.size()) {
                 Buster otherBuster = mOtherBusters.get(curIndex);
                 if (buster.getDis(otherBuster) <= 1760) {
-                    if (hasGhostAtSamePosition(buster)) return trapOtherBuster(buster, otherBuster);
-                    else if (otherBuster.mState == 1 && (otherBuster.getDis(mOpponentBasePosition) / 800f - 2 + buster.mChargeTurn >= 20)) {
+                    if (hasGhostAtSamePosition(buster)) {
+                        return trapOtherBuster(buster, otherBuster);
+                    } else if (otherBuster.mState == 1 && (otherBuster.getDis(mOpponentBasePosition) / 800f - 2 + buster.mChargeTurn >= 20)) {
                         return trapOtherBuster(buster, otherBuster);
                     }
                 }
@@ -490,7 +542,9 @@ public class CodeBuster {
                 }
             }
             System.err.println("defend last ghost for Buster : " + carringBust);
-            if (carringBust != null) return carringBust.moveToMe();
+            if (carringBust != null) {
+                return carringBust.moveToMe();
+            }
         }
         if (mDefenderCount >= 2) {
             if (buster.mPosition.getDis(0, 9000) < buster.mPosition.getDis(16000, 0)) {
@@ -594,10 +648,18 @@ public class CodeBuster {
             if (nullable && (dx < 0 || dx >= WIDTH || dy < 0 || dy >= HEIGHT)) {
                 return null;
             }
-            if (dx < 0) dx = 0;
-            if (dx >= WIDTH) dx = WIDTH - 1;
-            if (dy < 0) dy = 0;
-            if (dy >= HEIGHT) dy = HEIGHT - 1;
+            if (dx < 0) {
+                dx = 0;
+            }
+            if (dx >= WIDTH) {
+                dx = WIDTH - 1;
+            }
+            if (dy < 0) {
+                dy = 0;
+            }
+            if (dy >= HEIGHT) {
+                dy = HEIGHT - 1;
+            }
             return new Coord(dx, dy);
         }
 

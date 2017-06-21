@@ -10,8 +10,12 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
 
     @Override
     public String resolve(Integer[] param) {
-        if (param.length == 0) return NO_ANSWER;
-        if (param.length == 1) return String.valueOf(0);
+        if (param.length == 0) {
+            return NO_ANSWER;
+        }
+        if (param.length == 1) {
+            return String.valueOf(0);
+        }
 
         int sum = 0;
         for (int i = 0; i < param.length; i++) {
@@ -19,12 +23,16 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
             //find bigger number count in front
             int j = i - 1;
             while (j >= 0) {
-                if (param[j] > param[i]) bribes--;
+                if (param[j] > param[i]) {
+                    bribes--;
+                }
                 j--;
             }
             bribes = param[i] - (i + 1) - bribes;
 
-            if (bribes < 0 || bribes > 2) return NO_ANSWER;
+            if (bribes < 0 || bribes > 2) {
+                return NO_ANSWER;
+            }
             sum += bribes;
         }
         return String.valueOf(sum);
@@ -32,8 +40,12 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
 
     @Override
     public String resolve2(Integer[] param) {
-        if (param.length == 0) return NO_ANSWER;
-        if (param.length == 1) return String.valueOf(0);
+        if (param.length == 0) {
+            return NO_ANSWER;
+        }
+        if (param.length == 1) {
+            return String.valueOf(0);
+        }
 
         Integer[] positions = new Integer[param.length];
         for (int i = 0; i < param.length; i++) {
@@ -52,31 +64,41 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
             }
 
             int bribes = 0;
-            if (i == 0) bribes = 0;
-            else if (values[i] == 0) bribes = -i;
-            else {
+            if (i == 0) {
+                bribes = 0;
+            } else if (values[i] == 0) {
+                bribes = -i;
+            } else {
                 int positionCheckNb = Math.min(i, len - 1 - i);
                 int valueCheckNb = Math.min(values[i], len - 1 - values[i]);
                 if (positionCheckNb < valueCheckNb) {
                     if (i < len - 1 - i) {
                         for (int j = 0; j < i; j++) {
-                            if (values[j] > values[i]) bribes++;
+                            if (values[j] > values[i]) {
+                                bribes++;
+                            }
                         }
                     } else {
                         bribes = len - 1 - values[i]; //max possible count
                         for (int j = i + 1; j < len; j++) {
-                            if (values[j] > values[i]) bribes--;
+                            if (values[j] > values[i]) {
+                                bribes--;
+                            }
                         }
                     }
                 } else {
                     if (values[i] < len - 1 - values[i]) {
                         bribes = i; //max possible count
                         for (int j = 0; j < values[i]; j++) {
-                            if (position[j] < i) bribes--;
+                            if (position[j] < i) {
+                                bribes--;
+                            }
                         }
                     } else {
                         for (int j = values[i] + 1; j < len; j++) {
-                            if (position[j] < i) bribes++;
+                            if (position[j] < i) {
+                                bribes++;
+                            }
                         }
                     }
                 }

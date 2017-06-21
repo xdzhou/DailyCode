@@ -57,9 +57,11 @@ public class BoardImage {
      * <p>Draws the entire LightBoardCopy
      */
     public void drawLightBoardCopy(LightBoardCopy board) {
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 5; j++)
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
                 drawCell(i, j, board.getColor(i, j));
+            }
+        }
     }
 
 

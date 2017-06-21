@@ -83,7 +83,9 @@ public class TreeSearchTest {
         while (true) {
             strategy.newRoot(state);
             Optional<Direction> option = algo.find(state, searchParam);
-            if (!option.isPresent()) break;
+            if (!option.isPresent()) {
+                break;
+            }
             list.add(option.get());
             state = strategy.apply(state, option.get());
         }

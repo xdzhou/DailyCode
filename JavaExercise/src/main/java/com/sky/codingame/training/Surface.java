@@ -18,10 +18,11 @@ public class Surface {
         for (int i = 0; i < height; i++) {
             String line = in.nextLine();
             for (int j = 0; j < width; j++) {
-                if (line.charAt(j) == '#')
+                if (line.charAt(j) == '#') {
                     table[j][i] = 1;
-                else
+                } else {
                     table[j][i] = 0;
+                }
             }
         }
 
@@ -34,8 +35,9 @@ public class Surface {
                 System.out.println("" + map.get((int) table[px][py]));
             } else {
                 int surface = getSurfaceWater(table, width, height, px, py, i + 2);
-                if (surface != 0)
+                if (surface != 0) {
                     map.put(i + 2, surface);
+                }
                 System.out.println(surface);
             }
         }

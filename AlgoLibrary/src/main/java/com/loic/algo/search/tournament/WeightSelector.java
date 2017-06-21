@@ -87,6 +87,10 @@ public class WeightSelector<State, Trans> {
         };
     }
 
+    public interface ParamHeuristicFun<State> {
+        double fitness(State state, int depth, double[] params);
+    }
+
     private static final class WeightCandidateResolver implements CandidateResolver<double[]> {
         private final Range<Double>[] ranges;
 
@@ -126,9 +130,5 @@ public class WeightSelector<State, Trans> {
             double delta = random.nextDouble() * (range.upperEndpoint() - range.lowerEndpoint());
             return delta + range.lowerEndpoint();
         }
-    }
-
-    public interface ParamHeuristicFun<State> {
-        double fitness(State state, int depth, double[] params);
     }
 }

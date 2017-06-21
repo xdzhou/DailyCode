@@ -177,7 +177,9 @@ public class Test {
                        the first empty board cell */
                     for (int j = 0; j < Piece.CELL_COUNT; j++) {
                         if (mBoard.placePiece(permutation, j, emptyBoardCellIdx)) {
-                            if (!prune()) resolve();
+                            if (!prune()) {
+                                resolve();
+                            }
                             mBoard.removePiece(permutation);
                         }
                     }

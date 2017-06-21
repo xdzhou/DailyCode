@@ -140,11 +140,15 @@ public class SkynetBack {
                     }
                 }
             }
-            if (gate == -1) System.err.println("IMPOSSIBLE");
+            if (gate == -1) {
+                System.err.println("IMPOSSIBLE");
+            }
             List<Integer> gateList = specialPoints.get(gatePrev);
             if (gateList != null) {
                 gateList.remove(Integer.valueOf(gate));
-                if (gateList.size() <= 1) specialPoints.remove(gatePrev);
+                if (gateList.size() <= 1) {
+                    specialPoints.remove(gatePrev);
+                }
             } else {
                 hasGates.remove(Integer.valueOf(gatePrev));
             }

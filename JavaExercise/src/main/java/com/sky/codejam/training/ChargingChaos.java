@@ -23,19 +23,22 @@ public class ChargingChaos {
             List<Integer> device = new ArrayList<>(N);
             in.nextLine();
             String[] elcStr = in.nextLine().split(" ");
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < N; j++) {
                 electric.add(Integer.valueOf(elcStr[j], 2));
+            }
             String[] devStr = in.nextLine().split(" ");
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < N; j++) {
                 device.add(Integer.valueOf(devStr[j], 2));
+            }
             int[] elcNBone = getNbOne(electric, L);
             int[] devNBone = getNbOne(device, L);
 
             List<Integer> specialIndex = new ArrayList<>();
             for (int j = 0; j < L; j++) {
                 if (elcNBone[j] == devNBone[j]) {
-                    if (elcNBone[j] == N / 2 && N % 2 == 0)
+                    if (elcNBone[j] == N / 2 && N % 2 == 0) {
                         specialIndex.add(j); // not sure
+                    }
                 } else if (elcNBone[j] + devNBone[j] == N) {
                     bitSwitch(electric, L - 1 - j);
                     nbSwitch++;
@@ -46,10 +49,11 @@ public class ChargingChaos {
             }
             showList(specialIndex);
             int min = getMinSwitch(device, electric, specialIndex, L);
-            if (min == -1)
+            if (min == -1) {
                 System.out.println("Case #" + (i + 1) + ": NOT POSSIBLE 2");
-            else
+            } else {
                 System.out.println("Case #" + (i + 1) + ": " + (nbSwitch + min));
+            }
         }
         in.close();
     }
@@ -63,10 +67,12 @@ public class ChargingChaos {
     }
 
     private int getMinSwitch(List<Integer> device, List<Integer> electric, List<Integer> specialIndex, int L) {
-        if (isListEqual(electric, device))
+        if (isListEqual(electric, device)) {
             return 0;
-        if (!isBitEqual(device, electric, specialIndex, L))
+        }
+        if (!isBitEqual(device, electric, specialIndex, L)) {
             return -1;
+        }
 
         List<Integer> copyelectric = new ArrayList<>(electric.size());
         copyelectric.addAll(electric);
@@ -76,9 +82,9 @@ public class ChargingChaos {
         bitSwitch(copyelectric, L - 1 - index);
         int min2 = getMinSwitch(device, copyelectric, specialIndex, L);
 
-        if (min1 == min2 && min1 == -1)
+        if (min1 == min2 && min1 == -1) {
             return -1;
-        else if (min1 == -1) {
+        } else if (min1 == -1) {
             return min2 + 1;
         } else if (min2 == -1) {
             return min1;
@@ -89,10 +95,11 @@ public class ChargingChaos {
 
     private int[] getNbOne(List<Integer> list, int L) {
         int[] nbOne = new int[L];
-        for (int i = 0; i < list.size(); i++)
+        for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < L; j++) {
                 nbOne[j] += (list.get(i) & (1 << (L - 1 - j))) >>> (L - 1 - j);
             }
+        }
         return nbOne;
     }
 
@@ -116,8 +123,9 @@ public class ChargingChaos {
     }
 
     private boolean isBitEqual(List<Integer> l1, List<Integer> l2, List<Integer> specialIndex, int L) {
-        if (specialIndex.size() == l1.size())
+        if (specialIndex.size() == l1.size()) {
             return true;
+        }
         List<Integer> copyL1 = new ArrayList<>(l1.size());
         copyL1.addAll(l1);
         List<Integer> copyL2 = new ArrayList<>(l2.size());

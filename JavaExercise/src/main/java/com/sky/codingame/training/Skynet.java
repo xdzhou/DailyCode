@@ -61,7 +61,9 @@ public class Skynet {
             boolean[] removeFlags = new boolean[size];
             int[] prevNodes = new int[size];
             List<Integer> destinations = new ArrayList<>(ends.length);
-            for (int i = 0; i < ends.length; i++) destinations.add(ends[i]);
+            for (int i = 0; i < ends.length; i++) {
+                destinations.add(ends[i]);
+            }
             toTouchNodes.add(start);
             while (!destinations.contains(toTouchNodes.get(0))) {
                 int node = toTouchNodes.get(0);

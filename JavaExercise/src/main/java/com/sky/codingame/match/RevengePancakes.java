@@ -28,8 +28,9 @@ public class RevengePancakes {
                 nbChanges++;
             }
         }
-        if (cakeList.charAt(cakeList.length() - 1) == '-')
+        if (cakeList.charAt(cakeList.length() - 1) == '-') {
             nbChanges++;
+        }
         System.out.println("Case #" + (index + 1) + ": " + nbChanges);
     }
 }

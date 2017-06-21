@@ -13,8 +13,6 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import com.google.common.base.Preconditions;
-import com.loic.algo.search.Timer;
 import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
@@ -44,7 +42,9 @@ public class GeneticImpl implements TreeSearch {
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
-        if (next != null) return next;
+        if (next != null) {
+            return next;
+        }
 
         Resolver<State, Trans> resolver = new Resolver<>(root, param);
         Gene<Trans> best = new GeneticAlgorithm<>(resolver, param.timerDuration(), resolver)
@@ -69,7 +69,9 @@ public class GeneticImpl implements TreeSearch {
 
             for (int i = 0; i < param.getMaxDepth(); i++) {
                 List<Trans> possibleTrans = asStringSort(param.transitionStrategy().generate(curState));
-                if (possibleTrans.isEmpty()) break;
+                if (possibleTrans.isEmpty()) {
+                    break;
+                }
                 if (trans == null) {
                     trans = (Trans[]) Array.newInstance(possibleTrans.get(0).getClass(), param.getMaxDepth());
                 }
@@ -86,7 +88,9 @@ public class GeneticImpl implements TreeSearch {
             int depth = 0;
             for (int i = 0; i < param.getMaxDepth(); i++) {
                 List<Trans> possibleTrans = asStringSort(param.transitionStrategy().generate(curState));
-                if (!possibleTrans.contains(transGene.trans[i])) break;
+                if (!possibleTrans.contains(transGene.trans[i])) {
+                    break;
+                }
 
                 curState = param.applyStrategy().apply(curState, transGene.trans[i]);
                 depth++;
@@ -117,8 +121,12 @@ public class GeneticImpl implements TreeSearch {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             Gene<?> gene = (Gene<?>) o;
 

@@ -66,7 +66,9 @@ public class CloseMatch {
 
     private int getDif(String str1, String str2, int startIndex) {
         for (int i = startIndex; i < str1.length(); i++) {
-            if (str1.charAt(i) != str2.charAt(i)) return str1.charAt(i) - str2.charAt(i);
+            if (str1.charAt(i) != str2.charAt(i)) {
+                return str1.charAt(i) - str2.charAt(i);
+            }
         }
         return 0;
     }
@@ -84,8 +86,11 @@ public class CloseMatch {
             int num1 = getNum(curChar1, curChar2, cResult);
             int num2 = getNum(curChar2, curChar1, getJResult(cResult));
             if (cResult == UNKNOWN) {
-                if (num1 > num2) cResult = BIGGER;
-                else if (num1 < num2) cResult = SMALLER;
+                if (num1 > num2) {
+                    cResult = BIGGER;
+                } else if (num1 < num2) {
+                    cResult = SMALLER;
+                }
             }
             sb1.append(num1);
             sb2.append(num2);
@@ -97,9 +102,13 @@ public class CloseMatch {
     }
 
     private byte getJResult(byte cResult) {
-        if (cResult == UNKNOWN) return UNKNOWN;
-        else if (cResult == BIGGER) return SMALLER;
-        else return BIGGER;
+        if (cResult == UNKNOWN) {
+            return UNKNOWN;
+        } else if (cResult == BIGGER) {
+            return SMALLER;
+        } else {
+            return BIGGER;
+        }
     }
 
     private int getNum(char c1, char c2, byte result) {
@@ -110,8 +119,11 @@ public class CloseMatch {
                 case SMALLER:
                     return 9;
                 default:
-                    if (c2 == '?') return 0;
-                    else return c2 - '0';
+                    if (c2 == '?') {
+                        return 0;
+                    } else {
+                        return c2 - '0';
+                    }
             }
         } else {
             return c1 - '0';

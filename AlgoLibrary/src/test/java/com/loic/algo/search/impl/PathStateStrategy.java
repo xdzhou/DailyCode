@@ -62,22 +62,34 @@ public class PathStateStrategy implements ApplyStrategy<PathState, Direction>, H
         int line = pos / mapInfo.getWidth();
         int col = pos % mapInfo.getWidth();
         double fitness = mapInfo.heuristicToEnd(path.size(), line, col);
-        if (fitness != 1 && generate(pathState).isEmpty()) return 0;
+        if (fitness != 1 && generate(pathState).isEmpty()) {
+            return 0;
+        }
         return fitness * Math.pow(0.8, depth);
     }
 
     @Override
     public Set<Direction> generate(PathState pathState) {
         List<Integer> path = pathState.getPath();
-        if (mapInfo.getEndPos() == path.get(path.size() - 1)) return Collections.emptySet();
+        if (mapInfo.getEndPos() == path.get(path.size() - 1)) {
+            return Collections.emptySet();
+        }
         int pos = path.get(path.size() - 1);
         int line = pos / mapInfo.getWidth();
         int col = pos % mapInfo.getWidth();
         List<Direction> directions = new ArrayList<>(Direction.values().length);
-        if (reachable(path, line - 1, col)) directions.add(Direction.UP);
-        if (reachable(path, line + 1, col)) directions.add(Direction.DOWN);
-        if (reachable(path, line, col - 1)) directions.add(Direction.LEFT);
-        if (reachable(path, line, col + 1)) directions.add(Direction.RIGHT);
+        if (reachable(path, line - 1, col)) {
+            directions.add(Direction.UP);
+        }
+        if (reachable(path, line + 1, col)) {
+            directions.add(Direction.DOWN);
+        }
+        if (reachable(path, line, col - 1)) {
+            directions.add(Direction.LEFT);
+        }
+        if (reachable(path, line, col + 1)) {
+            directions.add(Direction.RIGHT);
+        }
         return ImmutableSet.copyOf(directions);
     }
 

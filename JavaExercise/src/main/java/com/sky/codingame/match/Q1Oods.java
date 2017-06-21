@@ -30,8 +30,9 @@ public class Q1Oods {
         for (int i = 0; i < N; i++) {
             int temp = budget[i];
             int tempC = C;
-            if (temp > moyen)
+            if (temp > moyen) {
                 moyen = C / (N - i);
+            }
             C = pay(i, temp, moyen, C, budget);
             if (C == tempC && temp != 0) {
                 int n = N - i;
@@ -62,8 +63,9 @@ public class Q1Oods {
     public static <T extends Comparable<T>> void sortShell(T[] a) {
         int N = a.length;
         int h = 1;
-        while (h < N / 3)
+        while (h < N / 3) {
             h = 3 * h + 1; // 1,4,13,40
+        }
         while (h >= 1) {
             for (int i = h; i < N; i++) {
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {

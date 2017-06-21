@@ -3,7 +3,6 @@ package com.sky;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,7 +65,9 @@ public class FileBuilder {
     private List<String> packageClass(String absolutePath) {
         String fileName = Paths.get(absolutePath).toFile().getName();
         File[] children = Paths.get(absolutePath).getParent().toFile().listFiles();
-        if (children == null || children.length == 0) return Collections.emptyList();
+        if (children == null || children.length == 0) {
+            return Collections.emptyList();
+        }
         return Arrays.stream(children)
             .map(File::getName)
             .filter(n -> n.endsWith(".java"))
@@ -81,7 +82,7 @@ public class FileBuilder {
         } else if (line.startsWith(IMPORT)) {
             boolean isLogImport = line.contains("org.slf4j.Logger");
             String absolutePath = toAbsolutePath(packageFile(line));
-            if (! isLogImport && !knownFiles.contains(absolutePath)) {
+            if (!isLogImport && !knownFiles.contains(absolutePath)) {
                 if (Files.exists(Paths.get(absolutePath))) {
                     innerClasses.put(absolutePath, processFile(absolutePath));
                     System.out.println("Inner class :" + line);
@@ -94,7 +95,9 @@ public class FileBuilder {
             if (fileKeyWordRead) {
                 Iterator<String> iterator = otherClass.iterator();
                 while (iterator.hasNext()) {
-                    if (line.contains(iterator.next())) iterator.remove();
+                    if (line.contains(iterator.next())) {
+                        iterator.remove();
+                    }
                 }
                 code.afterClassContent.add(line);
             } else {
@@ -113,7 +116,9 @@ public class FileBuilder {
                 } else {
                     Iterator<String> iterator = otherClass.iterator();
                     while (iterator.hasNext()) {
-                        if (line.contains(iterator.next())) iterator.remove();
+                        if (line.contains(iterator.next())) {
+                            iterator.remove();
+                        }
                     }
                     code.beforeClassContent.add(line);
                 }
@@ -154,7 +159,9 @@ public class FileBuilder {
         boolean insideComment = false;
         for (final String line : fileContent) {
             String trimedLine = line.trim();
-            if (trimedLine.startsWith("Preconditions") || trimedLine.startsWith("import com.google")) trimedLine = "//" + trimedLine;
+            if (trimedLine.startsWith("Preconditions") || trimedLine.startsWith("import com.google")) {
+                trimedLine = "//" + trimedLine;
+            }
             if (insideComment) {
                 if (trimedLine.contains(END_COMMENT)) {
                     insideComment = false;

@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import com.loic.algo.search.genetic.CandidateResolver;
 import com.loic.algo.search.genetic.AbstractGenetic;
+import com.loic.algo.search.genetic.CandidateResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class CombatSimulator<Agent> extends AbstractGenetic<Agent> {
     protected Map<Agent, Double> computeScores(List<Agent> agents) {
         int[][] result = new int[agents.size()][agents.size()];
         //FIXME combat count
-        for (int iteration = 0; iteration < 10; iteration ++) {
+        for (int iteration = 0; iteration < 10; iteration++) {
             for (int i = 0; i < result.length; i++) {
                 for (int j = i + 1; j < result.length; j++) {
                     int delta = comparator.compare(agents.get(i), agents.get(j));
@@ -40,7 +40,7 @@ public class CombatSimulator<Agent> extends AbstractGenetic<Agent> {
         Map<Agent, Double> map = new HashMap<>(agents.size());
 
         IntStream.range(0, agents.size())
-            .forEach(i -> map.put(agents.get(i), (double)Arrays.stream(result[i]).sum()));
+            .forEach(i -> map.put(agents.get(i), (double) Arrays.stream(result[i]).sum()));
         return map;
     }
 }

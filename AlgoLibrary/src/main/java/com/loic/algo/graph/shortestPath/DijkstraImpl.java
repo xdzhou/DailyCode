@@ -60,7 +60,9 @@ public class DijkstraImpl implements IShortestPath {
             openList.remove(selectNode);
             for (N nextNode : valueGraph.successors(selectNode)) {
                 Double preDis = disFromSourceMap.get(nextNode);
-                if (preDis != null && Double.compare(preDis, CLOSE_FLAG) == 0) continue;
+                if (preDis != null && Double.compare(preDis, CLOSE_FLAG) == 0) {
+                    continue;
+                }
 
                 double weight = valueGraph.edgeValue(selectNode, nextNode);
                 Preconditions.checkArgument(weight >= 0, "Dijkstra algo do NOT support negtive weight");

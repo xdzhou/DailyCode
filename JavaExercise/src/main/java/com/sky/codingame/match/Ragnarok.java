@@ -99,11 +99,13 @@ class Ragnarok {
         num++;
         Position centre = new Position();
         centre.x = sommeX / num;
-        if (sommeX % num > num / 2)
+        if (sommeX % num > num / 2) {
             centre.x += 1;
+        }
         centre.y = sommeY / num;
-        if (sommeY % num > num / 2)
+        if (sommeY % num > num / 2) {
             centre.y += 1;
+        }
         return centre;
     }
 

@@ -14,10 +14,12 @@ public class MinimumScalarProduct implements Resolver {
         int num = in.nextInt();
         List<Long> list1 = new ArrayList<>(num);
         List<Long> list2 = new ArrayList<>(num);
-        for (int j = 0; j < num; j++)
+        for (int j = 0; j < num; j++) {
             list1.add(in.nextLong());
-        for (int j = 0; j < num; j++)
+        }
+        for (int j = 0; j < num; j++) {
             list2.add(in.nextLong());
+        }
         Collections.sort(list1);
         Collections.sort(list2);
         long somme = 0;

@@ -21,7 +21,9 @@ public class MinimaxAlphaBeta implements TreeSearch {
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
-        if (next != null) return next;
+        if (next != null) {
+            return next;
+        }
 
         Pair<Trans, Double> result = alphaBeta(param, root, 0, Double.MIN_VALUE, Double.MAX_VALUE, true);
 
@@ -46,7 +48,9 @@ public class MinimaxAlphaBeta implements TreeSearch {
                     bestTrans = trans;
                 }
                 alpha = Math.max(alpha, best);
-                if (best <= alpha) break;
+                if (best <= alpha) {
+                    break;
+                }
             }
             return Pair.of(bestTrans, best);
         } else {
@@ -59,7 +63,9 @@ public class MinimaxAlphaBeta implements TreeSearch {
                     bestTrans = trans;
                 }
                 beta = Math.min(beta, best);
-                if (best <= alpha) break;
+                if (best <= alpha) {
+                    break;
+                }
             }
             return Pair.of(bestTrans, best);
         }

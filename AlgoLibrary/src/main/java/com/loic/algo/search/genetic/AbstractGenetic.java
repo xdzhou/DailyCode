@@ -21,8 +21,8 @@ public abstract class AbstractGenetic<Gene> {
     private final Random random = new Random(new Date().getTime());
 
     private final CandidateResolver<Gene> resolver;
-    private List<Gene> populations = new ArrayList<>();
     private final Timer timer = new Timer();
+    private List<Gene> populations = new ArrayList<>();
 
     public AbstractGenetic(CandidateResolver<Gene> resolver) {
         this(resolver, 100);

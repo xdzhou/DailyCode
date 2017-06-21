@@ -59,8 +59,9 @@ public class RankFile {
                 applyRow(table, temp, len - 1, size - 1);
             }
             if (table[len - 2][0].equals(table[len - 1][0])) {
-                if (appRow) applyColumn(table, temp, len - 2, size - 1);
-                else {
+                if (appRow) {
+                    applyColumn(table, temp, len - 2, size - 1);
+                } else {
                     flags[len - 2] = true;
                     applyRow(table, temp, len - 2, size - 1);
                 }
@@ -80,12 +81,14 @@ public class RankFile {
     }
 
     private void applyRow(Integer[][] table, int[][] temp, int num, int row) {
-        for (int i = 0; i < temp.length; i++)
+        for (int i = 0; i < temp.length; i++) {
             temp[row][i] = table[num][i];
+        }
     }
 
     private void applyColumn(Integer[][] table, int[][] temp, int num, int column) {
-        for (int i = 0; i < temp.length; i++)
+        for (int i = 0; i < temp.length; i++) {
             temp[i][column] = table[num][i];
+        }
     }
 }

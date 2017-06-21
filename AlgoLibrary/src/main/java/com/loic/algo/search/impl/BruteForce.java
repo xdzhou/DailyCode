@@ -18,7 +18,9 @@ public class BruteForce implements TreeSearch {
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
-        if (next != null) return next;
+        if (next != null) {
+            return next;
+        }
 
         Pair<Trans, Double> best = process(param, root, 0);
 

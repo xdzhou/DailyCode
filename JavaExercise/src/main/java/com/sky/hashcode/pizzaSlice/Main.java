@@ -38,7 +38,9 @@ public class Main {
             for (int j = 0; j < colCount; j++) {
                 boolean isTomato = data.charAt(j) == 'T';
                 pizza.setData(i, j, isTomato);
-                if (isTomato) tomatoCount++;
+                if (isTomato) {
+                    tomatoCount++;
+                }
             }
         }
         potentialMaxPoint = Math.min(pizza.size(), Math.min(tomatoCount / L, (pizza.size() - tomatoCount) / L) * H);
@@ -54,7 +56,9 @@ public class Main {
 
     private void process(Pizza pizza, List<Slice> cutSlices, int from, Slice changingSlice, List<Direction> directions) {
         callCount++;
-        if (bestSolutionFound) return;
+        if (bestSolutionFound) {
+            return;
+        }
         if (changingSlice != null) {
             if (changingSlice.isValid(L, H)) {
                 cutSlices.add(changingSlice);

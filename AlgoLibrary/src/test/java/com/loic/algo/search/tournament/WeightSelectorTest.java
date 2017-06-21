@@ -13,7 +13,6 @@ import com.loic.algo.search.core.ApplyStrategy;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TransitionStrategy;
 import com.loic.algo.search.impl.GeneticImpl;
-import org.testng.annotations.Test;
 
 public class WeightSelectorTest {
 

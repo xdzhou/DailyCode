@@ -123,7 +123,9 @@ public class SolutionViewer extends JFrame implements ActionListener {
      */
     private void fastForward() {
         currentSolution += 100;
-        if (currentSolution > maxSolution) currentSolution = maxSolution;
+        if (currentSolution > maxSolution) {
+            currentSolution = maxSolution;
+        }
         showCurrentSolution();
     }
 
@@ -144,7 +146,9 @@ public class SolutionViewer extends JFrame implements ActionListener {
      */
     private void rewind() {
         currentSolution -= 100;
-        if (currentSolution < minSolution) currentSolution = minSolution;
+        if (currentSolution < minSolution) {
+            currentSolution = minSolution;
+        }
         showCurrentSolution();
     }
 

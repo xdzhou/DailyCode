@@ -13,8 +13,9 @@ public class SortAlgo {
         for (int i = 0; i < N; i++) {
             int min = i;
             for (int j = i + 1; j < N; j++) {
-                if (less(a[j], a[min]))
+                if (less(a[j], a[min])) {
                     exch(a, min, j);
+                }
             }
         }
     }
@@ -27,8 +28,9 @@ public class SortAlgo {
     public static <T extends Comparable<T>> void sortInsert(T[] a) {
         int N = a.length;
         for (int i = 1; i < N; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--)
+            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
                 exch(a, j - 1, j);
+            }
         }
     }
 
@@ -40,8 +42,9 @@ public class SortAlgo {
     public static <T extends Comparable<T>> void sortShell(T[] a) {
         int N = a.length;
         int h = 1;
-        while (h < N / 3)
+        while (h < N / 3) {
             h = 3 * h + 1; // 1,4,13,40
+        }
         while (h >= 1) {
             for (int i = h; i < N; i++) {
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
@@ -61,8 +64,9 @@ public class SortAlgo {
         int N = a.length;
         aux = new Comparable[N];
         for (int sz = 1; sz < N; sz += sz) {
-            for (int lo = 0; lo < N - sz; lo += sz + sz)
+            for (int lo = 0; lo < N - sz; lo += sz + sz) {
                 merge(a, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1));
+            }
         }
     }
 
@@ -77,8 +81,9 @@ public class SortAlgo {
     }
 
     private static void sortMerge(Comparable[] a, int lo, int hi) {
-        if (hi <= lo)
+        if (hi <= lo) {
             return;
+        }
         int mid = lo + (hi - lo) / 2;
         sortMerge(a, lo, mid);
         sortMerge(a, mid + 1, hi);
@@ -93,14 +98,15 @@ public class SortAlgo {
             aux[k] = a[k];
         }
         for (int k = lo; k <= hi; k++) {
-            if (i > mid)
+            if (i > mid) {
                 a[k] = aux[j++];
-            else if (j > hi)
+            } else if (j > hi) {
                 a[k] = aux[i++];
-            else if (less(aux[j], aux[i]))
+            } else if (less(aux[j], aux[i])) {
                 a[k] = aux[j++];
-            else
+            } else {
                 a[k] = aux[i++];
+            }
         }
     }
 
@@ -114,8 +120,9 @@ public class SortAlgo {
     }
 
     private static <T extends Comparable<T>> void sortQuick(T[] a, int lo, int hi) {
-        if (hi <= lo)
+        if (hi <= lo) {
             return;
+        }
         int j = partition(a, lo, hi);
         sortQuick(a, lo, j - 1);
         sortQuick(a, j + 1, hi);
@@ -125,14 +132,19 @@ public class SortAlgo {
         int i = lo, j = hi + 1;
         T p = a[lo]; // 切分元素
         while (true) {
-            while (less(a[++i], p))
-                if (i == hi)
+            while (less(a[++i], p)) {
+                if (i == hi) {
                     break;
-            while (less(p, a[--j]))
-                if (j == lo)
+                }
+            }
+            while (less(p, a[--j])) {
+                if (j == lo) {
                     break;
-            if (i >= j)
+                }
+            }
+            if (i >= j) {
                 break;
+            }
             exch(a, i, j);
         }
         exch(a, lo, j);
@@ -154,8 +166,9 @@ public class SortAlgo {
     // check if the list is sorted (from samll to big)
     public static <T extends Comparable<T>> boolean isSorted(T[] a) {
         for (int i = 1; i < a.length; i++) {
-            if (less(a[i], a[i - 1]))
+            if (less(a[i], a[i - 1])) {
                 return false;
+            }
         }
         return true;
     }

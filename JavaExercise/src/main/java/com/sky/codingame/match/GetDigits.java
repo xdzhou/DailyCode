@@ -29,21 +29,40 @@ public class GetDigits {
         Collections.sort(chars);
         List<Integer> results = new ArrayList<>();
         //first round
-        while (checkNum(chars, 'Z', "ZERO")) results.add(0);
-        while (checkNum(chars, 'W', "TWO")) results.add(2);
-        while (checkNum(chars, 'U', "FOUR")) results.add(4);
-        while (checkNum(chars, 'X', "SIX")) results.add(6);
-        while (checkNum(chars, 'G', "EIGHT")) results.add(8);
+        while (checkNum(chars, 'Z', "ZERO")) {
+            results.add(0);
+        }
+        while (checkNum(chars, 'W', "TWO")) {
+            results.add(2);
+        }
+        while (checkNum(chars, 'U', "FOUR")) {
+            results.add(4);
+        }
+        while (checkNum(chars, 'X', "SIX")) {
+            results.add(6);
+        }
+        while (checkNum(chars, 'G', "EIGHT")) {
+            results.add(8);
+        }
         //second round
-        while (checkNum(chars, 'O', "ONE")) results.add(1);
-        while (checkNum(chars, 'R', "THREE")) results.add(3);
-        while (checkNum(chars, 'F', "FIVE")) results.add(5);
-        while (checkNum(chars, 'S', "SEVEN")) results.add(7);
+        while (checkNum(chars, 'O', "ONE")) {
+            results.add(1);
+        }
+        while (checkNum(chars, 'R', "THREE")) {
+            results.add(3);
+        }
+        while (checkNum(chars, 'F', "FIVE")) {
+            results.add(5);
+        }
+        while (checkNum(chars, 'S', "SEVEN")) {
+            results.add(7);
+        }
         //third round
         if (chars.size() > 0) {
             int count = chars.size() / 4;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) {
                 results.add(9);
+            }
         }
 
         Collections.sort(results);

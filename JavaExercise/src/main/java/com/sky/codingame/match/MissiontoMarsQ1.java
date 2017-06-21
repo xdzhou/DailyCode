@@ -12,8 +12,9 @@ public class MissiontoMarsQ1 {
         for (int i = 0; i < N; i++) {
             px[i] = in.nextInt();
             py[i] = in.nextInt();
-            if (i > 0 && py[i] == py[i - 1])
+            if (i > 0 && py[i] == py[i - 1]) {
                 indi = i;
+            }
         }
         sx = (px[indi - 1] + px[indi]) / 2;
         sy = py[indi];
@@ -37,9 +38,9 @@ public class MissiontoMarsQ1 {
 
     private static void getOutPut(int vx, int vy, int dx, int dy) {
         int R = -1, P = 0;
-        if (Math.abs(dx) < 500)
+        if (Math.abs(dx) < 500) {
             R = 0;
-        else {
+        } else {
             int temp = dx / 100 - vx;
             if (temp > 2000) {
                 R = -25;
@@ -76,10 +77,11 @@ public class MissiontoMarsQ1 {
         fdx += vx;
         fdy += vy;
         rate = Math.sqrt(fdx * fdx + fdy * fdy);
-        if (rate > 50)
+        if (rate > 50) {
             P = 4;
-        else
+        } else {
             P = 3;
+        }
         System.out.println(R + " " + P);
 
     }

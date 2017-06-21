@@ -40,7 +40,9 @@ public class UtcSearch implements TreeSearch {
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
-        if (next != null) return next;
+        if (next != null) {
+            return next;
+        }
 
         StateNode<State, Trans, Info> rootNode = new StateNode<>(root, null, null, new Info());
         Timer timer = new Timer();
@@ -97,7 +99,9 @@ public class UtcSearch implements TreeSearch {
     }
 
     private <State, Trans> StateNode<State, Trans, Info> getBestChild(StateNode<State, Trans, Info> parent) {
-        if (parent.children().size() == 1) return parent.children().get(0);
+        if (parent.children().size() == 1) {
+            return parent.children().get(0);
+        }
         double best = Double.NEGATIVE_INFINITY;
         StateNode<State, Trans, Info> bestChild = null;
         Info[] childInfo = new Info[parent.children().size()];

@@ -23,10 +23,11 @@ public class LCMSetEasy {
                 minMulti = minCommonMultiple(minMulti, S[i]);
             }
         }
-        if (minMulti == x)
+        if (minMulti == x) {
             return "Possible";
-        else
+        } else {
             return "Impossible";
+        }
     }
 
     private int minCommonMultiple(int m, int n) {

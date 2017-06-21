@@ -25,10 +25,12 @@ public class SnakesLadders {
         for (int i = 0; i < n; i++) {
             String s = in.nextLine();
             square[i] = s;
-            if (s.equals("S"))
+            if (s.equals("S")) {
                 startP = i;
-            if (s.equals("E"))
+            }
+            if (s.equals("E")) {
                 endP = i;
+            }
         }
         Node startNode = new Node(startP);
         startNode.G = startNode.F = 0;
@@ -51,11 +53,13 @@ public class SnakesLadders {
             if (square[position].equals("S") || square[position].equals("R")) {
                 for (int i = 1; i <= 6; i++) {
                     nextPosition = position + i;
-                    if (nextPosition < 0 || nextPosition >= square.length)
+                    if (nextPosition < 0 || nextPosition >= square.length) {
                         continue;
+                    }
                     Node tempNode = new Node(nextPosition);
-                    if (closeList.contains(tempNode))
+                    if (closeList.contains(tempNode)) {
                         continue;
+                    }
                     if (openList.contains(tempNode)) {
                         Node node = getNodeEqualTo(tempNode);
                         int newG = currentNode.G + 1;
@@ -103,8 +107,9 @@ public class SnakesLadders {
 
     private Node getNodeEqualTo(Node node) {
         for (Node n : openList) {
-            if (n.equals(node))
+            if (n.equals(node)) {
                 return n;
+            }
         }
         return null;
     }
@@ -142,17 +147,22 @@ public class SnakesLadders {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Node other = (Node) obj;
-            if (!getOuterType().equals(other.getOuterType()))
+            if (!getOuterType().equals(other.getOuterType())) {
                 return false;
-            if (position != other.position)
+            }
+            if (position != other.position) {
                 return false;
+            }
             return true;
         }
 

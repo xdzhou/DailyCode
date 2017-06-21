@@ -17,8 +17,9 @@ public class Milkshakes {
             int numType = in.nextInt();
             int numClient = in.nextInt();
             int[] typeMikeShark = new int[numType];
-            for (int j = 0; j < numType; j++)
+            for (int j = 0; j < numType; j++) {
                 typeMikeShark[j] = -1;
+            }
             List<ArrayList<Integer>> untreatedList = new ArrayList<>();
 
             boolean isPossible = true;
@@ -41,10 +42,11 @@ public class Milkshakes {
                     untreatedList.add(tempList);
                 }
             }
-            if (!isPossible)
+            if (!isPossible) {
                 System.out.println("Case #" + (i + 1) + " IMPOSSIBLE");
-            else
+            } else {
                 System.out.println(untreatedList);
+            }
         }
         in.close();
     }

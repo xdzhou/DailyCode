@@ -46,10 +46,14 @@ public class MoveStar implements ProblemTwoSolutions<String, String> {
         }
         int nextIndex = charIndex - 1;
         while (nextIndex >= 0) {
-            if (values[nextIndex] != '*') values[charIndex--] = values[nextIndex];
+            if (values[nextIndex] != '*') {
+                values[charIndex--] = values[nextIndex];
+            }
             nextIndex--;
         }
-        while (charIndex >= 0) values[charIndex--] = '*';
+        while (charIndex >= 0) {
+            values[charIndex--] = '*';
+        }
         return new String(values);
     }
 }

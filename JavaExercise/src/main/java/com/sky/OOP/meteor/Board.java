@@ -103,7 +103,9 @@ public class Board {
 
     int getFirstEmptyCellIndex() {
         for (int i = 0; i < CELL_COUNT; i++) {
-            if (boardCells[i].getPiece() == null) return i;
+            if (boardCells[i].getPiece() == null) {
+                return i;
+            }
         }
         return -1;
     }

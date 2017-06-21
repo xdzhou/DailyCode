@@ -58,11 +58,15 @@ class Smash {
                     fitnessSomme += g.mFitness;
                 }
             }
-            if (fitnessSomme < 8) return start(nextColors[0]);
+            if (fitnessSomme < 8) {
+                return start(nextColors[0]);
+            }
             List<Gene> childrenGenes = new ArrayList<>(POPULATION);
 
             for (int i = 0; i < GENERATION; i++) {
-                if (fitnessSomme < 8) break;
+                if (fitnessSomme < 8) {
+                    break;
+                }
                 childrenGenes.clear();
                 while (childrenGenes.size() < POPULATION - 1) {
                     getChild(getOneGene(fitnessSomme), getOneGene(fitnessSomme), childrenGenes);
@@ -134,7 +138,9 @@ class Smash {
             for (int i = 0; i < POPULATION; i++) {
                 Gene gene = mGenes.get(i);
                 temp += (gene.mFitness / (float) fitnessSomme);
-                if (temp >= taux) return gene;
+                if (temp >= taux) {
+                    return gene;
+                }
             }
             System.err.println("Oops, getOneGene error..." + taux + ", temp : " + temp);
             return null;
@@ -146,7 +152,9 @@ class Smash {
             int[] chromosome = g.mChromosome;
             for (int i = 0; i < NEXT_LEN; i++) {
                 int weight = mMapInfo.drop(chromosome[i], nextColors[i]);
-                if (weight < 0) System.err.println("Fitness < 0 : " + Arrays.toString(chromosome));
+                if (weight < 0) {
+                    System.err.println("Fitness < 0 : " + Arrays.toString(chromosome));
+                }
                 g.mFitness += weight;
             }
         }
@@ -192,11 +200,14 @@ class Smash {
 
         private int resetData() {
             int size = 0;
-            for (int line = 0; line < HEIGHT; line++)
+            for (int line = 0; line < HEIGHT; line++) {
                 for (int column = 0; column < WIDTH; column++) {
                     data[line][column] = lines[line].charAt(column);
-                    if (data[line][column] != '.') size++;
+                    if (data[line][column] != '.') {
+                        size++;
+                    }
                 }
+            }
             return size;
         }
 
@@ -235,8 +246,12 @@ class Smash {
                         topBound[y] = x;
                         bottomBound[y] = x;
                     } else {
-                        if (x < topBound[y]) topBound[y] = x;
-                        if (x > bottomBound[y]) bottomBound[y] = x;
+                        if (x < topBound[y]) {
+                            topBound[y] = x;
+                        }
+                        if (x > bottomBound[y]) {
+                            bottomBound[y] = x;
+                        }
                     }
                 }
             }
@@ -260,7 +275,9 @@ class Smash {
                 int index = indexToCheck.get(0);
                 Zone oneZone = getZoneFor(index);
                 if (oneZone != null) {
-                    if (oneZone.size() >= MIN_LIEN) zoneToDisappear.add(oneZone);
+                    if (oneZone.size() >= MIN_LIEN) {
+                        zoneToDisappear.add(oneZone);
+                    }
                     indexToCheck.removeAll(oneZone.mIndexs);
                 } else {
                     System.err.println("IMPOSSIBLE, no zone");
@@ -330,12 +347,16 @@ class Smash {
         }
 
         public void addIndex(int index) {
-            if (mIndexs == null) mIndexs = new ArrayList<>();
+            if (mIndexs == null) {
+                mIndexs = new ArrayList<>();
+            }
             mIndexs.add(index);
         }
 
         public void addBlock(int index) {
-            if (mIndexs == null) mIndexs = new ArrayList<>();
+            if (mIndexs == null) {
+                mIndexs = new ArrayList<>();
+            }
             mIndexs.add(index);
             mBlockCount++;
         }

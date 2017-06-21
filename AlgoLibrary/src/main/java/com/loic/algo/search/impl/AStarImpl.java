@@ -24,7 +24,9 @@ public class AStarImpl implements TreeSearch {
         requireNonNull(param, "SearchParam is mandatory");
 
         Optional<Trans> next = TreeSearchUtils.nextTrans(root, param.transitionStrategy());
-        if (next != null) return next;
+        if (next != null) {
+            return next;
+        }
 
         StateNode<State, Trans, Double> rootNode = new StateNode<>(root, null, null);
         PriorityQueue<StateNode<State, Trans, Double>> priorityQueue = new PriorityQueue<>((o1, o2) -> Double.compare(o2.info(), o1.info()));

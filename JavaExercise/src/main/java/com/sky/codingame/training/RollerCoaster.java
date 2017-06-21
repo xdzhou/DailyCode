@@ -38,13 +38,16 @@ public class RollerCoaster {
                 if (cap <= L) {
                     queue.offer(queue.poll());
                     size--;
-                    if (size == 0)
+                    if (size == 0) {
                         break;
-                } else
+                    }
+                } else {
                     break;
+                }
             }
-            if (cap > L)
+            if (cap > L) {
                 cap -= queue.element();
+            }
             System.out.println("cap = " + cap);
             resulta += cap;
         }

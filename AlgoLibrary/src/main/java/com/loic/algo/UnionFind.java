@@ -17,8 +17,9 @@ public class UnionFind {
 
     public int find(int p) {
         int p0 = p;
-        while (nextId[p] != p)
+        while (nextId[p] != p) {
             p = nextId[p];
+        }
         nextId[p0] = p;
         return p;
     }
@@ -27,8 +28,9 @@ public class UnionFind {
         int i = find(p);
         int j = find(q);
 
-        if (i == j)
+        if (i == j) {
             return;
+        }
         if (treeSize[i] > treeSize[j]) {
             nextId[j] = i;
             treeSize[i] += treeSize[j];

@@ -39,19 +39,21 @@ public class Q2Image {
                 if (len + l > W) {
                     image[potion] += (" " + (W - len) + " ");
                     potion++;
-                    if (potion > 99)
+                    if (potion > 99) {
                         break;
+                    }
                     len = l - (W - len);
-                    if (len < W)
+                    if (len < W) {
                         image[potion] = data[i] + (" " + len + " ");
-                    else {
+                    } else {
                         int n = len / W;
                         for (int j = 0; j < n; j++) {
                             image[potion + j] = data[i] + " " + W;
                         }
                         potion += n;
-                        if (potion > 99)
+                        if (potion > 99) {
                             break;
+                        }
                         int rest = len % W;
                         len = rest;
                         image[potion] = data[i] + " " + rest + " ";
@@ -64,25 +66,23 @@ public class Q2Image {
         }
         char c = 'Q';
         int num = 0;
-        if (image[13].contains("B 22"))
+        if (image[13].contains("B 22")) {
             num = 2;
-        else if (image[37].contains("B 22"))
+        } else if (image[37].contains("B 22")) {
             num = 4;
-        else if (image[61].contains("B 22"))
+        } else if (image[61].contains("B 22")) {
             num = 6;
-        else if (image[85].contains("B 22"))
+        } else if (image[85].contains("B 22")) {
             num = 8;
-
-        else if (image[4].contains("B 22"))
+        } else if (image[4].contains("B 22")) {
             num = 1;
-        else if (image[28].contains("B 22"))
+        } else if (image[28].contains("B 22")) {
             num = 3;
-        else if (image[52].contains("B 22"))
+        } else if (image[52].contains("B 22")) {
             num = 5;
-        else if (image[76].contains("B 22"))
+        } else if (image[76].contains("B 22")) {
             num = 7;
-
-        else if (image[13].contains("W 18")) {
+        } else if (image[13].contains("W 18")) {
             num = 2;
             c = 'H';
         } else if (image[37].contains("W 18")) {

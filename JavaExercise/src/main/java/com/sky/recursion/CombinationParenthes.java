@@ -24,10 +24,12 @@ public class CombinationParenthes implements Problem<Integer, Integer> {
         if (left == pairCount && right == pairCount) {
             Log.debug(s);
         } else if (left >= right) {
-            if (left < pairCount)
+            if (left < pairCount) {
                 printPair(s + "(", left + 1, right, pairCount);
-            if (right < pairCount)
+            }
+            if (right < pairCount) {
                 printPair(s + ")", left, right + 1, pairCount);
+            }
         }
     }
 

@@ -29,8 +29,9 @@ public final class CountingSheep {
                 chiffres[i] = num.charAt(chiffres.length - 1 - i) - '0';
             }
             BigInt bigInt = new BigInt();
-            while (bigInt.changeCount < 10)
+            while (bigInt.changeCount < 10) {
                 bigInt.add(chiffres, 0);
+            }
             System.out.println("Case #" + (index + 1) + ": " + bigInt);
         }
     }
@@ -47,10 +48,11 @@ public final class CountingSheep {
                 int sum = delta + chiffres[i] + getInt(i + startIndex);
                 delta = (sum >= 10) ? 1 : 0;
                 sum %= 10;
-                if (i + startIndex < nums.size())
+                if (i + startIndex < nums.size()) {
                     nums.set(i + startIndex, sum);
-                else
+                } else {
                     nums.add(i + startIndex, sum);
+                }
                 if (!flags[sum]) {
                     flags[sum] = true;
                     changeCount++;
@@ -63,10 +65,11 @@ public final class CountingSheep {
         }
 
         private int getInt(int index) {
-            if (index < nums.size())
+            if (index < nums.size()) {
                 return nums.get(index);
-            else
+            } else {
                 return 0;
+            }
         }
 
         @Override

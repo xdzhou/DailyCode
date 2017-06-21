@@ -19,7 +19,9 @@ public class BoardCell extends Cell {
             int num = 1;
             for (int i = 0; i < NEIGHBOUR_COUNT; i++) {
                 BoardCell cell = (BoardCell) getNeighbour(i);
-                if (cell != null) num += cell.getIslandCount();
+                if (cell != null) {
+                    num += cell.getIslandCount();
+                }
             }
             return num;
         }

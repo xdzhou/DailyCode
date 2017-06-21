@@ -15,7 +15,7 @@ public class TreeNode<T> {
         this.mRightNode = mRightNode;
     }
 
-    public static  <T> TreeNode<T> of(T value) {
+    public static <T> TreeNode<T> of(T value) {
         return new TreeNode<>(value, null, null);
     }
 

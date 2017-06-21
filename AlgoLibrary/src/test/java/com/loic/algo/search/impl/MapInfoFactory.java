@@ -70,16 +70,24 @@ public class MapInfoFactory {
 
         @Override
         public boolean reachable(int posX, int posY) {
-            if (posX < 0 || posY < 0) return false;
-            if (posX >= height || posY >= width) return false;
+            if (posX < 0 || posY < 0) {
+                return false;
+            }
+            if (posX >= height || posY >= width) {
+                return false;
+            }
             int pos = posX * width + posY;
-            if (!passFlag[pos]) return false;
+            if (!passFlag[pos]) {
+                return false;
+            }
             return true;
         }
 
         @Override
         public double heuristicToEnd(int lengthPassed, int posX, int posY) {
-            if (posX == endX && posY == endY) return 1;
+            if (posX == endX && posY == endY) {
+                return 1;
+            }
             return minDis / (double) (lengthPassed + Math.abs(posX - endX) + Math.abs(posY - endY));
         }
     }

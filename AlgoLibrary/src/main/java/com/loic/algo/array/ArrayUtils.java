@@ -14,12 +14,13 @@ public class ArrayUtils {
             int mid = (low + high) >>> 1;
             T midVal = list.get(mid);
             int cmp = midVal.compareTo(key);
-            if (cmp < 0)
+            if (cmp < 0) {
                 low = mid + 1;
-            else if (cmp > 0)
+            } else if (cmp > 0) {
                 high = mid - 1;
-            else
+            } else {
                 return mid; // key found
+            }
         }
         return ~low; // key not found.
     }
@@ -46,14 +47,19 @@ public class ArrayUtils {
         int i = lo, j = hi + 1;
         T p = a[lo]; // 切分元素
         while (true) {
-            while (a[++i].compareTo(p) < 0)
-                if (i == hi)
+            while (a[++i].compareTo(p) < 0) {
+                if (i == hi) {
                     break;
-            while (p.compareTo(a[--j]) < 0)
-                if (j == lo)
+                }
+            }
+            while (p.compareTo(a[--j]) < 0) {
+                if (j == lo) {
                     break;
-            if (i >= j)
+                }
+            }
+            if (i >= j) {
                 break;
+            }
             exch(a, i, j);
         }
         exch(a, lo, j);

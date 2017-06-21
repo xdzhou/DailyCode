@@ -27,12 +27,18 @@ public class Triple<T, E, K> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Triple<?, ?, ?> triple = (Triple<?, ?, ?>) o;
 
-        if (pair != null ? !pair.equals(triple.pair) : triple.pair != null) return false;
+        if (pair != null ? !pair.equals(triple.pair) : triple.pair != null) {
+            return false;
+        }
         return third != null ? third.equals(triple.third) : triple.third == null;
     }
 

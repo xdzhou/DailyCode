@@ -35,10 +35,11 @@ public class StoreCredit {
                 if (flag != -1) {
                     int a = swap[j] + 1;
                     int b = swap[flag] + 1;
-                    if (a < b)
+                    if (a < b) {
                         System.out.println("Case #" + (i + 1) + ": " + a + " " + b);
-                    else
+                    } else {
                         System.out.println("Case #" + (i + 1) + ": " + b + " " + a);
+                    }
                     break;
                 }
             }
@@ -47,9 +48,9 @@ public class StoreCredit {
     }
 
     private int binarySearch(int[] list, int from, int to, int key, int except) {
-        if (from > to || from < 0 || to >= list.length)
+        if (from > to || from < 0 || to >= list.length) {
             return -1;
-        else {
+        } else {
             // System.out.println("binarySearch =
             // "+from+","+to+","+key+","+except);
             int middle_indi = (table2indi(from, except) + table2indi(to, except)) / 2;

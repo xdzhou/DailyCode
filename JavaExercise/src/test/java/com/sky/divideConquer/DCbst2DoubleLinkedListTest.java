@@ -16,7 +16,7 @@ public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, Tr
 
     @Test
     public void testSimpleCase() {
-        check(null, (TreeNode<Integer>)null);
+        check(null, (TreeNode<Integer>) null);
         check(TreeNode.of(1), (i, o) -> assertEquals(i.value(), o.value()));
     }
 
@@ -26,7 +26,7 @@ public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, Tr
         root.setLeft(TreeNode.of(1));
         root.setRight(TreeNode.binaryTree(3, 4, 5));
 
-        check(root,  (i, o) -> {
+        check(root, (i, o) -> {
             int curValue = 1;
             TreeNode<Integer> curNode = o;
             while (curNode != null) {
@@ -35,7 +35,7 @@ public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, Tr
                     assertEquals(curNode.left().value(), Integer.valueOf(curValue - 1));
                 }
                 curNode = curNode.right();
-                curValue ++;
+                curValue++;
             }
 
 

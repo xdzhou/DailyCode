@@ -30,8 +30,9 @@ public class BoardDisplayingComponent extends JPanel {
             }
 
             public void componentShown(java.awt.event.ComponentEvent e) {
-                if (boardImage == null)
+                if (boardImage == null) {
                     repaint(); // will also initiate boardImage
+                }
             }
         });
     }

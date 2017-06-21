@@ -16,14 +16,16 @@ public class StockExchangeLosses {
         }
         min = tableValut[n - 1];
         for (int i = n - 1; i >= 0; i--) {
-            if (tableValut[i] < min)
+            if (tableValut[i] < min) {
                 min = tableValut[i];
+            }
             tableMin[i] = min;
         }
         min = 0;
         for (int i = 0; i < n - 1; i++) {
-            if (tableValut[i] > tableMin[i + 1])
+            if (tableValut[i] > tableMin[i + 1]) {
                 min = (min < tableMin[i + 1] - tableValut[i]) ? min : tableMin[i + 1] - tableValut[i];
+            }
         }
 
         System.out.print(min);

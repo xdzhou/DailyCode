@@ -82,7 +82,9 @@ public class Main {
             for (int videoId = 0; videoId < videoSize.length; videoId++) {
                 ValueElement ele = computeValue(videoId, cacheId);
                 valueTable[cacheId][videoId] = ele;
-                if (ele != null) priorityQueue.add(ele);
+                if (ele != null) {
+                    priorityQueue.add(ele);
+                }
             }
         }
         while (!priorityQueue.isEmpty()) {
