@@ -10,18 +10,15 @@ import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.collect.Range;
-import com.loic.algo.search.core.HeuristicStrategy;
-import com.loic.algo.search.core.HeuristicStrategy.Winess;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 import com.loic.algo.search.genetic.CandidateResolver;
-import io.reactivex.functions.Function3;
 
 public class WeightSelector<State, Trans> {
     private final Random random = new Random(new Date().getTime());
 
     private SearchParam<State, Trans> searchParam;
-    private Function3<State, Integer, Double[], Double> heuristicFun;
+    private ParamHeuristicFun<State> heuristicFun;
     private TreeSearch algo;
     private State[] roots;
     private Range<Double>[] ranges;
@@ -42,7 +39,7 @@ public class WeightSelector<State, Trans> {
         return this;
     }
 
-    public WeightSelector<State, Trans> withHeuristicFun(Function3<State, Integer, Double[], Double> heuristicFun) {
+    public WeightSelector<State, Trans> withHeuristicFun(ParamHeuristicFun<State> heuristicFun) {
         this.heuristicFun = heuristicFun;
         return this;
     }
@@ -57,7 +54,7 @@ public class WeightSelector<State, Trans> {
         return this;
     }
 
-    public Double[] select() {
+    public double[] select() {
         requireNonNull(roots);
         requireNonNull(searchParam);
         requireNonNull(heuristicFun);
@@ -66,28 +63,16 @@ public class WeightSelector<State, Trans> {
         checkState(roots.length > 0);
         checkState(ranges.length > 0);
 
-        CombatSimulator<Double[]> simulator = new CombatSimulator<>(new WeightCandidateResolver(ranges), generateComparator());
+        CombatSimulator<double[]> simulator = new CombatSimulator<>(new WeightCandidateResolver(ranges), generateComparator());
 
-        return simulator.iterate(100, 20, 5, 20, 10);
+        return simulator.iterate(10, 15);
     }
 
-    private Comparator<Double[]> generateComparator() {
+    private Comparator<double[]> generateComparator() {
         return (g1, g2) -> {
             State root = roots[random.nextInt(roots.length)];
-            SearchParam<State, Trans> param1 = searchParam.map((s, d) -> {
-                try {
-                    return heuristicFun.apply(s, d, g1);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            SearchParam<State, Trans> param2 = searchParam.map((s, d) -> {
-                try {
-                    return heuristicFun.apply(s, d, g2);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            SearchParam<State, Trans> param1 = searchParam.map((s, d) -> heuristicFun.fitness(s, d, g1));
+            SearchParam<State, Trans> param2 = searchParam.map((s, d) -> heuristicFun.fitness(s, d, g2));
             Optional<State> state1 = Optional.of(root);
             Optional<State> state2 = Optional.of(root);
             State result[] = (State[]) Array.newInstance(root.getClass(), 2);
@@ -97,33 +82,12 @@ public class WeightSelector<State, Trans> {
                 result[1] = state2.get();
                 state2 = algo.find(result[1], param2).map(t -> param2.applyStrategy().apply(result[1], t));
             }
+
             return stateComparator.compare(result[0], result[1]);
         };
     }
 
-    private class MyHeurist implements HeuristicStrategy<State> {
-        private final Double[] params;
-
-        private MyHeurist(Double[] params) {
-            this.params = params;
-        }
-
-        @Override
-        public double heuristic(State state, int depth) {
-            try {
-                return heuristicFun.apply(state, depth, params);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
-        public Winess winess(State state) {
-            return null;
-        }
-    }
-
-    private static final class WeightCandidateResolver implements CandidateResolver<Double[]> {
+    private static final class WeightCandidateResolver implements CandidateResolver<double[]> {
         private final Range<Double>[] ranges;
 
         private WeightCandidateResolver(Range<Double>[] ranges) {
@@ -131,8 +95,8 @@ public class WeightSelector<State, Trans> {
         }
 
         @Override
-        public Double[] generateRandomly(Random random) {
-            Double[] result = new Double[ranges.length];
+        public double[] generateRandomly(Random random) {
+            double[] result = new double[ranges.length];
             for (int i = 0; i < result.length; i++) {
                 result[i] = randomValue(ranges[i], random);
             }
@@ -140,8 +104,8 @@ public class WeightSelector<State, Trans> {
         }
 
         @Override
-        public Double[] merge(Double[] gene1, Double[] gene2, Random random) {
-            Double[] result = new Double[gene1.length];
+        public double[] merge(double[] gene1, double[] gene2, Random random) {
+            double[] result = new double[gene1.length];
             for (int i = 0; i < result.length; i++) {
                 result[i] = random.nextBoolean() ? gene1[i] : gene2[i];
             }
@@ -149,8 +113,8 @@ public class WeightSelector<State, Trans> {
         }
 
         @Override
-        public Double[] mutate(Double[] gene, Random random) {
-            Double[] result = new Double[gene.length];
+        public double[] mutate(double[] gene, Random random) {
+            double[] result = new double[gene.length];
             int index = random.nextInt(gene.length);
             for (int i = 0; i < result.length; i++) {
                 result[i] = (i == index) ? randomValue(ranges[index], random) : gene[i];
@@ -162,5 +126,9 @@ public class WeightSelector<State, Trans> {
             double delta = random.nextDouble() * (range.upperEndpoint() - range.lowerEndpoint());
             return delta + range.lowerEndpoint();
         }
+    }
+
+    public interface ParamHeuristicFun<State> {
+        double fitness(State state, int depth, double[] params);
     }
 }

@@ -28,9 +28,13 @@ public abstract class AbstractGenetic<Gene> {
         this(resolver, 100);
     }
 
-    public AbstractGenetic(CandidateResolver<Gene> resolver, long timeout) {
+    AbstractGenetic(CandidateResolver<Gene> resolver, long timeout) {
         this.resolver = Objects.requireNonNull(resolver);
         timer.startTimer(timeout);
+    }
+
+    public Gene iterate(int iterationCount, int population) {
+        return iterate(iterationCount, population, population / 4, population / 4, population / 9);
     }
 
     public Gene iterate(int iterationCount, int population, int selectionNumber, int mergedNumber, int mutatedNumber) {

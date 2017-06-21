@@ -26,14 +26,14 @@ public class CombatSimulator<Agent> extends AbstractGenetic<Agent> {
     protected Map<Agent, Double> computeScores(List<Agent> agents) {
         int[][] result = new int[agents.size()][agents.size()];
         //FIXME combat count
-        for (int iteration = 0; iteration < 500; iteration ++) {
+        for (int iteration = 0; iteration < 10; iteration ++) {
             for (int i = 0; i < result.length; i++) {
                 for (int j = i + 1; j < result.length; j++) {
                     int delta = comparator.compare(agents.get(i), agents.get(j));
                     //2 points for a win, 1 point for draw scoring function
                     result[i][j] = (delta == 0) ? 1 : (delta > 0 ? 2 : 0);
                     result[j][i] = 2 - result[i][j];
-                    LOG.error("{} combat with {}, result = {}", agents.get(i), agents.get(j), result[i][j]);
+                    LOG.trace("{} combat with {}, result = {}", agents.get(i), agents.get(j), result[i][j]);
                 }
             }
         }

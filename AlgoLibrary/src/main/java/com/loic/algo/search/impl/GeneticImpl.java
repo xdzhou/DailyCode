@@ -1,5 +1,6 @@
 package com.loic.algo.search.impl;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.loic.algo.search.TreeSearchUtils.asStringSort;
 import static java.util.Objects.requireNonNull;
 
@@ -12,6 +13,7 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
+import com.google.common.base.Preconditions;
 import com.loic.algo.search.Timer;
 import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
@@ -26,6 +28,16 @@ public class GeneticImpl implements TreeSearch {
     private int population = 100;
     private int simuCount = 100;
 
+    public void setPopulation(int population) {
+        checkArgument(population > 0);
+        this.population = population;
+    }
+
+    public void setSimuCount(int simuCount) {
+        checkArgument(simuCount > 0);
+        this.simuCount = simuCount;
+    }
+
     @Override
     public <State, Trans> Optional<Trans> find(State root, SearchParam<State, Trans> param) {
         requireNonNull(root, "Root state is mandatory");
@@ -36,7 +48,7 @@ public class GeneticImpl implements TreeSearch {
 
         Resolver<State, Trans> resolver = new Resolver<>(root, param);
         Gene<Trans> best = new GeneticAlgorithm<>(resolver, param.timerDuration(), resolver)
-            .iterate(simuCount, population, 10, 50, 25);
+            .iterate(simuCount, population, population / 4, population / 4, population / 10);
 
         return Optional.of(best.trans[0]);
     }
