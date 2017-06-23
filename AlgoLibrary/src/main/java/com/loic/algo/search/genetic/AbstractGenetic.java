@@ -25,7 +25,7 @@ public abstract class AbstractGenetic<Gene> {
     private List<Gene> populations = new ArrayList<>();
 
     public AbstractGenetic(CandidateResolver<Gene> resolver) {
-        this(resolver, 100);
+        this(resolver, Long.MAX_VALUE);
     }
 
     AbstractGenetic(CandidateResolver<Gene> resolver, long timeout) {
