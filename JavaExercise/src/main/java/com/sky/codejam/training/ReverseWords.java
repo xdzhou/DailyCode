@@ -13,7 +13,7 @@ public class ReverseWords implements Resolver {
         String[] items = s.split(" ");
         StringBuffer sb = new StringBuffer();
         for (int j = items.length - 1; j >= 0; j--) {
-            sb.append(items[j] + " ");
+            sb.append(items[j]).append(' ');
         }
         return sb.toString();
     }

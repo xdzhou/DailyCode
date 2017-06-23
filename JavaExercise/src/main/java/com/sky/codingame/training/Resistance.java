@@ -1,10 +1,11 @@
 package com.sky.codingame.training;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Resistance {
-    private HashMap<Character, String> table = new HashMap<>();
+    private Map<Character, String> table = new HashMap<>();
     private Node root = new Node();
     private String morseLine;
 

@@ -7,5 +7,5 @@ package com.sky.problem;
  * @param <E> output result
  */
 public interface Problem<T, E> {
-    public E resolve(T param);
+    E resolve(T param);
 }

@@ -25,9 +25,9 @@ public class MissiontoMarsQ1 {
             int HS = in.nextInt();
             int VS = in.nextInt();
             VS -= 4;
-            int F = in.nextInt();
-            int R = in.nextInt();
-            int P = in.nextInt();
+            in.nextInt();
+            in.nextInt();
+            in.nextInt();
 
             int dx = sx - X;
             int dy = sy - Y;

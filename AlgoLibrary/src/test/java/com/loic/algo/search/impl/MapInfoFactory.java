@@ -9,7 +9,6 @@ public class MapInfoFactory {
     public static MapInfo create(String... data) {
         int width = -1;
         int height = 0;
-        int startPos = -1;
         int endPos = -1;
         boolean[] passFlag = new boolean[data.length * data[0].length()];
         Arrays.fill(passFlag, true);
@@ -22,9 +21,6 @@ public class MapInfoFactory {
             for (int i = 0; i < lineData.length(); i++) {
                 char c = lineData.charAt(i);
                 switch (c) {
-                    case 'S':
-                        startPos = width * height + i;
-                        break;
                     case 'E':
                         endPos = width * height + i;
                         break;

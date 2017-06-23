@@ -23,7 +23,7 @@ class Smash {
         while (true) {
             for (int i = 0; i < 8; i++) {
                 int colorA = in.nextInt(); // color of the first block
-                int colorB = in.nextInt(); // color of the attached block
+                in.nextInt(); // color of the attached block
                 colors[i] = colorA;
             }
             for (int i = 0; i < 12; i++) {
@@ -31,7 +31,7 @@ class Smash {
                 algo.mMapInfo.initLine(i, row);
             }
             for (int i = 0; i < 12; i++) {
-                String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
+                in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
             }
 
             System.out.println(algo.start(colors)); // "x": the column in which to drop your blocks
@@ -186,7 +186,7 @@ class Smash {
         }
     }
 
-    private static class MapInfo {
+    private static class MapInfo implements Cloneable {
         private static final int MIN_LIEN = 4;
 
         private static final char EMPTY = '.';

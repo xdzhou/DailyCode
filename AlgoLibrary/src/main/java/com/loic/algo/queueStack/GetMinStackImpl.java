@@ -2,6 +2,7 @@ package com.loic.algo.queueStack;
 
 import java.util.LinkedList;
 
+@SuppressWarnings("PMD")
 public class GetMinStackImpl<T extends Comparable<T>> implements GetMinStack<T> {
     private final LinkedList<T> contents = new LinkedList<>();
     private final LinkedList<T> mins = new LinkedList<>();

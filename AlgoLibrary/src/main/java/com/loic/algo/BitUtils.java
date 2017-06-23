@@ -15,7 +15,7 @@ public class BitUtils {
             int curLevel = getBitLength(a) - 1;
             int result = 0;
             while (curLevel >= 0) {
-                result |= (1 << curLevel);
+                result |= 1 << curLevel;
                 curLevel -= 2;
             }
             return result == a;

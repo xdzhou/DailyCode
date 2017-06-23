@@ -25,8 +25,8 @@ public class LightBoardCopy implements Serializable {
     /**
      * <p>Creates the LightBoardCopy out of the given Board.
      */
+    @SuppressWarnings("PMD")
     public LightBoardCopy(Board board) {
-
         colors = new Color[10][5];
 
         // for each row

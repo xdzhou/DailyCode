@@ -25,9 +25,7 @@ public class RollerCoaster {
         Set<Integer> noteSet = new HashSet<>();
         long resulta = 0;
         for (int i = 1; i <= C; i++) {
-            if (noteSet.contains(numFlag)) {
-
-            } else {
+            if (!noteSet.contains(numFlag)) {
                 noteSet.add(numFlag);
             }
 

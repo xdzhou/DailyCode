@@ -37,7 +37,7 @@ class SkynetBridge {
             curX = in.nextInt(); // x coordinate of the motorbike
             int Y = in.nextInt(); // y coordinate of the motorbike
             curY.add(Y);
-            int A = in.nextInt(); // indicates whether the motorbike is activated "1" or detroyed "0"
+            in.nextInt(); // indicates whether the motorbike is activated "1" or detroyed "0"
         }
 
         List<Command> commands = algo.getCommands(S, curX, curY);

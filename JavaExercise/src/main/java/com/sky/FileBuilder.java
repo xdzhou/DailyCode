@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 public class FileBuilder {
     private static final String IMPORT = "import ";
     private static final String END_COMMENT = "*/";
+    private static final String POINT_JAVA = ".java";
 
     private static final Charset CHARSET = Charset.forName("UTF-8");
     private final Set<String> imports = new HashSet<>();
@@ -70,7 +71,7 @@ public class FileBuilder {
         }
         return Arrays.stream(children)
             .map(File::getName)
-            .filter(n -> n.endsWith(".java"))
+            .filter(n -> n.endsWith(POINT_JAVA))
             .filter(n -> !n.equals(fileName))
             .map(n -> n.substring(0, n.length() - 5)) //".jave" length is 5
             .collect(Collectors.toList());
@@ -78,7 +79,7 @@ public class FileBuilder {
 
     private boolean addLineToCode(final ClassCode code, boolean fileKeyWordRead, final String line, List<String> otherClass) {
         if (line.startsWith("package ")) {
-            // Do nothing, we'll remove the package info
+            System.out.println("skip package");
         } else if (line.startsWith(IMPORT)) {
             boolean isLogImport = line.contains("org.slf4j.Logger");
             String absolutePath = toAbsolutePath(packageFile(line));
@@ -129,7 +130,7 @@ public class FileBuilder {
 
     private String packageFile(String importStr) {
         final String className = importStr.substring(IMPORT.length()).replaceAll(";", "");
-        return className.replaceAll("\\.", "/") + ".java";
+        return className.replaceAll("\\.", "/") + POINT_JAVA;
     }
 
     private ClassCode processFile(String absolutePath) {
@@ -173,14 +174,13 @@ public class FileBuilder {
                 // We can skip comments since generated file size might be
                 // limited
             } else if (trimedLine.isEmpty()) {
-                // We don't need empty lines
+                System.out.println("We don't need empty lines");
             } else if (trimedLine.startsWith("//")) {
-                // We can skip comments since generated file size might be
-                // limited
+                System.out.println("We can skip comments since generated file size might be");
             } else if (trimedLine.startsWith("LOG")) {
-                // ignore logs
+                System.out.println("ignore logs");
             } else if (trimedLine.contains("LoggerFactory")) {
-                // ignore logs
+                System.out.println("ignore logs");
             } else if (trimedLine.startsWith("/*")) {
                 // We can skip comments since generated file size might be
                 // limited
@@ -197,7 +197,7 @@ public class FileBuilder {
     private void readPackageClasses(String absolutePath, List<String> otherClass) {
         final Path directory = Paths.get(absolutePath).getParent();
         otherClass.stream()
-            .map(n -> directory.toFile().getAbsolutePath() + File.separator + n + ".java")
+            .map(n -> directory.toFile().getAbsolutePath() + File.separator + n + POINT_JAVA)
             .filter(p -> !knownFiles.contains(p))
             .forEach(p -> innerClasses.put(p, processFile(p)));
     }
@@ -213,12 +213,13 @@ public class FileBuilder {
         return exerciseSrcRoot + packageFile;
     }
 
+    @SuppressWarnings("PMD")
     private void write(ClassCode treated) {
         String className = treated.className();
         if (className == null || className.isEmpty()) {
             className = "Out";
         }
-        final String outputFile = className + ".java";
+        final String outputFile = className + POINT_JAVA;
 
         final List<String> lines = new ArrayList<>();
         lines.addAll(imports);
@@ -242,7 +243,7 @@ public class FileBuilder {
 
         try {
             Files.write(Paths.get("src", "main", "java", outputFile), lines, CHARSET);
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

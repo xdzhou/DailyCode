@@ -22,7 +22,7 @@ public class BitMap {
         if ((mBits[index] & (1 << rest)) != 0) {
             return false;
         }
-        mBits[index] |= (1 << rest);
+        mBits[index] |= 1 << rest;
         return true;
     }
 

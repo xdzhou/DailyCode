@@ -83,7 +83,7 @@ public class BigInt implements Cloneable {
             }
             return newInstance;
         } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }

@@ -168,7 +168,7 @@ public class CodeBuster {
             }
             entity = buster;
         } else {
-            throw new RuntimeException("of entity for type " + type + " ???");
+            throw new IllegalStateException("of entity for type " + type + " ???");
         }
         entity.mPosition.reset(x, y);
         if ((entity instanceof Buster) && mMyBusters.contains(entity)) {
@@ -240,7 +240,7 @@ public class CodeBuster {
             }
             return mBasePosition.moveToMe();
         } else {
-            throw new RuntimeException("Ghost no released !!!");
+            throw new IllegalStateException("Ghost no released !!!");
         }
     }
 
@@ -306,7 +306,7 @@ public class CodeBuster {
     private String searchGhost(Buster buster, List<Integer> toSearchIndex) {
         int searchIndex = getUnSearchedPoint(buster, toSearchIndex);
         if (searchIndex < 0) {
-            throw new RuntimeException("ERROR : no zone to search...");
+            throw new IllegalStateException("ERROR : no zone to search...");
         }
         Coord p = mZoneCenters[searchIndex];
         System.err.println(buster + " will search ghost at point " + p);
@@ -340,27 +340,6 @@ public class CodeBuster {
             }
         }
         return count;
-    }
-
-    private void printMap(List<Integer> toSearchIndex) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 6; j++) {
-                int index = i * 6 + j;
-                if (toSearchIndex.contains(index)) {
-                    sb.append('M');
-                    if (mZonePassed[index]) {
-                        throw new RuntimeException("ERROR is true ????");
-                    }
-                } else if (mZonePassed[index]) {
-                    sb.append('O');
-                } else {
-                    sb.append('X');
-                }
-            }
-            sb.append('\n');
-        }
-        System.err.println(sb.toString());
     }
 
     private void analyse() {
@@ -404,7 +383,7 @@ public class CodeBuster {
         List<Integer> toSearchIndex = new ArrayList<>();
         mDefenderCount = 0;
         for (int i = 0; i < mMyBusters.size(); i++) {
-            System.out.println(treat(mMyBusters.get(i), i, toSearchIndex, count));
+            System.out.println(treat(mMyBusters.get(i), toSearchIndex, count));
         }
 
         mGameInfo.mCloseOpponent.clear();
@@ -432,7 +411,7 @@ public class CodeBuster {
         //printMap(toSearchIndex);
     }
 
-    private String treat(Buster buster, int index, List<Integer> toSearchIndex, int unSearchCount) {
+    private String treat(Buster buster, List<Integer> toSearchIndex, int unSearchCount) {
         //stunned
         if (buster.mState == 2) {
             if (mGameInfo.mCloseOpponent.containsKey(buster)) {
@@ -509,7 +488,6 @@ public class CodeBuster {
             Collections.sort(mGhosts, new GhostComparator(buster));
             Ghost closeGhost = mGhosts.get(0);
             float cost = buster.getBustCost(closeGhost);
-            float dis = buster.getDis(closeGhost);
             /*
             boolean inTime = true;
             if (closeGhost.mTrapCount > 0 && dis > 1760) {

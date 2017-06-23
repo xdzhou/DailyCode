@@ -14,7 +14,7 @@ public class CombatSimulatorTest {
     public void testCombinationGuesser() {
         Combination toBeFound = new Combination(0, 3, 7, 9);
         CandidateStrategy strategy = new CandidateStrategy(10);
-        strategy.setToBeFound(toBeFound);
+        //strategy.setToBeFound(toBeFound);
         Function<Combination, Double> heuristicFun = heuristic(toBeFound);
 
         CombatSimulator<Combination> algo = new CombatSimulator<>(strategy, Comparator.comparingDouble(heuristicFun::apply));

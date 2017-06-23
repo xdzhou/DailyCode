@@ -1,21 +1,15 @@
 package com.loic.algo.search.genetic;
 
-import java.util.Objects;
 import java.util.Random;
 
 import com.google.common.base.Preconditions;
 
 public class CandidateStrategy implements CandidateResolver<Combination> {
     private final int bound;
-    private Combination toBeFound;
 
     public CandidateStrategy(int bound) {
         Preconditions.checkState(bound > 0);
         this.bound = bound;
-    }
-
-    public void setToBeFound(Combination toBeFound) {
-        this.toBeFound = Objects.requireNonNull(toBeFound);
     }
 
     @Override

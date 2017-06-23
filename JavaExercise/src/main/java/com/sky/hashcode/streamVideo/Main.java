@@ -160,7 +160,7 @@ public class Main {
             writer = new PrintWriter(file.getAbsolutePath().replace(".in", ".out"), "UTF-8");
             writer.print(sb.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             if (writer != null) {
                 writer.close();

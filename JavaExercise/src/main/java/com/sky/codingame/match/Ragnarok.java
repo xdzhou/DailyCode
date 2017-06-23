@@ -23,7 +23,7 @@ class Ragnarok {
 
         while (true) {
             String[] indi = in.nextLine().split(" ");
-            int H = Integer.parseInt(indi[0]);
+            Integer.parseInt(indi[0]);
             int N = Integer.parseInt(indi[1]);
 
             addGaintPosition(in, N, currentX, currentY);
@@ -126,10 +126,6 @@ class Ragnarok {
         p.x = (b * f - e * c) / (b * d - e * a);
         p.y = (d * c - a * f) / (b * d - e * a);
         return p;
-    }
-
-    private double getDistance(int x1, int y1, int x2, int y2) {
-        return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
 
     private static class Position {

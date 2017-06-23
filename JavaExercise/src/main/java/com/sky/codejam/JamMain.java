@@ -54,8 +54,8 @@ public class JamMain {
                 writer.close();
                 in.close();
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            throw new IllegalStateException(e);
         }
     }
 }

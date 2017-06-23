@@ -1,6 +1,7 @@
 package com.loic.algo;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
@@ -14,6 +15,6 @@ public class UnionFindTest {
         find.union(0, 1);
         find.union(8, 1);
         find.union(0, 9);
-        assertEquals(find.connected(8, 9), true);
+        assertTrue(find.connected(8, 9));
     }
 }

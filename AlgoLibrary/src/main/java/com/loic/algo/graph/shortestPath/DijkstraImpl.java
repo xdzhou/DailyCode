@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.*;
 import java.util.function.BiFunction;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.graph.ValueGraph;
@@ -65,7 +64,7 @@ public class DijkstraImpl implements IShortestPath {
                 }
 
                 double weight = valueGraph.edgeValue(selectNode, nextNode);
-                Preconditions.checkArgument(weight >= 0, "Dijkstra algo do NOT support negtive weight");
+                checkArgument(weight >= 0, "Dijkstra algo do NOT support negtive weight");
                 double newDis = disFromSourceMap.get(selectNode) + weight;
                 if (preDis == null || newDis < preDis) {
                     disFromSourceMap.put(nextNode, newDis);

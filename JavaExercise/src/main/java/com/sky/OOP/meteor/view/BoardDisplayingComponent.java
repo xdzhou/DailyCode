@@ -101,10 +101,6 @@ public class BoardDisplayingComponent extends JPanel {
         if (boardImage == null) {
             recreateAndInitiateBoardImage();
         }
-        try {
-            g.drawImage(boardImage.getImage(), 0, 0, this);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        g.drawImage(boardImage.getImage(), 0, 0, this);
     }
 }

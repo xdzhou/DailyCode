@@ -101,7 +101,7 @@ public class SolutionViewer extends JFrame implements ActionListener {
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Solution file " + path + " not found, make sure you've calculated all solutions.");
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return lightBoardCopy;
     }

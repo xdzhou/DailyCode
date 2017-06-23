@@ -8,14 +8,12 @@ import java.util.Map;
 
 import com.loic.algo.common.Pair;
 import com.sky.problem.Problem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610
  */
 public class ShortestTransformPath<T> implements Problem<Void, Integer> {
-    private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
+    //private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 
     private Map<T, HashSet<T>> treeMap;
     private Comparator<Pair<Integer, Integer>> longestPathComparator = (o1, o2) -> o2.first().compareTo(o1.first());

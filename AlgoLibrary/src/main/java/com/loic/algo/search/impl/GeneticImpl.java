@@ -7,7 +7,6 @@ import static java.util.Objects.requireNonNull;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
@@ -20,9 +19,6 @@ import com.loic.algo.search.genetic.CandidateResolver;
 import com.loic.algo.search.genetic.GeneticAlgorithm;
 
 public class GeneticImpl implements TreeSearch {
-    private static final int MAX_SAME_FITNESS_GENERATION = 7;
-    private static final float DEFAULT_MUTATION_RATE = 0.1f;
-
     private int population = 100;
     private int simuCount = 100;
 
@@ -116,7 +112,7 @@ public class GeneticImpl implements TreeSearch {
         private final Trans[] trans;
 
         private Gene(Trans[] trans) {
-            this.trans = Objects.requireNonNull(trans);
+            this.trans = requireNonNull(trans);
         }
 
         @Override

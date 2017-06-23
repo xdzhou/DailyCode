@@ -3,6 +3,8 @@ package com.loic.algo;
 import static com.loic.algo.BitUtils.getOneCount;
 import static com.loic.algo.BitUtils.isBitStaggered;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
@@ -10,11 +12,11 @@ public class BitUtilsTest {
 
     @Test
     public void testIsBitStaggered() {
-        assertEquals(isBitStaggered(convert("101")), true);
-        assertEquals(isBitStaggered(convert("1010")), true);
-        assertEquals(isBitStaggered(convert("1011")), false);
-        assertEquals(isBitStaggered(convert("10101010101")), true);
-        assertEquals(isBitStaggered(convert("1001")), false);
+        assertTrue(isBitStaggered(convert("101")));
+        assertTrue(isBitStaggered(convert("1010")));
+        assertFalse(isBitStaggered(convert("1011")));
+        assertTrue(isBitStaggered(convert("10101010101")));
+        assertFalse(isBitStaggered(convert("1001")));
     }
 
     @Test

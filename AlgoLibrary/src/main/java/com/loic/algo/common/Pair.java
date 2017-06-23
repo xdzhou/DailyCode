@@ -46,6 +46,7 @@ public class Pair<T, E> implements Cloneable {
     }
 
     @Override
+    @SuppressWarnings("PMD")
     public Pair<T, E> clone() {
         try {
             return (Pair<T, E>) super.clone();

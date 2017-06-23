@@ -1,6 +1,7 @@
 package com.sky.codejam.training;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Spelling {
@@ -23,7 +24,7 @@ public class Spelling {
                 char c = s.charAt(j);
                 int currentIndi = Integer.parseInt(letteMap.get(c).substring(0, 1));
                 if (currentIndi == lastIndi) {
-                    sb.append(" ").append(letteMap.get(c));
+                    sb.append(' ').append(letteMap.get(c));
                 } else {
                     sb.append(letteMap.get(c));
                 }
@@ -34,7 +35,7 @@ public class Spelling {
         in.close();
     }
 
-    private void initMap(HashMap<Character, String> map) {
+    private void initMap(Map<Character, String> map) {
         map.clear();
         map.put('a', "2");
         map.put('b', "22");

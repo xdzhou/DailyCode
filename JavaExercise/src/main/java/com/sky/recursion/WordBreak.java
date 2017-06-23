@@ -26,10 +26,10 @@ public class WordBreak implements Problem<Pair<String, Set<String>>, List<String
         if (s == null || s.equals("")) {
             StringBuilder sb = new StringBuilder();
             for (String word : preWords) {
-                sb.append(word).append(" ");
+                sb.append(word).append(' ');
             }
             for (String word : postWords) {
-                sb.append(word).append(" ");
+                sb.append(word).append(' ');
             }
             sb.deleteCharAt(sb.length() - 1);
             result.add(sb.toString());
