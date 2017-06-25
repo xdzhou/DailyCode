@@ -1,5 +1,7 @@
 package com.loic.algo.graph;
 
+import static org.testng.Assert.assertTrue;
+
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.loic.algo.graph.topologicalSort.ITopologicalSort;
@@ -15,10 +17,10 @@ public class TopologicalSortTest {
         Graph graph = GraphBuilder.undirected().build();
 
         ITopologicalSort algo = new KahnImpl();
-        Assert.assertTrue(algo.sort(graph).isEmpty());
+        assertTrue(algo.sort(graph).isEmpty());
 
         algo = new TopologicalDfsImpl();
-        Assert.assertTrue(algo.sort(graph).isEmpty());
+        assertTrue(algo.sort(graph).isEmpty());
     }
 
     @Test
@@ -26,10 +28,10 @@ public class TopologicalSortTest {
         Graph<?> graph = GraphHepler.cycleDirectedGraph();
 
         ITopologicalSort algo = new KahnImpl();
-        Assert.assertTrue(algo.sort(graph).isEmpty());
+        assertTrue(algo.sort(graph).isEmpty());
 
         algo = new TopologicalDfsImpl();
-        Assert.assertTrue(algo.sort(graph).isEmpty());
+        assertTrue(algo.sort(graph).isEmpty());
     }
 
     @Test

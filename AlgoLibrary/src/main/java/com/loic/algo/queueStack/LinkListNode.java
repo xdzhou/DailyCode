@@ -1,6 +1,10 @@
 package com.loic.algo.queueStack;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
+import java.util.stream.IntStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +55,7 @@ public class LinkListNode<T> {
     public LinkListNode<T> hasCycle() {
         LinkListNode<T> flag1 = this;
         LinkListNode<T> flag2 = this;
-        while (flag2.mNext != null) {
+        while (flag2 != null && flag2.mNext != null) {
             flag1 = flag1.mNext;
             flag2 = flag2.mNext.mNext;
             if (flag1 == flag2) {
@@ -130,6 +134,10 @@ public class LinkListNode<T> {
         return p;
     }
 
+    public T getValue() {
+        return mValue;
+    }
+
     public LinkListNode<T> getIntersectNodeIfCycle() {
         LinkListNode<T> node = hasCycle();
         if (node != null) {
@@ -188,7 +196,7 @@ public class LinkListNode<T> {
      * find the nth to last element of a singly linked list
      */
     public LinkListNode<T> fineNthLastNode(int n) {
-        Preconditions.checkArgument(n > 0);
+        checkArgument(n > 0);
         LinkListNode<T> resultIndi = this;
         LinkListNode<T> headIndi = this;
         n--;
@@ -226,5 +234,16 @@ public class LinkListNode<T> {
         sb.delete(sb.length() - 2, sb.length());
         sb.append("]");
         return sb.toString();
+    }
+
+    public static <T> LinkListNode<T> from(T... items) {
+        requireNonNull(items);
+        checkArgument(items.length > 0);
+        LinkListNode<T> root = new LinkListNode<>(items[0]);
+        LinkListNode<T> tail = root;
+        for (int i = 1; i < items.length; i++) {
+            tail = tail.append(items[i]);
+        }
+        return root;
     }
 }

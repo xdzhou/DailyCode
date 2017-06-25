@@ -1,6 +1,7 @@
 package com.loic.algo.common;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
+
 import org.testng.annotations.Test;
 
 public class BitMapTest {
@@ -13,11 +14,11 @@ public class BitMapTest {
     @Test
     public void testSet() {
         BitMap bitMap = new BitMap(12);
-        Assert.assertEquals(bitMap.set(1), true);
-        Assert.assertEquals(bitMap.set(1), false);
+        assertEquals(bitMap.set(1), true);
+        assertEquals(bitMap.set(1), false);
 
-        Assert.assertEquals(bitMap.isSet(1), true);
-        Assert.assertEquals(bitMap.isSet(10), false);
+        assertEquals(bitMap.isSet(1), true);
+        assertEquals(bitMap.isSet(10), false);
     }
 
     @Test
@@ -26,6 +27,6 @@ public class BitMapTest {
         bitMap.set(0);
         bitMap.set(39);
 
-        Assert.assertEquals(bitMap.binaryString(), "1000000000000000000000000000000000000001");
+        assertEquals(bitMap.binaryString(), "1000000000000000000000000000000000000001");
     }
 }

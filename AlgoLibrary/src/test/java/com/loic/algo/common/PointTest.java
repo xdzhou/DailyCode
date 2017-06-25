@@ -1,6 +1,7 @@
 package com.loic.algo.common;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
+
 import org.testng.annotations.Test;
 
 public class PointTest {
@@ -8,12 +9,14 @@ public class PointTest {
     @Test
     public void testConstructor() {
         Point p = new Point(12, 23);
-        Assert.assertEquals(p.x, 12);
-        Assert.assertEquals(p.y, 23);
+        assertEquals(p.x, 12);
+        assertEquals(p.y, 23);
     }
 
     @Test
     public void testEqual() {
-        Assert.assertEquals(new Point(12, 23), new Point(12, 23));
+        Point p = new Point(12, 23);
+        assertEquals(p, new Point(12, 23));
+        assertEquals(p.hashCode(), new Point(12, 23).hashCode(), 0);
     }
 }

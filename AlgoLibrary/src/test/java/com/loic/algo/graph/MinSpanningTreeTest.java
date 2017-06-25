@@ -1,5 +1,7 @@
 package com.loic.algo.graph;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.Set;
 
 import com.google.common.graph.EndpointPair;
@@ -8,7 +10,6 @@ import com.google.common.graph.ValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.loic.algo.graph.minSpanningTree.IMinSpanningTree;
 import com.loic.algo.graph.minSpanningTree.PrimImpl;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class MinSpanningTreeTest {
@@ -23,7 +24,7 @@ public class MinSpanningTreeTest {
             totalWeight += graph.edgeValue(pair.nodeU(), pair.nodeV());
         }
 
-        Assert.assertEquals(totalWeight, 39, 0);
+        assertEquals(totalWeight, 39, 0);
     }
 
     //https://zh.wikipedia.org/wiki/%E6%99%AE%E6%9E%97%E5%A7%86%E7%AE%97%E6%B3%95#/media/File:Prim_Algorithm_7.svg

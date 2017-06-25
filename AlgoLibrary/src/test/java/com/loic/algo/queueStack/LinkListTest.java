@@ -1,15 +1,17 @@
 package com.loic.algo.queueStack;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class LinkListTest {
-    LinkListNode<Integer> noCyclyNode1;
-    LinkListNode<Integer> noCyclyNode2;
-    LinkListNode<Integer> intersectNode;
+    private LinkListNode<Integer> noCyclyNode1;
+    private LinkListNode<Integer> noCyclyNode2;
+    private LinkListNode<Integer> intersectNode;
 
-    LinkListNode<Integer> cyclyNode;
+    private LinkListNode<Integer> cyclyNode;
 
     @BeforeTest
     public void init() {
@@ -22,7 +24,7 @@ public class LinkListTest {
         System.out.println(noCyclyNode1.printList());
         LinkListNode<Integer> reversNode = noCyclyNode1.reverse();
         System.out.println(reversNode.printList());
-        Assert.assertEquals(noCyclyNode1.getNext(), null);
+        assertEquals(noCyclyNode1.getNext(), null);
         noCyclyNode1 = reversNode.reverse();
 
         cyclyNode = new LinkListNode<>(1);
@@ -32,14 +34,56 @@ public class LinkListTest {
 
     @Test
     public void cycleCheckTest() {
-        Assert.assertTrue(noCyclyNode1.hasCycle() == null);
-        Assert.assertTrue(noCyclyNode2.hasCycle() == null);
-        Assert.assertTrue(cyclyNode.hasCycle() != null);
+        assertTrue(noCyclyNode1.hasCycle() == null);
+        assertTrue(noCyclyNode2.hasCycle() == null);
+        assertTrue(cyclyNode.hasCycle() != null);
     }
 
     @Test
     public void findIntersectNodeTest() {
-        Assert.assertEquals(noCyclyNode1.getFirstIntersectNode(noCyclyNode2), intersectNode);
-        Assert.assertEquals(noCyclyNode2.getFirstIntersectNode(noCyclyNode1), intersectNode);
+        assertEquals(noCyclyNode1.getFirstIntersectNode(noCyclyNode2), intersectNode);
+        assertEquals(noCyclyNode2.getFirstIntersectNode(noCyclyNode1), intersectNode);
+    }
+
+    @Test
+    public void testFindNthNode() {
+        LinkListNode<Integer> root = LinkListNode.from(1, 2, 3, 4, 5, 6);
+        assertEquals(5, root.fineNthLastNode(2).getValue(), 0);
+        assertEquals(2, root.fineNthLastNode(5).getValue(), 0);
+    }
+
+    @Test
+    public void testIntersecNode() {
+        LinkListNode<Integer> root = LinkListNode.from(1, 2, 3, 4, 5, 6);
+        LinkListNode<Integer> intersec = root.fineNthLastNode(3);
+        LinkListNode<Integer> another = new LinkListNode<>(88);
+        another.setNextNode(intersec);
+
+        assertEquals(intersec, root.getFirstIntersectNode(another));
+        assertEquals(intersec, another.getFirstIntersectNode(root));
+
+        assertTrue(root.isJoinedWith(another));
+    }
+
+    @Test
+    public void testIntersecNodeForCycle() {
+        LinkListNode<Integer> root = LinkListNode.from(1, 2, 3, 4, 5, 6);
+        LinkListNode<Integer> intersec = root.fineNthLastNode(4);
+        root.fineNthLastNode(1).setNextNode(intersec);
+
+        assertEquals(intersec, root.getIntersectNodeIfCycle());
+        assertTrue(root.isJoinedWith(root.getNext()));
+        assertTrue(root.isJoinedWith(root));
+    }
+
+    @Test
+    public void testRemoveNode() {
+        LinkListNode<Integer> root = LinkListNode.from(1, 2, 3, 4, 5, 6);
+        LinkListNode<Integer> toRemove = root.fineNthLastNode(4);
+        root.removeNode(toRemove);
+
+        assertEquals(2, root.fineNthLastNode(4).getValue(), 0);
+        root.removeNode(root.fineNthLastNode(1));
+        assertEquals(5, root.fineNthLastNode(1).getValue(), 0);
     }
 }

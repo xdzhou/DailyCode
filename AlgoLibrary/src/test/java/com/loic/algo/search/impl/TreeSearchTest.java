@@ -1,11 +1,13 @@
 package com.loic.algo.search.impl;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 import java.util.Optional;
 
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
-import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
@@ -27,11 +29,11 @@ public class TreeSearchTest {
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
-        Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 7);
-        Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 7);
+        assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 7);
+        assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 7);
 
-        Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 7);
-        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 7);
+        assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 7);
+        assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 7);
     }
 
     @Test
@@ -45,11 +47,11 @@ public class TreeSearchTest {
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
-        Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 16);
+        assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 16);
         //Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 16);
 
-        Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 16);
-        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 16);
+        assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 16);
+        assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 16);
     }
 
     @Test
@@ -63,11 +65,11 @@ public class TreeSearchTest {
         PathStateStrategy strategy = new PathStateStrategy(mapInfo);
         PathState root = new PathState(0);
 
-        Assert.assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 24);
-        Assert.assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 24);
+        assertEquals(testAlgo(new BruteForce(), root, strategy).size(), 24);
+        assertEquals(testAlgo(new AStarImpl(), root, strategy).size(), 24);
 
-        Assert.assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 24);
-        Assert.assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 24);
+        assertTrue(testAlgo(new UtcSearch(1000), root, strategy).size() >= 24);
+        assertTrue(testAlgo(new GeneticImpl(), root, strategy).size() >= 24);
     }
 
     private List<Direction> testAlgo(TreeSearch algo, PathState root, PathStateStrategy strategy) {

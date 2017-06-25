@@ -1,11 +1,12 @@
 package com.loic.algo.search.tournament;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Comparator;
 import java.util.function.Function;
 
 import com.loic.algo.search.genetic.CandidateStrategy;
 import com.loic.algo.search.genetic.Combination;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class CombatSimulatorTest {
@@ -19,7 +20,7 @@ public class CombatSimulatorTest {
 
         CombatSimulator<Combination> algo = new CombatSimulator<>(strategy, Comparator.comparingDouble(heuristicFun::apply));
         Combination best = algo.iterate(100, 25, 5, 20, 20);
-        Assert.assertEquals(toBeFound, best);
+        assertEquals(toBeFound, best);
     }
 
     public Function<Combination, Double> heuristic(Combination toBeFound) {

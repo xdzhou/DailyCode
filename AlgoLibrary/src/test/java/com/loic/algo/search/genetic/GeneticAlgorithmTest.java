@@ -1,8 +1,9 @@
 package com.loic.algo.search.genetic;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.function.Function;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class GeneticAlgorithmTest {
@@ -14,7 +15,7 @@ public class GeneticAlgorithmTest {
         //strategy.setToBeFound(toBeFound);
         GeneticAlgorithm<Combination> algo = new GeneticAlgorithm<>(strategy, 100, heuristic(toBeFound));
         Combination best = algo.iterate(100, 25, 5, 20, 20);
-        Assert.assertEquals(toBeFound, best);
+        assertEquals(toBeFound, best);
     }
 
 
