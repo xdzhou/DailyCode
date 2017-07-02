@@ -1,5 +1,7 @@
 package com.loic.algo.search.genetic;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -24,13 +26,9 @@ public abstract class AbstractGenetic<Gene> {
     private final Timer timer = new Timer();
     private List<Gene> populations = new ArrayList<>();
 
-    public AbstractGenetic(CandidateResolver<Gene> resolver) {
-        this(resolver, Long.MAX_VALUE);
-    }
-
     AbstractGenetic(CandidateResolver<Gene> resolver, long timeout) {
         this.resolver = Objects.requireNonNull(resolver);
-        timer.startTimer(timeout);
+        timer.setDuration(timeout);
     }
 
     public Gene iterate(int iterationCount, int population) {
@@ -38,6 +36,9 @@ public abstract class AbstractGenetic<Gene> {
     }
 
     public Gene iterate(int iterationCount, int population, int selectionNumber, int mergedNumber, int mutatedNumber) {
+        checkArgument(iterationCount > 1);
+        checkArgument(population > 1);
+        timer.startTime();
         for (int i = 0; i < iterationCount; i++) {
             try {
                 oneIteration(population, selectionNumber, mergedNumber, mutatedNumber);
