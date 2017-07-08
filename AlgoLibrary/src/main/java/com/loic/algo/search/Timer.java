@@ -22,7 +22,7 @@ public class Timer {
     }
 
     public void checkTime() throws TimeoutException {
-        if (timeout > 0 && System.nanoTime() > timeout) {
+        if (timeout > 0 && System.currentTimeMillis() > timeout) {
             throw new TimeoutException();
         }
     }
