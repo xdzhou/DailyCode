@@ -21,6 +21,10 @@ public class Pair<T, E> implements Cloneable {
         return second;
     }
 
+    public boolean empty() {
+        return first == null && second == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
