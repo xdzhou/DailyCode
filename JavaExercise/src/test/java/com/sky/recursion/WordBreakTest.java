@@ -5,11 +5,14 @@ import java.util.Set;
 
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<String>> {
+
+    public WordBreakTest() {
+        super(new WordBreak());
+    }
 
     @Test
     public void test() {
@@ -17,8 +20,8 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
 
         check(Pair.of(
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
-            generateSet("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa",
-                "aaaaaaaaaa")), this::onOutputReady);
+            generateSet("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")),
+            this::onOutputReady);
     }
 
     private void onOutputReady(Pair<String, Set<String>> input, List<String> output) {
@@ -27,10 +30,5 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
                 Assert.assertEquals(input.first(), s.replace(" ", ""));
             }
         }
-    }
-
-    @Override
-    public SolutionProvider<Pair<String, Set<String>>, List<String>> getAlgo() {
-        return new WordBreak();
     }
 }

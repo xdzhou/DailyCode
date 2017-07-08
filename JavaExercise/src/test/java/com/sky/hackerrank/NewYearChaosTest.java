@@ -1,14 +1,12 @@
 package com.sky.hackerrank;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class NewYearChaosTest extends CommonTest<Integer[], String> {
 
-    @Override
-    protected SolutionProvider<Integer[], String> getAlgo() {
-        return new NewYearChaos();
+    public NewYearChaosTest() {
+        super(new NewYearChaos());
     }
 
     @Test

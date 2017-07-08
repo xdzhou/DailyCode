@@ -1,14 +1,12 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class TrailingZerosTest extends CommonTest<Integer, Integer> {
 
-    @Override
-    public SolutionProvider<Integer, Integer> getAlgo() {
-        return new TrailingZeros();
+    public TrailingZerosTest() {
+        super(new TrailingZeros());
     }
 
     @Test

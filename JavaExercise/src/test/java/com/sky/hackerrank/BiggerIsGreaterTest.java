@@ -1,14 +1,12 @@
 package com.sky.hackerrank;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class BiggerIsGreaterTest extends CommonTest<String, String> {
 
-    @Override
-    protected SolutionProvider<String, String> getAlgo() {
-        return new BiggerIsGreater();
+    public BiggerIsGreaterTest() {
+        super(new BiggerIsGreater());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.sky.common;
 
+import static java.util.Objects.requireNonNull;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -13,15 +13,13 @@ import java.util.function.Function;
 
 import com.sky.solution.SolutionProvider;
 
-public abstract class CommonTest<T, E> {
-    private SolutionProvider<T, E> solutionProvider;
+public class CommonTest<T, E> {
+    private final SolutionProvider<T, E> solutionProvider;
 
-    public CommonTest() {
-        solutionProvider = getAlgo();
-        assertNotEquals(solutionProvider, null);
+    public CommonTest(SolutionProvider<T, E> solutionProvider) {
+        this.solutionProvider = requireNonNull(solutionProvider);
     }
 
-    protected abstract SolutionProvider<T, E> getAlgo();
 
     public SolutionProvider<T, E> getProblem() {
         return solutionProvider;

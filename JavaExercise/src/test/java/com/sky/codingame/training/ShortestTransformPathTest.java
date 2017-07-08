@@ -5,10 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
+
+    public ShortestTransformPathTest() {
+        super(new ShortestTransformPath<Integer>());
+    }
 
     private void chargeData(String fileIn) {
         ShortestTransformPath<Integer> algo = (ShortestTransformPath<Integer>) getProblem();
@@ -62,11 +65,6 @@ public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
     public void test6() {
         chargeData("ShortestTransformPathIn6.txt");
         check(null, 7);
-    }
-
-    @Override
-    public SolutionProvider<Void, Integer> getAlgo() {
-        return new ShortestTransformPath<Integer>();
     }
 
 }

@@ -1,10 +1,13 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class AdditiveNumberTest extends CommonTest<String, Boolean> {
+
+    public AdditiveNumberTest() {
+        super(new AdditiveNumber());
+    }
 
     @Test
     public void test() {
@@ -13,10 +16,5 @@ public class AdditiveNumberTest extends CommonTest<String, Boolean> {
         check("123", true);
         check("000000", true);
         check("00654160000", false);
-    }
-
-    @Override
-    public SolutionProvider<String, Boolean> getAlgo() {
-        return new AdditiveNumber();
     }
 }

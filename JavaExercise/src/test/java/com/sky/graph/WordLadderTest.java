@@ -5,11 +5,14 @@ import java.util.Set;
 
 import com.loic.algo.common.Triple;
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WordLadderTest extends CommonTest<Triple<String, String, Set<String>>, List<List<String>>> {
+    public WordLadderTest() {
+        super(new WordLadder());
+    }
+
     @Test
     public void test() {
         check(Triple.of("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")), this::onOutputReady);
@@ -25,10 +28,5 @@ public class WordLadderTest extends CommonTest<Triple<String, String, Set<String
                 Assert.assertEquals(input.second(), paths.get(paths.size() - 1));
             }
         }
-    }
-
-    @Override
-    public SolutionProvider<Triple<String, String, Set<String>>, List<List<String>>> getAlgo() {
-        return new WordLadder();
     }
 }

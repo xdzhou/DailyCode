@@ -2,10 +2,13 @@ package com.sky.exercise;
 
 import com.loic.algo.common.Point;
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class MaxPointsInLineTest extends CommonTest<Point[], Integer> {
+
+    public MaxPointsInLineTest() {
+        super(new MaxPointsInLine());
+    }
 
     @Test
     public void test() {
@@ -23,10 +26,5 @@ public class MaxPointsInLineTest extends CommonTest<Point[], Integer> {
             result[i] = new Point(p[i * 2], p[i * 2 + 1]);
         }
         return result;
-    }
-
-    @Override
-    public SolutionProvider<Point[], Integer> getAlgo() {
-        return new MaxPointsInLine();
     }
 }

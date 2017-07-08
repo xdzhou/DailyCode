@@ -1,10 +1,13 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class VenomProblemTest extends CommonTest<Integer, Integer> {
+    public VenomProblemTest() {
+        super(new VenomProblem());
+    }
+
     @Test
     public void test() {
         check(1000, 10);
@@ -12,10 +15,5 @@ public class VenomProblemTest extends CommonTest<Integer, Integer> {
         check(7, 3);
         check(1024, 10);
         check(16, 4);
-    }
-
-    @Override
-    public SolutionProvider<Integer, Integer> getAlgo() {
-        return new VenomProblem();
     }
 }
