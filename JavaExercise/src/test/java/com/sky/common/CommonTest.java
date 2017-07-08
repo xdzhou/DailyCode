@@ -1,80 +1,54 @@
 package com.sky.common;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
-import com.sky.problem.Problem;
-import com.sky.problem.ProblemThreeSolutions;
-import com.sky.problem.ProblemTwoSolutions;
-import org.testng.Assert;
+import com.sky.solution.SolutionProvider;
 
 public abstract class CommonTest<T, E> {
-    private Problem<T, E> mAlgoToTest;
+    private SolutionProvider<T, E> solutionProvider;
 
     public CommonTest() {
-        mAlgoToTest = getAlgo();
-        Assert.assertNotEquals(mAlgoToTest, null);
+        solutionProvider = getAlgo();
+        assertNotEquals(solutionProvider, null);
     }
 
-    protected abstract Problem<T, E> getAlgo();
+    protected abstract SolutionProvider<T, E> getAlgo();
 
-    public Problem<T, E> getProblem() {
-        return mAlgoToTest;
+    public SolutionProvider<T, E> getProblem() {
+        return solutionProvider;
     }
 
     protected void check(T input, E output) {
-        if (mAlgoToTest instanceof ProblemThreeSolutions) {
-            ProblemThreeSolutions<T, E> threeSolutionAlgo = (ProblemThreeSolutions<T, E>) mAlgoToTest;
-            E baseOutPut = threeSolutionAlgo.resolve(input);
-            Assert.assertEquals(baseOutPut, threeSolutionAlgo.resolve2(input));
-            Assert.assertEquals(baseOutPut, threeSolutionAlgo.resolve3(input));
-            if (output != null) {
-                Assert.assertEquals(baseOutPut, output);
-            }
-        } else if (mAlgoToTest instanceof ProblemTwoSolutions) {
-            ProblemTwoSolutions<T, E> twoSolutionAlgo = (ProblemTwoSolutions<T, E>) mAlgoToTest;
-            E baseOutPut = twoSolutionAlgo.resolve(input);
-            Assert.assertEquals(baseOutPut, twoSolutionAlgo.resolve2(input));
-            if (output != null) {
-                Assert.assertEquals(baseOutPut, output);
-            }
-        } else {
-            Assert.assertEquals(mAlgoToTest.resolve(input), output);
+        for (Function<T, E> solution : solutionProvider.solutions()) {
+            assertEquals(solution.apply(input), output);
+        }
+    }
+
+    protected void checkInput(T input) {
+        List<Function<T, E>> list = solutionProvider.solutions();
+        assertTrue(list.size() > 1);
+        E output = list.get(0).apply(input);
+        for (int i = 1; i < list.size(); i++) {
+            assertEquals(list.get(i).apply(input), output);
         }
     }
 
     protected void check(T input) {
-        if (mAlgoToTest instanceof ProblemThreeSolutions) {
-            ProblemThreeSolutions<T, E> threeSolutionAlgo = (ProblemThreeSolutions<T, E>) mAlgoToTest;
-
-            onOutputReady(input, threeSolutionAlgo.resolve(input));
-            onOutputReady(input, threeSolutionAlgo.resolve2(input));
-            onOutputReady(input, threeSolutionAlgo.resolve3(input));
-        } else if (mAlgoToTest instanceof ProblemTwoSolutions) {
-            ProblemTwoSolutions<T, E> twoSolutionAlgo = (ProblemTwoSolutions<T, E>) mAlgoToTest;
-            onOutputReady(input, twoSolutionAlgo.resolve(input));
-            onOutputReady(input, twoSolutionAlgo.resolve2(input));
-        } else {
-            onOutputReady(input, mAlgoToTest.resolve(input));
-        }
+        check(input, this::onOutputReady);
     }
 
     protected void check(T input, BiConsumer<T, E> consumer) {
-        if (mAlgoToTest instanceof ProblemThreeSolutions) {
-            ProblemThreeSolutions<T, E> threeSolutionAlgo = (ProblemThreeSolutions<T, E>) mAlgoToTest;
-
-            consumer.accept(input, threeSolutionAlgo.resolve(input));
-            consumer.accept(input, threeSolutionAlgo.resolve2(input));
-            consumer.accept(input, threeSolutionAlgo.resolve3(input));
-        } else if (mAlgoToTest instanceof ProblemTwoSolutions) {
-            ProblemTwoSolutions<T, E> twoSolutionAlgo = (ProblemTwoSolutions<T, E>) mAlgoToTest;
-            consumer.accept(input, twoSolutionAlgo.resolve(input));
-            consumer.accept(input, twoSolutionAlgo.resolve2(input));
-        } else {
-            consumer.accept(input, mAlgoToTest.resolve(input));
+        for (Function<T, E> solution : solutionProvider.solutions()) {
+            consumer.accept(input, solution.apply(input));
         }
     }
 

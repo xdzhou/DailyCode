@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -31,7 +31,7 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
     }
 
     @Override
-    public Problem<Pair<String, Set<String>>, List<String>> getAlgo() {
+    public SolutionProvider<Pair<String, Set<String>>, List<String>> getAlgo() {
         return new WordBreak();
     }
 }

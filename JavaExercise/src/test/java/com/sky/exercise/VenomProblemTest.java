@@ -1,7 +1,7 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class VenomProblemTest extends CommonTest<Integer, Integer> {
@@ -15,7 +15,7 @@ public class VenomProblemTest extends CommonTest<Integer, Integer> {
     }
 
     @Override
-    public Problem<Integer, Integer> getAlgo() {
+    public SolutionProvider<Integer, Integer> getAlgo() {
         return new VenomProblem();
     }
 }

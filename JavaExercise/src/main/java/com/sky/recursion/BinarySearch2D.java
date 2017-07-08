@@ -3,7 +3,7 @@ package com.sky.recursion;
 import java.util.Objects;
 
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
  *
  * @link http://www.hawstein.com/posts/9.6.html
  */
-public class BinarySearch2D<K extends Comparable<K>> implements Problem<Pair<K[][], K>, Pair<Integer, Integer>> {
+public class BinarySearch2D<K extends Comparable<K>> extends AbstractSolutionProvider<Pair<K[][], K>, Pair<Integer, Integer>> {
     public static final Pair<Integer, Integer> UNFOUND = Pair.of(-1, -1);
     private static final Logger Log = LoggerFactory.getLogger(BinarySearch2D.class);
 
     @Override
-    public Pair<Integer, Integer> resolve(Pair<K[][], K> param) {
+    protected Pair<Integer, Integer> resolve(Pair<K[][], K> param) {
         Objects.requireNonNull(param);
         return binarySearch2D(param.first(), param.second());
     }

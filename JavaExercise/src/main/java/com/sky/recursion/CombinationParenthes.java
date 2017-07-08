@@ -1,6 +1,6 @@
 package com.sky.recursion;
 
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
  *
  * @link http://www.hawstein.com/posts/8.5.html
  */
-public class CombinationParenthes implements Problem<Integer, Integer> {
+public class CombinationParenthes extends AbstractSolutionProvider<Integer, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(CombinationParenthes.class);
 
     @Override
-    public Integer resolve(Integer param) {
+    protected Integer resolve(Integer param) {
         printPair("", 0, 0, param);
         return getPairCount(0, 0, param);
     }

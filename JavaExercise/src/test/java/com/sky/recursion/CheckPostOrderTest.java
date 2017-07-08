@@ -1,7 +1,7 @@
 package com.sky.recursion;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class CheckPostOrderTest extends CommonTest<Integer[], Boolean> {
@@ -13,7 +13,7 @@ public class CheckPostOrderTest extends CommonTest<Integer[], Boolean> {
     }
 
     @Override
-    public Problem<Integer[], Boolean> getAlgo() {
+    public SolutionProvider<Integer[], Boolean> getAlgo() {
         return new CheckPostOrder();
     }
 }

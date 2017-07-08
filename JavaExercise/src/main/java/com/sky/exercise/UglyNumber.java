@@ -1,18 +1,19 @@
 package com.sky.exercise;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import com.loic.algo.array.ArrayUtils;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * 我们把只包含因子2、3 和5 的数称作丑数（Ugly Number）。例如6、8 都是丑数， 但14 不是，因为它包含因子7。习惯上我们把1
  * 当做是第一个丑数。求按从小到大的顺序的第1500 个丑数。
  */
-public class UglyNumber implements ProblemTwoSolutions<Integer, Integer> {
+public class UglyNumber implements SolutionProvider<Integer, Integer> {
 
-    @Override
     public Integer resolve(Integer param) {
         // DP list
         List<Integer> uglyNumberList = new ArrayList<>(param);
@@ -43,7 +44,6 @@ public class UglyNumber implements ProblemTwoSolutions<Integer, Integer> {
         return false;
     }
 
-    @Override
     public Integer resolve2(Integer param) {
         List<Integer> uglyHeap = new ArrayList<>(param);
         uglyHeap.add(1);
@@ -64,5 +64,10 @@ public class UglyNumber implements ProblemTwoSolutions<Integer, Integer> {
             }
         }
         return uglyHeap.get(0);
+    }
+
+    @Override
+    public List<Function<Integer, Integer>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

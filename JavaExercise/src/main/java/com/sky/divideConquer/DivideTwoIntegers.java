@@ -1,7 +1,7 @@
 package com.sky.divideConquer;
 
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
  *
  * @link https://leetcode.com/problems/divide-two-integers/
  */
-public class DivideTwoIntegers implements Problem<Pair<Integer, Integer>, Integer> {
+public class DivideTwoIntegers extends AbstractSolutionProvider<Pair<Integer, Integer>, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(DivideTwoIntegers.class);
 
     @Override
-    public Integer resolve(Pair<Integer, Integer> param) {
+    protected Integer resolve(Pair<Integer, Integer> param) {
         return divide(param.first(), param.second());
     }
 

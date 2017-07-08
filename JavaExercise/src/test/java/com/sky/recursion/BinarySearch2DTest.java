@@ -2,14 +2,14 @@ package com.sky.recursion;
 
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class BinarySearch2DTest extends CommonTest<Pair<Integer[][], Integer>, Pair<Integer, Integer>> {
 
     @Override
-    public Problem<Pair<Integer[][], Integer>, Pair<Integer, Integer>> getAlgo() {
+    public SolutionProvider<Pair<Integer[][], Integer>, Pair<Integer, Integer>> getAlgo() {
         return new BinarySearch2D<>();
     }
 

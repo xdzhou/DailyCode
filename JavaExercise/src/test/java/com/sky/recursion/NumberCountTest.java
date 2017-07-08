@@ -1,20 +1,20 @@
 package com.sky.recursion;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class NumberCountTest extends CommonTest<Integer, Integer[]> {
 
     @Override
-    public Problem<Integer, Integer[]> getAlgo() {
+    public SolutionProvider<Integer, Integer[]> getAlgo() {
         return new NumberCount();
     }
 
     @Test
     public void test() {
-        check(1235, (Integer[]) null);
-        check(1212, (Integer[]) null);
+        checkInput(1235);
+        checkInput(1212);
     }
 
 }

@@ -1,12 +1,12 @@
 package com.sky.divideConquer;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class DCIntegerDivisionTest extends CommonTest<Integer, Integer> {
     @Override
-    protected Problem<Integer, Integer> getAlgo() {
+    protected SolutionProvider<Integer, Integer> getAlgo() {
         return new DCIntegerDivision();
     }
 

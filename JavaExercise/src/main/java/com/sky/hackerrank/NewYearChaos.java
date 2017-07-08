@@ -1,14 +1,17 @@
 package com.sky.hackerrank;
 
-import com.sky.problem.ProblemTwoSolutions;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+import com.sky.solution.SolutionProvider;
 
 /**
  * URL : https://www.hackerrank.com/challenges/new-year-chaos
  */
-public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
+public class NewYearChaos implements SolutionProvider<Integer[], String> {
     static final String NO_ANSWER = "Too chaotic";
 
-    @Override
     public String resolve(Integer[] param) {
         if (param.length == 0) {
             return NO_ANSWER;
@@ -38,7 +41,6 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
         return String.valueOf(sum);
     }
 
-    @Override
     public String resolve2(Integer[] param) {
         if (param.length == 0) {
             return NO_ANSWER;
@@ -115,4 +117,8 @@ public class NewYearChaos implements ProblemTwoSolutions<Integer[], String> {
         return String.valueOf(sum);
     }
 
+    @Override
+    public List<Function<Integer[], String>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
+    }
 }

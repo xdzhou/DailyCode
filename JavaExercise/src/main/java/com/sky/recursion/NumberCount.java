@@ -1,10 +1,12 @@
 package com.sky.recursion;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +16,12 @@ import org.slf4j.LoggerFactory;
  *
  * @link http://www.hawstein.com/posts/20.4.html
  */
-public class NumberCount implements ProblemTwoSolutions<Integer, Integer[]> {
+public class NumberCount implements SolutionProvider<Integer, Integer[]> {
     private static final Logger Log = LoggerFactory.getLogger(NumberCount.class);
 
     /**
      * WARNING: result[0] is faux
      */
-    @Override
     public Integer[] resolve(Integer param) {
         Objects.requireNonNull(param);
         Preconditions.checkArgument(param > 0, "n must be bigger than 0 !");
@@ -103,7 +104,6 @@ public class NumberCount implements ProblemTwoSolutions<Integer, Integer[]> {
      *
      * @link http://www.hawstein.com/posts/20.4.html
      */
-    @Override
     public Integer[] resolve2(Integer param) {
         Objects.requireNonNull(param);
         Preconditions.checkArgument(param > 0, "n must be bigger than 0 !");
@@ -131,5 +131,10 @@ public class NumberCount implements ProblemTwoSolutions<Integer, Integer[]> {
         result[0] += 1;
         Log.debug("getNumCount2 for {} : {}", param, result);
         return result;
+    }
+
+    @Override
+    public List<Function<Integer, Integer[]>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

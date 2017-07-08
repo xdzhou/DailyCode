@@ -1,7 +1,7 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class ContinuousCardsTest extends CommonTest<Integer[], Boolean> {
@@ -20,7 +20,7 @@ public class ContinuousCardsTest extends CommonTest<Integer[], Boolean> {
     }
 
     @Override
-    public Problem<Integer[], Boolean> getAlgo() {
+    public SolutionProvider<Integer[], Boolean> getAlgo() {
         return new ContinuousCards();
     }
 }

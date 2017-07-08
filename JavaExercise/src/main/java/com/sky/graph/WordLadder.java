@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.loic.algo.common.Triple;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
  *
  * @link https://leetcode.com/problems/word-ladder-ii/
  */
-public class WordLadder implements Problem<Triple<String, String, Set<String>>, List<List<String>>> {
+public class WordLadder extends AbstractSolutionProvider<Triple<String, String, Set<String>>, List<List<String>>> {
     private static final Logger Log = LoggerFactory.getLogger(WordLadder.class);
 
     @Override
-    public List<List<String>> resolve(Triple<String, String, Set<String>> param) {
+    protected List<List<String>> resolve(Triple<String, String, Set<String>> param) {
         Objects.requireNonNull(param);
         return findLadders(param.first(), param.second(), param.third());
     }

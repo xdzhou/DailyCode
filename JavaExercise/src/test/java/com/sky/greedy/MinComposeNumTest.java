@@ -1,7 +1,7 @@
 package com.sky.greedy;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class MinComposeNumTest extends CommonTest<Integer[], String> {
@@ -14,7 +14,7 @@ public class MinComposeNumTest extends CommonTest<Integer[], String> {
     }
 
     @Override
-    public Problem<Integer[], String> getAlgo() {
+    public SolutionProvider<Integer[], String> getAlgo() {
         return new MinComposeNum();
     }
 }

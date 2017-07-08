@@ -1,7 +1,7 @@
 package com.sky.dynamicProgramming;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class FindMidNumTest extends CommonTest<Integer[], Integer> {
@@ -13,7 +13,7 @@ public class FindMidNumTest extends CommonTest<Integer[], Integer> {
     }
 
     @Override
-    public Problem<Integer[], Integer> getAlgo() {
+    public SolutionProvider<Integer[], Integer> getAlgo() {
         return new FindMidNum();
     }
 }

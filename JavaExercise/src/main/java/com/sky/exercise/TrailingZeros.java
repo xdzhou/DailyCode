@@ -1,16 +1,19 @@
 package com.sky.exercise;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
 import com.loic.algo.common.Pair;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * 计算n的阶乘末尾0的个数。
  *
  * @link http://www.hawstein.com/posts/19.3.html
  */
-public class TrailingZeros implements ProblemTwoSolutions<Integer, Integer> {
+public class TrailingZeros implements SolutionProvider<Integer, Integer> {
 
-    @Override
     public Integer resolve(Integer param) {
         return getTrailingZerosCountInNFactorial(param);
     }
@@ -47,7 +50,6 @@ public class TrailingZeros implements ProblemTwoSolutions<Integer, Integer> {
     }
 
     // 因子2出现频率远大于5，因此只需求出因子5出现的次数
-    @Override
     public Integer resolve2(Integer param) {
         int curNum = param;
         int count = 0;
@@ -57,4 +59,8 @@ public class TrailingZeros implements ProblemTwoSolutions<Integer, Integer> {
         return count;
     }
 
+    @Override
+    public List<Function<Integer, Integer>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
+    }
 }

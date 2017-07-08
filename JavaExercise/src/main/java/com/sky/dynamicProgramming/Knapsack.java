@@ -4,16 +4,16 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Triple;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /*
  * 01背包问题:
  * 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。
  * 求解将哪些物品装入背包可使价值总和最大。
  */
-public class Knapsack implements Problem<Triple<Integer, Integer[], Integer[]>, Integer> {
+public class Knapsack extends AbstractSolutionProvider<Triple<Integer, Integer[], Integer[]>, Integer> {
     @Override
-    public Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
+    protected Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
         Objects.requireNonNull(param);
         Preconditions.checkArgument(param.second().length == param.third().length,
             "weight.length != value.length");

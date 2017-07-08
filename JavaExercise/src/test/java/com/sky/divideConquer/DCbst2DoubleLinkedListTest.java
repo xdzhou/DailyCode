@@ -4,13 +4,13 @@ import static org.testng.Assert.assertEquals;
 
 import com.loic.algo.tree.TreeNode;
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, TreeNode<Integer>> {
 
     @Override
-    protected Problem<TreeNode<Integer>, TreeNode<Integer>> getAlgo() {
+    protected SolutionProvider<TreeNode<Integer>, TreeNode<Integer>> getAlgo() {
         return new DCbst2DoubleLinkedList<>();
     }
 

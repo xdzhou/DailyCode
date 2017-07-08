@@ -1,21 +1,21 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class UglyNumberTest extends CommonTest<Integer, Integer> {
 
     @Test
     public void test() {
-        check(3, (Integer) null);
-        check(10, (Integer) null);
-        check(99, (Integer) null);
-        check(911, (Integer) null);
+        checkInput(3);
+        checkInput(10);
+        checkInput(99);
+        checkInput(911);
     }
 
     @Override
-    public Problem<Integer, Integer> getAlgo() {
+    public SolutionProvider<Integer, Integer> getAlgo() {
         return new UglyNumber();
     }
 }

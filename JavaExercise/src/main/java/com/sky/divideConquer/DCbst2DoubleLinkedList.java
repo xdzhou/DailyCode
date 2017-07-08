@@ -1,15 +1,15 @@
 package com.sky.divideConquer;
 
 import com.loic.algo.tree.TreeNode;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * 输入一棵二元查找树(Binary search tree)，将该二元查找树转换成一个排序的双向链表。 要求不能创建任何新的结点，只调整指针的指向。
  */
-public class DCbst2DoubleLinkedList<T> implements Problem<TreeNode<T>, TreeNode<T>> {
+public class DCbst2DoubleLinkedList<T> extends AbstractSolutionProvider<TreeNode<T>, TreeNode<T>> {
 
     @Override
-    public TreeNode<T> resolve(TreeNode<T> bstNode) {
+    protected TreeNode<T> resolve(TreeNode<T> bstNode) {
         return changeToLinkList(bstNode);
     }
 

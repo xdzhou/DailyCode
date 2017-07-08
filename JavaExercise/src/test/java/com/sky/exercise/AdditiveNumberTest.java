@@ -1,7 +1,7 @@
 package com.sky.exercise;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class AdditiveNumberTest extends CommonTest<String, Boolean> {
@@ -16,7 +16,7 @@ public class AdditiveNumberTest extends CommonTest<String, Boolean> {
     }
 
     @Override
-    public Problem<String, Boolean> getAlgo() {
+    public SolutionProvider<String, Boolean> getAlgo() {
         return new AdditiveNumber();
     }
 }

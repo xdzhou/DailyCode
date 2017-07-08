@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
@@ -65,7 +65,7 @@ public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
     }
 
     @Override
-    public Problem<Void, Integer> getAlgo() {
+    public SolutionProvider<Void, Integer> getAlgo() {
         return new ShortestTransformPath<Integer>();
     }
 

@@ -2,7 +2,7 @@ package com.sky.exercise;
 
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class CheckRotationStringTest extends CommonTest<Pair<String, String>, Boolean> {
@@ -15,7 +15,7 @@ public class CheckRotationStringTest extends CommonTest<Pair<String, String>, Bo
     }
 
     @Override
-    public Problem<Pair<String, String>, Boolean> getAlgo() {
+    public SolutionProvider<Pair<String, String>, Boolean> getAlgo() {
         return new CheckRotationString();
     }
 }

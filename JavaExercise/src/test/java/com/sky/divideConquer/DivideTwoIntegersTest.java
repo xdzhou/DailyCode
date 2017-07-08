@@ -2,7 +2,7 @@ package com.sky.divideConquer;
 
 import com.loic.algo.common.Pair;
 import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.solution.SolutionProvider;
 import org.testng.annotations.Test;
 
 public class DivideTwoIntegersTest extends CommonTest<Pair<Integer, Integer>, Integer> {
@@ -17,7 +17,7 @@ public class DivideTwoIntegersTest extends CommonTest<Pair<Integer, Integer>, In
     }
 
     @Override
-    public Problem<Pair<Integer, Integer>, Integer> getAlgo() {
+    public SolutionProvider<Pair<Integer, Integer>, Integer> getAlgo() {
         return new DivideTwoIntegers();
     }
 }

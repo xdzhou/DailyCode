@@ -1,17 +1,18 @@
 package com.sky.hackerrank;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * URL : https://www.hackerrank.com/challenges/bigger-is-greater
  */
-public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
+public class BiggerIsGreater implements SolutionProvider<String, String> {
     static final String NO_ANSWER = "no answer";
 
-    @Override
     public String resolve(String param) {
         Preconditions.checkNotNull(param);
         if (param.length() <= 1) {
@@ -51,7 +52,6 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
         }
     }
 
-    @Override
     public String resolve2(String param) {
         char[] array = param.toCharArray();
         int i = array.length - 1;
@@ -81,5 +81,10 @@ public class BiggerIsGreater implements ProblemTwoSolutions<String, String> {
             j--;
         }
         return new String(array);
+    }
+
+    @Override
+    public List<Function<String, String>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

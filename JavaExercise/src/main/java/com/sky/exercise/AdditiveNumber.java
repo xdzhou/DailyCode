@@ -1,6 +1,6 @@
 package com.sky.exercise;
 
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * Additive number is a positive integer whose digits can form additive
@@ -12,13 +12,12 @@ import com.sky.problem.Problem;
  *
  * @link https://leetcode.com/problems/additive-number/
  */
-public class AdditiveNumber implements Problem<String, Boolean> {
-
+public class AdditiveNumber extends AbstractSolutionProvider<String, Boolean> {
     /**
      * 诀窍就是只要确定前2个数字，后面的可以自动求出
      */
     @Override
-    public Boolean resolve(String s) {
+    protected Boolean resolve(String s) {
         if (s == null || s.length() < 3) {
             return false;
         }
