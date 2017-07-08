@@ -18,4 +18,9 @@ public class PathState {
     public List<Integer> getPath() {
         return path;
     }
+
+    @Override
+    public String toString() {
+        return path.toString();
+    }
 }

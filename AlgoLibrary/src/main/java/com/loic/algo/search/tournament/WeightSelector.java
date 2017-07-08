@@ -13,6 +13,7 @@ import com.google.common.collect.Range;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 import com.loic.algo.search.genetic.CandidateResolver;
+import com.loic.algo.search.genetic.ComparatorGenetic;
 
 public class WeightSelector<State, Trans> {
     private final Random random = new Random(new Date().getTime());
@@ -55,6 +56,10 @@ public class WeightSelector<State, Trans> {
     }
 
     public double[] select() {
+        return select(10, 15);
+    }
+
+    public double[] select(int iterationCount, int population) {
         requireNonNull(roots);
         requireNonNull(searchParam);
         requireNonNull(heuristicFun);
@@ -63,9 +68,9 @@ public class WeightSelector<State, Trans> {
         checkState(roots.length > 0);
         checkState(ranges.length > 0);
 
-        CombatSimulator<double[]> simulator = new CombatSimulator<>(new WeightCandidateResolver(ranges), generateComparator());
+        ComparatorGenetic<double[]> simulator = new ComparatorGenetic<>(new WeightCandidateResolver(ranges), generateComparator());
 
-        return simulator.iterate(10, 15);
+        return simulator.iterate(iterationCount, population);
     }
 
     private Comparator<double[]> generateComparator() {

@@ -1,19 +1,28 @@
 package com.loic.algo.search;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public class Timer {
-    private long startTime;
-    private long timeout;
+    private long duration;
+    private long timeout = -1;
 
-    public void startTimer(double durationInMilliseconds) {
-        checkArgument(durationInMilliseconds > 0);
-        startTime = System.nanoTime();
-        timeout = startTime + (long) (durationInMilliseconds * 1000000);
+    public void startTimer(long durationInMS) {
+        setDuration(durationInMS);
+        startTime();
+    }
+
+    public void startTime() {
+        if (duration > 0) {
+            timeout = System.currentTimeMillis() + duration;
+        } else {
+            timeout = -1;
+        }
+    }
+
+    public void setDuration(long durationInMS) {
+        duration = durationInMS;
     }
 
     public void checkTime() throws TimeoutException {
-        if (startTime > 0 && timeout > 0 && System.nanoTime() > timeout) {
+        if (timeout > 0 && System.currentTimeMillis() > timeout) {
             throw new TimeoutException();
         }
     }

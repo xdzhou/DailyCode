@@ -56,7 +56,7 @@ public class PathStateStrategy implements ApplyStrategy<PathState, Direction>, H
     @Override
     public double heuristic(PathState pathState, int depth) {
         List<Integer> path = pathState.getPath();
-        Assert.assertEquals(path.size(), depth + delta);
+        //Assert.assertEquals(path.size(), depth + delta);
 
         int pos = path.get(path.size() - 1);
         int line = pos / mapInfo.getWidth();

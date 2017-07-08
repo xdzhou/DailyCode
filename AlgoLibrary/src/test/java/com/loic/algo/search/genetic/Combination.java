@@ -13,6 +13,13 @@ public class Combination {
         this.fourth = fourth;
     }
 
+    public int delta(Combination other) {
+        return Math.abs(first - other.first)
+            + Math.abs(second - other.second)
+            + Math.abs(third - other.third)
+            + Math.abs(fourth - other.fourth);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

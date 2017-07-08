@@ -18,5 +18,6 @@ public class PointTest {
         Point p = new Point(12, 23);
         assertEquals(p, new Point(12, 23));
         assertEquals(p.hashCode(), new Point(12, 23).hashCode(), 0);
+        assertEquals(p.toString(), new Point(12, 23).toString());
     }
 }
