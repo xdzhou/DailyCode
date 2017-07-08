@@ -13,16 +13,15 @@ public class WordBreakTest extends CommonTest<Pair<String, Set<String>>, List<St
 
     @Test
     public void test() {
-        check(Pair.of("catsanddog", generateSet("cat", "cats", "and", "sand", "dog")));
+        check(Pair.of("catsanddog", generateSet("cat", "cats", "and", "sand", "dog")), this::onOutputReady);
 
         check(Pair.of(
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
             generateSet("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa",
-                "aaaaaaaaaa")));
+                "aaaaaaaaaa")), this::onOutputReady);
     }
 
-    @Override
-    protected void onOutputReady(Pair<String, Set<String>> input, List<String> output) {
+    private void onOutputReady(Pair<String, Set<String>> input, List<String> output) {
         if (!output.isEmpty()) {
             for (String s : output) {
                 Assert.assertEquals(input.first(), s.replace(" ", ""));

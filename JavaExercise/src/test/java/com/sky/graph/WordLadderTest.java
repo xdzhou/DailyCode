@@ -12,12 +12,11 @@ import org.testng.annotations.Test;
 public class WordLadderTest extends CommonTest<Triple<String, String, Set<String>>, List<List<String>>> {
     @Test
     public void test() {
-        check(Triple.of("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")));
-        check(Triple.of("hot", "dog", generateSet("hot", "dot", "dog")));
+        check(Triple.of("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")), this::onOutputReady);
+        check(Triple.of("hot", "dog", generateSet("hot", "dot", "dog")), this::onOutputReady);
     }
 
-    @Override
-    protected void onOutputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
+    private void onOutputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
         if (!output.isEmpty()) {
             int pathLen = output.get(0).size();
             for (List<String> paths : output) {

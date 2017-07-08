@@ -42,17 +42,10 @@ public abstract class CommonTest<T, E> {
         }
     }
 
-    protected void check(T input) {
-        check(input, this::onOutputReady);
-    }
-
     protected void check(T input, BiConsumer<T, E> consumer) {
         for (Function<T, E> solution : solutionProvider.solutions()) {
             consumer.accept(input, solution.apply(input));
         }
-    }
-
-    protected void onOutputReady(T input, E output) {
     }
 
     // helper method
