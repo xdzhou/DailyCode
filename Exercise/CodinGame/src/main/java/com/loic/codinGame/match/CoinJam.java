@@ -1,4 +1,4 @@
-package com.loic.match;
+package com.loic.codinGame.match;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package com.loic.training;
+package com.loic.codinGame.training;
 
 import java.io.Serializable;
 import java.util.ArrayList;
