@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * Remove the minimum number of invalid parentheses in order to make the input
@@ -13,11 +13,11 @@ import com.sky.problem.Problem;
  *
  * @link https://leetcode.com/problems/remove-invalid-parentheses/
  */
-public class RemoveInvalidParentheses implements Problem<String, List<String>> {
+public class RemoveInvalidParentheses extends AbstractSolutionProvider<String, List<String>> {
     private boolean needRemoveOpenParentheses = false;
 
     @Override
-    public List<String> resolve(String s) {
+    protected List<String> resolve(String s) {
         List<String> result = new ArrayList<String>();
         int len = s.length();
         if (len > 0) {

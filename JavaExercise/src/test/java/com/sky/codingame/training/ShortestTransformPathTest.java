@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
+public class ShortestTransformPathTest {
 
-    private void chargeData(String fileIn) {
-        ShortestTransformPath<Integer> algo = (ShortestTransformPath<Integer>) getProblem();
+    private void chargeData(ShortestTransformPath<Integer> algo, String fileIn) {
         String floder = "src/test/resources/codingame/";
         try {
             algo.clear();
@@ -28,45 +26,42 @@ public class ShortestTransformPathTest extends CommonTest<Void, Integer> {
         }
     }
 
+    private void testFile(String fileName, int output) {
+        ShortestTransformPath<Integer> algo = new ShortestTransformPath<Integer>();
+        chargeData(algo, fileName);
+        new SolutionChecker<>(algo)
+            .check(null, output);
+
+    }
+
     @Test
     public void test1() {
-        chargeData("ShortestTransformPathIn1.txt");
-        check(null, 2);
+        testFile("ShortestTransformPathIn1.txt", 2);
     }
 
     @Test
     public void test2() {
-        chargeData("ShortestTransformPathIn2.txt");
-        check(null, 2);
+        testFile("ShortestTransformPathIn2.txt", 2);
     }
 
     @Test
     public void test3() {
-        chargeData("ShortestTransformPathIn3.txt");
-        check(null, 3);
+        testFile("ShortestTransformPathIn3.txt", 3);
     }
 
     @Test
     public void test4() {
-        chargeData("ShortestTransformPathIn4.txt");
-        check(null, 5);
+        testFile("ShortestTransformPathIn4.txt", 5);
     }
 
     @Test
     public void test5() {
-        chargeData("ShortestTransformPathIn5.txt");
-        check(null, 5);
+        testFile("ShortestTransformPathIn5.txt", 5);
     }
 
     @Test
     public void test6() {
-        chargeData("ShortestTransformPathIn6.txt");
-        check(null, 7);
-    }
-
-    @Override
-    public Problem<Void, Integer> getAlgo() {
-        return new ShortestTransformPath<Integer>();
+        testFile("ShortestTransformPathIn6.txt", 7);
     }
 
 }

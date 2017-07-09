@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Map;
 
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610
  */
-public class ShortestTransformPath<T> implements Problem<Void, Integer> {
+public class ShortestTransformPath<T> extends AbstractSolutionProvider<Void, Integer> {
     //private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 
     private Map<T, HashSet<T>> treeMap;
@@ -24,7 +24,7 @@ public class ShortestTransformPath<T> implements Problem<Void, Integer> {
     }
 
     @Override
-    public Integer resolve(Void param) {
+    protected Integer resolve(Void param) {
         return getShortestTransformPathLength();
     }
 

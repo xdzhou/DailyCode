@@ -1,8 +1,12 @@
 package com.sky.exercise;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
 import com.google.common.base.Preconditions;
 import com.loic.algo.tree.TreeNode;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * { http://www.geeksforgeeks.org/check-binary-tree-subtree-another-binary-tree-set-2/}
@@ -13,9 +17,8 @@ import com.sky.problem.ProblemTwoSolutions;
  * <p/>
  * 有两棵很大的二叉树：T1有上百万个结点，T2有上百个结点。写程序判断T2是否为T1的子树。
  */
-public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Boolean> {
+public class CheckSubTree implements SolutionProvider<TreeNode<Integer>[], Boolean> {
 
-    @Override
     public Boolean resolve(TreeNode<Integer>[] param) {
         Preconditions.checkArgument(param != null && param.length > 1);
         TreeNode<Integer> T1 = param[0];
@@ -51,7 +54,6 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
      * The idea is based on the fact that inorder and preorder/postorder
      * uniquely identify a binary tree. 中序排序 和 前序排序/后续排序 可以唯一确定一颗树
      */
-    @Override
     public Boolean resolve2(TreeNode<Integer>[] param) {
         Preconditions.checkArgument(param != null && param.length > 1);
         TreeNode<Integer> T1 = param[0];
@@ -78,5 +80,10 @@ public class CheckSubTree implements ProblemTwoSolutions<TreeNode<Integer>[], Bo
         } else {
             return tree.mValue + getPreOrder(tree.left(), replaceNull) + getPreOrder(tree.right(), replaceNull);
         }
+    }
+
+    @Override
+    public List<Function<TreeNode<Integer>[], Boolean>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

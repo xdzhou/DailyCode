@@ -1,16 +1,16 @@
 package com.sky.exercise;
 
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * 一串首尾相连的珠子(m 个)，有N 种颜色(N<=10)， 设计一个算法，取出其中一段，要求包含所有N 中颜色，并使长度最短。
  * 并分析时间复杂度与空间复杂度。
  */
-public class FindSubStringWithAllChar implements Problem<Pair<String, Integer>, String> {
+public class FindSubStringWithAllChar extends AbstractSolutionProvider<Pair<String, Integer>, String> {
 
     @Override
-    public String resolve(Pair<String, Integer> param) {
+    protected String resolve(Pair<String, Integer> param) {
         return findAllChar(param.first(), param.second());
     }
 

@@ -17,7 +17,7 @@ import com.loic.algo.eventDrive.EventDriveSystem;
  * other testing frameworks. You may also include a brief explanation of your
  * design and assumptions along with your code.
  * <p/>
- * Problem Statement: In a Formula-1 challenge, there are n teams numbered 1 to
+ * SolutionProvider Statement: In a Formula-1 challenge, there are n teams numbered 1 to
  * n. Each team has a car and a driver. Car’s specification are as follows: –
  * Top speed: (150 + 10 * i) km per hour – Acceleration: (2 * i) meter per
  * second square. – Handling factor (hf) = 0.8 – Nitro : Increases the speed to

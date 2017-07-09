@@ -1,15 +1,15 @@
 package com.sky.dynamicProgramming;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * 在一个int 数组里查找这样的数，它大于等于左侧所有数，小于等于右侧所有数。
  */
-public class FindMidNum implements Problem<Integer[], Integer> {
+public class FindMidNum extends AbstractSolutionProvider<Integer[], Integer> {
 
     @Override
-    public Integer resolve(Integer[] param) {
+    protected Integer resolve(Integer[] param) {
         Preconditions.checkNotNull(param);
         // use dp to save max num from 0 to i
         int[] dp = new int[param.length];

@@ -1,20 +1,15 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class JumpingNumbersTest extends CommonTest<Integer, Integer> {
+public class JumpingNumbersTest {
 
     @Test
     public void test() {
-        check(9, 9);
-        check(20, 12);
-        check(105, 28);
-    }
-
-    @Override
-    public Problem<Integer, Integer> getAlgo() {
-        return new JumpingNumbers();
+        new SolutionChecker<>(new JumpingNumbers())
+            .check(9, 9)
+            .check(20, 12)
+            .check(105, 28);
     }
 }

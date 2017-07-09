@@ -1,15 +1,18 @@
 package com.sky.exercise;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
 import com.google.common.base.Preconditions;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * 函数将字符串中的字符'*'移到串的前部分，前面的非'*'字符后移， 但不能改变非'*'字符的先后顺序，函数返回串中字符'*'的数量。
  * 如原始串为：ab**cd**e*12，处理后为*****abcde12
  */
-public class MoveStar implements ProblemTwoSolutions<String, String> {
+public class MoveStar implements SolutionProvider<String, String> {
     // 用1个游标从尾部开始向前移动，指向*时和前面第一个非*字符互换
-    @Override
     public String resolve(String param) {
         Preconditions.checkNotNull(param);
         char[] values = param.toCharArray();
@@ -36,7 +39,6 @@ public class MoveStar implements ProblemTwoSolutions<String, String> {
         a[j] = c;
     }
 
-    @Override
     public String resolve2(String param) {
         Preconditions.checkNotNull(param);
         char[] values = param.toCharArray();
@@ -55,5 +57,10 @@ public class MoveStar implements ProblemTwoSolutions<String, String> {
             values[charIndex--] = '*';
         }
         return new String(values);
+    }
+
+    @Override
+    public List<Function<String, String>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

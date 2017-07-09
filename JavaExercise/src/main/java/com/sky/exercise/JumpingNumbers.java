@@ -2,7 +2,7 @@ package com.sky.exercise;
 
 import java.util.Objects;
 
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
  * 8987 and 4343456 are Jumping numbers but 796 and 89098 are not. <br>
  * Given a positive number x, print Jumping Numbers count.
  */
-public class JumpingNumbers implements Problem<Integer, Integer> {
+public class JumpingNumbers extends AbstractSolutionProvider<Integer, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(JumpingNumbers.class);
 
     @Override
-    public Integer resolve(Integer param) {
+    protected Integer resolve(Integer param) {
         Objects.requireNonNull(param);
         if (param < 10) {
             return param;

@@ -3,21 +3,20 @@ package com.sky.divideConquer;
 import static org.testng.Assert.assertEquals;
 
 import com.loic.algo.tree.TreeNode;
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, TreeNode<Integer>> {
+public class DCbst2DoubleLinkedListTest {
 
-    @Override
-    protected Problem<TreeNode<Integer>, TreeNode<Integer>> getAlgo() {
-        return new DCbst2DoubleLinkedList<>();
+    public SolutionChecker<TreeNode<Integer>, TreeNode<Integer>> getChecker() {
+        return new SolutionChecker<>(new DCbst2DoubleLinkedList<Integer>());
     }
 
     @Test
     public void testSimpleCase() {
-        check(null, (TreeNode<Integer>) null);
-        check(TreeNode.of(1), (i, o) -> assertEquals(i.value(), o.value()));
+        getChecker()
+            .check(null, (TreeNode<Integer>) null)
+            .check(TreeNode.of(1), (i, o) -> assertEquals(i.value(), o.value()));
     }
 
     @Test
@@ -26,19 +25,18 @@ public class DCbst2DoubleLinkedListTest extends CommonTest<TreeNode<Integer>, Tr
         root.setLeft(TreeNode.of(1));
         root.setRight(TreeNode.binaryTree(3, 4, 5));
 
-        check(root, (i, o) -> {
-            int curValue = 1;
-            TreeNode<Integer> curNode = o;
-            while (curNode != null) {
-                assertEquals(curNode.value(), Integer.valueOf(curValue));
-                if (curNode.left() != null) {
-                    assertEquals(curNode.left().value(), Integer.valueOf(curValue - 1));
+        getChecker()
+            .check(root, (i, o) -> {
+                int curValue = 1;
+                TreeNode<Integer> curNode = o;
+                while (curNode != null) {
+                    assertEquals(curNode.value(), Integer.valueOf(curValue));
+                    if (curNode.left() != null) {
+                        assertEquals(curNode.left().value(), Integer.valueOf(curValue - 1));
+                    }
+                    curNode = curNode.right();
+                    curValue++;
                 }
-                curNode = curNode.right();
-                curValue++;
-            }
-
-
-        });
+            });
     }
 }

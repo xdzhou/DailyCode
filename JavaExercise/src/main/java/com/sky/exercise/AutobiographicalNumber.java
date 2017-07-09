@@ -3,9 +3,10 @@ package com.sky.exercise;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * ==> 6210001000 is a Autobiographical Number 0 在下排出现了6 次，1 在下排出现了2 次， 2
  * 在下排出现了1 次，3 在下排出现了0 次....
  */
-public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Boolean> {
+public class AutobiographicalNumber implements SolutionProvider<Integer, Boolean> {
     /**
      * Autobiographical a 特征是 ：a的各位数字的和为a的长度；最后一位一定为0；a的长度最短为3
      */
@@ -24,7 +25,6 @@ public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Bool
     private List<Integer> autobiographicalNumberList;
 
     // 检测每个数字出现的次数依次组成的数是否和原来的相等
-    @Override
     public Boolean resolve(Integer param) {
         Preconditions.checkNotNull(param);
         String numString = param.toString();
@@ -40,7 +40,6 @@ public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Bool
         return numString.equals(sb.toString());
     }
 
-    @Override
     public Boolean resolve2(Integer param) {
         if (autobiographicalNumberList == null) {
             autobiographicalNumberList = new ArrayList<>();
@@ -115,5 +114,10 @@ public class AutobiographicalNumber implements ProblemTwoSolutions<Integer, Bool
                 Log.debug("Find new Autobiographical Number(bigger than Int_Max) : {}", numBuilder.toString());
             }
         }
+    }
+
+    @Override
+    public List<Function<Integer, Boolean>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

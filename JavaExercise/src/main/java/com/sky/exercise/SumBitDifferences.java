@@ -1,9 +1,12 @@
 package com.sky.exercise;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import com.loic.algo.BitUtils;
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * Sum of bit differences among all pairs<br>
@@ -18,9 +21,8 @@ import com.sky.problem.ProblemTwoSolutions;
  * For example, bit difference for 2 and 7 is 2. Binary representation of 2 is
  * 010 and 7 is 111 ( first and last bits differ in two numbers).
  */
-public class SumBitDifferences implements ProblemTwoSolutions<Integer[], Integer> {
+public class SumBitDifferences implements SolutionProvider<Integer[], Integer> {
     // 取2个数异或，再计算二进制表示中1的个数
-    @Override
     public Integer resolve(Integer[] param) {
         Objects.requireNonNull(param);
         int len = param.length;
@@ -36,7 +38,6 @@ public class SumBitDifferences implements ProblemTwoSolutions<Integer[], Integer
     /**
      * int是32位，可以换个思路，对每个数的32bit分别计算 对每次取出每个数的第i位并算出bit 1 出现的次数，和bit 0 的出现次数
      */
-    @Override
     public Integer resolve2(Integer[] param) {
         Objects.requireNonNull(param);
         int len = param.length;
@@ -54,4 +55,8 @@ public class SumBitDifferences implements ProblemTwoSolutions<Integer[], Integer
         return sum * 2;
     }
 
+    @Override
+    public List<Function<Integer[], Integer>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
+    }
 }

@@ -1,23 +1,25 @@
 package com.sky.graph;
 
+import static com.sky.common.TestHelper.toSet;
+
 import java.util.List;
 import java.util.Set;
 
 import com.loic.algo.common.Triple;
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.common.SolutionChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WordLadderTest extends CommonTest<Triple<String, String, Set<String>>, List<List<String>>> {
+public class WordLadderTest {
+
     @Test
     public void test() {
-        check(Triple.of("hit", "cog", generateSet("hot", "dot", "dog", "lot", "log")));
-        check(Triple.of("hot", "dog", generateSet("hot", "dot", "dog")));
+        new SolutionChecker<>(new WordLadder())
+            .check(Triple.of("hit", "cog", toSet("hot", "dot", "dog", "lot", "log")), this::onOutputReady)
+            .check(Triple.of("hot", "dog", toSet("hot", "dot", "dog")), this::onOutputReady);
     }
 
-    @Override
-    protected void onOutputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
+    private void onOutputReady(Triple<String, String, Set<String>> input, List<List<String>> output) {
         if (!output.isEmpty()) {
             int pathLen = output.get(0).size();
             for (List<String> paths : output) {
@@ -26,10 +28,5 @@ public class WordLadderTest extends CommonTest<Triple<String, String, Set<String
                 Assert.assertEquals(input.second(), paths.get(paths.size() - 1));
             }
         }
-    }
-
-    @Override
-    public Problem<Triple<String, String, Set<String>>, List<List<String>>> getAlgo() {
-        return new WordLadder();
     }
 }

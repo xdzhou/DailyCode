@@ -1,27 +1,21 @@
 package com.sky.recursion;
 
 import com.loic.algo.common.Pair;
-import com.sky.common.CommonTest;
-import com.sky.problem.Problem;
+import com.sky.common.SolutionChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class BinarySearch2DTest extends CommonTest<Pair<Integer[][], Integer>, Pair<Integer, Integer>> {
-
-    @Override
-    public Problem<Pair<Integer[][], Integer>, Pair<Integer, Integer>> getAlgo() {
-        return new BinarySearch2D<>();
-    }
+public class BinarySearch2DTest {
 
     @Test
     public void test() {
         Integer[][] table = createTable(100);
-        check(Pair.of(table, 2));
-        check(Pair.of(table, 63));
+        new SolutionChecker<>(new BinarySearch2D<Integer>())
+            .check(Pair.of(table, 2), this::onOutputReady)
+            .check(Pair.of(table, 63), this::onOutputReady);
     }
 
-    @Override
-    protected void onOutputReady(Pair<Integer[][], Integer> input, Pair<Integer, Integer> output) {
+    private void onOutputReady(Pair<Integer[][], Integer> input, Pair<Integer, Integer> output) {
         Assert.assertEquals(input.first()[output.first()][output.second()], input.second());
     }
 

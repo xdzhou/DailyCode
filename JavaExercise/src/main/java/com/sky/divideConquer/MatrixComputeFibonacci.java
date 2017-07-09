@@ -1,12 +1,16 @@
 package com.sky.divideConquer;
 
-import com.sky.problem.ProblemTwoSolutions;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+import com.sky.solution.AbstractSolutionProvider;
 
 /**
  * 斐波那契数列 Fibonacci polynomial function fib(n） if n = 0 or n = 1 return 1 return
  * fib(n − 1) + fib（n − 2
  */
-public class MatrixComputeFibonacci implements ProblemTwoSolutions<Integer, Integer> {
+public class MatrixComputeFibonacci extends AbstractSolutionProvider<Integer, Integer> {
 
     /**
      * f(n) = f(n-1)+f(n-2)
@@ -15,7 +19,7 @@ public class MatrixComputeFibonacci implements ProblemTwoSolutions<Integer, Inte
      * |f(n-1)| |1 0| |f(n-2)| |1 0| |f(0)|
      */
     @Override
-    public Integer resolve(Integer n) {
+    protected Integer resolve(Integer n) {
         if (n < 2) {
             return n;
         }
@@ -51,7 +55,6 @@ public class MatrixComputeFibonacci implements ProblemTwoSolutions<Integer, Inte
         return matrixMultiplication(matrixMultiplication(m1, m2), m3);
     }
 
-    @Override
     public Integer resolve2(Integer param) {
         int n = param;
         if (n <= 1) {
@@ -65,5 +68,10 @@ public class MatrixComputeFibonacci implements ProblemTwoSolutions<Integer, Inte
         }
 
         return result[n % 3];
+    }
+
+    @Override
+    public List<Function<Integer, Integer>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
     }
 }

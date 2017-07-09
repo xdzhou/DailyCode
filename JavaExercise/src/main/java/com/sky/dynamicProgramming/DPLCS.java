@@ -1,18 +1,18 @@
 package com.sky.dynamicProgramming;
 
 import com.google.common.base.Preconditions;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 求最长公共子串（Longest Common Subsequence, LCS）
  */
-public class DPLCS implements Problem<String[], String> {
+public class DPLCS extends AbstractSolutionProvider<String[], String> {
     private static final Logger Log = LoggerFactory.getLogger(DPLCS.class);
 
     @Override
-    public String resolve(String[] param) {
+    protected String resolve(String[] param) {
         Preconditions.checkArgument(param != null && param.length > 1);
         String tempString = param[0];
         for (int i = 1; i < param.length && tempString != null; i++) {

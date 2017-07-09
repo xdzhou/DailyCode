@@ -5,18 +5,18 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 有两个序列a,b，大小都为n,序列元素的值任意整数，无序； 要求：通过交换a,b 中的元素，使[序列a 元素的和]与[序列b 元素的和]之间的差最小。
  */
-public class GetCloseSum implements Problem<Pair<Integer[], Integer[]>, Integer> {
+public class GetCloseSum extends AbstractSolutionProvider<Pair<Integer[], Integer[]>, Integer> {
     private static final Logger Log = LoggerFactory.getLogger(GetCloseSum.class);
 
     @Override
-    public Integer resolve(Pair<Integer[], Integer[]> param) {
+    protected Integer resolve(Pair<Integer[], Integer[]> param) {
         Objects.requireNonNull(param);
         return swithAndGetCloseSum(param.first(), param.second());
     }

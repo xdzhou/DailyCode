@@ -3,12 +3,12 @@ package com.sky.recursion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
-public class EightQueens implements Problem<Void, Integer> {
+public class EightQueens extends AbstractSolutionProvider<Void, Integer> {
 
     @Override
-    public Integer resolve(Void param) {
+    protected Integer resolve(Void param) {
         List<Integer> positions = new ArrayList<>(8);
         return search(0, positions);
     }

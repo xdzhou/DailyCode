@@ -6,11 +6,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.loic.algo.common.Pair;
-import com.sky.problem.Problem;
+import com.sky.solution.AbstractSolutionProvider;
 
-public class WordBreak implements Problem<Pair<String, Set<String>>, List<String>> {
+public class WordBreak extends AbstractSolutionProvider<Pair<String, Set<String>>, List<String>> {
     @Override
-    public List<String> resolve(Pair<String, Set<String>> param) {
+    protected List<String> resolve(Pair<String, Set<String>> param) {
         Objects.requireNonNull(param);
         return wordBreak(param.first(), param.second());
     }

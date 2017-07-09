@@ -1,10 +1,12 @@
 package com.sky.dynamicProgramming;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
-import com.sky.problem.ProblemTwoSolutions;
+import com.sky.solution.SolutionProvider;
 
 /**
  * LongestIncreasingSubsequence 一个序列有N个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度。
@@ -12,8 +14,12 @@ import com.sky.problem.ProblemTwoSolutions;
  * D[j] + 1} (j = 1, 2, 3, ..., i-1 且 A[j] < A[i]) D[i] 表示是A[i]以为结尾的LIS result =
  * D[i]中最大值
  */
-public class LongestIncreasingSubsequence implements ProblemTwoSolutions<Integer[], Integer> {
+public class LongestIncreasingSubsequence implements SolutionProvider<Integer[], Integer> {
     @Override
+    public List<Function<Integer[], Integer>> solutions() {
+        return Arrays.asList(this::resolve, this::resolve2);
+    }
+
     public Integer resolve(Integer[] param) {
         int[] dp = new int[param.length];
         dp[0] = 1;
@@ -38,9 +44,8 @@ public class LongestIncreasingSubsequence implements ProblemTwoSolutions<Integer
      *
      * @link http://www.felix021.com/blog/read.php?1587
      */
-    @Override
     public Integer resolve2(Integer[] param) {
-        List<Integer> minLISEndList = new ArrayList<Integer>();
+        List<Integer> minLISEndList = new ArrayList<>();
         for (int p : param) {
             if (minLISEndList.isEmpty()) {
                 minLISEndList.add(p);
