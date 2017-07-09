@@ -2,7 +2,8 @@
 *.iml
 build/
 */build/
-*/logContentFile.log
+*/*.log
+*/*/*.log
 
 !.gitignore
 !.travis.yml
