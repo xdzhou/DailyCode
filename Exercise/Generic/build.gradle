@@ -1,0 +1,10 @@
+test {
+    testLogging.showStandardStreams = true
+    useTestNG()
+    include '**/Test*.*'
+}
+
+dependencies {
+    compile project(':AlgoLibrary')
+    compile project(':Exercise:Common')
+}
