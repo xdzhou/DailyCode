@@ -1,18 +1,15 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class AutobiographicalNumberTest extends CommonTest<Integer, Boolean> {
-
-    public AutobiographicalNumberTest() {
-        super(new AutobiographicalNumber());
-    }
+public class AutobiographicalNumberTest {
 
     @Test
     public void test() {
-        checkInput(2020);
-        checkInput(1210);
-        checkInput(132545);
+        new SolutionChecker<>(new AutobiographicalNumber())
+            .checkInput(2020)
+            .checkInput(1210)
+            .checkInput(132545);
     }
 }

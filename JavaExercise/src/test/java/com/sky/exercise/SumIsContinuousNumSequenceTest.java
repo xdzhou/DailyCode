@@ -1,16 +1,14 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class SumIsContinuousNumSequenceTest extends CommonTest<Integer, Integer> {
-    public SumIsContinuousNumSequenceTest() {
-        super(new SumIsContinuousNumSequence());
-    }
+public class SumIsContinuousNumSequenceTest {
 
     @Test
     public void test() {
-        check(15, 3);
-        check(3, 1);
+        new SolutionChecker<>(new SumIsContinuousNumSequence())
+            .check(15, 3)
+            .check(3, 1);
     }
 }

@@ -1,21 +1,18 @@
 package com.sky.exercise;
 
 import com.loic.algo.common.Point;
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class MaxPointsInLineTest extends CommonTest<Point[], Integer> {
-
-    public MaxPointsInLineTest() {
-        super(new MaxPointsInLine());
-    }
+public class MaxPointsInLineTest {
 
     @Test
     public void test() {
-        check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4);
-        check(generatePoints(2, 3, 3, 3, -5, 3), 3);
-        check(generatePoints(1, 1, 1, 1, 1, 1), 3);
-        check(generatePoints(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
+        new SolutionChecker<>(new MaxPointsInLine())
+            .check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4)
+            .check(generatePoints(2, 3, 3, 3, -5, 3), 3)
+            .check(generatePoints(1, 1, 1, 1, 1, 1), 3)
+            .check(generatePoints(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
     }
 
     private Point[] generatePoints(int... p) {

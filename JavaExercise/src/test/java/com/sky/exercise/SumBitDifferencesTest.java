@@ -1,18 +1,16 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
+import static com.sky.common.TestHelper.toArray;
+
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class SumBitDifferencesTest extends CommonTest<Integer[], Integer> {
-
-    public SumBitDifferencesTest() {
-        super(new SumBitDifferences());
-    }
+public class SumBitDifferencesTest {
 
     @Test
     public void test() {
-        check(transform(1, 2), 4);
-        check(transform(1, 3, 5), 8);
+        new SolutionChecker<>(new SumBitDifferences())
+            .check(toArray(1, 2), 4)
+            .check(toArray(1, 3, 5), 8);
     }
-
 }

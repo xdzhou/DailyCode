@@ -1,18 +1,15 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class JumpingNumbersTest extends CommonTest<Integer, Integer> {
-
-    public JumpingNumbersTest() {
-        super(new JumpingNumbers());
-    }
+public class JumpingNumbersTest {
 
     @Test
     public void test() {
-        check(9, 9);
-        check(20, 12);
-        check(105, 28);
+        new SolutionChecker<>(new JumpingNumbers())
+            .check(9, 9)
+            .check(20, 12)
+            .check(105, 28);
     }
 }

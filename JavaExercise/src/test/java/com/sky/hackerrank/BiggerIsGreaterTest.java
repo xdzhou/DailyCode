@@ -1,22 +1,19 @@
 package com.sky.hackerrank;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class BiggerIsGreaterTest extends CommonTest<String, String> {
-
-    public BiggerIsGreaterTest() {
-        super(new BiggerIsGreater());
-    }
+public class BiggerIsGreaterTest {
 
     @Test
     public void test() {
-        check("ab", "ba");
-        check("bb", BiggerIsGreater.NO_ANSWER);
-        check("hefg", "hegf");
-        check("dhck", "dhkc");
-        check("87654", BiggerIsGreater.NO_ANSWER);
-        check("01265330", "01302356");
-        check("123", "132");
+        new SolutionChecker<>(new BiggerIsGreater())
+            .check("ab", "ba")
+            .check("bb", BiggerIsGreater.NO_ANSWER)
+            .check("hefg", "hegf")
+            .check("dhck", "dhkc")
+            .check("87654", BiggerIsGreater.NO_ANSWER)
+            .check("01265330", "01302356")
+            .check("123", "132");
     }
 }

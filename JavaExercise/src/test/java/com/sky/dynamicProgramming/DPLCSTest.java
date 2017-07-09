@@ -1,17 +1,17 @@
 package com.sky.dynamicProgramming;
 
-import com.sky.common.CommonTest;
+import static com.sky.common.TestHelper.toArray;
+
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class DPLCSTest extends CommonTest<String[], String> {
-    public DPLCSTest() {
-        super(new DPLCS());
-    }
+public class DPLCSTest {
 
     @Test
     public void test() {
-        check(transform("abcdefg", "apcmzf"), "acf");
-        check(transform("123654987", "zfddsf"), (String) null);
-        check(transform("1234", "34"), "34");
+        new SolutionChecker<>(new DPLCS())
+            .check(toArray("abcdefg", "apcmzf"), "acf")
+            .check(toArray("123654987", "zfddsf"), (String) null)
+            .check(toArray("1234", "34"), "34");
     }
 }

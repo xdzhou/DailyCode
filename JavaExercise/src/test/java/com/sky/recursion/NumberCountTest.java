@@ -1,18 +1,15 @@
 package com.sky.recursion;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class NumberCountTest extends CommonTest<Integer, Integer[]> {
-
-    public NumberCountTest() {
-        super(new NumberCount());
-    }
+public class NumberCountTest {
 
     @Test
     public void test() {
-        checkInput(1235);
-        checkInput(1212);
+        new SolutionChecker<>(new NumberCount())
+            .checkInput(1235)
+            .checkInput(1212);
     }
 
 }

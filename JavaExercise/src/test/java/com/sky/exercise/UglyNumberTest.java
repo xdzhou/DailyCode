@@ -1,19 +1,16 @@
 package com.sky.exercise;
 
-import com.sky.common.CommonTest;
+import com.sky.common.SolutionChecker;
 import org.testng.annotations.Test;
 
-public class UglyNumberTest extends CommonTest<Integer, Integer> {
-
-    public UglyNumberTest() {
-        super(new UglyNumber());
-    }
+public class UglyNumberTest {
 
     @Test
     public void test() {
-        checkInput(3);
-        checkInput(10);
-        checkInput(99);
-        checkInput(911);
+        new SolutionChecker<>(new UglyNumber())
+            .checkInput(3)
+            .checkInput(10)
+            .checkInput(99)
+            .checkInput(911);
     }
 }
