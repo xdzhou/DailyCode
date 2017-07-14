@@ -7,11 +7,11 @@ import com.google.common.base.Preconditions;
 class GameState implements Cloneable {
     private BordState myBord;
     private int myScore;
-    private int myBlockCount;
+    private double myBlockCount;
 
     private BordState otherBord;
     private int otherScore;
-    private int otherBlockCount;
+    private double otherBlockCount;
 
     private boolean myTurn = true;
     private int dropCount = 0;
@@ -26,10 +26,21 @@ class GameState implements Cloneable {
         if (myTurn) {
             int score = myBord.drop(drop.column(), drop.rotation(), colorSet[dropIndex]);
             myScore += score;
-            //TODO
+            otherBlockCount = score / 70d;
+            if (otherBlockCount >= 6) {
+                int lineCount = (int) (otherBlockCount / 6);
+                otherBord.dropBlockLine(lineCount);
+                otherBlockCount -= (lineCount * 6);
+            }
         } else {
             int score = otherBord.drop(drop.column(), drop.rotation(), colorSet[dropIndex]);
             otherScore += score;
+            myBlockCount = score / 70d;
+            if (myBlockCount >= 6) {
+                int lineCount = (int) (myBlockCount / 6);
+                myBord.dropBlockLine(lineCount);
+                myBlockCount -= (lineCount * 6);
+            }
         }
         myTurn = !myTurn;
         dropCount ++;

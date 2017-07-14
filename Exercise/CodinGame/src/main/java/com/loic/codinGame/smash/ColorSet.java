@@ -27,4 +27,9 @@ class ColorSet {
     public char color2() {
         return c2;
     }
+
+    @Override
+    public String toString() {
+        return "[" + c1 + ',' + c2 + "]";
+    }
 }

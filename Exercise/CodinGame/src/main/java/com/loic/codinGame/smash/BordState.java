@@ -62,6 +62,21 @@ public class BordState implements Cloneable {
         return isOver;
     }
 
+    public void dropBlockLine(int line) {
+        for (int col = 0; col < WIDTH; col++) {
+            int lastLine = getEmptyLine(col);
+            int toAdd = line;
+            while (toAdd > 0 && lastLine >= 0) {
+                data[lastLine][col] = BLOCK;
+                toAdd--;
+                lastLine--;
+            }
+            if (toAdd > 0) {
+                isOver = true;
+            }
+        }
+    }
+
     //return score
     public int drop(int col, int rotation, ColorSet colorSet) {
         if (isOver) {

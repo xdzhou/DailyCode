@@ -35,7 +35,6 @@ public class SmashPlayerTest {
             System.out.println(drop);
             System.out.println(rootState);
         }
-
     }
 
     private void fill(ColorSet[] colorSets) {
