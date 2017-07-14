@@ -1,5 +1,7 @@
 package com.loic.codinGame.smash;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,33 +9,45 @@ import java.util.List;
 import java.util.Set;
 
 public class BordState implements Cloneable {
-    public static final int MIN_LIEN = 4;
+    static final int MIN_LIEN = 4;
 
-    private static final int HEIGHT = 12;
+    static final int HEIGHT = 12;
     private static final int WIDTH = 6;
-    private static final int NEXT_LEN = 6;
     private static final char EMPTY = '.';
     private static final char BLOCK = '0';
 
     private char[][] data = new char[HEIGHT][WIDTH];
     private boolean isOver = false;
 
-    private void setLine(String s, int line) {
-        for(int column = 0; column < WIDTH; column ++) {
-            data[line][column] = s.charAt(column);
+    public BordState() {
+        for(int i = 0; i < HEIGHT; i ++) {
+            Arrays.fill(data[i], EMPTY);
         }
     }
 
-    public int getEmptyCount() {
-        int count = 0;
+    public void checkLine(String s, int line) {
+        for(int column = 0; column < WIDTH; column ++) {
+            checkState(data[line][column] == s.charAt(column));
+        }
+    }
+
+    public double getEmptyCount(double blockRatio) {
+        checkState(blockRatio >= 1);
+        int emptyCount = 0;
+        int blockCount = 0;
         for(int line = 0; line < HEIGHT; line ++) {
             for(int column = 0; column < WIDTH; column ++) {
-                if (data[line][column] == EMPTY) {
-                    count++;
+                switch (data[line][column]) {
+                    case EMPTY:
+                        emptyCount++;
+                        break;
+                    case BLOCK:
+                        blockCount++;
+                        break;
                 }
             }
         }
-        return count;
+        return emptyCount;
     }
 
     public int getEmptyLine(int col) {
@@ -49,7 +63,7 @@ public class BordState implements Cloneable {
     }
 
     //return score
-    private int drop(int col, int rotation, ColorSet colorSet) {
+    public int drop(int col, int rotation, ColorSet colorSet) {
         if (isOver) {
             return 0;
         }
@@ -248,6 +262,10 @@ public class BordState implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public char[] getData(int line) {
+        return data[line];
     }
 
     @Override

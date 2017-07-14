@@ -1,11 +1,15 @@
 package com.loic.codinGame.smash;
 
-public class ColorSet {
+class ColorSet {
     private char c1, c2;
 
-    public ColorSet(char c1, char c2) {
+    ColorSet(char c1, char c2) {
         this.c1 = c1;
         this.c2 = c2;
+    }
+
+    ColorSet(int c1, int c2) {
+        this((char)('0' + c1), (char)('0' + c2));
     }
 
     public ColorSet exchange() {

@@ -2,6 +2,8 @@
 *.iml
 build/
 */build/
+*/out/
+*/*/out/
 */*.log
 */*/*.log
 

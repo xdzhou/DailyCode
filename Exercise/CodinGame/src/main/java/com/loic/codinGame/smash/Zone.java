@@ -3,12 +3,12 @@ package com.loic.codinGame.smash;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Zone {
+class Zone {
     private char color;
     private int blockCount = 0;
     private List<Integer> indexs;
 
-    public Zone(char color) {
+    Zone(char color) {
         this.color = color;
     }
 
