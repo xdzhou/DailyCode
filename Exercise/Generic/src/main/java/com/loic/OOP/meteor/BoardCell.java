@@ -11,7 +11,7 @@ public class BoardCell extends Cell {
         mPiece = piece;
     }
 
-    int getIslandCount() {
+    public int getIslandCount() {
         if (mPiece != null || isProcessing()) {
             return 0;
         } else {

@@ -1,25 +1,28 @@
-package com.loic.OOP.meteor;
+package com.loic.OOP;
 
-import java.io.BufferedOutputStream;
+import static org.testng.Assert.assertEquals;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.loic.OOP.meteor.view.LightBoardCopy;
+import com.loic.OOP.meteor.Board;
+import com.loic.OOP.meteor.BoardCell;
+import com.loic.OOP.meteor.Cell;
+import com.loic.OOP.meteor.Piece;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * http://www.ibm.com/developerworks/cn/java/j-javaoptimization/index.html
  */
-public class Test {
-    private final Board mBoard;
-    private final List<Piece> mPieces;
+public class MeteorTest {
+    private Board mBoard;
+    private List<Piece> mPieces;
     private int numberOfSolutions;
 
-    public Test() {
+    @BeforeTest
+    public void initBoard() {
         boolean b = new File("JavaExercise/build/solutions").mkdirs();
         if (b) {
             System.out.println("Create solution folder");
@@ -150,19 +153,15 @@ public class Test {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Starting " + Test.class.getName() + "  " + new Date());
+    @Test
+    public void testMeteor() {
         long time = System.currentTimeMillis();
-
-        Test solver = new Test();
-        solver.resolve();
-
-        System.out.println("Stopping " + Test.class.getName() + "  " + new Date());
-        System.out.println(solver.numberOfSolutions + " solutions found.");
+        resolve();
         System.out.println("Run time: " + (System.currentTimeMillis() - time));
+        assertEquals(numberOfSolutions, 2098);
     }
 
-    public void resolve() {
+    private void resolve() {
         if (!mPieces.isEmpty()) {
             // We'll try to find a piece that fits on this board cell
             int emptyBoardCellIdx = mBoard.getFirstEmptyCellIndex();
@@ -190,7 +189,7 @@ public class Test {
                 mPieces.add(h, currentPiece);
             }
         } else {
-            puzzleSolved();
+            numberOfSolutions ++;
         }
     }
 
@@ -204,24 +203,5 @@ public class Test {
             }
         }
         return false;
-    }
-
-    private void puzzleSolved() {
-        // Print out the solution number and time.
-        numberOfSolutions++;
-        System.out.println(numberOfSolutions + " - " + new Date());
-
-        // Serialize the found solution.
-        String fileName = "solutions/" + numberOfSolutions + ".ser";
-
-        try {
-            FileOutputStream file = new FileOutputStream(fileName);
-            ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(file));
-            //ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
-            out.writeObject(new LightBoardCopy(mBoard));
-            out.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

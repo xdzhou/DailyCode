@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    static final int CELL_COUNT = 50;
+    public static final int CELL_COUNT = 50;
     private static final int CELL_COUNT_IN_ROW = 5;
 
     private final BoardCell[] boardCells = new BoardCell[CELL_COUNT];
 
-    Board() {
+    public Board() {
         for (int i = 0; i < CELL_COUNT; i++) {
             boardCells[i] = new BoardCell();
         }
@@ -61,7 +61,7 @@ public class Board {
         }
     }
 
-    boolean placePiece(Piece piece, int pieceCellIndex, int boardCellIndex) {
+    public boolean placePiece(Piece piece, int pieceCellIndex, int boardCellIndex) {
         List<BoardCell> occupiedCells = new ArrayList<>(Piece.CELL_COUNT);
         piece.unProcessing();
         match(piece.getCell(pieceCellIndex), boardCells[boardCellIndex], occupiedCells);
@@ -87,7 +87,7 @@ public class Board {
         return boardCells[index];
     }
 
-    void removePiece(Piece piece) {
+    public void removePiece(Piece piece) {
         for (BoardCell boardCell : boardCells) {
             if (piece == boardCell.getPiece()) {
                 boardCell.setPiece(null);
@@ -95,13 +95,13 @@ public class Board {
         }
     }
 
-    void unProcessing() {
+    public void unProcessing() {
         for (Cell cell : boardCells) {
             cell.setProcessing(false);
         }
     }
 
-    int getFirstEmptyCellIndex() {
+    public int getFirstEmptyCellIndex() {
         for (int i = 0; i < CELL_COUNT; i++) {
             if (boardCells[i].getPiece() == null) {
                 return i;
