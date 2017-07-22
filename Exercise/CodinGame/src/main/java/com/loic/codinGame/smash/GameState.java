@@ -2,8 +2,6 @@ package com.loic.codinGame.smash;
 
 import java.util.Arrays;
 
-import com.google.common.base.Preconditions;
-
 class GameState implements Cloneable {
     private BordState myBord;
     private int myScore;
@@ -71,12 +69,12 @@ class GameState implements Cloneable {
         return otherBord;
     }
 
-    public void checkMyScore(int score) {
-        Preconditions.checkState(myScore == score);
+    public void setMyScore(int score) {
+        myScore = score;
     }
 
-    public void checkOtherScore(int score) {
-        Preconditions.checkState(otherScore == score);
+    public void setOtherScore(int score) {
+        otherScore = score;
     }
 
     public boolean isOver() {

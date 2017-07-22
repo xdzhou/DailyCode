@@ -1,14 +1,10 @@
 package com.loic.codinGame.smash;
 
-import static com.google.common.base.Preconditions.checkState;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class BordState implements Cloneable {
@@ -28,29 +24,10 @@ public class BordState implements Cloneable {
         }
     }
 
-    public void checkLine(String s, int line) {
+    public void setLine(String s, int line) {
         for(int column = 0; column < WIDTH; column ++) {
-            checkState(data[line][column] == s.charAt(column));
+            data[line][column] = s.charAt(column);
         }
-    }
-
-    public double getEmptyCount(double blockRatio) {
-        checkState(blockRatio >= 1);
-        int emptyCount = 0;
-        int blockCount = 0;
-        for(int line = 0; line < HEIGHT; line ++) {
-            for(int column = 0; column < WIDTH; column ++) {
-                switch (data[line][column]) {
-                    case EMPTY:
-                        emptyCount++;
-                        break;
-                    case BLOCK:
-                        blockCount++;
-                        break;
-                }
-            }
-        }
-        return emptyCount;
     }
 
     public int getEmptyLine(int col) {

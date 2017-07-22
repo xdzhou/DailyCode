@@ -1,12 +1,11 @@
 package com.loic.codinGame.smash;
 
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.google.common.collect.ImmutableSet;
+import com.google.common.base.Preconditions;
 import com.loic.algo.search.core.ApplyStrategy;
 import com.loic.algo.search.core.HeuristicStrategy;
 import com.loic.algo.search.core.SearchParam;
@@ -24,7 +23,7 @@ public class SmashPlayer {
 
         GameState rootState = new GameState();
         TreeSearch algo = new MinimaxAlphaBeta();
-        SearchParam<GameState, Drop> param = searchParam(colors);
+        SearchParam<GameState, Drop> param = searchParam(colors, 6);
 
         // game loop
         while (true) {
@@ -33,15 +32,15 @@ public class SmashPlayer {
                 int colorB = in.nextInt(); // color of the attached block
                 colors[i] = new ColorSet((char)('0'+colorA), (char)('0'+colorB));
             }
-            rootState.checkMyScore(in.nextInt());
+            rootState.setMyScore(in.nextInt());
             for (int i = 0; i < 12; i++) {
                 String row = in.next();
-                rootState.myBord().checkLine(row, i);
+                rootState.myBord().setLine(row, i);
             }
-            rootState.checkOtherScore(in.nextInt());
+            rootState.setOtherScore(in.nextInt());
             for (int i = 0; i < 12; i++) {
                 String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
-                rootState.otherBord().checkLine(row, i);
+                rootState.otherBord().setLine(row, i);
             }
 
             Drop drop = algo.find(rootState, param).get();
@@ -51,22 +50,22 @@ public class SmashPlayer {
     }
 
     static {
-        List<Drop> list = new LinkedList<>();
+        DROP_SET = new HashSet<>();
         for (int rotation = 0; rotation < 4; rotation ++) {
             int colCount = (rotation == 0 || rotation == 2) ? 5 : 6;
             for (int col = 0; col < colCount; col++) {
-                list.add(new Drop(col, rotation));
+                DROP_SET.add(new Drop(col, rotation));
             }
         }
-        DROP_SET = ImmutableSet.copyOf(list);
     }
 
-    static SearchParam<GameState, Drop> searchParam(ColorSet[] colors) {
+    static SearchParam<GameState, Drop> searchParam(ColorSet[] colors, int depth) {
+        Preconditions.checkState(depth > 0 && depth % 2 == 0);
         return SearchParam.<GameState, Drop>builder()
             .applyStrategy(applyStrategy(colors))
             .heuristicStrategy(heuristicStrategy())
             .transitionStrategy(transitionStrategy())
-            .maxDepth(colors.length * 2 - 1)
+            .maxDepth(depth)
             .build();
     }
 

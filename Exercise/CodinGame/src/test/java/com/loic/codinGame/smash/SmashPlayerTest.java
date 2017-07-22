@@ -1,5 +1,8 @@
 package com.loic.codinGame.smash;
 
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +23,7 @@ public class SmashPlayerTest {
 
         GameState rootState = new GameState();
         TreeSearch algo = new MinimaxAlphaBeta();
-        SearchParam<GameState, Drop> param = SmashPlayer.searchParam(colorSets);
+        SearchParam<GameState, Drop> param = SmashPlayer.searchParam(colorSets, 6);
 
         List<Drop> dropList = TreeSearchUtils.asStringSort(SmashPlayer.DROP_SET);
 
@@ -35,13 +38,15 @@ public class SmashPlayerTest {
                 rootState.apply(drop, colorSets);
                 rootState.apply(dropList.get(random.nextInt(colorSets.length)), colorSets);
             }
-
+            if (rootState.isOver()) break;
             rootState.asRoot();
             addRandomOne(colorSets);
 
-            System.out.println(drop);
-            System.out.println(rootState);
+            //System.out.println(drop);
+            //System.out.println(rootState);
         }
+        assertFalse(rootState.myBord().isOver());
+        assertTrue(rootState.otherBord().isOver());
     }
 
     private void fill(ColorSet[] colorSets) {
