@@ -25,9 +25,16 @@ public class SmashPlayerTest {
         List<Drop> dropList = TreeSearchUtils.asStringSort(SmashPlayer.DROP_SET);
 
         for (int turn = 0; turn < 100; turn ++) {
-            Drop drop = algo.find(rootState, param).get();
-            rootState.apply(drop, colorSets);
-            rootState.apply(dropList.get(random.nextInt(colorSets.length)), colorSets);
+            Drop drop;
+            if (turn == 0) {
+                drop = dropList.get(0);
+                rootState.apply(dropList.get(0), colorSets);
+                rootState.apply(dropList.get(colorSets.length - 1), colorSets);
+            } else {
+                drop = algo.find(rootState, param).get();
+                rootState.apply(drop, colorSets);
+                rootState.apply(dropList.get(random.nextInt(colorSets.length)), colorSets);
+            }
 
             rootState.asRoot();
             addRandomOne(colorSets);

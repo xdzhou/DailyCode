@@ -46,4 +46,18 @@ class Zone {
     public boolean containIndex(int index) {
         return indexs != null && indexs.contains(index);
     }
+
+    public int heuristic() {
+        int groupSize = indexs.size() - blockCount;
+        switch (groupSize) {
+            case 1:
+                return 0;
+            case 2:
+                return 2;
+            case 3:
+                return 3 + blockCount;
+            default:
+                throw new IllegalStateException("Why we got group count : " + groupSize);
+        }
+    }
 }

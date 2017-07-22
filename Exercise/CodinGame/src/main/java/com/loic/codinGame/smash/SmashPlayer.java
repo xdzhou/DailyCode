@@ -81,7 +81,7 @@ public class SmashPlayer {
     private static HeuristicStrategy<GameState> heuristicStrategy() {
         return (gameState, depth) -> {
             //TODO other feature to estimate
-            return gameState.myScore() - gameState.otherScore();
+            return gameState.myScore() - gameState.otherScore() + gameState.extraScore();
         };
     }
 

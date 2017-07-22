@@ -4,8 +4,11 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class BordState implements Cloneable {
@@ -119,7 +122,7 @@ public class BordState implements Cloneable {
         if (z1 != null || z2 != null) {
             return disappearZone(0, z1, z2);
         } else {
-            return 1;
+            return 0;
         }
     }
 
@@ -145,7 +148,7 @@ public class BordState implements Cloneable {
         if (z1 != null || z2 != null) {
             return disappearZone(0, z1, z2);
         } else {
-            return 1;
+            return 0;
         }
     }
 
@@ -222,6 +225,27 @@ public class BordState implements Cloneable {
             score += disappearZone(chainIndex + 1, zoneToDisappear.toArray(new Zone[zoneToDisappear.size()]));
         }
         return score;
+    }
+
+    public int extraScore() {
+        if (isOver) {
+            return 0;
+        }
+        Set<Integer> traitedIndex = new HashSet<>();
+        List<Zone> zones = new LinkedList<>();
+        for (int line = HEIGHT - 1; line >= 0; line --) {
+            for (int col = 0; col < WIDTH; col ++) {
+                int index = getIndex(line, col);
+                Zone zone;
+                if (data[line][col] != EMPTY && !traitedIndex.contains(index) && (zone = getZoneFor(index)) != null) {
+                    zones.add(zone);
+                    traitedIndex.addAll(zone.getIndexs());
+                }
+            }
+        }
+        int extraScore = zones.stream().mapToInt(Zone::heuristic).sum();
+
+        return extraScore;
     }
 
     private Zone getZoneFor(int index) {

@@ -83,6 +83,10 @@ class GameState implements Cloneable {
         return myBord.isOver() || otherBord.isOver();
     }
 
+    public int extraScore() {
+        return myBord.extraScore() - otherBord.extraScore();
+    }
+
     @Override
     protected GameState clone() {
         try {
