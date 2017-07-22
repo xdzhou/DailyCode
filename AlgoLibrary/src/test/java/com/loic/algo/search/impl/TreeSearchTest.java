@@ -8,16 +8,10 @@ import java.util.Optional;
 
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
 public class TreeSearchTest {
-
-    @BeforeTest
-    public void before() {
-        //Logger.getRootLogger().setLevel(Level.TRACE);
-    }
 
     @Test
     public void testSimple() throws Exception {
