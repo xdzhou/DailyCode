@@ -25,7 +25,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
             return next;
         }
 
-        Pair<Trans, Double> result = alphaBeta(param, root, 0, Double.MIN_VALUE, Double.MAX_VALUE, true);
+        Pair<Trans, Double> result = alphaBeta(param, root, 0, Double.NEGATIVE_INFINITY, Double.MAX_VALUE, true);
 
         return Optional.ofNullable(result.first());
     }
@@ -33,7 +33,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
     private <State, Trans> Pair<Trans, Double> alphaBeta(SearchParam<State, Trans> param, State state, int depth, double alpha, double beta, boolean maxPlayer) {
         Set<Trans> transitions = param.transitionStrategy().generate(state);
 
-        if (depth > param.getMaxDepth() || transitions.isEmpty()) {
+        if (depth >= param.getMaxDepth() || transitions.isEmpty()) {
             double fitness = param.heuristicStrategy().heuristic(state, depth);
             return Pair.of(null, fitness);
         }
@@ -48,7 +48,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
                     bestTrans = trans;
                 }
                 alpha = Math.max(alpha, best);
-                if (best <= alpha) {
+                if (beta <= alpha) {
                     break;
                 }
             }
@@ -63,7 +63,7 @@ public class MinimaxAlphaBeta implements TreeSearch {
                     bestTrans = trans;
                 }
                 beta = Math.min(beta, best);
-                if (best <= alpha) {
+                if (beta <= alpha) {
                     break;
                 }
             }

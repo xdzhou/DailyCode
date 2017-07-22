@@ -1,14 +1,14 @@
 package com.loic.OOP.meteor;
 
 public class Piece {
-    static final int CELL_COUNT = 5;
-    static final int PERMUTATION_COUNT = 12;
+    public static final int CELL_COUNT = 5;
+    public static final int PERMUTATION_COUNT = 12;
 
     private final Cell[] mCells;
     private final int mNum;
     private int mCurrentMutation = 0;
 
-    Piece(Cell[] cells, int num) {
+    public Piece(Cell[] cells, int num) {
         mCells = cells;
         mNum = num;
     }
@@ -17,7 +17,7 @@ public class Piece {
         return mNum;
     }
 
-    Piece nextMutation() {
+    public Piece nextMutation() {
         mCurrentMutation++;
         mCurrentMutation %= PERMUTATION_COUNT;
         if (mCurrentMutation == 0 || mCurrentMutation == 6) {

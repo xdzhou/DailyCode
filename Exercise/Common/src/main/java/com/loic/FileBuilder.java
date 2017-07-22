@@ -43,14 +43,18 @@ public class FileBuilder {
 
     private final Map<String, ClassCode> innerClasses = new LinkedHashMap<>();
 
-    private final String algoSrcRoot;
-    private final String exerciseSrcRoot;
+    private final String[] srcRoots;
 
     private FileBuilder() {
         String path = Paths.get("").toFile().getAbsolutePath();
         path = path.substring(0, path.indexOf("DailyCode") + 9);
-        algoSrcRoot = path + "/AlgoLibrary/src/main/java/";
-        exerciseSrcRoot = path + "/JavaExercise/src/main/java/";
+
+        srcRoots = new String[] {
+            path + "/AlgoLibrary/src/main/java/",
+            path + "/Exercise/CodinGame/src/main/java/",
+            path + "/Exercise/Common/src/main/java/",
+            path + "/Exercise/Generic/src/main/java/"
+        };
     }
 
     public static void main(String[] args) {
@@ -207,10 +211,13 @@ public class FileBuilder {
     }
 
     private String toAbsolutePath(String packageFile) {
-        if (new File(algoSrcRoot + packageFile).isFile()) {
-            return algoSrcRoot + packageFile;
+        for (String srcPath : srcRoots) {
+            if (new File(srcPath + packageFile).isFile()) {
+                return srcPath + packageFile;
+            }
         }
-        return exerciseSrcRoot + packageFile;
+        //TODO
+        return packageFile;
     }
 
     @SuppressWarnings("PMD")

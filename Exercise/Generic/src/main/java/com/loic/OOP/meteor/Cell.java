@@ -1,14 +1,14 @@
 package com.loic.OOP.meteor;
 
-class Cell {
+public class Cell {
     static final int NEIGHBOUR_COUNT = 6;
 
-    static final int EAST = 0;
-    static final int SOUTH_EAST = 1;
-    static final int SOUTH_WEST = 2;
-    static final int WEST = 3;
-    static final int NORTH_WEST = 4;
-    static final int NORTH_EAST = 5;
+    public static final int EAST = 0;
+    public static final int SOUTH_EAST = 1;
+    public static final int SOUTH_WEST = 2;
+    public static final int WEST = 3;
+    public static final int NORTH_WEST = 4;
+    public static final int NORTH_EAST = 5;
 
     private boolean mProcessing = false;
 
@@ -22,7 +22,7 @@ class Cell {
         }
     }
 
-    void setNeighbour(int side, Cell cell) {
+    public void setNeighbour(int side, Cell cell) {
         if (side >= 0 && side < NEIGHBOUR_COUNT) {
             mNeighbours[side] = cell;
         } else {
@@ -30,7 +30,7 @@ class Cell {
         }
     }
 
-    boolean isProcessing() {
+    public boolean isProcessing() {
         return mProcessing;
     }
 
