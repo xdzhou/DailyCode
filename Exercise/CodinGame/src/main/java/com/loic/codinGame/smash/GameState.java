@@ -97,6 +97,7 @@ class GameState implements Cloneable {
         }
     }
 
+    @SuppressWarnings("PMD")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GameState : \n");
