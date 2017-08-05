@@ -26,13 +26,13 @@ public class Main {
     private Map<Integer, Set<Cache>> videoCacheMap = new HashMap<>();
 
     public static void main(String[] args) throws FileNotFoundException {
-        //new Main().start(new File("JavaExercise/src/resources/streamVideo/me_at_the_zoo.in"));
+        new Main().start(new File("src/main/resources/hashcode/streamVideo/me_at_the_zoo.in"));
         //new Main().start(new File("JavaExercise/src/resources/streamVideo/kittens.in"));
-        new Main().start(new File("src/main/resources/hashcode/streamVideo/trending_today.in"));
+        //new Main().start(new File("src/main/resources/hashcode/streamVideo/trending_today.in"));
         //new Main().start(new File("JavaExercise/src/resources/streamVideo/videos_worth_spreading.in"));
     }
 
-    private void start(File file) throws FileNotFoundException {
+    public void start(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file, "UTF-8");
         videoSize = new int[scanner.nextInt()];
         int endPointCount = scanner.nextInt();
@@ -126,7 +126,7 @@ public class Main {
         Cache cache = cacheList.get(cacheId);
         cache.videoFilled.add(videoId);
         cache.restCapacity -= videoSize[videoId];
-        Preconditions.checkState(cache.restCapacity >= 0);
+        //Preconditions.checkState(cache.restCapacity >= 0);
         Set<Cache> caches = videoCacheMap.get(videoId);
         if (caches == null) {
             caches = new HashSet<>();

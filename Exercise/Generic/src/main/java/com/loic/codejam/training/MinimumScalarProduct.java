@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 import com.loic.codejam.Resolver;
 
-public class MinimumScalarProduct implements Resolver {
+public class MinimumScalarProduct implements Resolver<Long> {
 
     @Override
-    public String solve(Scanner in) {
+    public Long solve(Scanner in) {
         int num = in.nextInt();
         List<Long> list1 = new ArrayList<>(num);
         List<Long> list2 = new ArrayList<>(num);
@@ -22,10 +22,10 @@ public class MinimumScalarProduct implements Resolver {
         }
         Collections.sort(list1);
         Collections.sort(list2);
-        long somme = 0;
+        long sum = 0;
         for (int j = 0; j < num; j++) {
-            somme += (list1.get(j) * list2.get(num - 1 - j));
+            sum += (list1.get(j) * list2.get(num - 1 - j));
         }
-        return Long.toString(somme);
+        return sum;
     }
 }

@@ -3,3 +3,7 @@ test {
     useTestNG()
     include '**/Test*.*'
 }
+
+dependencies {
+    compile project(':AlgoLibrary')
+}

@@ -7,7 +7,7 @@ import com.loic.codejam.Resolver;
 /**
  * https://code.google.com/codejam/contest/3264486/dashboard
  */
-public class PancakeFlipper implements Resolver {
+public class PancakeFlipper implements Resolver<String> {
 
     @Override
     public String solve(Scanner in) {

@@ -4,39 +4,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Spelling {
+import com.loic.codejam.Resolver;
 
-    public static void main(String[] args) {
-        new Spelling().start();
-    }
+public class Spelling implements Resolver<String> {
+    private final HashMap<Character, String> letteMap = initMap();
 
-    public void start() {
-        HashMap<Character, String> letteMap = new HashMap<>();
-        initMap(letteMap);
-        Scanner in = new Scanner(System.in, "UTF-8");
-        int N = in.nextInt();
-        in.nextLine();
-        for (int i = 0; i < N; i++) {
-            String s = in.nextLine();
-            StringBuffer sb = new StringBuffer();
-            int lastIndi = -1;
-            for (int j = 0; j < s.length(); j++) {
-                char c = s.charAt(j);
-                int currentIndi = Integer.parseInt(letteMap.get(c).substring(0, 1));
-                if (currentIndi == lastIndi) {
-                    sb.append(' ').append(letteMap.get(c));
-                } else {
-                    sb.append(letteMap.get(c));
-                }
-                lastIndi = currentIndi;
+    @Override
+    public String solve(Scanner in) {
+        String s = in.nextLine();
+        StringBuilder sb = new StringBuilder();
+        int lastIndi = -1;
+        for (int j = 0; j < s.length(); j++) {
+            char c = s.charAt(j);
+            int currentIndi = Integer.parseInt(letteMap.get(c).substring(0, 1));
+            if (currentIndi == lastIndi) {
+                sb.append(' ').append(letteMap.get(c));
+            } else {
+                sb.append(letteMap.get(c));
             }
-            System.out.println("Case #" + (i + 1) + ": " + sb.toString());
+            lastIndi = currentIndi;
         }
-        in.close();
+        return sb.toString();
     }
 
-    private void initMap(Map<Character, String> map) {
-        map.clear();
+    private HashMap<Character, String> initMap() {
+        HashMap<Character, String> map = new HashMap<>();
         map.put('a', "2");
         map.put('b', "22");
         map.put('c', "222");
@@ -64,5 +56,6 @@ public class Spelling {
         map.put('y', "999");
         map.put('z', "9999");
         map.put(' ', "0");
+        return map;
     }
 }
