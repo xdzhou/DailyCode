@@ -15,7 +15,7 @@ public class JamTool {
         new JamTool().process(args[0], args[1]);
     }
 
-    private void process(String resolverClassName, String inputFolder) {
+    private  <T> void process(String resolverClassName, String inputFolder) {
         if (!resolverClassName.startsWith("com")) {
             resolverClassName = "com.sky.codejam.training." + resolverClassName;
         }
@@ -23,7 +23,7 @@ public class JamTool {
             inputFolder = "src/main/resources/codejam/" + inputFolder;
         }
         try {
-            process((Class<? extends Resolver<?>>)Class.forName(resolverClassName), new File(inputFolder));
+            process((Class<? extends Resolver<T>>)Class.forName(resolverClassName), new File(inputFolder));
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException(e);
         }
@@ -33,13 +33,22 @@ public class JamTool {
         try (PrintWriter writer = new PrintWriter(input.getAbsolutePath().replace("in", "out"), "UTF-8")) {
             Scanner in = new Scanner(input, "UTF-8");
             process(resolverClass, in, (index, result) -> writer.println("Case #" + (index + 1) + ": " + result));
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
+        } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    public <T> void process(Class<? extends Resolver<T>> resolverClass, Scanner in, BiConsumer<Integer, T> resultConsumer) throws IllegalAccessException, InstantiationException {
-        Resolver<T> resolver = resolverClass.newInstance();
+    public <T> void process(Class<? extends Resolver<T>> resolverClass, String data, BiConsumer<Integer, T> resultConsumer) {
+        process(resolverClass, new Scanner(data), resultConsumer);
+    }
+
+    public <T> void process(Class<? extends Resolver<T>> resolverClass, Scanner in, BiConsumer<Integer, T> resultConsumer) {
+        Resolver<T> resolver = null;
+        try {
+            resolver = resolverClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        }
         int count = in.nextInt();
         in.nextLine();
         for (int i = 0; i < count; i++) {
