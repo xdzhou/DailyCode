@@ -19,7 +19,7 @@ public class JamToolTest {
     public void testInput() throws Exception {
         String path = "src/test/resources/codejam";
 
-        JamTool.main(new String[]{"com.loic.codejam.JamMainTest$IntResolver", path});
+        JamTool.main(new String[]{"com.loic.codejam.JamToolTest$IntResolver", path});
 
         Arrays.stream(new File(path).listFiles())
             .filter(f -> f.getName().endsWith("out"))

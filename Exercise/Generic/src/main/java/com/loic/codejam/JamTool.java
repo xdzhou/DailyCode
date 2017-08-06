@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
 
@@ -23,7 +24,11 @@ public class JamTool {
             inputFolder = "src/main/resources/codejam/" + inputFolder;
         }
         try {
-            process((Class<? extends Resolver<T>>)Class.forName(resolverClassName), new File(inputFolder));
+            Class<? extends Resolver<T>> resolverClass = (Class<? extends Resolver<T>>)Class.forName(resolverClassName);
+
+            Arrays.stream(new File(inputFolder).listFiles())
+                .filter(f -> f.getName().endsWith("in"))
+                .forEach(f -> process(resolverClass, f));
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException(e);
         }
