@@ -23,10 +23,6 @@ public class MeteorTest {
 
     @BeforeTest
     public void initBoard() {
-        boolean b = new File("JavaExercise/build/solutions").mkdirs();
-        if (b) {
-            System.out.println("Create solution folder");
-        }
         mBoard = new Board();
         mPieces = new ArrayList<>(Board.CELL_COUNT / Piece.CELL_COUNT);
 

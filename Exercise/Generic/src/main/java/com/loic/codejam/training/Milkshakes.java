@@ -4,51 +4,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Milkshakes {
+import com.loic.codejam.Resolver;
 
-    public static void main(String[] args) {
-        new Milkshakes().start();
-    }
+public class Milkshakes implements Resolver<String> {
 
-    public void start() {
-        Scanner in = new Scanner(System.in, "UTF-8");
-        int numCase = in.nextInt();
-        for (int i = 0; i < numCase; i++) {
-            int numType = in.nextInt();
-            int numClient = in.nextInt();
-            int[] typeMikeShark = new int[numType];
-            for (int j = 0; j < numType; j++) {
-                typeMikeShark[j] = -1;
-            }
-            List<ArrayList<Integer>> untreatedList = new ArrayList<>();
+    @Override
+    public String solve(Scanner in) {
+        int numType = in.nextInt();
+        int numClient = in.nextInt();
+        int[] typeMikeShark = new int[numType];
+        for (int j = 0; j < numType; j++) {
+            typeMikeShark[j] = -1;
+        }
+        List<ArrayList<Integer>> untreatedList = new ArrayList<>();
 
-            boolean isPossible = true;
-            for (int j = 0; j < numClient; j++) {
-                int numFlavor = in.nextInt();
-                ArrayList<Integer> tempList = new ArrayList<>();
-                for (int m = 0; m < numFlavor; m++) {
-                    int type = in.nextInt() - 1;
-                    if (typeMikeShark[type] == -1) {
-                        tempList.add(type);
-                        tempList.add(in.nextInt());
-                    }
-                }
-                if (tempList.size() == 0) {
-                    isPossible = false;
-                    break;
-                } else if (tempList.size() == 2) {
-                    typeMikeShark[tempList.get(0)] = tempList.get(1);
-                } else {
-                    untreatedList.add(tempList);
+        boolean isPossible = true;
+        for (int j = 0; j < numClient; j++) {
+            int numFlavor = in.nextInt();
+            ArrayList<Integer> tempList = new ArrayList<>();
+            for (int m = 0; m < numFlavor; m++) {
+                int type = in.nextInt() - 1;
+                if (typeMikeShark[type] == -1) {
+                    tempList.add(type);
+                    tempList.add(in.nextInt());
                 }
             }
-            if (!isPossible) {
-                System.out.println("Case #" + (i + 1) + " IMPOSSIBLE");
+            if (tempList.size() == 0) {
+                isPossible = false;
+                break;
+            } else if (tempList.size() == 2) {
+                typeMikeShark[tempList.get(0)] = tempList.get(1);
             } else {
-                System.out.println(untreatedList);
+                untreatedList.add(tempList);
             }
         }
-        in.close();
+        if (!isPossible) {
+            return "IMPOSSIBLE";
+        } else {
+            return untreatedList.toString();
+        }
     }
-
 }

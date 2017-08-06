@@ -16,7 +16,7 @@ package com.loic.topcoder.training;
  */
 public class LCMSetEasy {
 
-    public String include(int[] S, int x) {
+    public static String include(int[] S, int x) {
         int minMulti = 1;
         for (int i = 0; i < S.length; i++) {
             if (x % S[i] == 0) {
@@ -30,11 +30,11 @@ public class LCMSetEasy {
         }
     }
 
-    private int minCommonMultiple(int m, int n) {
+    private static int minCommonMultiple(int m, int n) {
         return m * n / maxCommonDivisor(m, n);
     }
 
-    private int maxCommonDivisor(int m, int n) {
+    private static int maxCommonDivisor(int m, int n) {
         if (m < n) {// 保证m>n,若m<n,则进行数据交换
             int temp = m;
             m = n;

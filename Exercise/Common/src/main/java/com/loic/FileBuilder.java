@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Preconditions;
+
 /**
  * In some contests you will have to submit all your code in a single file. This
  * class is here to help you build this unique file by scanning the base class
@@ -58,13 +60,11 @@ public class FileBuilder {
     }
 
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Unexpected number of arguments");
-        } else {
-            FileBuilder builder = new FileBuilder();
-            ClassCode treated = builder.processFile(builder.toAbsolutePath(args[0]));
-            builder.write(treated);
-        }
+        Preconditions.checkState(args != null && args.length == 1);
+
+        FileBuilder builder = new FileBuilder();
+        ClassCode treated = builder.processFile(builder.toAbsolutePath(args[0]));
+        builder.write(treated);
     }
 
     private List<String> packageClass(String absolutePath) {

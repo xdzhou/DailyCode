@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import com.loic.codejam.Resolver;
 
-public class ReverseWords implements Resolver {
+public class ReverseWords implements Resolver<String> {
 
     @Override
     public String solve(Scanner in) {
