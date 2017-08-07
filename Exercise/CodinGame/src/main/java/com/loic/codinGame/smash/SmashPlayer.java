@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.search.core.ApplyStrategy;
@@ -25,7 +24,7 @@ public class SmashPlayer implements CodinGameResolver<String> {
     private SearchParam<GameState, Drop> param = searchParam(colors, 6);
 
     @Override
-    public void accept(Scanner in, Consumer<String> outputConsumer) {
+    public String accept(Scanner in) {
         for (int i = 0; i < MAX_LEN; i++) {
             int colorA = in.nextInt(); // color of the first block
             int colorB = in.nextInt(); // color of the attached block
@@ -44,7 +43,7 @@ public class SmashPlayer implements CodinGameResolver<String> {
 
         Drop drop = algo.find(rootState, param).get();
         rootState.apply(drop, colors);
-        outputConsumer.accept(drop.column() + " " + drop.rotation());
+        return drop.column() + " " + drop.rotation();
         //System.out.println(drop.column() + " " + drop.rotation()); // "x": the column in which to drop your blocks
     }
 

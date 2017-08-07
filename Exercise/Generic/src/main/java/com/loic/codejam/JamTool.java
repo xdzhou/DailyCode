@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
 
+import com.loic.solution.ScannerResolver;
+
 public class JamTool {
 
     public static void main(String[] args) {
@@ -24,7 +26,7 @@ public class JamTool {
             inputFolder = "src/main/resources/codejam/" + inputFolder;
         }
         try {
-            Class<? extends Resolver<T>> resolverClass = (Class<? extends Resolver<T>>)Class.forName(resolverClassName);
+            Class<? extends ScannerResolver<T>> resolverClass = (Class<? extends ScannerResolver<T>>)Class.forName(resolverClassName);
 
             Arrays.stream(new File(inputFolder).listFiles())
                 .filter(f -> f.getName().endsWith("in"))
@@ -34,7 +36,7 @@ public class JamTool {
         }
     }
 
-    private <T> void process(Class<? extends Resolver<T>> resolverClass, File input) {
+    private <T> void process(Class<? extends ScannerResolver<T>> resolverClass, File input) {
         try (PrintWriter writer = new PrintWriter(input.getAbsolutePath().replace("in", "out"), "UTF-8")) {
             Scanner in = new Scanner(input, "UTF-8");
             process(resolverClass, in, (index, result) -> writer.println("Case #" + (index + 1) + ": " + result));
@@ -43,12 +45,12 @@ public class JamTool {
         }
     }
 
-    public <T> void process(Class<? extends Resolver<T>> resolverClass, String data, BiConsumer<Integer, T> resultConsumer) {
+    public <T> void process(Class<? extends ScannerResolver<T>> resolverClass, String data, BiConsumer<Integer, T> resultConsumer) {
         process(resolverClass, new Scanner(data), resultConsumer);
     }
 
-    public <T> void process(Class<? extends Resolver<T>> resolverClass, Scanner in, BiConsumer<Integer, T> resultConsumer) {
-        Resolver<T> resolver = null;
+    public <T> void process(Class<? extends ScannerResolver<T>> resolverClass, Scanner in, BiConsumer<Integer, T> resultConsumer) {
+        ScannerResolver<T> resolver = null;
         try {
             resolver = resolverClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
@@ -57,7 +59,7 @@ public class JamTool {
         int count = in.nextInt();
         in.nextLine();
         for (int i = 0; i < count; i++) {
-            resultConsumer.accept(i, resolver.solve(in));
+            resultConsumer.accept(i, resolver.accept(in));
         }
         in.close();
     }

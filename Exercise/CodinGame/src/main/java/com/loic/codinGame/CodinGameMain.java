@@ -14,7 +14,7 @@ public class CodinGameMain {
         resolver.before(in);
 
         while (true) {
-            resolver.accept(in, result -> System.out.println(result.toString()));
+            System.out.println(resolver.accept(in));
         }
     }
 }

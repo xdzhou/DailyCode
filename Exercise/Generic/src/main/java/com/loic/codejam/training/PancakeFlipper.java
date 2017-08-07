@@ -2,15 +2,15 @@ package com.loic.codejam.training;
 
 import java.util.Scanner;
 
-import com.loic.codejam.Resolver;
+import com.loic.solution.ScannerResolver;
 
 /**
  * https://code.google.com/codejam/contest/3264486/dashboard
  */
-public class PancakeFlipper implements Resolver<String> {
+public class PancakeFlipper implements ScannerResolver<String> {
 
     @Override
-    public String solve(Scanner in) {
+    public String accept(Scanner in) {
         String cakes = in.next();
         int count = in.nextInt();
 
