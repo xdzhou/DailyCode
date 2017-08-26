@@ -14,13 +14,13 @@ import com.google.common.io.Files;
 import com.loic.solution.ScannerResolver;
 import org.testng.annotations.Test;
 
-public class JamToolTest {
+public class JamExecutorTest {
 
     @Test
     public void testInput() throws Exception {
         String path = "src/test/resources/codejam";
 
-        JamTool.main(new String[]{"com.loic.codejam.JamToolTest$IntResolver", path});
+        new JamExecutor<>(new IntResolver()).execute(new File(path));
 
         Arrays.stream(new File(path).listFiles())
             .filter(f -> f.getName().endsWith("out"))
