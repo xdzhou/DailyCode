@@ -23,9 +23,9 @@ public class ParanoidAndroid implements CodinGameResolver<String> {
     public void before(Scanner in) {
         final int nbFloors = in.nextInt(); // number of floors
         final int width = in.nextInt(); // width of the area
-        final int nbRounds = in.nextInt(); // maximum number of rounds
-        final int exitFloor = in.nextInt(); // floor on which the exit is found
-        final int exitPos = in.nextInt(); // position of the exit on its floor
+        in.nextInt(); // maximum number of rounds
+        in.nextInt(); // floor on which the exit is found
+        in.nextInt(); // position of the exit on its floor
         in.nextInt(); // number of generated clones
         int nbAdditionalElevators = in.nextInt(); // number of additional elevators that you can build
         System.err.println("number of elevators can be created: " + nbAdditionalElevators);
