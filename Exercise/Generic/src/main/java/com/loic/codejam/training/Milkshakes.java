@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.loic.codejam.Resolver;
+import com.loic.solution.ScannerResolver;
 
-public class Milkshakes implements Resolver<String> {
+public class Milkshakes implements ScannerResolver<String> {
 
     @Override
-    public String solve(Scanner in) {
+    public String accept(Scanner in) {
         int numType = in.nextInt();
         int numClient = in.nextInt();
         int[] typeMikeShark = new int[numType];

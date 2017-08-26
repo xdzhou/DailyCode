@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-import com.loic.codejam.Resolver;
+import com.loic.solution.ScannerResolver;
 
-public class MinimumScalarProduct implements Resolver<Long> {
+public class MinimumScalarProduct implements ScannerResolver<Long> {
 
     @Override
-    public Long solve(Scanner in) {
+    public Long accept(Scanner in) {
         int num = in.nextInt();
         List<Long> list1 = new ArrayList<>(num);
         List<Long> list2 = new ArrayList<>(num);

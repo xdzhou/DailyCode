@@ -9,20 +9,29 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class ParanoidAndroid {
+import com.loic.codinGame.CodinGameResolver;
 
-    public static void main(String args[]) {
-        Scanner in = new Scanner(System.in, "UTF-8");
+public class ParanoidAndroid implements CodinGameResolver<String> {
+    private int nbFloors, nbAdditionalElevators, exitFloor, nbRounds, exitPos, width;
+    private Map<Integer, List<Integer>> elevatorMap;
+    private MapInfo mapInfo;
+    private AStarAlgo algo;
+    private int[] elePos;
+    private boolean[] eleCreated;
+
+    @Override
+    public void before(Scanner in) {
         final int nbFloors = in.nextInt(); // number of floors
         final int width = in.nextInt(); // width of the area
-        final int nbRounds = in.nextInt(); // maximum number of rounds
-        final int exitFloor = in.nextInt(); // floor on which the exit is found
-        final int exitPos = in.nextInt(); // position of the exit on its floor
+        in.nextInt(); // maximum number of rounds
+        in.nextInt(); // floor on which the exit is found
+        in.nextInt(); // position of the exit on its floor
         in.nextInt(); // number of generated clones
         int nbAdditionalElevators = in.nextInt(); // number of additional elevators that you can build
         System.err.println("number of elevators can be created: " + nbAdditionalElevators);
         int nbElevators = in.nextInt(); // number of elevators
-        final Map<Integer, List<Integer>> elevatorMap = new HashMap<>(nbElevators);
+
+        elevatorMap = new HashMap<>(nbElevators);
         for (int i = 0; i < nbElevators; i++) {
             int elevatorFloor = in.nextInt(); // floor on which this elevator is found
             int elevatorPos = in.nextInt(); // position of the elevator on its floor
@@ -36,94 +45,91 @@ public class ParanoidAndroid {
         }
 
         System.err.println("elevatorMap : " + elevatorMap);
+        mapInfo = new MapInfo(nbFloors, width, elevatorMap);
+        algo = new AStarAlgo(mapInfo);
 
-        final MapInfo mapInfo = new MapInfo(nbFloors, width, elevatorMap);
+        eleCreated = new boolean[nbFloors];
+    }
 
-        final AStarAlgo algo = new AStarAlgo(mapInfo);
+    @Override
+    public String accept(Scanner in) {
+        final int cloneFloor = in.nextInt(); // floor of the leading clone
+        final int clonePos = in.nextInt(); // position of the leading clone on its floor
+        String direction = in.next(); // direction of the leading clone: LEFT or RIGHT
 
-        int[] elePos = null;
-        boolean[] eleCreated = new boolean[nbFloors];
-
-        // game loop
-        while (true) {
-            final int cloneFloor = in.nextInt(); // floor of the leading clone
-            final int clonePos = in.nextInt(); // position of the leading clone on its floor
-            String direction = in.next(); // direction of the leading clone: LEFT or RIGHT
-
-            if (elePos == null) {
-                System.err.println("Start point : " + cloneFloor + ", " + clonePos);
-                final List<Integer> hasEleFloors = new ArrayList<>();
-                for (Integer floor : elevatorMap.keySet()) {
-                    if (floor < exitFloor) {
-                        hasEleFloors.add(floor);
-                    }
-                }
-                int elevatorAdd = nbAdditionalElevators - (exitFloor - hasEleFloors.size());
-                List<Integer> path = null;
-                if (elevatorAdd < 0) {
-                    System.err.println("IMPOSSIBLE");
-                } else if (elevatorAdd == 0) {
-                    path = algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
-                } else {
-                    if (elevatorAdd > hasEleFloors.size()) {
-                        elevatorAdd = hasEleFloors.size();
-                    }
-                    List<Integer> ignoreList = new ArrayList<>(elevatorAdd);
-
-                    class Iterator {
-                        List<Integer> fill(List<Integer> ignoreList, int startIndex, int count) {
-                            if (count == 0) {
-                                System.err.println("check ignore list : " + ignoreList);
-                                mapInfo.setIgnoreFloors(ignoreList);
-                                return algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
-                            } else if (hasEleFloors.size() - startIndex >= count) {
-                                int len = hasEleFloors.size() - startIndex - count + 1;
-                                List<Integer> retVal = null;
-                                for (int i = startIndex; i < startIndex + len && retVal == null; i++) {
-                                    ignoreList.add(hasEleFloors.get(i));
-                                    retVal = fill(ignoreList, i + 1, count - 1);
-                                    ignoreList.remove(ignoreList.size() - 1);
-                                }
-                                return retVal;
-                            }
-                            return null;
-                        }
-                    }
-                    path = new Iterator().fill(ignoreList, 0, elevatorAdd);
-                }
-
-                elePos = new int[nbFloors];
-                elePos[exitFloor] = exitPos;
-                if (path == null) {
-                    System.err.println("IMPOSSIBLE");
-                } else {
-                    for (int i = 0; i + 2 < path.size(); i += 2) {
-                        if (path.get(i + 2) + 1 == path.get(i) && path.get(i + 1) == path.get(i + 3)) {
-                            int floor = nbFloors - 1 - path.get(i);
-                            elePos[floor] = path.get(i + 1);
-                            System.err.println("find elevator : " + floor + ", " + elePos[floor]);
-                        }
-                    }
+        if (elePos == null) {
+            System.err.println("Start point : " + cloneFloor + ", " + clonePos);
+            final List<Integer> hasEleFloors = new ArrayList<>();
+            for (Integer floor : elevatorMap.keySet()) {
+                if (floor < exitFloor) {
+                    hasEleFloors.add(floor);
                 }
             }
-
-            String action;
-            if (cloneFloor < 0) {
-                action = "WAIT";
-            } else if (!eleCreated[cloneFloor] && elePos[cloneFloor] == clonePos && (!elevatorMap.containsKey(cloneFloor) || !elevatorMap.get(cloneFloor).contains(clonePos))) {
-                eleCreated[cloneFloor] = true;
-                action = "ELEVATOR";
-            } else if (elePos[cloneFloor] > clonePos && direction.equals("LEFT")) {
-                action = "BLOCK";
-            } else if (elePos[cloneFloor] < clonePos && direction.equals("RIGHT")) {
-                action = "BLOCK";
-            } else if (clonePos == 0 || clonePos == width - 1) {
-                action = "BLOCK";
+            int elevatorAdd = nbAdditionalElevators - (exitFloor - hasEleFloors.size());
+            List<Integer> path = null;
+            if (elevatorAdd < 0) {
+                System.err.println("IMPOSSIBLE");
+            } else if (elevatorAdd == 0) {
+                path = algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
             } else {
-                action = "WAIT";
+                if (elevatorAdd > hasEleFloors.size()) {
+                    elevatorAdd = hasEleFloors.size();
+                }
+                List<Integer> ignoreList = new ArrayList<>(elevatorAdd);
+
+                class Iterator {
+                    List<Integer> fill(List<Integer> ignoreList, int startIndex, int count) {
+                        if (count == 0) {
+                            System.err.println("check ignore list : " + ignoreList);
+                            mapInfo.setIgnoreFloors(ignoreList);
+                            return algo.search(nbFloors - 1 - cloneFloor, clonePos, nbFloors - 1 - exitFloor, exitPos, nbRounds);
+                        } else if (hasEleFloors.size() - startIndex >= count) {
+                            int len = hasEleFloors.size() - startIndex - count + 1;
+                            List<Integer> retVal = null;
+                            for (int i = startIndex; i < startIndex + len && retVal == null; i++) {
+                                ignoreList.add(hasEleFloors.get(i));
+                                retVal = fill(ignoreList, i + 1, count - 1);
+                                ignoreList.remove(ignoreList.size() - 1);
+                            }
+                            return retVal;
+                        }
+                        return null;
+                    }
+                }
+                path = new Iterator().fill(ignoreList, 0, elevatorAdd);
             }
-            System.out.println(action); // action: WAIT or BLOCK
+
+            elePos = new int[nbFloors];
+            elePos[exitFloor] = exitPos;
+            if (path == null) {
+                System.err.println("IMPOSSIBLE");
+            } else {
+                for (int i = 0; i + 2 < path.size(); i += 2) {
+                    if (path.get(i + 2) + 1 == path.get(i) && path.get(i + 1) == path.get(i + 3)) {
+                        int floor = nbFloors - 1 - path.get(i);
+                        elePos[floor] = path.get(i + 1);
+                        System.err.println("find elevator : " + floor + ", " + elePos[floor]);
+                    }
+                }
+            }
         }
+
+        String action;
+        if (cloneFloor < 0) {
+            action = "WAIT";
+        } else if (!eleCreated[cloneFloor] && elePos[cloneFloor] == clonePos && (!elevatorMap.containsKey(cloneFloor) || !elevatorMap.get(cloneFloor).contains(clonePos))) {
+            eleCreated[cloneFloor] = true;
+            action = "ELEVATOR";
+        } else if (elePos[cloneFloor] > clonePos && direction.equals("LEFT")) {
+            action = "BLOCK";
+        } else if (elePos[cloneFloor] < clonePos && direction.equals("RIGHT")) {
+            action = "BLOCK";
+        } else if (clonePos == 0 || clonePos == width - 1) {
+            action = "BLOCK";
+        } else {
+            action = "WAIT";
+        }
+        return action;
     }
 
     private static class MapInfo implements AStarAlgo.IMapInfo {

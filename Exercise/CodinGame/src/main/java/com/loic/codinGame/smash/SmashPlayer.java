@@ -12,41 +12,39 @@ import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TransitionStrategy;
 import com.loic.algo.search.core.TreeSearch;
 import com.loic.algo.search.impl.MinimaxAlphaBeta;
+import com.loic.codinGame.CodinGameResolver;
 
-public class SmashPlayer {
-    public static final Set<Drop> DROP_SET;
+public class SmashPlayer implements CodinGameResolver<String> {
+    static final Set<Drop> DROP_SET;
     private static final int MAX_LEN = 8;
 
-    public static void main(String args[]) {
-        Scanner in = new Scanner(System.in, "UTF-8");
-        final ColorSet[] colors = new ColorSet[MAX_LEN];
+    private final ColorSet[] colors = new ColorSet[MAX_LEN];
+    private GameState rootState = new GameState();
+    private TreeSearch algo = new MinimaxAlphaBeta();
+    private SearchParam<GameState, Drop> param = searchParam(colors, 6);
 
-        GameState rootState = new GameState();
-        TreeSearch algo = new MinimaxAlphaBeta();
-        SearchParam<GameState, Drop> param = searchParam(colors, 6);
-
-        // game loop
-        while (true) {
-            for (int i = 0; i < MAX_LEN; i++) {
-                int colorA = in.nextInt(); // color of the first block
-                int colorB = in.nextInt(); // color of the attached block
-                colors[i] = new ColorSet((char)('0'+colorA), (char)('0'+colorB));
-            }
-            rootState.setMyScore(in.nextInt());
-            for (int i = 0; i < 12; i++) {
-                String row = in.next();
-                rootState.myBord().setLine(row, i);
-            }
-            rootState.setOtherScore(in.nextInt());
-            for (int i = 0; i < 12; i++) {
-                String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
-                rootState.otherBord().setLine(row, i);
-            }
-
-            Drop drop = algo.find(rootState, param).get();
-            rootState.apply(drop, colors);
-            System.out.println(drop.column() + " " + drop.rotation()); // "x": the column in which to drop your blocks
+    @Override
+    public String accept(Scanner in) {
+        for (int i = 0; i < MAX_LEN; i++) {
+            int colorA = in.nextInt(); // color of the first block
+            int colorB = in.nextInt(); // color of the attached block
+            colors[i] = new ColorSet((char)('0'+colorA), (char)('0'+colorB));
         }
+        rootState.setMyScore(in.nextInt());
+        for (int i = 0; i < 12; i++) {
+            String row = in.next();
+            rootState.myBord().setLine(row, i);
+        }
+        rootState.setOtherScore(in.nextInt());
+        for (int i = 0; i < 12; i++) {
+            String row = in.next(); // One line of the map ('.' = empty, '0' = skull block, '1' to '5' = colored block)
+            rootState.otherBord().setLine(row, i);
+        }
+
+        Drop drop = algo.find(rootState, param).get();
+        rootState.apply(drop, colors);
+        return drop.column() + " " + drop.rotation();
+        //System.out.println(drop.column() + " " + drop.rotation()); // "x": the column in which to drop your blocks
     }
 
     static {

@@ -11,15 +11,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.google.common.io.Files;
+import com.loic.solution.ScannerResolver;
 import org.testng.annotations.Test;
 
-public class JamToolTest {
+public class JamExecutorTest {
 
     @Test
     public void testInput() throws Exception {
         String path = "src/test/resources/codejam";
 
-        JamTool.main(new String[]{"com.loic.codejam.JamToolTest$IntResolver", path});
+        new JamExecutor<>(new IntResolver()).execute(new File(path));
 
         Arrays.stream(new File(path).listFiles())
             .filter(f -> f.getName().endsWith("out"))
@@ -37,9 +38,9 @@ public class JamToolTest {
             }).forEach(f -> assertTrue(f.delete()));
     }
 
-    public static final class IntResolver implements Resolver<Integer> {
+    public static final class IntResolver implements ScannerResolver<Integer> {
         @Override
-        public Integer solve(Scanner in) {
+        public Integer accept(Scanner in) {
             return 100;
         }
     }

@@ -5,30 +5,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-class SkynetBridge {
+import com.loic.codinGame.CodinGameResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+class SkynetBridge implements CodinGameResolver<String> {
+    private static final Logger LOG = LoggerFactory.getLogger(SkynetBridge.class);
 
     private int mMin;
     private String[] mLanes;
+    private List<Command> commands;
 
-    public SkynetBridge(int min) {
-        mMin = min;
-        mLanes = new String[4];
-    }
-
-    public static void main(String args[]) {
-        Scanner in = new Scanner(System.in, "UTF-8");
+    @Override
+    public void before(Scanner in) {
         int M = in.nextInt(); // the amount of motorbikes to control
-        int V = in.nextInt(); // the minimum amount of motorbikes that must survive
-        SkynetBridge algo = new SkynetBridge(V);
-        algo.mLanes[0] = in.next();
-        System.err.println("len : " + algo.mLanes[0].length());
-        System.err.println(algo.mLanes[0]);
-        algo.mLanes[1] = in.next();
-        System.err.println(algo.mLanes[1]);
-        algo.mLanes[2] = in.next();
-        System.err.println(algo.mLanes[2]);
-        algo.mLanes[3] = in.next();
-        System.err.println(algo.mLanes[3]);
+        mMin = in.nextInt(); // the minimum amount of motorbikes that must survive
+        mLanes = new String[4];
+        mLanes[0] = in.next();
+        mLanes[1] = in.next();
+        mLanes[2] = in.next();
+        mLanes[3] = in.next();
 
         int S = in.nextInt(); // the motorbikes' speed
         int curX = 0;
@@ -40,29 +36,12 @@ class SkynetBridge {
             in.nextInt(); // indicates whether the motorbike is activated "1" or detroyed "0"
         }
 
-        List<Command> commands = algo.getCommands(S, curX, curY);
-
-        // game loop
-        while (commands != null && !commands.isEmpty()) {
-            System.out.println(commands.remove(0));
-        }
-        in.close();
-
-
-        //SkynetBridge algo = new SkynetBridge(0);
-        //algo.test();
+        commands = getCommands(S, curX, curY);
     }
 
-    public void test() {
-        mMin = 1;
-        mLanes[0] = ".............................0..0....";
-        mLanes[1] = ".0.0..................000....000.....";
-        mLanes[2] = "....000.........0.0...000............";
-        mLanes[3] = "............0.0......................";
-        List<Integer> curY = new ArrayList<Integer>(1);
-        curY.add(2);
-        List<Command> commands = getCommands(4, 0, curY);
-        System.err.println(commands);
+    @Override
+    public String accept(Scanner in) {
+        return commands.remove(0).toString();
     }
 
     public List<Command> getCommands(int curSpeed, int curX, List<Integer> curY) {
@@ -71,7 +50,7 @@ class SkynetBridge {
     }
 
     private List<Command> find(int curSpeed, int curX, List<Integer> curY, List<Command> commands) {
-        System.err.println("speed: " + curSpeed + ", X: " + curX + ", Ys: " + curY + ", commands: " + commands);
+        LOG.debug("speed: " + curSpeed + ", X: " + curX + ", Ys: " + curY + ", commands: " + commands);
         if (curY.size() >= mMin) {
             if (curX > mLanes[0].length()) {
                 return commands;
@@ -168,7 +147,7 @@ class SkynetBridge {
             }
             for (int i = startX; i <= endX; i++) {
                 if (mLanes[y].charAt(i) == '0') {
-                    System.err.println("has hole for y:" + y + ", startX:" + startX + ", endX:" + endX);
+                    LOG.debug("has hole for y:" + y + ", startX:" + startX + ", endX:" + endX);
                     return true;
                 }
             }
