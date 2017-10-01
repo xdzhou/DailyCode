@@ -1,0 +1,9 @@
+test {
+    testLogging.showStandardStreams = true
+    useTestNG()
+    include '**/Test*.*'
+}
+
+dependencies {
+    compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+}
