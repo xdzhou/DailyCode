@@ -1,11 +1,15 @@
-package com.loic.algo.flux;
+package com.loic.flux;
 
 import java.util.List;
-import java.util.function.*;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public interface Flux<I> {
 
-  <R> Flux<R> newFlux(Iterable<? extends R> iterable);
+  <R> Flux<R> newFlux(Iterable<R> iterable);
 
 
   <K> Flux<GroupFlux<K, I>> groupBy(Function<? super I, ? extends K> keyMapper);
@@ -21,6 +25,8 @@ public interface Flux<I> {
   <R> Flux<R> reduce(R initialValue, BiFunction<R, ? super I, R> accumulator);
 
   Flux<List<I>> toList();
+
+  Flux<Set<I>> toSet();
 
   <R> Flux<R> compose(Transformer<? super I, ? extends R> transformer);
 

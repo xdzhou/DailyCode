@@ -6,6 +6,7 @@ build/
 */*/out/
 */*.log
 */*/*.log
+setup.sh
 
 !.gitignore
 !.travis.yml
