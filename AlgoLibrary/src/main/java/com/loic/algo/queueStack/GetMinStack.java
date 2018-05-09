@@ -1,13 +1,13 @@
 package com.loic.algo.queueStack;
 
 public interface GetMinStack<T> {
-    void push(T ele);
+  void push(T ele);
 
-    T pop();
+  T pop();
 
-    boolean isEmpty();
+  boolean isEmpty();
 
-    T peek();
+  T peek();
 
-    T getMin();
+  T getMin();
 }

@@ -9,65 +9,65 @@ import com.loic.solution.AbstractSolutionProvider;
  */
 public class FindSubStringWithAllChar extends AbstractSolutionProvider<Pair<String, Integer>, String> {
 
-    @Override
-    protected String resolve(Pair<String, Integer> param) {
-        return findAllChar(param.first(), param.second());
-    }
+  @Override
+  protected String resolve(Pair<String, Integer> param) {
+    return findAllChar(param.first(), param.second());
+  }
 
-    // Tips:需要一个数组存储各个数字出现的次数，使用head和tail
-    // 2个游标，每次head前进一步，tail游标只有当它指向得数字出现的次数大于1时才前进
-    private String findAllChar(String content, int N) {
-        if (content == null || content.isEmpty()) {
-            return null;
-        } else if (N == 1) {
-            return content.substring(0, 1);
-        }
-        // the number occur times in substring
-        int[] occurTimes = new int[N];
-        // find the substring with all chars
-        int cacheTail = -1, cacheHead = -1;
-        // the 2 cursor of substring
-        int tail = 0, head = 0;
-        for (; head < content.length(); head++) {
-            int curNum = getNumber(head, content);
-            occurTimes[curNum]++;
-            for (; tail <= head; tail++) {
-                int tailNum = getNumber(tail, content);
-                if (occurTimes[tailNum] > 1) {
-                    occurTimes[tailNum]--;
-                } else {
-                    break;
-                }
-            }
-            if (head - tail + 1 >= N && isComplet(occurTimes) &&
-                (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail))) {
-                cacheHead = head;
-                cacheTail = tail;
-                if (cacheHead - cacheTail + 1 == N) {
-                    // the shortest
-                    // substring have found
-                    break;
-                }
-            }
-        }
-        if (cacheHead != -1) {
-            return content.substring(cacheTail, cacheHead + 1);
+  // Tips:需要一个数组存储各个数字出现的次数，使用head和tail
+  // 2个游标，每次head前进一步，tail游标只有当它指向得数字出现的次数大于1时才前进
+  private String findAllChar(String content, int N) {
+    if (content == null || content.isEmpty()) {
+      return null;
+    } else if (N == 1) {
+      return content.substring(0, 1);
+    }
+    // the number occur times in substring
+    int[] occurTimes = new int[N];
+    // find the substring with all chars
+    int cacheTail = -1, cacheHead = -1;
+    // the 2 cursor of substring
+    int tail = 0, head = 0;
+    for (; head < content.length(); head++) {
+      int curNum = getNumber(head, content);
+      occurTimes[curNum]++;
+      for (; tail <= head; tail++) {
+        int tailNum = getNumber(tail, content);
+        if (occurTimes[tailNum] > 1) {
+          occurTimes[tailNum]--;
         } else {
-            return null;
+          break;
         }
-    }
-
-    private boolean isComplet(int[] num) {
-        for (int value : num) {
-            if (value <= 0) {
-                return false;
-            }
+      }
+      if (head - tail + 1 >= N && isComplet(occurTimes) &&
+          (cacheTail == -1 || (head - tail) < (cacheHead - cacheTail))) {
+        cacheHead = head;
+        cacheTail = tail;
+        if (cacheHead - cacheTail + 1 == N) {
+          // the shortest
+          // substring have found
+          break;
         }
-        return true;
+      }
     }
+    if (cacheHead != -1) {
+      return content.substring(cacheTail, cacheHead + 1);
+    } else {
+      return null;
+    }
+  }
 
-    private int getNumber(int index, String content) {
-        return content.charAt(index) - '0';
+  private boolean isComplet(int[] num) {
+    for (int value : num) {
+      if (value <= 0) {
+        return false;
+      }
     }
+    return true;
+  }
+
+  private int getNumber(int index, String content) {
+    return content.charAt(index) - '0';
+  }
 
 }

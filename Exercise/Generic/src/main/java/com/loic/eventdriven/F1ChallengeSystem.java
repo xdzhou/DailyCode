@@ -1,10 +1,10 @@
 package com.loic.eventdriven;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.loic.algo.eventDrive.Event;
 import com.loic.algo.eventDrive.EventDriveSystem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * {http://www.geeksforgeeks.org/google-interview-question-for-java-position/}
@@ -37,162 +37,162 @@ import com.loic.algo.eventDrive.EventDriveSystem;
  * final speeds and the corresponding completion times.
  */
 public class F1ChallengeSystem extends EventDriveSystem {
-    private final List<Car> mCarsList;
-    private final int maxDis;
+  private final List<Car> mCarsList;
+  private final int maxDis;
 
-    private Car champion;
+  private Car champion;
 
-    public F1ChallengeSystem(int N, int maxDis) {
-        super();
-        this.maxDis = maxDis;
-        mCarsList = new ArrayList<>(N);
-        for (int i = 1; i <= N; i++) {
-            Car car = new Car(i, (150 + 10 * i) / 3.6d, 2 * i);
-            car.record.dis = -200 * (i - 1);
-            mCarsList.add(car);
+  public F1ChallengeSystem(int N, int maxDis) {
+    super();
+    this.maxDis = maxDis;
+    mCarsList = new ArrayList<>(N);
+    for (int i = 1; i <= N; i++) {
+      Car car = new Car(i, (150 + 10 * i) / 3.6d, 2 * i);
+      car.record.dis = -200 * (i - 1);
+      mCarsList.add(car);
 
-            addNewEvent(new AcceleratStopEvent(0, car));
+      addNewEvent(new AcceleratStopEvent(0, car));
+    }
+    addNewEvent(new ReassessmentEvent(2));
+  }
+
+  @Override
+  protected boolean isFinish() {
+    return champion != null;
+  }
+
+  @Override
+  protected void onStopSimulate() {
+    Log.debug("the champion is {}", champion);
+  }
+
+  @Override
+  protected void processEvent(Event event) {
+    if (event instanceof AcceleratStopEvent) {
+      Car car = ((AcceleratStopEvent) event).car;
+      double duration = (event.getTime() - car.record.recordTime);
+      car.record.recordTime = event.getTime();
+      car.record.dis += (car.record.curSpeed * duration + 0.5f * car.acceleration * duration * duration);
+      car.record.curSpeed = car.topSpeed;
+      // Log.debug("Time :{} - {} stop accelerat and in top speed
+      // now",event.time, car);
+    } else if (event instanceof ReassessmentEvent) {
+      addNewEvent(new ReassessmentEvent(event.getTime() + 2));
+      // Log.debug("new rea-ssessment Event at time : {}", event.time);
+      Car lastCar = mCarsList.get(0);
+      for (Car car : mCarsList) {
+        double duration = (event.getTime() - car.record.recordTime);
+        if (car.record.curSpeed < car.topSpeed) {
+          car.record.dis += (car.record.curSpeed * duration + 0.5d * car.acceleration * duration * duration);
+          car.record.curSpeed += car.acceleration * (event.getTime() - car.record.recordTime);
+        } else {
+          car.record.dis += car.topSpeed * duration;
         }
-        addNewEvent(new ReassessmentEvent(2));
+        car.record.curSpeed *= Car.HANDLING_FACTOR;
+        car.record.recordTime = event.getTime();
+        // Log.debug("new record for {}", car);
+
+        addNewEvent(new AcceleratStopEvent(event.getTime(), car));
+
+        if (car.record.dis < lastCar.record.dis) {
+          lastCar = car;
+        }
+
+        if (car.record.dis >= maxDis &&
+            (champion == null || car.record.dis > champion.record.dis)) {
+          champion = car;
+        }
+      }
+
+      if (lastCar.nitro() && lastCar.record.curSpeed < lastCar.topSpeed) {
+        addNewEvent(new AcceleratStopEvent(event.getTime(), lastCar));
+      }
+    }
+  }
+
+  // inner class
+  private static class CarRecord {
+    private double recordTime = 0;
+    private double dis = 0;
+    private double curSpeed = 0;
+    private boolean alreadyNitro = false;
+
+    @Override
+    public String toString() {
+      return "CarRecord [recordTime=" + recordTime + ", dis=" + dis + ", curSpeed=" + curSpeed + ", alreadyNitro="
+          + alreadyNitro + "]";
+    }
+  }
+
+  private static final class Car {
+    private static final float HANDLING_FACTOR = 0.8f;
+
+    private final int id;
+    private final double topSpeed;
+    private final int acceleration;
+
+    private CarRecord record = new CarRecord();
+
+    private Car(int id, double topSpeed, int acceleration) {
+      this.id = id;
+      this.topSpeed = topSpeed;
+      this.acceleration = acceleration;
+    }
+
+    private double computeAccelerateDuration() {
+      return (topSpeed - record.curSpeed) / (double) acceleration;
+    }
+
+    private boolean nitro() {
+      if (!record.alreadyNitro) {
+        record.curSpeed = Math.min(record.curSpeed * 2, topSpeed);
+        record.alreadyNitro = true;
+        return true;
+      }
+      return false;
     }
 
     @Override
-    protected boolean isFinish() {
-        return champion != null;
+    public String toString() {
+      return "Car " + id + " - " + record;
+    }
+  }
+
+  private static final class AcceleratStopEvent implements Event {
+    private final double time;
+    private Car car;
+
+    private AcceleratStopEvent(double startTime, Car car) {
+      time = startTime + car.computeAccelerateDuration();
+      this.car = car;
     }
 
     @Override
-    protected void onStopSimulate() {
-        Log.debug("the champion is {}", champion);
+    public boolean isValid() {
+      return Math.abs(car.computeAccelerateDuration() - this.time + car.record.recordTime) < 0.0000001d;
     }
 
     @Override
-    protected void processEvent(Event event) {
-        if (event instanceof AcceleratStopEvent) {
-            Car car = ((AcceleratStopEvent) event).car;
-            double duration = (event.getTime() - car.record.recordTime);
-            car.record.recordTime = event.getTime();
-            car.record.dis += (car.record.curSpeed * duration + 0.5f * car.acceleration * duration * duration);
-            car.record.curSpeed = car.topSpeed;
-            // Log.debug("Time :{} - {} stop accelerat and in top speed
-            // now",event.time, car);
-        } else if (event instanceof ReassessmentEvent) {
-            addNewEvent(new ReassessmentEvent(event.getTime() + 2));
-            // Log.debug("new rea-ssessment Event at time : {}", event.time);
-            Car lastCar = mCarsList.get(0);
-            for (Car car : mCarsList) {
-                double duration = (event.getTime() - car.record.recordTime);
-                if (car.record.curSpeed < car.topSpeed) {
-                    car.record.dis += (car.record.curSpeed * duration + 0.5d * car.acceleration * duration * duration);
-                    car.record.curSpeed += car.acceleration * (event.getTime() - car.record.recordTime);
-                } else {
-                    car.record.dis += car.topSpeed * duration;
-                }
-                car.record.curSpeed *= Car.HANDLING_FACTOR;
-                car.record.recordTime = event.getTime();
-                // Log.debug("new record for {}", car);
+    public double getTime() {
+      return time;
+    }
+  }
 
-                addNewEvent(new AcceleratStopEvent(event.getTime(), car));
+  private static final class ReassessmentEvent implements Event {
+    private final double time;
 
-                if (car.record.dis < lastCar.record.dis) {
-                    lastCar = car;
-                }
-
-                if (car.record.dis >= maxDis &&
-                    (champion == null || car.record.dis > champion.record.dis)) {
-                    champion = car;
-                }
-            }
-
-            if (lastCar.nitro() && lastCar.record.curSpeed < lastCar.topSpeed) {
-                addNewEvent(new AcceleratStopEvent(event.getTime(), lastCar));
-            }
-        }
+    private ReassessmentEvent(double time) {
+      this.time = time;
     }
 
-    // inner class
-    private static class CarRecord {
-        private double recordTime = 0;
-        private double dis = 0;
-        private double curSpeed = 0;
-        private boolean alreadyNitro = false;
-
-        @Override
-        public String toString() {
-            return "CarRecord [recordTime=" + recordTime + ", dis=" + dis + ", curSpeed=" + curSpeed + ", alreadyNitro="
-                + alreadyNitro + "]";
-        }
+    @Override
+    public boolean isValid() {
+      return true;
     }
 
-    private static final class Car {
-        private static final float HANDLING_FACTOR = 0.8f;
-
-        private final int id;
-        private final double topSpeed;
-        private final int acceleration;
-
-        private CarRecord record = new CarRecord();
-
-        private Car(int id, double topSpeed, int acceleration) {
-            this.id = id;
-            this.topSpeed = topSpeed;
-            this.acceleration = acceleration;
-        }
-
-        private double computeAccelerateDuration() {
-            return (topSpeed - record.curSpeed) / (double) acceleration;
-        }
-
-        private boolean nitro() {
-            if (!record.alreadyNitro) {
-                record.curSpeed = Math.min(record.curSpeed * 2, topSpeed);
-                record.alreadyNitro = true;
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public String toString() {
-            return "Car " + id + " - " + record;
-        }
+    @Override
+    public double getTime() {
+      return time;
     }
-
-    private static final class AcceleratStopEvent implements Event {
-        private final double time;
-        private Car car;
-
-        private AcceleratStopEvent(double startTime, Car car) {
-            time = startTime + car.computeAccelerateDuration();
-            this.car = car;
-        }
-
-        @Override
-        public boolean isValid() {
-            return Math.abs(car.computeAccelerateDuration() - this.time + car.record.recordTime) < 0.0000001d;
-        }
-
-        @Override
-        public double getTime() {
-            return time;
-        }
-    }
-
-    private static final class ReassessmentEvent implements Event {
-        private final double time;
-
-        private ReassessmentEvent(double time) {
-            this.time = time;
-        }
-
-        @Override
-        public boolean isValid() {
-            return true;
-        }
-
-        @Override
-        public double getTime() {
-            return time;
-        }
-    }
+  }
 }

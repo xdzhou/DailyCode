@@ -8,32 +8,32 @@ import com.loic.solution.AbstractSolutionProvider;
  */
 public class DCbst2DoubleLinkedList<T> extends AbstractSolutionProvider<TreeNode<T>, TreeNode<T>> {
 
-    @Override
-    protected TreeNode<T> resolve(TreeNode<T> bstNode) {
-        return changeToLinkList(bstNode);
-    }
+  @Override
+  protected TreeNode<T> resolve(TreeNode<T> bstNode) {
+    return changeToLinkList(bstNode);
+  }
 
-    private TreeNode<T> changeToLinkList(TreeNode<T> node) {
-        if (node == null) {
-            return null;
-        } else if (node.left() == null && node.right() == null) {
-            return node;
-        } else {
-            TreeNode<T> leftLinkList = changeToLinkList(node.left());
-            TreeNode<T> rightLinkList = changeToLinkList(node.right());
-            TreeNode<T> retVal = leftLinkList == null ? node : leftLinkList;
-            while (leftLinkList != null && leftLinkList.right() != null) {
-                leftLinkList = leftLinkList.right();
-            }
-            node.setLeft(leftLinkList);
-            node.setRight(rightLinkList);
-            if (leftLinkList != null) {
-                leftLinkList.setRight(node);
-            }
-            if (rightLinkList != null) {
-                rightLinkList.setLeft(node);
-            }
-            return retVal;
-        }
+  private TreeNode<T> changeToLinkList(TreeNode<T> node) {
+    if (node == null) {
+      return null;
+    } else if (node.left() == null && node.right() == null) {
+      return node;
+    } else {
+      TreeNode<T> leftLinkList = changeToLinkList(node.left());
+      TreeNode<T> rightLinkList = changeToLinkList(node.right());
+      TreeNode<T> retVal = leftLinkList == null ? node : leftLinkList;
+      while (leftLinkList != null && leftLinkList.right() != null) {
+        leftLinkList = leftLinkList.right();
+      }
+      node.setLeft(leftLinkList);
+      node.setRight(rightLinkList);
+      if (leftLinkList != null) {
+        leftLinkList.setRight(node);
+      }
+      if (rightLinkList != null) {
+        rightLinkList.setLeft(node);
+      }
+      return retVal;
     }
+  }
 }

@@ -1,53 +1,53 @@
 package com.loic.OOP.meteor;
 
 public class Piece {
-    public static final int CELL_COUNT = 5;
-    public static final int PERMUTATION_COUNT = 12;
+  public static final int CELL_COUNT = 5;
+  public static final int PERMUTATION_COUNT = 12;
 
-    private final Cell[] mCells;
-    private final int mNum;
-    private int mCurrentMutation = 0;
+  private final Cell[] mCells;
+  private final int mNum;
+  private int mCurrentMutation = 0;
 
-    public Piece(Cell[] cells, int num) {
-        mCells = cells;
-        mNum = num;
+  public Piece(Cell[] cells, int num) {
+    mCells = cells;
+    mNum = num;
+  }
+
+  public int getNumber() {
+    return mNum;
+  }
+
+  public Piece nextMutation() {
+    mCurrentMutation++;
+    mCurrentMutation %= PERMUTATION_COUNT;
+    if (mCurrentMutation == 0 || mCurrentMutation == 6) {
+      rotatePiece();
+      flipPiece();
+    } else {
+      rotatePiece();
     }
+    return this;
+  }
 
-    public int getNumber() {
-        return mNum;
-    }
+  Cell getCell(int index) {
+    return mCells[index];
+  }
 
-    public Piece nextMutation() {
-        mCurrentMutation++;
-        mCurrentMutation %= PERMUTATION_COUNT;
-        if (mCurrentMutation == 0 || mCurrentMutation == 6) {
-            rotatePiece();
-            flipPiece();
-        } else {
-            rotatePiece();
-        }
-        return this;
+  private void rotatePiece() {
+    for (Cell cell : mCells) {
+      cell.rotate();
     }
+  }
 
-    Cell getCell(int index) {
-        return mCells[index];
+  private void flipPiece() {
+    for (Cell cell : mCells) {
+      cell.flip();
     }
+  }
 
-    private void rotatePiece() {
-        for (Cell cell : mCells) {
-            cell.rotate();
-        }
+  void unProcessing() {
+    for (Cell cell : mCells) {
+      cell.setProcessing(false);
     }
-
-    private void flipPiece() {
-        for (Cell cell : mCells) {
-            cell.flip();
-        }
-    }
-
-    void unProcessing() {
-        for (Cell cell : mCells) {
-            cell.setProcessing(false);
-        }
-    }
+  }
 }

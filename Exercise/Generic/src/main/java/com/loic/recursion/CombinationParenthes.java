@@ -12,39 +12,39 @@ import org.slf4j.LoggerFactory;
  * @link http://www.hawstein.com/posts/8.5.html
  */
 public class CombinationParenthes extends AbstractSolutionProvider<Integer, Integer> {
-    private static final Logger Log = LoggerFactory.getLogger(CombinationParenthes.class);
+  private static final Logger Log = LoggerFactory.getLogger(CombinationParenthes.class);
 
-    @Override
-    protected Integer resolve(Integer param) {
-        printPair("", 0, 0, param);
-        return getPairCount(0, 0, param);
+  @Override
+  protected Integer resolve(Integer param) {
+    printPair("", 0, 0, param);
+    return getPairCount(0, 0, param);
+  }
+
+  private void printPair(String s, int left, int right, int pairCount) {
+    if (left == pairCount && right == pairCount) {
+      Log.debug(s);
+    } else if (left >= right) {
+      if (left < pairCount) {
+        printPair(s + "(", left + 1, right, pairCount);
+      }
+      if (right < pairCount) {
+        printPair(s + ")", left, right + 1, pairCount);
+      }
     }
+  }
 
-    private void printPair(String s, int left, int right, int pairCount) {
-        if (left == pairCount && right == pairCount) {
-            Log.debug(s);
-        } else if (left >= right) {
-            if (left < pairCount) {
-                printPair(s + "(", left + 1, right, pairCount);
-            }
-            if (right < pairCount) {
-                printPair(s + ")", left, right + 1, pairCount);
-            }
+  private int getPairCount(int left, int right, int p) {
+    if (right <= left && left <= p) {
+      if (left == p && right == p) {
+        return 1;
+      } else {
+        if (left == p) {
+          return getPairCount(left, right + 1, p);
+        } else {
+          return getPairCount(left + 1, right, p) + getPairCount(left, right + 1, p);
         }
+      }
     }
-
-    private int getPairCount(int left, int right, int p) {
-        if (right <= left && left <= p) {
-            if (left == p && right == p) {
-                return 1;
-            } else {
-                if (left == p) {
-                    return getPairCount(left, right + 1, p);
-                } else {
-                    return getPairCount(left + 1, right, p) + getPairCount(left, right + 1, p);
-                }
-            }
-        }
-        return 0;
-    }
+    return 0;
+  }
 }

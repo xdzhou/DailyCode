@@ -4,5 +4,5 @@ import java.util.Set;
 
 public interface TransitionStrategy<State, Trans> {
 
-    Set<Trans> generate(State state);
+  Set<Trans> generate(State state);
 }

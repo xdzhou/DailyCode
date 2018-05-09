@@ -8,24 +8,24 @@ import com.loic.solution.AbstractSolutionProvider;
  */
 public class FindMidNum extends AbstractSolutionProvider<Integer[], Integer> {
 
-    @Override
-    protected Integer resolve(Integer[] param) {
-        Preconditions.checkNotNull(param);
-        // use dp to save max num from 0 to i
-        int[] dp = new int[param.length];
-        dp[0] = param[0];
-        for (int i = 1; i < param.length; i++) {
-            dp[i] = Math.max(dp[i - 1], param[i]);
-        }
-
-        int min = param[param.length - 1];
-        for (int i = param.length - 2; i >= 0; i--) {
-            min = Math.min(min, param[i]);
-            if (dp[i] == param[i] && min == param[i]) {
-                return param[i];
-            }
-        }
-        return 0;
+  @Override
+  protected Integer resolve(Integer[] param) {
+    Preconditions.checkNotNull(param);
+    // use dp to save max num from 0 to i
+    int[] dp = new int[param.length];
+    dp[0] = param[0];
+    for (int i = 1; i < param.length; i++) {
+      dp[i] = Math.max(dp[i - 1], param[i]);
     }
+
+    int min = param[param.length - 1];
+    for (int i = param.length - 2; i >= 0; i--) {
+      min = Math.min(min, param[i]);
+      if (dp[i] == param[i] && min == param[i]) {
+        return param[i];
+      }
+    }
+    return 0;
+  }
 
 }

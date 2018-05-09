@@ -1,8 +1,8 @@
 package com.loic.algo.graph.topologicalSort;
 
-import java.util.List;
-
 import com.google.common.graph.Graph;
+
+import java.util.List;
 
 /*
  * @URL : http://blog.csdn.net/dm_vincent/article/details/7714519
@@ -10,5 +10,5 @@ import com.google.common.graph.Graph;
  *
  */
 public interface ITopologicalSort {
-    <N> List<N> sort(Graph<N> graph);
+  <N> List<N> sort(Graph<N> graph);
 }

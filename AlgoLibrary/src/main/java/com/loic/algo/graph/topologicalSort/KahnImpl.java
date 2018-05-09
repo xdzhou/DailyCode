@@ -1,19 +1,12 @@
 package com.loic.algo.graph.topologicalSort;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.graph.Graph;
 import com.google.common.graph.Graphs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 /*
  * Kahn算法：广度优先搜索
@@ -24,47 +17,47 @@ import org.slf4j.LoggerFactory;
  * 此List中的顺序就是对图进行拓扑排序的结果。
  */
 public class KahnImpl implements ITopologicalSort {
-    private static final Logger LOG = LoggerFactory.getLogger(KahnImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(KahnImpl.class);
 
-    @Override
-    public <N> List<N> sort(Graph<N> graph) {
-        Objects.requireNonNull(graph);
-        if (!graph.isDirected()) {
-            LOG.debug("Topological Sort algo need directed graph");
-            return Collections.emptyList();
-        }
-        if (Graphs.hasCycle(graph)) {
-            LOG.debug("Can't find topological sort list for cycle graph");
-            return Collections.emptyList();
-        }
-
-        Set<N> nodes = graph.nodes();
-        List<N> results = new ArrayList<>(nodes.size());
-
-        LinkedList<N> emptyInComingList = new LinkedList<>();
-
-        Map<N, Integer> comingSizeMap = new HashMap<>();
-        for (N node : nodes) {
-            int inDegree = graph.inDegree(node);
-            comingSizeMap.put(node, inDegree);
-            if (inDegree == 0) {
-                emptyInComingList.add(node);
-            }
-        }
-
-        while (!emptyInComingList.isEmpty()) {
-            N noInNode = emptyInComingList.poll();
-            results.add(noInNode);
-            for (N target : graph.successors(noInNode)) {
-                int newComingSize = comingSizeMap.get(target) - 1;
-                comingSizeMap.put(target, newComingSize);
-                if (newComingSize == 0) {
-                    emptyInComingList.push(target);
-                }
-            }
-        }
-
-        return results.size() == nodes.size() ? ImmutableList.copyOf(results) : Collections.emptyList();
+  @Override
+  public <N> List<N> sort(Graph<N> graph) {
+    Objects.requireNonNull(graph);
+    if (!graph.isDirected()) {
+      LOG.debug("Topological Sort algo need directed graph");
+      return Collections.emptyList();
     }
+    if (Graphs.hasCycle(graph)) {
+      LOG.debug("Can't find topological sort list for cycle graph");
+      return Collections.emptyList();
+    }
+
+    Set<N> nodes = graph.nodes();
+    List<N> results = new ArrayList<>(nodes.size());
+
+    LinkedList<N> emptyInComingList = new LinkedList<>();
+
+    Map<N, Integer> comingSizeMap = new HashMap<>();
+    for (N node : nodes) {
+      int inDegree = graph.inDegree(node);
+      comingSizeMap.put(node, inDegree);
+      if (inDegree == 0) {
+        emptyInComingList.add(node);
+      }
+    }
+
+    while (!emptyInComingList.isEmpty()) {
+      N noInNode = emptyInComingList.poll();
+      results.add(noInNode);
+      for (N target : graph.successors(noInNode)) {
+        int newComingSize = comingSizeMap.get(target) - 1;
+        comingSizeMap.put(target, newComingSize);
+        if (newComingSize == 0) {
+          emptyInComingList.push(target);
+        }
+      }
+    }
+
+    return results.size() == nodes.size() ? ImmutableList.copyOf(results) : Collections.emptyList();
+  }
 
 }

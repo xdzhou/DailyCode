@@ -1,11 +1,11 @@
 package com.loic.codinGame;
 
-import java.util.Scanner;
-
 import com.loic.solution.ScannerResolver;
+
+import java.util.Scanner;
 
 public interface CodinGameResolver<T> extends ScannerResolver<T> {
 
-    default void before(Scanner in) {
-    }
+  default void before(Scanner in) {
+  }
 }

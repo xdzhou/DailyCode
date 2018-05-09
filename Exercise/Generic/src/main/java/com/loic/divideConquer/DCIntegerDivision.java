@@ -7,23 +7,23 @@ import com.loic.solution.AbstractSolutionProvider;
  * 其中n[1]>=n[2]>=...>=n[k]>=1,k>=1。正整数n的一个这种表示称为n的一个划分. 求n的不同划分个数。
  */
 public class DCIntegerDivision extends AbstractSolutionProvider<Integer, Integer> {
-    @Override
-    protected Integer resolve(Integer n) {
-        if (n == 1) {
-            return 1;
-        }
-        return getDivisionCount(n, n);
+  @Override
+  protected Integer resolve(Integer n) {
+    if (n == 1) {
+      return 1;
     }
+    return getDivisionCount(n, n);
+  }
 
-    private int getDivisionCount(int max, int n) {
-        if (n <= 1 || max == 1) {
-            return 1;
-        }
-        int retVal = 0;
-        for (int i = Math.min(max, n); i > 0; i--) {
-            retVal += getDivisionCount(i, n - i);
-        }
-        return retVal;
+  private int getDivisionCount(int max, int n) {
+    if (n <= 1 || max == 1) {
+      return 1;
     }
+    int retVal = 0;
+    for (int i = Math.min(max, n); i > 0; i--) {
+      retVal += getDivisionCount(i, n - i);
+    }
+    return retVal;
+  }
 
 }

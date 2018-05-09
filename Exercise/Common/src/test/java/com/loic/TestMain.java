@@ -7,7 +7,7 @@ import com.loic.algo.search.impl.UtcSearch;
 
 public class TestMain {
 
-    private Pair<String, Integer> pair;
-    private TreeSearch algo1 = new MinimaxAlphaBeta();
-    private TreeSearch algo2 = new UtcSearch(100);
+  private Pair<String, Integer> pair;
+  private TreeSearch algo1 = new MinimaxAlphaBeta();
+  private TreeSearch algo2 = new UtcSearch(100);
 }

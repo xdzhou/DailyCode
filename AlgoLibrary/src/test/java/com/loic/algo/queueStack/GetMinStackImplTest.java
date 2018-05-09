@@ -1,33 +1,33 @@
 package com.loic.algo.queueStack;
 
-import static org.testng.Assert.assertEquals;
-
 import org.testng.annotations.Test;
 
-public class GetMinStackImplTest {
-    @Test
-    public void test() {
-        GetMinStackImpl<Integer> algo = new GetMinStackImpl<>();
-        algo.push(2);
-        assertEquals((int) algo.getMin(), 2);
-        algo.push(3);
-        assertEquals((int) algo.getMin(), 2);
-        algo.push(1);
-        assertEquals((int) algo.getMin(), 1);
-        algo.push(4);
-        assertEquals((int) algo.getMin(), 1);
-        algo.push(0);
-        assertEquals((int) algo.getMin(), 0);
-        algo.push(5);
-        assertEquals((int) algo.getMin(), 0);
+import static org.testng.Assert.assertEquals;
 
-        algo.pop();
-        assertEquals((int) algo.getMin(), 0);
-        algo.pop();
-        assertEquals((int) algo.getMin(), 1);
-        algo.pop();
-        assertEquals((int) algo.getMin(), 1);
-        algo.pop();
-        assertEquals((int) algo.getMin(), 2);
-    }
+public class GetMinStackImplTest {
+  @Test
+  public void test() {
+    GetMinStackImpl<Integer> algo = new GetMinStackImpl<>();
+    algo.push(2);
+    assertEquals((int) algo.getMin(), 2);
+    algo.push(3);
+    assertEquals((int) algo.getMin(), 2);
+    algo.push(1);
+    assertEquals((int) algo.getMin(), 1);
+    algo.push(4);
+    assertEquals((int) algo.getMin(), 1);
+    algo.push(0);
+    assertEquals((int) algo.getMin(), 0);
+    algo.push(5);
+    assertEquals((int) algo.getMin(), 0);
+
+    algo.pop();
+    assertEquals((int) algo.getMin(), 0);
+    algo.pop();
+    assertEquals((int) algo.getMin(), 1);
+    algo.pop();
+    assertEquals((int) algo.getMin(), 1);
+    algo.pop();
+    assertEquals((int) algo.getMin(), 2);
+  }
 }

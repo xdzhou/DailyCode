@@ -8,22 +8,22 @@ import com.loic.solution.AbstractSolutionProvider;
  */
 public class LongestSymmetricSubstring extends AbstractSolutionProvider<String, Integer> {
 
-    @Override
-    protected Integer resolve(String param) {
-        int[] dp = new int[param.length()];
-        dp[0] = 0;
-        int maxLen = 0;
-        for (int i = 1; i < param.length(); i++) {
-            int len = 0;
-            if (i - dp[i - 1] - 1 >= 0 && param.charAt(i) == param.charAt(i - dp[i - 1] - 1)) {
-                len = dp[i - 1] + 2;
-            }
-            dp[i] = len;
-            if (len > maxLen) {
-                maxLen = len;
-            }
-        }
-        return maxLen;
+  @Override
+  protected Integer resolve(String param) {
+    int[] dp = new int[param.length()];
+    dp[0] = 0;
+    int maxLen = 0;
+    for (int i = 1; i < param.length(); i++) {
+      int len = 0;
+      if (i - dp[i - 1] - 1 >= 0 && param.charAt(i) == param.charAt(i - dp[i - 1] - 1)) {
+        len = dp[i - 1] + 2;
+      }
+      dp[i] = len;
+      if (len > maxLen) {
+        maxLen = len;
+      }
     }
+    return maxLen;
+  }
 
 }

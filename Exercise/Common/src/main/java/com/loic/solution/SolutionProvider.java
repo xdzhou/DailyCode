@@ -10,5 +10,5 @@ import java.util.function.Function;
  * @param <E> output result
  */
 public interface SolutionProvider<T, E> {
-    List<Function<T, E>> solutions();
+  List<Function<T, E>> solutions();
 }

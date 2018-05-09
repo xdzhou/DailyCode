@@ -1,12 +1,12 @@
 package com.loic.exercise;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-
 import com.google.common.base.Preconditions;
 import com.loic.algo.tree.TreeNode;
 import com.loic.solution.SolutionProvider;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * { http://www.geeksforgeeks.org/check-binary-tree-subtree-another-binary-tree-set-2/}
@@ -19,71 +19,71 @@ import com.loic.solution.SolutionProvider;
  */
 public class CheckSubTree implements SolutionProvider<TreeNode<Integer>[], Boolean> {
 
-    public Boolean resolve(TreeNode<Integer>[] param) {
-        Preconditions.checkArgument(param != null && param.length > 1);
-        TreeNode<Integer> T1 = param[0];
-        TreeNode<Integer> T2 = param[1];
+  public Boolean resolve(TreeNode<Integer>[] param) {
+    Preconditions.checkArgument(param != null && param.length > 1);
+    TreeNode<Integer> T1 = param[0];
+    TreeNode<Integer> T2 = param[1];
 
-        return isSubTree(T1, T2);
-    }
+    return isSubTree(T1, T2);
+  }
 
-    private boolean isSubTree(TreeNode<Integer> T1, TreeNode<Integer> T2) {
-        if ((T1 == null && T2 == null) || T1 == T2) {
-            return true;
-        } else if (T1 != null && T2 != null) {
-            boolean isequal = isEqual(T1, T2);
-            if (isequal) {
-                return true;
-            } else {
-                return isSubTree(T1.left(), T2) || isSubTree(T1.right(), T2);
-            }
-        }
-        return false;
+  private boolean isSubTree(TreeNode<Integer> T1, TreeNode<Integer> T2) {
+    if ((T1 == null && T2 == null) || T1 == T2) {
+      return true;
+    } else if (T1 != null && T2 != null) {
+      boolean isequal = isEqual(T1, T2);
+      if (isequal) {
+        return true;
+      } else {
+        return isSubTree(T1.left(), T2) || isSubTree(T1.right(), T2);
+      }
     }
+    return false;
+  }
 
-    private boolean isEqual(TreeNode<Integer> T1, TreeNode<Integer> T2) {
-        if ((T1 == null && T2 == null) || T1 == T2) {
-            return true;
-        } else if (T1 != null && T2 != null && T1.mValue.equals(T2.mValue)) {
-            return isEqual(T1.left(), T2.left()) && isEqual(T1.right(), T2.right());
-        }
-        return false;
+  private boolean isEqual(TreeNode<Integer> T1, TreeNode<Integer> T2) {
+    if ((T1 == null && T2 == null) || T1 == T2) {
+      return true;
+    } else if (T1 != null && T2 != null && T1.mValue.equals(T2.mValue)) {
+      return isEqual(T1.left(), T2.left()) && isEqual(T1.right(), T2.right());
     }
+    return false;
+  }
 
-    /**
-     * The idea is based on the fact that inorder and preorder/postorder
-     * uniquely identify a binary tree. 中序排序 和 前序排序/后续排序 可以唯一确定一颗树
-     */
-    public Boolean resolve2(TreeNode<Integer>[] param) {
-        Preconditions.checkArgument(param != null && param.length > 1);
-        TreeNode<Integer> T1 = param[0];
-        TreeNode<Integer> T2 = param[1];
-        String replaceNull = "$";
-        if (getInOrder(T1, replaceNull).contains(getInOrder(T2, replaceNull))
-            && getPreOrder(T1, replaceNull).contains(getPreOrder(T2, replaceNull))) {
-            return true;
-        }
-        return false;
+  /**
+   * The idea is based on the fact that inorder and preorder/postorder
+   * uniquely identify a binary tree. 中序排序 和 前序排序/后续排序 可以唯一确定一颗树
+   */
+  public Boolean resolve2(TreeNode<Integer>[] param) {
+    Preconditions.checkArgument(param != null && param.length > 1);
+    TreeNode<Integer> T1 = param[0];
+    TreeNode<Integer> T2 = param[1];
+    String replaceNull = "$";
+    if (getInOrder(T1, replaceNull).contains(getInOrder(T2, replaceNull))
+        && getPreOrder(T1, replaceNull).contains(getPreOrder(T2, replaceNull))) {
+      return true;
     }
+    return false;
+  }
 
-    private String getInOrder(TreeNode<Integer> tree, String replaceNull) {
-        if (tree == null) {
-            return replaceNull;
-        } else {
-            return getInOrder(tree.left(), replaceNull) + tree.mValue + getInOrder(tree.right(), replaceNull);
-        }
+  private String getInOrder(TreeNode<Integer> tree, String replaceNull) {
+    if (tree == null) {
+      return replaceNull;
+    } else {
+      return getInOrder(tree.left(), replaceNull) + tree.mValue + getInOrder(tree.right(), replaceNull);
     }
+  }
 
-    private String getPreOrder(TreeNode<Integer> tree, String replaceNull) {
-        if (tree == null) {
-            return replaceNull;
-        } else {
-            return tree.mValue + getPreOrder(tree.left(), replaceNull) + getPreOrder(tree.right(), replaceNull);
-        }
+  private String getPreOrder(TreeNode<Integer> tree, String replaceNull) {
+    if (tree == null) {
+      return replaceNull;
+    } else {
+      return tree.mValue + getPreOrder(tree.left(), replaceNull) + getPreOrder(tree.right(), replaceNull);
     }
+  }
 
-    @Override
-    public List<Function<TreeNode<Integer>[], Boolean>> solutions() {
-        return Arrays.asList(this::resolve, this::resolve2);
-    }
+  @Override
+  public List<Function<TreeNode<Integer>[], Boolean>> solutions() {
+    return Arrays.asList(this::resolve, this::resolve2);
+  }
 }
