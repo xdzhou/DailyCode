@@ -15,6 +15,10 @@ public class SolutionChecker<T, E> {
     this.solutionProvider = requireNonNull(solutionProvider);
   }
 
+  public static <T, E> SolutionChecker<T, E> checker(SolutionProvider<T, E> solutionProvider) {
+    return new SolutionChecker<>(solutionProvider);
+  }
+
   public SolutionChecker<T, E> check(T input, E output) {
     for (Function<T, E> solution : solutionProvider.solutions()) {
       assertEquals(solution.apply(input), output);
