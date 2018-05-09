@@ -1,6 +1,6 @@
 package com.loic.recursion;
 
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.annotations.Test;
 
 public class CombinationParenthesTest {

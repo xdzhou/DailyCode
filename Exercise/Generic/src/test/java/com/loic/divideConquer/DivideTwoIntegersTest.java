@@ -1,7 +1,7 @@
 package com.loic.divideConquer;
 
 import com.loic.algo.common.Pair;
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.annotations.Test;
 
 public class DivideTwoIntegersTest {

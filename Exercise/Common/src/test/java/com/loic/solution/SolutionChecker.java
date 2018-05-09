@@ -1,6 +1,4 @@
-package com.loic.common;
-
-import com.loic.solution.SolutionProvider;
+package com.loic.solution;
 
 import java.util.List;
 import java.util.function.BiConsumer;

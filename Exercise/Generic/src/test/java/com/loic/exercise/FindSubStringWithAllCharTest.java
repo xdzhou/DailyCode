@@ -1,7 +1,7 @@
 package com.loic.exercise;
 
 import com.loic.algo.common.Pair;
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

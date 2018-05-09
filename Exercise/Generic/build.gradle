@@ -7,4 +7,5 @@ test {
 dependencies {
     compile project(':AlgoLibrary')
     compile project(':Exercise:Common')
+    testCompile project(':Exercise:Common').sourceSets.test.output
 }

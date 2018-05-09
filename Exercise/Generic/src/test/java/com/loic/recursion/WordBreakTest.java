@@ -1,14 +1,14 @@
 package com.loic.recursion;
 
 import com.loic.algo.common.Pair;
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.Set;
 
-import static com.loic.common.TestHelper.toSet;
+import static com.loic.solution.TestHelper.toSet;
 
 public class WordBreakTest {
 

@@ -1,7 +1,7 @@
 package com.loic.divideConquer;
 
 import com.loic.algo.tree.TreeNode;
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;

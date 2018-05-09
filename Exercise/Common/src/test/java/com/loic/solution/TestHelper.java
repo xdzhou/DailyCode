@@ -1,4 +1,4 @@
-package com.loic.common;
+package com.loic.solution;
 
 import java.util.HashSet;
 import java.util.List;

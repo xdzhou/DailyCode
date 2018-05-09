@@ -1,9 +1,9 @@
 package com.loic.dynamicProgramming;
 
-import com.loic.common.SolutionChecker;
+import com.loic.solution.SolutionChecker;
 import org.testng.annotations.Test;
 
-import static com.loic.common.TestHelper.toArray;
+import static com.loic.solution.TestHelper.toArray;
 
 public class LongestIncreasingSubsequenceTest {
 
