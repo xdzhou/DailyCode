@@ -1,6 +1,6 @@
 package com.loic.recursion;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
  * 如果是返回true，否则返回false。 例如输入5、7、6、9、11、10、8，由于这一整数序列是如下树的后序遍历结果： 8 / \ 6 10 / \
  * / \ 5 7 9 11 因此返回true。 如果输入7、4、6、5，没有哪棵树的后序遍历的结果是这个序列，因此返回false。
  */
-public class CheckPostOrder extends AbstractSolutionProvider<Integer[], Boolean> {
+public class CheckPostOrder extends SingleSolutionProvider<Integer[], Boolean> {
 
   @Override
   protected Boolean resolve(Integer[] param) {

@@ -9,7 +9,7 @@ public class AbstractSolutionProviderTest {
 
   @Test
   public void testSolutionCount() {
-    AbstractSolutionProvider solutionProvider = spy(new AbstractSolutionProvider() {
+    SingleSolutionProvider solutionProvider = spy(new SingleSolutionProvider() {
       @Override
       protected Object resolve(Object input) {
         return null;

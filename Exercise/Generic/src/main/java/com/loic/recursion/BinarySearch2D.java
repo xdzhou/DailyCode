@@ -1,7 +1,7 @@
 package com.loic.recursion;
 
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @link http://www.hawstein.com/posts/9.6.html
  */
-public class BinarySearch2D<K extends Comparable<K>> extends AbstractSolutionProvider<Pair<K[][], K>, Pair<Integer, Integer>> {
+public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvider<Pair<K[][], K>, Pair<Integer, Integer>> {
   public static final Pair<Integer, Integer> UNFOUND = Pair.of(-1, -1);
   private static final Logger Log = LoggerFactory.getLogger(BinarySearch2D.class);
 

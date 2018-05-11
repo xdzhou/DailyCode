@@ -1,12 +1,12 @@
 package com.loic.dynamicProgramming;
 
 import com.google.common.base.Preconditions;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 /**
  * 在一个int 数组里查找这样的数，它大于等于左侧所有数，小于等于右侧所有数。
  */
-public class FindMidNum extends AbstractSolutionProvider<Integer[], Integer> {
+public class FindMidNum extends SingleSolutionProvider<Integer[], Integer> {
 
   @Override
   protected Integer resolve(Integer[] param) {

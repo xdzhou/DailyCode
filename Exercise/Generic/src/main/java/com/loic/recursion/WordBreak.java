@@ -1,14 +1,14 @@
 package com.loic.recursion;
 
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class WordBreak extends AbstractSolutionProvider<Pair<String, Set<String>>, List<String>> {
+public class WordBreak extends SingleSolutionProvider<Pair<String, Set<String>>, List<String>> {
   @Override
   protected List<String> resolve(Pair<String, Set<String>> param) {
     Objects.requireNonNull(param);

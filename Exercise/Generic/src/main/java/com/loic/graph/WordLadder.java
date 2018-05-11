@@ -1,7 +1,7 @@
 package com.loic.graph;
 
 import com.loic.algo.common.Triple;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @link https://leetcode.com/problems/word-ladder-ii/
  */
-public class WordLadder extends AbstractSolutionProvider<Triple<String, String, Set<String>>, List<List<String>>> {
+public class WordLadder extends SingleSolutionProvider<Triple<String, String, Set<String>>, List<List<String>>> {
   private static final Logger Log = LoggerFactory.getLogger(WordLadder.class);
 
   @Override

@@ -1,6 +1,6 @@
 package com.loic.exercise;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import java.util.Objects;
  * 8987 and 4343456 are Jumping numbers but 796 and 89098 are not. <br>
  * Given a positive number x, print Jumping Numbers count.
  */
-public class JumpingNumbers extends AbstractSolutionProvider<Integer, Integer> {
+public class JumpingNumbers extends SingleSolutionProvider<Integer, Integer> {
   private static final Logger Log = LoggerFactory.getLogger(JumpingNumbers.class);
 
   @Override

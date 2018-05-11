@@ -1,14 +1,14 @@
 package com.loic.codinGame.training;
 
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.*;
 
 /**
  * https://www.codingame.com/ide/2441721b72dda76188c9dae6948ffed73872610
  */
-public class ShortestTransformPath<T> extends AbstractSolutionProvider<Void, Integer> {
+public class ShortestTransformPath<T> extends SingleSolutionProvider<Void, Integer> {
   //private static final Logger Log = LoggerFactory.getLogger(ShortestTransformPath.class);
 
   private Map<T, HashSet<T>> treeMap;

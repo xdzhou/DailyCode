@@ -1,11 +1,11 @@
 package com.loic.recursion;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EightQueens extends AbstractSolutionProvider<Void, Integer> {
+public class EightQueens extends SingleSolutionProvider<Void, Integer> {
 
   @Override
   protected Integer resolve(Void param) {

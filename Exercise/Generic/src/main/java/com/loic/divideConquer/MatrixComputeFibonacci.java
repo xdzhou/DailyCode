@@ -1,6 +1,6 @@
 package com.loic.divideConquer;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.function.Function;
  * 斐波那契数列 Fibonacci polynomial function fib(n） if n = 0 or n = 1 return 1 return
  * fib(n − 1) + fib（n − 2
  */
-public class MatrixComputeFibonacci extends AbstractSolutionProvider<Integer, Integer> {
+public class MatrixComputeFibonacci extends SingleSolutionProvider<Integer, Integer> {
 
   /**
    * f(n) = f(n-1)+f(n-2)

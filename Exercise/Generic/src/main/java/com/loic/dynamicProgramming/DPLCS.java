@@ -1,14 +1,14 @@
 package com.loic.dynamicProgramming;
 
 import com.google.common.base.Preconditions;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 求最长公共子串（Longest Common Subsequence, LCS）
  */
-public class DPLCS extends AbstractSolutionProvider<String[], String> {
+public class DPLCS extends SingleSolutionProvider<String[], String> {
   private static final Logger Log = LoggerFactory.getLogger(DPLCS.class);
 
   @Override

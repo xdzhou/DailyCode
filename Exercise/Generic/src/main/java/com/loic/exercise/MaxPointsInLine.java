@@ -1,7 +1,7 @@
 package com.loic.exercise;
 
 import com.loic.algo.common.Point;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @link https://leetcode.com/problems/max-points-on-a-line/
  */
-public class MaxPointsInLine extends AbstractSolutionProvider<Point[], Integer> {
+public class MaxPointsInLine extends SingleSolutionProvider<Point[], Integer> {
   private static final Logger Log = LoggerFactory.getLogger(MaxPointsInLine.class);
 
   // 以一个点为基准，其他的点和它计算斜率，所有斜率相同的点必在一条直线上

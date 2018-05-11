@@ -1,7 +1,7 @@
 package com.loic.divideConquer;
 
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @link https://leetcode.com/problems/divide-two-integers/
  */
-public class DivideTwoIntegers extends AbstractSolutionProvider<Pair<Integer, Integer>, Integer> {
+public class DivideTwoIntegers extends SingleSolutionProvider<Pair<Integer, Integer>, Integer> {
   private static final Logger Log = LoggerFactory.getLogger(DivideTwoIntegers.class);
 
   @Override

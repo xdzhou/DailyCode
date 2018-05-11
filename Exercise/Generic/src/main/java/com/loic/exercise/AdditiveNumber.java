@@ -1,6 +1,6 @@
 package com.loic.exercise;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 /**
  * Additive number is a positive integer whose digits can form additive
@@ -12,7 +12,7 @@ import com.loic.solution.AbstractSolutionProvider;
  *
  * @link https://leetcode.com/problems/additive-number/
  */
-public class AdditiveNumber extends AbstractSolutionProvider<String, Boolean> {
+public class AdditiveNumber extends SingleSolutionProvider<String, Boolean> {
   /**
    * 诀窍就是只要确定前2个数字，后面的可以自动求出
    */

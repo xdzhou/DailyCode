@@ -1,6 +1,6 @@
 package com.loic.exercise;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @link https://leetcode.com/problems/remove-invalid-parentheses/
  */
-public class RemoveInvalidParentheses extends AbstractSolutionProvider<String, List<String>> {
+public class RemoveInvalidParentheses extends SingleSolutionProvider<String, List<String>> {
   private boolean needRemoveOpenParentheses = false;
 
   @Override

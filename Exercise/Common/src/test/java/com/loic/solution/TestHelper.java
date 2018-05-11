@@ -19,6 +19,10 @@ public class TestHelper {
     return list;
   }
 
+  public static int[] toIntArray(int... list) {
+    return list;
+  }
+
   public static <T> List<T> toList(T... list) {
     //FIXME use immutable list
     return asList(list);

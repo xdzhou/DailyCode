@@ -1,6 +1,6 @@
 package com.loic.exercise;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
  * 扑克牌的顺子 从扑克牌中随机抽n张牌，判断是不是一个顺子，即这n张牌是不是连续的。 2-10 为数字本身，A 为1，J 为11，Q 为12，K
  * 为13，而大小王可以看成任意数字。
  */
-public class ContinuousCards extends AbstractSolutionProvider<Integer[], Boolean> {
+public class ContinuousCards extends SingleSolutionProvider<Integer[], Boolean> {
 
   // make king = 0
   @Override

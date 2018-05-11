@@ -1,8 +1,8 @@
 package com.loic.leetcode;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
-public class String2Integer extends AbstractSolutionProvider<String, Integer> {
+public class String2Integer extends SingleSolutionProvider<String, Integer> {
 
   @Override
   protected Integer resolve(String input) {

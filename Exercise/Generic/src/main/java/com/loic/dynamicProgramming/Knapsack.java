@@ -2,7 +2,7 @@ package com.loic.dynamicProgramming;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Triple;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ import java.util.Objects;
  * 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。
  * 求解将哪些物品装入背包可使价值总和最大。
  */
-public class Knapsack extends AbstractSolutionProvider<Triple<Integer, Integer[], Integer[]>, Integer> {
+public class Knapsack extends SingleSolutionProvider<Triple<Integer, Integer[], Integer[]>, Integer> {
   @Override
   protected Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
     Objects.requireNonNull(param);

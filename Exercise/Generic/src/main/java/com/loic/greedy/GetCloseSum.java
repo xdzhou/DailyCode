@@ -2,7 +2,7 @@ package com.loic.greedy;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * 有两个序列a,b，大小都为n,序列元素的值任意整数，无序； 要求：通过交换a,b 中的元素，使[序列a 元素的和]与[序列b 元素的和]之间的差最小。
  */
-public class GetCloseSum extends AbstractSolutionProvider<Pair<Integer[], Integer[]>, Integer> {
+public class GetCloseSum extends SingleSolutionProvider<Pair<Integer[], Integer[]>, Integer> {
   private static final Logger Log = LoggerFactory.getLogger(GetCloseSum.class);
 
   @Override

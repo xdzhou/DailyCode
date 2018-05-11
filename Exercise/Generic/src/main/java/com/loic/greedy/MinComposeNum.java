@@ -1,6 +1,6 @@
 package com.loic.greedy;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import java.util.List;
  * 把数组排成最小的数。 输入一个正整数数组，将它们连接起来排成一个数，输出能排出的所有数字中最小的一个。 例如输入数组{32,
  * 321}，则输出这两个能排成的最小数字32132
  */
-public class MinComposeNum extends AbstractSolutionProvider<Integer[], String> {
+public class MinComposeNum extends SingleSolutionProvider<Integer[], String> {
 
   @Override
   protected String resolve(Integer[] param) {

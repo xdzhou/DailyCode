@@ -2,7 +2,7 @@ package com.loic.exercise;
 
 import com.google.common.base.Preconditions;
 import com.loic.algo.common.Pair;
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ import java.util.Objects;
  * 给出字符串s1和s2，只使用一次isSubstring就能判断s2是否是s1的旋转字符串，
  * 请写出代码。旋转字符串："waterbottle"是"erbottlewat"的旋转字符串。
  */
-public class CheckRotationString extends AbstractSolutionProvider<Pair<String, String>, Boolean> {
+public class CheckRotationString extends SingleSolutionProvider<Pair<String, String>, Boolean> {
   @Override
   protected Boolean resolve(Pair<String, String> param) {
     Objects.requireNonNull(param);

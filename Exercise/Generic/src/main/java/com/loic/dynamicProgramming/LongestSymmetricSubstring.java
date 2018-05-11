@@ -1,12 +1,12 @@
 package com.loic.dynamicProgramming;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 /**
  * 对称字符串的最大长度。 输入一个字符串，输出该字符串中对称的子字符串的最大长度。
  * 比如输入字符串“google”，由于该字符串里最长的对称子字符串是“goog”，因此输出4。
  */
-public class LongestSymmetricSubstring extends AbstractSolutionProvider<String, Integer> {
+public class LongestSymmetricSubstring extends SingleSolutionProvider<String, Integer> {
 
   @Override
   protected Integer resolve(String param) {

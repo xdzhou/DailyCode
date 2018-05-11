@@ -1,6 +1,6 @@
 package com.loic.recursion;
 
-import com.loic.solution.AbstractSolutionProvider;
+import com.loic.solution.SingleSolutionProvider;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import java.util.List;
  * 用递归颠倒一个栈。例如输入栈{1, 2, 3, 4, 5}，1 在栈顶。 颠倒之后的栈为{5, 4, 3, 2, 1}，5 处在栈顶。
  */
 @SuppressWarnings("PMD")
-public class InvertStack extends AbstractSolutionProvider<LinkedList<Integer>, LinkedList<Integer>> {
+public class InvertStack extends SingleSolutionProvider<LinkedList<Integer>, LinkedList<Integer>> {
 
   @Override
   protected LinkedList<Integer> resolve(LinkedList<Integer> stack) {
