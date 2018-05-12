@@ -4,7 +4,7 @@ import com.loic.solution.SolutionChecker;
 import org.junit.Test;
 
 public class String2IntegerTest {
-  private final SolutionChecker<String, Integer> checker = SolutionChecker.checker(new String2Integer());
+  private final SolutionChecker<String, Integer> checker = SolutionChecker.create(new String2Integer());
 
   @Test
   public void testSmallNumber() {

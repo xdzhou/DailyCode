@@ -9,7 +9,7 @@ public class FindOddNumTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new FindOddNum())
+    SolutionChecker.create(new FindOddNum())
         .check(toArray(1, 2, 2), 1)
         .check(toArray(1, 1, 2, 2, 2, 3, 4, 4, 3), 2);
   }

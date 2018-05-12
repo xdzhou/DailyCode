@@ -2,6 +2,9 @@ package com.loic.leetcode;
 
 import com.loic.solution.SingleSolutionProvider;
 
+/*
+ * 8. String to Integer (atoi)
+ */
 public class String2Integer extends SingleSolutionProvider<String, Integer> {
 
   @Override

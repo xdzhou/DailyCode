@@ -14,7 +14,7 @@ public class WordLadderTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new WordLadder())
+    SolutionChecker.create(new WordLadder())
         .check(Triple.of("hit", "cog", toSet("hot", "dot", "dog", "lot", "log")), this::onOutputReady)
         .check(Triple.of("hot", "dog", toSet("hot", "dot", "dog")), this::onOutputReady);
   }

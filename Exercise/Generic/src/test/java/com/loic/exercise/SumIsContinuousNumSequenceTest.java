@@ -7,7 +7,7 @@ public class SumIsContinuousNumSequenceTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new SumIsContinuousNumSequence())
+    SolutionChecker.create(new SumIsContinuousNumSequence())
         .check(15, 3)
         .check(3, 1);
   }

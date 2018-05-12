@@ -8,7 +8,7 @@ public class MaxPointsInLineTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new MaxPointsInLine())
+    SolutionChecker.create(new MaxPointsInLine())
         .check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4)
         .check(generatePoints(2, 3, 3, 3, -5, 3), 3)
         .check(generatePoints(1, 1, 1, 1, 1, 1), 3)

@@ -7,7 +7,7 @@ public class UglyNumberTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new UglyNumber())
+    SolutionChecker.create(new UglyNumber())
         .checkInput(3)
         .checkInput(10)
         .checkInput(99)

@@ -14,7 +14,7 @@ public class WordBreakTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new WordBreak())
+    SolutionChecker.create(new WordBreak())
         .check(Pair.of("catsanddog", toSet("cat", "cats", "and", "sand", "dog")), this::onOutputReady)
         .check(Pair.of(
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",

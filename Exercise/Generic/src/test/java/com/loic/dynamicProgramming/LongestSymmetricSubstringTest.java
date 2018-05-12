@@ -7,7 +7,7 @@ public class LongestSymmetricSubstringTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new LongestSymmetricSubstring())
+    SolutionChecker.create(new LongestSymmetricSubstring())
         .check("google", 4)
         .check("abcdef", 0)
         .check("elgoogle", 8)

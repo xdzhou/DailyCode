@@ -7,7 +7,7 @@ public class AutobiographicalNumberTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new AutobiographicalNumber())
+    SolutionChecker.create(new AutobiographicalNumber())
         .checkInput(2020)
         .checkInput(1210)
         .checkInput(132545);

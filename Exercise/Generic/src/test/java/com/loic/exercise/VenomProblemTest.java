@@ -7,7 +7,7 @@ public class VenomProblemTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new VenomProblem())
+    SolutionChecker.create(new VenomProblem())
         .check(1000, 10)
         .check(4, 2)
         .check(7, 3)

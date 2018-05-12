@@ -10,7 +10,7 @@ public class BinarySearch2DTest {
   @Test
   public void test() {
     Integer[][] table = createTable(100);
-    new SolutionChecker<>(new BinarySearch2D<Integer>())
+    SolutionChecker.create(new BinarySearch2D<Integer>())
         .check(Pair.of(table, 2), this::onOutputReady)
         .check(Pair.of(table, 63), this::onOutputReady);
   }

@@ -11,11 +11,11 @@ import static org.testng.Assert.assertTrue;
 public class SolutionChecker<T, E> {
   private final SolutionProvider<T, E> solutionProvider;
 
-  public SolutionChecker(SolutionProvider<T, E> solutionProvider) {
+  private SolutionChecker(SolutionProvider<T, E> solutionProvider) {
     this.solutionProvider = requireNonNull(solutionProvider);
   }
 
-  public static <T, E> SolutionChecker<T, E> checker(SolutionProvider<T, E> solutionProvider) {
+  public static <T, E> SolutionChecker<T, E> create(SolutionProvider<T, E> solutionProvider) {
     return new SolutionChecker<>(solutionProvider);
   }
 

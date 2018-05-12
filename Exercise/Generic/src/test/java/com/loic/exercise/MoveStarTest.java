@@ -7,7 +7,7 @@ public class MoveStarTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new MoveStar())
+    SolutionChecker.create(new MoveStar())
         .check("ab**cd**e*12", "*****abcde12")
         .check("*az*12*", "***az12")
         .check("*****", "*****")

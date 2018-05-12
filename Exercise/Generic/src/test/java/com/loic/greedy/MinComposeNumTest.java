@@ -9,7 +9,7 @@ public class MinComposeNumTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new MinComposeNum())
+    SolutionChecker.create(new MinComposeNum())
         .check(toArray(1, 2, 3, 4, 5, 6, 7), "1234567")
         .check(toArray(1, 11, 21, 12, 99), "111122199")
         .check(toArray(10, 15, 25, 85), "10152585")

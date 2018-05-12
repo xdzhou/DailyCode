@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-/* 11. Container With Most Water
+/*
+ * 11. Container With Most Water
  */
 public class ContainerMostWater implements SolutionProvider<int[], Integer> {
 

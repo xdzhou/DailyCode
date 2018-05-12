@@ -7,7 +7,7 @@ public class MatrixComputeFibonacciTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new MatrixComputeFibonacci())
+    SolutionChecker.create(new MatrixComputeFibonacci())
         .checkInput(10)
         .checkInput(100)
         .checkInput(1000)

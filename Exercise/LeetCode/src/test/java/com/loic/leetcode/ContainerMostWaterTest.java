@@ -8,7 +8,7 @@ import java.util.Random;
 
 
 public class ContainerMostWaterTest {
-  private final SolutionChecker<int[], Integer> checker = SolutionChecker.checker(new ContainerMostWater());
+  private final SolutionChecker<int[], Integer> checker = SolutionChecker.create(new ContainerMostWater());
 
   @Test
   public void test2lines() {

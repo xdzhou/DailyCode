@@ -7,7 +7,7 @@ public class NumberCountTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new NumberCount())
+    SolutionChecker.create(new NumberCount())
         .checkInput(1235)
         .checkInput(1212);
   }

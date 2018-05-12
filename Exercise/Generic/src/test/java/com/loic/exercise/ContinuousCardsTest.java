@@ -9,7 +9,7 @@ public class ContinuousCardsTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new ContinuousCards())
+    SolutionChecker.create(new ContinuousCards())
         .check(toArray(1), true)
         .check(toArray(1, 2, 3), true)
         .check(toArray(1, 2, 5), false)

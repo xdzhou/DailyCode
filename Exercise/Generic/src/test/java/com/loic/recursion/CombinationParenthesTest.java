@@ -7,7 +7,7 @@ public class CombinationParenthesTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new CombinationParenthes())
+    SolutionChecker.create(new CombinationParenthes())
         .check(1, 1)
         .check(2, 2)
         .check(3, 5);

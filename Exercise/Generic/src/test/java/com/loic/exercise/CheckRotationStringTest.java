@@ -8,7 +8,7 @@ public class CheckRotationStringTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new CheckRotationString())
+    SolutionChecker.create(new CheckRotationString())
         .check(Pair.of("sqf", "123"), false)
         .check(Pair.of("12345", "45123"), true)
         .check(Pair.of("12345", "12"), false)

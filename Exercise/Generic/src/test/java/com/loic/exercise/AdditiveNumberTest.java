@@ -7,7 +7,7 @@ public class AdditiveNumberTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new AdditiveNumber())
+    SolutionChecker.create(new AdditiveNumber())
         .check("112358", true)
         .check("199100199", true)
         .check("123", true)

@@ -7,7 +7,7 @@ public class DCIntegerDivisionTest {
 
   @Test
   public void testSimpleCase() {
-    new SolutionChecker<>(new DCIntegerDivision())
+    SolutionChecker.create(new DCIntegerDivision())
         .check(1, 1)
         .check(2, 2)
         .check(3, 3)

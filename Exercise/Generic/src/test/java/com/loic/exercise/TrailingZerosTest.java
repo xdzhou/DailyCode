@@ -7,7 +7,7 @@ public class TrailingZerosTest {
 
   @Test
   public void test() {
-    SolutionChecker<Integer, Integer> checker = new SolutionChecker<>(new TrailingZeros());
+    SolutionChecker<Integer, Integer> checker = SolutionChecker.create(new TrailingZeros());
     for (int i = 0; i < 100; i++) {
       checker.checkInput(i * 6);
     }

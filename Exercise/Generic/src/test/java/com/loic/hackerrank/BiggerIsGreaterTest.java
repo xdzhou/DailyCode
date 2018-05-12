@@ -7,7 +7,7 @@ public class BiggerIsGreaterTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new BiggerIsGreater())
+    SolutionChecker.create(new BiggerIsGreater())
         .check("ab", "ba")
         .check("bb", BiggerIsGreater.NO_ANSWER)
         .check("hefg", "hegf")

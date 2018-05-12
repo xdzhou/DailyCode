@@ -8,7 +8,7 @@ public class DivideTwoIntegersTest {
 
   @Test
   public void test() {
-    new SolutionChecker<>(new DivideTwoIntegers())
+    SolutionChecker.create(new DivideTwoIntegers())
         .check(Pair.of(1, 2), 1 / 2)
         .check(Pair.of(145, 12), 145 / 12)
         .check(Pair.of(1546, 0), Integer.MAX_VALUE)

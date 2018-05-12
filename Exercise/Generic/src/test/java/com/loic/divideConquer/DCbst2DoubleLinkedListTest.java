@@ -9,7 +9,7 @@ import static org.testng.Assert.assertEquals;
 public class DCbst2DoubleLinkedListTest {
 
   public SolutionChecker<TreeNode<Integer>, TreeNode<Integer>> getChecker() {
-    return new SolutionChecker<>(new DCbst2DoubleLinkedList<Integer>());
+    return SolutionChecker.create(new DCbst2DoubleLinkedList<Integer>());
   }
 
   @Test
