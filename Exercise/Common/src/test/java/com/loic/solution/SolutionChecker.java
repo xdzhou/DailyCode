@@ -33,7 +33,6 @@ public class SolutionChecker<T, E> {
     for (int i = 1; i < list.size(); i++) {
       assertEquals(list.get(i).apply(input), output);
     }
-
     return this;
   }
 
