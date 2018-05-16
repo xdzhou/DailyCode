@@ -11,38 +11,34 @@ public class RemoveEndNodeTest {
 
   @Test
   public void testNormalRemove() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1, 2, 3, 4, 5), 2));
-    Assert.assertEquals(Arrays.asList(1, 2, 3, 5), result);
-  }
-
-  @Test
-  public void testBigN() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1, 2, 3, 4, 5), 200));
-    Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+    test(2, Arrays.asList(1, 2, 3, 5), 1, 2, 3, 4, 5);
   }
 
   @Test
   public void testLastOne() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1, 2, 3), 1));
-    Assert.assertEquals(Arrays.asList(1, 2), result);
+    test(1, Arrays.asList(1, 2), 1, 2, 3);
   }
 
   @Test
   public void testFirstOne() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1, 2), 2));
-    Assert.assertEquals(Arrays.asList(2), result);
+    test(2, Arrays.asList(2), 1, 2);
   }
 
   @Test
   public void testFirstOneWithSizeOne() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1), 1));
-    Assert.assertEquals(Arrays.asList(), result);
+    test(1, Arrays.asList(), 1);
   }
 
   @Test
   public void testSecondOne() {
-    List<Integer> result = toList(new RemoveEndNode().resolve(createNodes(1, 2, 3), 2));
-    Assert.assertEquals(Arrays.asList(1, 3), result);
+    test(2, Arrays.asList(1, 3), 1, 2, 3);
+  }
+
+  private void test(int n, List<Integer> expect, int... nums) {
+    List<Integer> result1 = toList(new RemoveEndNode().resolve(createNodes(nums), n));
+    List<Integer> result2 = toList(new RemoveEndNode().removeNthFromEnd(createNodes(nums), n));
+    Assert.assertEquals(expect, result1);
+    Assert.assertEquals(expect, result2);
   }
 
   private RemoveEndNode.ListNode createNodes(int... nums) {
