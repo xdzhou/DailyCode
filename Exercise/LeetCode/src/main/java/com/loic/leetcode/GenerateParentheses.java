@@ -7,6 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+/*
+ * 22. Generate Parentheses
+ * https://en.wikipedia.org/wiki/Catalan_number
+ */
 public class GenerateParentheses implements SolutionProvider<Integer, List<String>> {
 
   @Override

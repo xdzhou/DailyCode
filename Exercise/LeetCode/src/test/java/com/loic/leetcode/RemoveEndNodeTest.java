@@ -1,5 +1,6 @@
 package com.loic.leetcode;
 
+import com.loic.helper.ListNode;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,17 +36,17 @@ public class RemoveEndNodeTest {
   }
 
   private void test(int n, List<Integer> expect, int... nums) {
-    List<Integer> result1 = toList(new RemoveEndNode().resolve(createNodes(nums), n));
-    List<Integer> result2 = toList(new RemoveEndNode().removeNthFromEnd(createNodes(nums), n));
+    List<Integer> result1 = new RemoveEndNode().resolve(createNodes(nums), n).toList();
+    List<Integer> result2 = new RemoveEndNode().removeNthFromEnd(createNodes(nums), n).toList();
     Assert.assertEquals(expect, result1);
     Assert.assertEquals(expect, result2);
   }
 
-  private RemoveEndNode.ListNode createNodes(int... nums) {
-    RemoveEndNode.ListNode head = null;
-    RemoveEndNode.ListNode cur = null;
+  private ListNode createNodes(int... nums) {
+    ListNode head = null;
+    ListNode cur = null;
     for (int num : nums) {
-      RemoveEndNode.ListNode node = new RemoveEndNode.ListNode(num);
+      ListNode node = new ListNode(num);
       if (cur == null) {
         head = node;
       } else {
@@ -54,14 +55,5 @@ public class RemoveEndNodeTest {
       cur = node;
     }
     return head;
-  }
-
-  private List<Integer> toList(RemoveEndNode.ListNode node) {
-    List<Integer> list = new ArrayList<>();
-    while (node != null) {
-      list.add(node.val);
-      node = node.next;
-    }
-    return list;
   }
 }

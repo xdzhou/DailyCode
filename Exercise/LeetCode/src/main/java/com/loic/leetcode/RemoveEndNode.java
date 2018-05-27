@@ -1,5 +1,6 @@
 package com.loic.leetcode;
 
+import com.loic.helper.ListNode;
 import com.loic.solution.BiSolutionProvider;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.function.BiFunction;
 /*
  * 19. Remove Nth Node From End of List
  */
-public class RemoveEndNode implements BiSolutionProvider<RemoveEndNode.ListNode, Integer, RemoveEndNode.ListNode> {
+public class RemoveEndNode implements BiSolutionProvider<ListNode, Integer, ListNode> {
 
   @Override
   public List<BiFunction<ListNode, Integer, ListNode>> solutions() {
@@ -53,15 +54,5 @@ public class RemoveEndNode implements BiSolutionProvider<RemoveEndNode.ListNode,
     }
 
     return head;
-  }
-
-
-  static class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-      val = x;
-    }
   }
 }
