@@ -21,7 +21,7 @@ public class SwapNodes implements SolutionProvider<ListNode, ListNode> {
     ListNode dummy = new ListNode(0);
     dummy.next = node;
     ListNode cur = dummy;
-    while (cur != null && cur.next != null && cur.next.next != null) {
+    while (cur.next != null && cur.next.next != null) {
       ListNode first = cur.next;
       ListNode second = cur.next.next;
       first.next = second.next;
