@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+/*
+ * 31. Next Permutation
+ */
 public class NextPermutation implements SolutionProvider<int[], Void> {
 
   @Override
