@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class RemoveEndNodeTest {
@@ -36,24 +37,11 @@ public class RemoveEndNodeTest {
   }
 
   private void test(int n, List<Integer> expect, int... nums) {
-    List<Integer> result1 = new RemoveEndNode().resolve(createNodes(nums), n).toList();
-    List<Integer> result2 = new RemoveEndNode().removeNthFromEnd(createNodes(nums), n).toList();
+    ListNode node = new RemoveEndNode().resolve(ListNode.createNodes(nums), n);
+    List<Integer> result1 = node == null ? Collections.EMPTY_LIST : node.toList();
+    node = new RemoveEndNode().removeNthFromEnd(ListNode.createNodes(nums), n);
+    List<Integer> result2 = node == null ? Collections.EMPTY_LIST : node.toList();
     Assert.assertEquals(expect, result1);
     Assert.assertEquals(expect, result2);
-  }
-
-  private ListNode createNodes(int... nums) {
-    ListNode head = null;
-    ListNode cur = null;
-    for (int num : nums) {
-      ListNode node = new ListNode(num);
-      if (cur == null) {
-        head = node;
-      } else {
-        cur.next = node;
-      }
-      cur = node;
-    }
-    return head;
   }
 }

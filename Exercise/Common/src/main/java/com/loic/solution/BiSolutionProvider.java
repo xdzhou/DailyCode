@@ -2,7 +2,6 @@ package com.loic.solution;
 
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * common interface for solution provider which could have several solutions
