@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 /*
- * 39. Combination Sum
+ * 40. Combination Sum II
  */
-public class CombinationSum implements BiSolutionProvider<int[], Integer, List<List<Integer>>> {
+public class CombinationSumII implements BiSolutionProvider<int[], Integer, List<List<Integer>>> {
 
   @Override
   public List<BiFunction<int[], Integer, List<List<Integer>>>> solutions() {
@@ -33,7 +33,7 @@ public class CombinationSum implements BiSolutionProvider<int[], Integer, List<L
       if (candidates[i] <= target && candidates[i] != previous) {
         previous = candidates[i];
         int index = i;
-        List<List<Integer>> preResult = backtracking(candidates, index, target - candidates[index]);
+        List<List<Integer>> preResult = backtracking(candidates, index - 1, target - candidates[index]);
         preResult.forEach(item -> item.add(candidates[index]));
         result.addAll(preResult);
       }
