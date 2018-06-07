@@ -1,4 +1,4 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
 import com.loic.solution.SolutionProvider;
 

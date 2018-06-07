@@ -1,5 +1,6 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
+import com.loic.leetcode.medium.String2Integer;
 import com.loic.solution.SolutionChecker;
 import org.junit.Test;
 

@@ -1,6 +1,7 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
 
+import com.loic.leetcode.medium.CombinationSumII;
 import com.loic.solution.TestHelper;
 import org.junit.Assert;
 import org.junit.Test;

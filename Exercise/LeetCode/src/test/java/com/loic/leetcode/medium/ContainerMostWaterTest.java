@@ -1,5 +1,6 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
+import com.loic.leetcode.medium.ContainerMostWater;
 import com.loic.solution.SolutionChecker;
 import com.loic.solution.TestHelper;
 import org.junit.Test;

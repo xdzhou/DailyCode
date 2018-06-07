@@ -1,10 +1,10 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
 import com.loic.helper.ListNode;
+import com.loic.leetcode.medium.RemoveEndNode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

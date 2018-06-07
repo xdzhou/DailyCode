@@ -1,6 +1,7 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
 import com.loic.helper.ListNode;
+import com.loic.leetcode.medium.SwapNodes;
 import com.loic.solution.SolutionChecker;
 import org.junit.Assert;
 import org.junit.Test;

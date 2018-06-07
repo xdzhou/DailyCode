@@ -1,5 +1,6 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
+import com.loic.leetcode.medium.SearchRange;
 import com.loic.solution.BiSolutionChecker;
 import com.loic.solution.TestHelper;
 import org.junit.Test;

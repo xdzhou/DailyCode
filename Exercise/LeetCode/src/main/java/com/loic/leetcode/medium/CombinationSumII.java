@@ -1,4 +1,4 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
 import com.loic.solution.BiSolutionProvider;
 
@@ -9,9 +9,9 @@ import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 /*
- * 39. Combination Sum
+ * 40. Combination Sum II
  */
-public class CombinationSum implements BiSolutionProvider<int[], Integer, List<List<Integer>>> {
+public class CombinationSumII implements BiSolutionProvider<int[], Integer, List<List<Integer>>> {
 
   @Override
   public List<BiFunction<int[], Integer, List<List<Integer>>>> solutions() {
@@ -35,7 +35,7 @@ public class CombinationSum implements BiSolutionProvider<int[], Integer, List<L
           previous = candidates[i];
           int index = i;
           int len = result.size();
-          backtracking(candidates, index, target - candidates[index], result);
+          backtracking(candidates, index - 1, target - candidates[index], result);
           IntStream.range(len, result.size()).forEach(item -> result.get(item).add(candidates[index]));
         }
       }

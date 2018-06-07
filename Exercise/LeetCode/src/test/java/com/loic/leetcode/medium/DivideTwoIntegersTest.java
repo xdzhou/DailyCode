@@ -1,5 +1,6 @@
-package com.loic.leetcode;
+package com.loic.leetcode.medium;
 
+import com.loic.leetcode.medium.DivideTwoIntegers;
 import com.loic.solution.BiSolutionChecker;
 import org.junit.Test;
 
