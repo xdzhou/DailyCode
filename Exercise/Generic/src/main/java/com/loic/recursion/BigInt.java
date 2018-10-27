@@ -60,7 +60,7 @@ public class BigInt implements Cloneable {
     }
   }
 
-  public String getPrintablValue() {
+  public String getPrintableValue() {
     if (mPrefix == null) {
       return Integer.toString(value);
     } else {
@@ -69,7 +69,7 @@ public class BigInt implements Cloneable {
       for (int i = 0; i < delta; i++) {
         valueSb.insert(0, "0");
       }
-      valueSb.insert(0, mPrefix.getPrintablValue());
+      valueSb.insert(0, mPrefix.getPrintableValue());
       return valueSb.toString();
     }
   }

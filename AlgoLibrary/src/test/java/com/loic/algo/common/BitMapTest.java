@@ -2,7 +2,7 @@ package com.loic.algo.common;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 public class BitMapTest {
 
@@ -14,11 +14,11 @@ public class BitMapTest {
   @Test
   public void testSet() {
     BitMap bitMap = new BitMap(12);
-    assertEquals(bitMap.set(1), true);
-    assertEquals(bitMap.set(1), false);
+    assertTrue(bitMap.set(1));
+    assertFalse(bitMap.set(1));
 
-    assertEquals(bitMap.isSet(1), true);
-    assertEquals(bitMap.isSet(10), false);
+    assertTrue(bitMap.isSet(1));
+    assertFalse(bitMap.isSet(10));
   }
 
   @Test

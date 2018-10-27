@@ -28,11 +28,11 @@ public class CheckSubTree implements SolutionProvider<TreeNode<Integer>[], Boole
   }
 
   private boolean isSubTree(TreeNode<Integer> T1, TreeNode<Integer> T2) {
-    if ((T1 == null && T2 == null) || T1 == T2) {
+    if (T1 == T2) {
       return true;
     } else if (T1 != null && T2 != null) {
-      boolean isequal = isEqual(T1, T2);
-      if (isequal) {
+      boolean isEqual = isEqual(T1, T2);
+      if (isEqual) {
         return true;
       } else {
         return isSubTree(T1.left(), T2) || isSubTree(T1.right(), T2);
@@ -42,7 +42,7 @@ public class CheckSubTree implements SolutionProvider<TreeNode<Integer>[], Boole
   }
 
   private boolean isEqual(TreeNode<Integer> T1, TreeNode<Integer> T2) {
-    if ((T1 == null && T2 == null) || T1 == T2) {
+    if (T1 == T2) {
       return true;
     } else if (T1 != null && T2 != null && T1.mValue.equals(T2.mValue)) {
       return isEqual(T1.left(), T2.left()) && isEqual(T1.right(), T2.right());

@@ -3,8 +3,7 @@ package com.loic.algo.queueStack;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class LinkListTest {
   private LinkListNode<Integer> noCyclyNode1;
@@ -24,7 +23,7 @@ public class LinkListTest {
     System.out.println(noCyclyNode1.printList());
     LinkListNode<Integer> reversNode = noCyclyNode1.reverse();
     System.out.println(reversNode.printList());
-    assertEquals(noCyclyNode1.getNext(), null);
+    assertNull(noCyclyNode1.getNext());
     noCyclyNode1 = reversNode.reverse();
 
     cyclyNode = new LinkListNode<>(1);
@@ -34,9 +33,9 @@ public class LinkListTest {
 
   @Test
   public void cycleCheckTest() {
-    assertTrue(noCyclyNode1.hasCycle() == null);
-    assertTrue(noCyclyNode2.hasCycle() == null);
-    assertTrue(cyclyNode.hasCycle() != null);
+    assertNull(noCyclyNode1.hasCycle());
+    assertNull(noCyclyNode2.hasCycle());
+    assertNotNull(cyclyNode.hasCycle());
   }
 
   @Test

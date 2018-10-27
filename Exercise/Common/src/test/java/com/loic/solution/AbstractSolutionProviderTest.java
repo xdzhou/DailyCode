@@ -3,7 +3,7 @@ package com.loic.solution;
 import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.spy;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 
 public class AbstractSolutionProviderTest {
 
@@ -16,6 +16,6 @@ public class AbstractSolutionProviderTest {
       }
     });
 
-    assertTrue(solutionProvider.solutions().size() == 1);
+    assertEquals(solutionProvider.solutions().size(), 1);
   }
 }

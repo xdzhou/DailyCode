@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class MaxPQTest {
   private int N = 100;
@@ -18,7 +19,7 @@ public class MaxPQTest {
     Comparator<Integer> cmp = (o1, o2) -> Integer.compare(o2, o1);
     queueJava = new PriorityQueue<>(N, cmp);
     maxQueue = new MaxPQ<>(Integer.class, N);
-    assertEquals(maxQueue.isEmpty(), true);
+    assertTrue(maxQueue.isEmpty());
     for (int i = 0; i < N; i++) {
       int d = (int) (Math.random() * 100);
       queueJava.add(d);

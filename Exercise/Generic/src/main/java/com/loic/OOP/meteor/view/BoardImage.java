@@ -42,7 +42,7 @@ public class BoardImage {
 
 
   /**
-   * <p>Draws the cell for boardposition (x,y) in the given color.
+   * <p>Draws the cell for boardPosition (x,y) in the given color.
    */
   public void drawCell(int x, int y, Color c) {
     Polygon p = getPolygon(x, y);
@@ -66,7 +66,7 @@ public class BoardImage {
 
 
   /**
-   * <p>Gives the polygon for the boardposition (x,y).
+   * <p>Gives the polygon for the boardPosition (x,y).
    */
   protected Polygon getPolygon(int x, int y) {
     if (polygons[x][y] == null) {
@@ -77,7 +77,7 @@ public class BoardImage {
 
 
   /**
-   * <p>Creates and returns a Polygon for the boardposition (x,y).
+   * <p>Creates and returns a Polygon for the boardPosition (x,y).
    */
   protected Polygon createPolygon(int y, int x) {
 

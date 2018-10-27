@@ -13,7 +13,7 @@ public class BitMap {
   }
 
   /**
-   * @return true if set success, false if already setted
+   * @return true if set success, false if already set
    */
   public boolean set(int number) {
     // number % 32 == number & 0x1F
@@ -27,7 +27,7 @@ public class BitMap {
   }
 
   /**
-   * @return whether the number is setted
+   * @return whether the number is set
    */
   public boolean isSet(int number) {
     // number % 32 == number & 0x1F

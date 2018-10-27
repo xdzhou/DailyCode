@@ -18,10 +18,10 @@ public class BiggerIsGreater implements SolutionProvider<String, String> {
     if (param.length() <= 1) {
       return NO_ANSWER;
     }
-    char[] datas = param.toCharArray();
-    int curIndex = datas.length - 2;
+    char[] data = param.toCharArray();
+    int curIndex = data.length - 2;
     while (curIndex >= 0) {
-      if (datas[curIndex] < datas[curIndex + 1]) {
+      if (data[curIndex] < data[curIndex + 1]) {
         break;
       }
       curIndex--;
@@ -30,25 +30,25 @@ public class BiggerIsGreater implements SolutionProvider<String, String> {
       return NO_ANSWER;
     } else {
       int firstIndex = curIndex + 1;
-      int changeTimes = (datas.length - firstIndex) >>> 1;
-      int changeSum = datas.length - firstIndex - 1;
+      int changeTimes = (data.length - firstIndex) >>> 1;
+      int changeSum = data.length - firstIndex - 1;
       for (int i = 0; i < changeTimes; i++) {
-        char ch = datas[firstIndex + i];
-        datas[firstIndex + i] = datas[changeSum - i + firstIndex];
-        datas[changeSum - i + firstIndex] = ch;
+        char ch = data[firstIndex + i];
+        data[firstIndex + i] = data[changeSum - i + firstIndex];
+        data[changeSum - i + firstIndex] = ch;
       }
 
-      int changeIndex = Arrays.binarySearch(datas, curIndex + 1, datas.length, datas[curIndex]);
+      int changeIndex = Arrays.binarySearch(data, curIndex + 1, data.length, data[curIndex]);
       if (changeIndex < 0) {
         changeIndex = -changeIndex - 1;
       } else {
         changeIndex++;
       }
-      char c = datas[curIndex];
-      datas[curIndex] = datas[changeIndex];
-      datas[changeIndex] = c;
+      char c = data[curIndex];
+      data[curIndex] = data[changeIndex];
+      data[changeIndex] = c;
 
-      return new String(datas);
+      return new String(data);
     }
   }
 

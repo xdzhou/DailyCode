@@ -203,15 +203,15 @@ public class BordState implements Cloneable {
     if (isOver) {
       return 0;
     }
-    Set<Integer> traitedIndex = new HashSet<>();
+    Set<Integer> treatedIndex = new HashSet<>();
     List<Zone> zones = new LinkedList<>();
     for (int line = HEIGHT - 1; line >= 0; line--) {
       for (int col = 0; col < WIDTH; col++) {
         int index = getIndex(line, col);
         Zone zone;
-        if (data[line][col] != EMPTY && !traitedIndex.contains(index) && (zone = getZoneFor(index)) != null) {
+        if (data[line][col] != EMPTY && !treatedIndex.contains(index) && (zone = getZoneFor(index)) != null) {
           zones.add(zone);
-          traitedIndex.addAll(zone.getIndexs());
+          treatedIndex.addAll(zone.getIndexs());
         }
       }
     }

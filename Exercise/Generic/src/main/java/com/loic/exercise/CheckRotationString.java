@@ -15,10 +15,10 @@ public class CheckRotationString extends SingleSolutionProvider<Pair<String, Str
   @Override
   protected Boolean resolve(Pair<String, String> param) {
     Objects.requireNonNull(param);
-    return isRotionString(param.first(), param.second());
+    return isRotationString(param.first(), param.second());
   }
 
-  private boolean isRotionString(String s1, String s2) {
+  private boolean isRotationString(String s1, String s2) {
     Preconditions.checkNotNull(s1);
     Preconditions.checkNotNull(s2);
 

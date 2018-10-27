@@ -13,7 +13,7 @@ import java.util.Objects;
  * @link http://www.hawstein.com/posts/9.6.html
  */
 public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvider<Pair<K[][], K>, Pair<Integer, Integer>> {
-  public static final Pair<Integer, Integer> UNFOUND = Pair.of(-1, -1);
+  public static final Pair<Integer, Integer> NOT_FOUND = Pair.of(-1, -1);
   private static final Logger Log = LoggerFactory.getLogger(BinarySearch2D.class);
 
   @Override
@@ -24,7 +24,7 @@ public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvi
 
   public Pair<Integer, Integer> binarySearch2D(K[][] table, K value) {
     Pair<Integer, Integer> result = binarySearch2D(table, value, 0, table[0].length - 1, 0, table.length - 1);
-    if (result == UNFOUND) {
+    if (result == NOT_FOUND) {
       Log.debug("can't find {}", value);
     } else {
       Log.debug("{} found, index : {}", value, result);
@@ -35,13 +35,13 @@ public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvi
   private Pair<Integer, Integer> binarySearch2D(K[][] table, K value, int lineFrom, int lineTo, int rowFrom,
                                                 int rowTo) {
     if (value.compareTo(table[lineFrom][rowFrom]) < 0 || value.compareTo(table[lineTo][rowTo]) > 0) {
-      return UNFOUND;
+      return NOT_FOUND;
     }
     if ((lineTo - lineFrom) * (rowTo - rowFrom) < 9) {
       Log.debug("line from {} to {}, row from {} to {}", lineFrom, lineTo, rowFrom, rowTo);
-      Pair<Integer, Integer> result = UNFOUND;
-      for (int i = lineFrom; i <= lineTo && result == UNFOUND; i++) {
-        for (int j = rowFrom; j <= rowTo && result == UNFOUND; j++) {
+      Pair<Integer, Integer> result = NOT_FOUND;
+      for (int i = lineFrom; i <= lineTo && result == NOT_FOUND; i++) {
+        for (int j = rowFrom; j <= rowTo && result == NOT_FOUND; j++) {
           result = checkValue(table, value, i, j);
         }
       }
@@ -51,22 +51,22 @@ public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvi
       int rowMid = (rowFrom + rowTo) >>> 1;
 
       Pair<Integer, Integer> result = checkValue(table, value, lineMid, rowMid);
-      if (result == UNFOUND) {
+      if (result == NOT_FOUND) {
         Log.debug("check mid index : table[{}, {}] = {}", lineMid, rowMid, table[lineMid][rowMid]);
         if (value.compareTo(table[lineMid][rowMid]) < 0) {
           result = binarySearch2D(table, value, lineFrom, lineMid, rowFrom, rowMid);
-          if (result == UNFOUND) {
+          if (result == NOT_FOUND) {
             result = binarySearch2D(table, value, lineFrom, lineMid - 1, rowMid + 1, rowTo);
           }
-          if (result == UNFOUND) {
+          if (result == NOT_FOUND) {
             result = binarySearch2D(table, value, lineMid + 1, lineTo, rowFrom, rowMid - 1);
           }
         } else {
           result = binarySearch2D(table, value, lineMid, lineTo, rowMid, rowTo);
-          if (result == UNFOUND) {
+          if (result == NOT_FOUND) {
             result = binarySearch2D(table, value, lineFrom, lineMid - 1, rowMid + 1, rowTo);
           }
-          if (result == UNFOUND) {
+          if (result == NOT_FOUND) {
             result = binarySearch2D(table, value, lineMid + 1, lineTo, rowFrom, rowMid - 1);
           }
         }
@@ -80,7 +80,7 @@ public class BinarySearch2D<K extends Comparable<K>> extends SingleSolutionProvi
     if (value.equals(table[line][row])) {
       return Pair.of(line, row);
     } else {
-      return UNFOUND;
+      return NOT_FOUND;
     }
   }
 }
