@@ -1,6 +1,5 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.ThreeSum;
 import com.loic.solution.SolutionChecker;
 import com.loic.solution.TestHelper;
 import org.junit.Assert;
@@ -22,14 +21,14 @@ public class ThreeSumTest {
     List<List<Integer>> list = new ArrayList<>();
     int mod = 0;
     List<Integer> tmp = null;
-    for(int val : nums) {
+    for (int val : nums) {
       if (mod % 3 == 0) {
         mod = 0;
         tmp = new ArrayList<>(3);
         list.add(tmp);
       }
       tmp.add(val);
-      mod ++;
+      mod++;
     }
     return list;
   }
