@@ -44,10 +44,10 @@ public class FileBuilder {
     path = path.substring(0, path.indexOf("DailyCode") + 9);
 
     srcRoots = new String[]{
-        path + "/AlgoLibrary/src/main/java/",
-        path + "/Exercise/CodinGame/src/main/java/",
-        path + "/Exercise/Common/src/main/java/",
-        path + "/Exercise/Generic/src/main/java/"
+      path + "/AlgoLibrary/src/main/java/",
+      path + "/Exercise/CodinGame/src/main/java/",
+      path + "/Exercise/Common/src/main/java/",
+      path + "/Exercise/Generic/src/main/java/"
     };
   }
 
@@ -66,11 +66,11 @@ public class FileBuilder {
       return Collections.emptyList();
     }
     return Arrays.stream(children)
-        .map(File::getName)
-        .filter(n -> n.endsWith(POINT_JAVA))
-        .filter(n -> !n.equals(fileName))
-        .map(n -> n.substring(0, n.length() - 5)) //".jave" length is 5
-        .collect(Collectors.toList());
+      .map(File::getName)
+      .filter(n -> n.endsWith(POINT_JAVA))
+      .filter(n -> !n.equals(fileName))
+      .map(n -> n.substring(0, n.length() - 5)) //".jave" length is 5
+      .collect(Collectors.toList());
   }
 
   private boolean addLineToCode(final ClassCode code, boolean fileKeyWordRead, final String line, List<String> otherClass) {
@@ -163,7 +163,7 @@ public class FileBuilder {
         if (trimedLine.contains(END_COMMENT)) {
           insideComment = false;
           final String remainingCode = trimedLine.substring(trimedLine.indexOf(END_COMMENT) + END_COMMENT.length());
-          if (!remainingCode.trim().isEmpty()) {
+          if (!isEmpty(remainingCode)) {
             fileKeyWordRead = addLineToCode(code, fileKeyWordRead, remainingCode, otherClass);
           }
         }
@@ -190,12 +190,23 @@ public class FileBuilder {
     return code;
   }
 
+  private static boolean isEmpty(String s) {
+    if (s != null) {
+      for (char c : s.toCharArray()) {
+        if (!Character.isWhitespace(c)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   private void readPackageClasses(String absolutePath, List<String> otherClass) {
     final Path directory = Paths.get(absolutePath).getParent();
     otherClass.stream()
-        .map(n -> directory.toFile().getAbsolutePath() + File.separator + n + POINT_JAVA)
-        .filter(p -> !knownFiles.contains(p))
-        .forEach(p -> innerClasses.put(p, processFile(p)));
+      .map(n -> directory.toFile().getAbsolutePath() + File.separator + n + POINT_JAVA)
+      .filter(p -> !knownFiles.contains(p))
+      .forEach(p -> innerClasses.put(p, processFile(p)));
   }
 
   private String toAbsolutePath(Path path) {
@@ -236,9 +247,7 @@ public class FileBuilder {
       }
     }
 
-    for (final String line : treated.afterClassContent) {
-      lines.add(line);
-    }
+    lines.addAll(treated.afterClassContent);
 
     try {
       Files.write(Paths.get("src", "main", "java", outputFile), lines, CHARSET);

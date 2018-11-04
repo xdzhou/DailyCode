@@ -1,15 +1,15 @@
 package com.loic.recursion;
 
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-public class NumberCountTest {
+class NumberCountTest {
 
   @Test
-  public void test() {
+  void test() {
     SolutionChecker.create(new NumberCount())
-        .checkInput(1235)
-        .checkInput(1212);
+      .checkInput(1235)
+      .checkInput(1212);
   }
 
 }

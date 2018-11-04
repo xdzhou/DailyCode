@@ -1,15 +1,15 @@
 package com.loic.algo.search.genetic;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GeneticAlgorithmTest {
+class GeneticAlgorithmTest {
 
   @Test
-  public void testCombinationGuesser() {
+  void testCombinationGuesser() {
     Combination toBeFound = new Combination(0, 3, 7, 9);
     CandidateStrategy strategy = new CandidateStrategy(10);
     //strategy.setToBeFound(toBeFound);
@@ -19,7 +19,7 @@ public class GeneticAlgorithmTest {
   }
 
 
-  public Function<Combination, Double> heuristic(Combination toBeFound) {
+  Function<Combination, Double> heuristic(Combination toBeFound) {
     return combination -> {
       int result = 0;
       if (combination.first == toBeFound.first) {

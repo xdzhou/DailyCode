@@ -2,24 +2,24 @@ package com.loic.algo.search.impl;
 
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
-import org.testng.annotations.Test;
-import org.testng.collections.Lists;
+import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TreeSearchTest {
+class TreeSearchTest {
 
   @Test
-  public void testSimple() throws Exception {
+  void testSimple() throws Exception {
     MapInfo mapInfo = MapInfoFactory.create(
-        "S****",
-        "*##**",
-        "*##**",
-        "****E");
+      "S****",
+      "*##**",
+      "*##**",
+      "****E");
     PathStateStrategy strategy = new PathStateStrategy(mapInfo);
     PathState root = new PathState(0);
 
@@ -31,13 +31,13 @@ public class TreeSearchTest {
   }
 
   @Test
-  public void testMiddle() throws Exception {
+  void testMiddle() throws Exception {
     MapInfo mapInfo = MapInfoFactory.create(
-        "S********",
-        "####***#*",
-        "*********",
-        "*########",
-        "****E****");
+      "S********",
+      "####***#*",
+      "*********",
+      "*########",
+      "****E****");
     PathStateStrategy strategy = new PathStateStrategy(mapInfo);
     PathState root = new PathState(0);
 
@@ -49,13 +49,13 @@ public class TreeSearchTest {
   }
 
   @Test
-  public void testComplex() throws Exception {
+  void testComplex() throws Exception {
     MapInfo mapInfo = MapInfoFactory.create(
-        "S#***#***",
-        "*#*#*#*#*",
-        "*#*#*****",
-        "*#*#####*",
-        "***#E****");
+      "S#***#***",
+      "*#*#*#*#*",
+      "*#*#*****",
+      "*#*#####*",
+      "***#E****");
     PathStateStrategy strategy = new PathStateStrategy(mapInfo);
     PathState root = new PathState(0);
 
@@ -67,12 +67,12 @@ public class TreeSearchTest {
   }
 
   private List<Direction> testAlgo(TreeSearch algo, PathState root, PathStateStrategy strategy) {
-    List<Direction> list = Lists.newArrayList();
+    List<Direction> list = new ArrayList<>();
     SearchParam<PathState, Direction> searchParam = SearchParam.<PathState, Direction>builder()
-        .applyStrategy(strategy)
-        .heuristicStrategy(strategy)
-        .transitionStrategy(strategy)
-        .build();
+      .applyStrategy(strategy)
+      .heuristicStrategy(strategy)
+      .transitionStrategy(strategy)
+      .build();
 
     PathState state = root;
 

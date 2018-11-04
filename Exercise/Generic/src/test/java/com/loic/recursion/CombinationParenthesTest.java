@@ -1,15 +1,15 @@
 package com.loic.recursion;
 
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-public class CombinationParenthesTest {
+class CombinationParenthesTest {
 
   @Test
-  public void test() {
+  void test() {
     SolutionChecker.create(new CombinationParenthes())
-        .check(1, 1)
-        .check(2, 2)
-        .check(3, 5);
+      .check(1, 1)
+      .check(2, 2)
+      .check(3, 5);
   }
 }

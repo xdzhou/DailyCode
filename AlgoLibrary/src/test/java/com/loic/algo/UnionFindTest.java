@@ -1,14 +1,14 @@
 package com.loic.algo;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UnionFindTest {
+class UnionFindTest {
 
   @Test
-  public void test() {
+  void test() {
     UnionFind find = new UnionFind(10);
 
     assertEquals(find.find(9), 9);

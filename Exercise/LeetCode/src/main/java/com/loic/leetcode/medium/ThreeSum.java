@@ -20,8 +20,8 @@ public class ThreeSum implements SolutionProvider<int[], List<List<Integer>>> {
 
     List<List<Integer>> lists = new ArrayList<>();
 
-    for(int index = 0; index < input.length - 2; index++) {
-      if (index - 1 >= 0 && input[index] == input[index -1]) {
+    for (int index = 0; index < input.length - 2; index++) {
+      if (index - 1 >= 0 && input[index] == input[index - 1]) {
         //avoid putting same triple to the list when previous value is same as current
         continue;
       }
@@ -37,12 +37,12 @@ public class ThreeSum implements SolutionProvider<int[], List<List<Integer>>> {
             lists.add(list);
             preHead = input[head];
           }
-          head ++;
-          tail --;
+          head++;
+          tail--;
         } else if (value < -input[index]) {
-          head ++;
+          head++;
         } else {
-          tail --;
+          tail--;
         }
       }
     }
@@ -52,7 +52,7 @@ public class ThreeSum implements SolutionProvider<int[], List<List<Integer>>> {
   private List<List<Integer>> resolve(int[] input) {
     Arrays.sort(input);
     Map<List<Integer>, List<Integer>> map = new HashMap<>();
-    for(int index = 0; index < input.length - 2; index++) {
+    for (int index = 0; index < input.length - 2; index++) {
       int head = index + 1;
       int tail = input.length - 1;
       while (head < tail) {
@@ -60,12 +60,12 @@ public class ThreeSum implements SolutionProvider<int[], List<List<Integer>>> {
         if (value == -input[index]) {
           List<Integer> list = Arrays.asList(input[index], input[head], input[tail]);
           map.put(list, list);
-          head ++;
-          tail --;
+          head++;
+          tail--;
         } else if (value < -input[index]) {
-          head ++;
+          head++;
         } else {
-          tail --;
+          tail--;
         }
       }
     }

@@ -25,7 +25,7 @@ public class RotatedSortedSearch implements BiSolutionProvider<int[], Integer, I
     while (from < to) {
       int mid = (from + to) >>> 1;
       if (nums[mid] > nums[to]) {
-        from = mid +1;
+        from = mid + 1;
       } else {
         //ATTENTION: to != mid -1
         to = mid;

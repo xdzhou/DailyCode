@@ -672,13 +672,13 @@ public class CodeBuster {
     @Override
     public String toString() {
       return "{AcceptCost=" + mAcceptCost +
-          ", TurnRest=" + mTurnRest +
-          ", GhostCount=" + mGhostCount +
-          ", GhostCaught=" + mGhostCaught +
-          ", NeedHelpBuster=" + mNeedHelpBuster +
-          ", LastBustCount=" + mLastBustCount +
-          ", GhostCarring=" + mGhostCarring +
-          '}';
+        ", TurnRest=" + mTurnRest +
+        ", GhostCount=" + mGhostCount +
+        ", GhostCaught=" + mGhostCaught +
+        ", NeedHelpBuster=" + mNeedHelpBuster +
+        ", LastBustCount=" + mLastBustCount +
+        ", GhostCarring=" + mGhostCarring +
+        '}';
     }
   }
 
@@ -760,7 +760,7 @@ public class CodeBuster {
     @Override
     public String toString() {
       return "Buster[" + mId + ", state " + mState + ", value " + mValue +
-          ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
+        ", charge " + mChargeTurn + ", trust " + mTrustValue + ", " + mPosition + "]";
     }
   }
 }

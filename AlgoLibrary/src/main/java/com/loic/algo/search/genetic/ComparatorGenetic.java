@@ -51,7 +51,7 @@ public class ComparatorGenetic<Gene> extends AbstractGenetic<Gene> {
     Map<Gene, Double> map = new HashMap<>(genes.size());
 
     IntStream.range(0, genes.size())
-        .forEach(i -> map.put(genes.get(i), (double) stream(result[i]).sum()));
+      .forEach(i -> map.put(genes.get(i), (double) stream(result[i]).sum()));
     return map;
   }
 }

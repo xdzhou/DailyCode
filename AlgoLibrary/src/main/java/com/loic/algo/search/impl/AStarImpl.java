@@ -46,13 +46,13 @@ public class AStarImpl implements TreeSearch {
       Set<Trans> nexts = param.transitionStrategy().generate(curNode.state());
       if (curNode.depth() <= param.getMaxDepth() && !nexts.isEmpty()) {
         double bestChild = nexts.stream()
-            .map(t -> {
-              State childState = param.applyStrategy().apply(curNode.state(), t);
-              return new StateNode<>(childState, curNode, t, param.heuristicStrategy().heuristic(childState, curNode.depth() + 1));
-            })
-            .peek(curNode::addChild)
-            .peek(priorityQueue::add)
-            .reduce(Double.NEGATIVE_INFINITY, (best, node) -> Math.max(best, node.info()), Math::max);
+          .map(t -> {
+            State childState = param.applyStrategy().apply(curNode.state(), t);
+            return new StateNode<>(childState, curNode, t, param.heuristicStrategy().heuristic(childState, curNode.depth() + 1));
+          })
+          .peek(curNode::addChild)
+          .peek(priorityQueue::add)
+          .reduce(Double.NEGATIVE_INFINITY, (best, node) -> Math.max(best, node.info()), Math::max);
         if (bestChild != Double.NEGATIVE_INFINITY) {
           curNode.setInfo(bestChild);
           updateInfo(curNode.parent());
@@ -61,14 +61,14 @@ public class AStarImpl implements TreeSearch {
     }
 
     return rootNode.children().stream()
-        .reduce((node1, node2) -> node1.info() > node2.info() ? node1 : node2)
-        .map(StateNode::getAppliedTransition);
+      .reduce((node1, node2) -> node1.info() > node2.info() ? node1 : node2)
+      .map(StateNode::getAppliedTransition);
   }
 
   private <State, Trans> void updateInfo(StateNode<State, Trans, Double> node) {
     if (node != null) {
       double bestChild = node.children().stream()
-          .reduce(Double.NEGATIVE_INFINITY, (best, n) -> Math.max(best, n.info()), Math::max);
+        .reduce(Double.NEGATIVE_INFINITY, (best, n) -> Math.max(best, n.info()), Math::max);
       node.setInfo(bestChild);
 
       updateInfo(node.parent());

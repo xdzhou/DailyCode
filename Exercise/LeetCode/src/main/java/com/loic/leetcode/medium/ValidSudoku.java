@@ -31,7 +31,7 @@ public class ValidSudoku implements SolutionProvider<char[][], Boolean> {
     boolean valid = true;
     if (list != null) {
       valid = list.stream().allMatch(p -> p / 9 != pos / 9 && p % 9 != pos % 9 && blockPosition(p) != blockPosition(pos));
-    } else if (key != '.'){
+    } else if (key != '.') {
       list = new ArrayList<>();
       positionsMap.put(key, list);
     }

@@ -5,8 +5,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SolutionChecker<T, E> {
   private final SolutionProvider<T, E> solutionProvider;
@@ -31,7 +30,11 @@ public class SolutionChecker<T, E> {
     assertTrue(list.size() > 1);
     E output = list.get(0).apply(input);
     for (int i = 1; i < list.size(); i++) {
-      assertEquals(list.get(i).apply(input), output);
+      if (output.getClass().isArray()) {
+        assertArrayEquals((Object[]) list.get(i).apply(input), (Object[]) output);
+      } else {
+        assertEquals(list.get(i).apply(input), output);
+      }
     }
     return this;
   }

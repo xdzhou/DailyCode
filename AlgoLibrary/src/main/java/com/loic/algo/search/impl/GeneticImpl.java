@@ -44,7 +44,7 @@ public class GeneticImpl implements TreeSearch {
 
     Resolver<State, Trans> resolver = new Resolver<>(root, param);
     Gene<Trans> best = new GeneticAlgorithm<>(resolver, param.timerDuration(), resolver)
-        .iterate(simuCount, population, population / 4, population / 4, population / 10);
+      .iterate(simuCount, population, population / 4, population / 4, population / 10);
 
     return Optional.of(best.trans[0]);
   }
@@ -98,7 +98,7 @@ public class GeneticImpl implements TreeSearch {
     public Gene<Trans> merge(Gene<Trans> gene1, Gene<Trans> gene2, Random random) {
       Trans[] newTrans = (Trans[]) Array.newInstance(gene1.trans[0].getClass(), param.getMaxDepth());
       IntStream.range(0, param.getMaxDepth())
-          .forEach(index -> newTrans[index] = random.nextBoolean() ? gene1.trans[index] : gene2.trans[index]);
+        .forEach(index -> newTrans[index] = random.nextBoolean() ? gene1.trans[index] : gene2.trans[index]);
       return new Gene<>(newTrans);
     }
 

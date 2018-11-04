@@ -1,14 +1,13 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.RotatedSortedSearch;
 import com.loic.solution.BiSolutionChecker;
 import com.loic.solution.TestHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RotatedSortedSearchTest {
+class RotatedSortedSearchTest {
 
   @Test
-  public void test() {
+  void test() {
     BiSolutionChecker.create(new RotatedSortedSearch())
       .check(TestHelper.toIntArray(4, 5, 0, 1, 2, 3), 5, 1)
       .check(TestHelper.toIntArray(4, 5, 0, 1, 2, 3), 9, -1)

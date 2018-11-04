@@ -1,26 +1,25 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.CombinationSum;
 import com.loic.solution.TestHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class CombinationSumTest {
+class CombinationSumTest {
   private CombinationSum algo = new CombinationSum();
 
   @Test
-  public void testEmpty() {
-    Assert.assertTrue(algo.resolve(TestHelper.toIntArray(), 8).isEmpty());
-    Assert.assertTrue(algo.resolve(TestHelper.toIntArray(9), 8).isEmpty());
-    Assert.assertTrue(algo.resolve(TestHelper.toIntArray(3, 7), 8).isEmpty());
+  void testEmpty() {
+    Assertions.assertTrue(algo.resolve(TestHelper.toIntArray(), 8).isEmpty());
+    Assertions.assertTrue(algo.resolve(TestHelper.toIntArray(9), 8).isEmpty());
+    Assertions.assertTrue(algo.resolve(TestHelper.toIntArray(3, 7), 8).isEmpty());
   }
 
   @Test
-  public void testSimpleCase() {
+  void testSimpleCase() {
     List<List<Integer>> result = Arrays.asList(Arrays.asList(7), Arrays.asList(2, 2, 3));
-    Assert.assertEquals(result, algo.resolve(TestHelper.toIntArray(2, 3, 6, 7), 7));
+    Assertions.assertEquals(result, algo.resolve(TestHelper.toIntArray(2, 3, 6, 7), 7));
   }
 }

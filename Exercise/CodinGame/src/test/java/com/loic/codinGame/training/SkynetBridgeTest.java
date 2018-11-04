@@ -1,23 +1,23 @@
 package com.loic.codinGame.training;
 
 import com.loic.codinGame.CodinGameResolver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
-public class SkynetBridgeTest {
+class SkynetBridgeTest {
 
   @Test
-  public void simpleTest() throws Exception {
+  void simpleTest() throws Exception {
     StringBuilder sb = new StringBuilder();
     sb.append(1).append('\n')
-        .append(1).append('\n')
-        .append(".............................0..0....").append('\n')
-        .append(".0.0..................000....000.....").append('\n')
-        .append("....000.........0.0...000............").append('\n')
-        .append("............0.0......................").append('\n')
-        .append("4 0 2 1");
+      .append(1).append('\n')
+      .append(".............................0..0....").append('\n')
+      .append(".0.0..................000....000.....").append('\n')
+      .append("....000.........0.0...000............").append('\n')
+      .append("............0.0......................").append('\n')
+      .append("4 0 2 1");
     Scanner in = new Scanner(sb.toString());
 
     CodinGameResolver<?> resolver = new SkynetBridge();
@@ -32,6 +32,6 @@ public class SkynetBridgeTest {
     resolver.accept(in);
     resolver.accept(in);
 
-    Assert.expectThrows(IndexOutOfBoundsException.class, () -> resolver.accept(in));
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> resolver.accept(in));
   }
 }

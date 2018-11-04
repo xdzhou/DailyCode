@@ -24,9 +24,9 @@ public class JamExecutor<T> {
     checkState(inputFileFolder.isDirectory());
 
     Arrays.stream(inputFileFolder.listFiles())
-        .filter(File::isFile)
-        .filter(file -> file.getName().endsWith("in"))
-        .forEach(this::process);
+      .filter(File::isFile)
+      .filter(file -> file.getName().endsWith("in"))
+      .forEach(this::process);
   }
 
   private void process(File input) {

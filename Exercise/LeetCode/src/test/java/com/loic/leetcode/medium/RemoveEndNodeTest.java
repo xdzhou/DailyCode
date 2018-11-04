@@ -1,38 +1,37 @@
 package com.loic.leetcode.medium;
 
 import com.loic.helper.ListNode;
-import com.loic.leetcode.medium.RemoveEndNode;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RemoveEndNodeTest {
+class RemoveEndNodeTest {
 
   @Test
-  public void testNormalRemove() {
+  void testNormalRemove() {
     test(2, Arrays.asList(1, 2, 3, 5), 1, 2, 3, 4, 5);
   }
 
   @Test
-  public void testLastOne() {
+  void testLastOne() {
     test(1, Arrays.asList(1, 2), 1, 2, 3);
   }
 
   @Test
-  public void testFirstOne() {
+  void testFirstOne() {
     test(2, Arrays.asList(2), 1, 2);
   }
 
   @Test
-  public void testFirstOneWithSizeOne() {
+  void testFirstOneWithSizeOne() {
     test(1, Arrays.asList(), 1);
   }
 
   @Test
-  public void testSecondOne() {
+  void testSecondOne() {
     test(2, Arrays.asList(1, 3), 1, 2, 3);
   }
 
@@ -41,7 +40,7 @@ public class RemoveEndNodeTest {
     List<Integer> result1 = node == null ? Collections.EMPTY_LIST : node.toList();
     node = new RemoveEndNode().removeNthFromEnd(ListNode.createNodes(nums), n);
     List<Integer> result2 = node == null ? Collections.EMPTY_LIST : node.toList();
-    Assert.assertEquals(expect, result1);
-    Assert.assertEquals(expect, result2);
+    Assertions.assertEquals(expect, result1);
+    Assertions.assertEquals(expect, result2);
   }
 }

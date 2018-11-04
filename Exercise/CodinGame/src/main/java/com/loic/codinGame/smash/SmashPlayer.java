@@ -32,11 +32,11 @@ public class SmashPlayer implements CodinGameResolver<String> {
   static SearchParam<GameState, Drop> searchParam(ColorSet[] colors, int depth) {
     Preconditions.checkState(depth > 0 && depth % 2 == 0);
     return SearchParam.<GameState, Drop>builder()
-        .applyStrategy(applyStrategy(colors))
-        .heuristicStrategy(heuristicStrategy())
-        .transitionStrategy(transitionStrategy())
-        .maxDepth(depth)
-        .build();
+      .applyStrategy(applyStrategy(colors))
+      .heuristicStrategy(heuristicStrategy())
+      .transitionStrategy(transitionStrategy())
+      .maxDepth(depth)
+      .build();
   }
 
   private static ApplyStrategy<GameState, Drop> applyStrategy(ColorSet[] colors) {

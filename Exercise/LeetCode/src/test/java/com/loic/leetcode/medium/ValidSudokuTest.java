@@ -1,19 +1,19 @@
 package com.loic.leetcode.medium;
 
 import com.loic.solution.SolutionChecker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ValidSudokuTest {
+class ValidSudokuTest {
 
   private final SolutionChecker<char[][], Boolean> checker = SolutionChecker.create(new ValidSudoku());
 
   @Test
-  public void validSodukoTest() {
+  void validSodukoTest() {
     checker.check(goodBoard(), true);
   }
 
   @Test
-  public void unvalidSodukoTest() {
+  void unvalidSodukoTest() {
     checker.check(badBoard(), false);
   }
 

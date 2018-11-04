@@ -1,15 +1,15 @@
 package com.loic.algo.search.genetic;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ComparatorGeneticTest {
+class ComparatorGeneticTest {
 
   @Test
-  public void testCombinationGuesser() {
+  void testCombinationGuesser() {
     Combination toBeFound = new Combination(0, 3, 7, 9);
     CandidateStrategy strategy = new CandidateStrategy(10);
 

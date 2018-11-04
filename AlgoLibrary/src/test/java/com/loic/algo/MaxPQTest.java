@@ -1,21 +1,21 @@
 package com.loic.algo;
 
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MaxPQTest {
+class MaxPQTest {
   private int N = 100;
   private PriorityQueue<Integer> queueJava;
   private MaxPQ<Integer> maxQueue;
 
-  @BeforeClass
-  public void beforeClass() {
+  @BeforeEach
+  void beforeClass() {
     Comparator<Integer> cmp = (o1, o2) -> Integer.compare(o2, o1);
     queueJava = new PriorityQueue<>(N, cmp);
     maxQueue = new MaxPQ<>(Integer.class, N);
@@ -29,7 +29,7 @@ public class MaxPQTest {
   }
 
   @Test
-  public void MaxPQtest() {
+  void MaxPQtest() {
     for (int i = 0; i < N; i++) {
       double d1 = queueJava.poll();
       double d2 = maxQueue.delMax();

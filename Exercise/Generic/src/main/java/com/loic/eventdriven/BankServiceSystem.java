@@ -53,7 +53,7 @@ public class BankServiceSystem extends EventDriveSystem {
       Client clientInWait = mQueue.poll();
       if (clientInWait != null) {
         Log.debug("T : {} - client : {} stop waiting, and will be serviced in window {}", event.getTime(),
-            clientInWait, win);
+          clientInWait, win);
         addNewEvent(new LeaveEvent(clientInWait, event.getTime() + clientInWait.serviceDuration, win));
       } else {
         windows[win] = true;

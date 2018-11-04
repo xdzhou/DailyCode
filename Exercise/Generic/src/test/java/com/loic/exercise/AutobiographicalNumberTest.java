@@ -1,15 +1,15 @@
 package com.loic.exercise;
 
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-public class AutobiographicalNumberTest {
+class AutobiographicalNumberTest {
 
   @Test
-  public void test() {
+  void test() {
     SolutionChecker.create(new AutobiographicalNumber())
-        .checkInput(2020)
-        .checkInput(1210)
-        .checkInput(132545);
+      .checkInput(2020)
+      .checkInput(1210)
+      .checkInput(132545);
   }
 }

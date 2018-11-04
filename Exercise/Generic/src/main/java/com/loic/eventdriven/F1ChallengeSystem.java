@@ -99,7 +99,7 @@ public class F1ChallengeSystem extends EventDriveSystem {
         }
 
         if (car.record.dis >= maxDis &&
-            (champion == null || car.record.dis > champion.record.dis)) {
+          (champion == null || car.record.dis > champion.record.dis)) {
           champion = car;
         }
       }
@@ -120,7 +120,7 @@ public class F1ChallengeSystem extends EventDriveSystem {
     @Override
     public String toString() {
       return "CarRecord [recordTime=" + recordTime + ", dis=" + dis + ", curSpeed=" + curSpeed + ", alreadyNitro="
-          + alreadyNitro + "]";
+        + alreadyNitro + "]";
     }
   }
 

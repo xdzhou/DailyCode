@@ -1,10 +1,10 @@
 package com.loic.eventdriven;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-public class BankServiceSystemTest {
+class BankServiceSystemTest {
   @Test
-  public void test() {
+  void test() {
     BankServiceSystem algo = new BankServiceSystem();
     algo.simulate();
   }

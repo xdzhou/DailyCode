@@ -22,7 +22,7 @@ public class RemoveEndNode implements BiSolutionProvider<ListNode, Integer, List
     dummy.next = head;
 
     ListNode first = dummy, second = dummy;
-    for(int i = 0; i < n + 1; i++) {
+    for (int i = 0; i < n + 1; i++) {
       first = first.next;
     }
     while (first != null) {
@@ -37,11 +37,11 @@ public class RemoveEndNode implements BiSolutionProvider<ListNode, Integer, List
   public ListNode resolve(ListNode head, int n) {
     ListNode cur = head;
     int removes = 0;
-    for(int i = 0; i < n && cur != null; i++) {
-      removes ++;
+    for (int i = 0; i < n && cur != null; i++) {
+      removes++;
       cur = cur.next;
     }
-    if(removes == n && cur == null) {
+    if (removes == n && cur == null) {
       return head.next;
     }
     if (cur != null) {

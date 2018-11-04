@@ -1,12 +1,12 @@
 package com.loic.algo.queueStack;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GetMinStackImplTest {
+class GetMinStackImplTest {
   @Test
-  public void test() {
+  void test() {
     GetMinStackImpl<Integer> algo = new GetMinStackImpl<>();
     algo.push(2);
     assertEquals((int) algo.getMin(), 2);

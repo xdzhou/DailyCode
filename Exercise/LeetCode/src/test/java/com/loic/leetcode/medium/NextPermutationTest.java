@@ -1,27 +1,26 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.NextPermutation;
 import com.loic.solution.SolutionChecker;
 import com.loic.solution.TestHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class NextPermutationTest {
+class NextPermutationTest {
 
   @Test
-  public void test() {
+  void test() {
     SolutionChecker.create(new NextPermutation())
       .check(TestHelper.toIntArray(4, 5, 3, 1), (nums, o) -> {
-        Assert.assertArrayEquals(TestHelper.toIntArray(5, 1, 3, 4), nums);
+        Assertions.assertArrayEquals(TestHelper.toIntArray(5, 1, 3, 4), nums);
       })
       .check(TestHelper.toIntArray(1), (nums, o) -> {
-        Assert.assertArrayEquals(TestHelper.toIntArray(1), nums);
+        Assertions.assertArrayEquals(TestHelper.toIntArray(1), nums);
       })
       .check(TestHelper.toIntArray(1, 2, 3), (nums, o) -> {
-        Assert.assertArrayEquals(TestHelper.toIntArray(1, 3, 2), nums);
+        Assertions.assertArrayEquals(TestHelper.toIntArray(1, 3, 2), nums);
       })
       .check(TestHelper.toIntArray(2, 1, 2, 2, 2, 2, 2, 1), (nums, o) -> {
-        Assert.assertArrayEquals(TestHelper.toIntArray(2, 2, 1, 1, 2, 2, 2, 2), nums);
+        Assertions.assertArrayEquals(TestHelper.toIntArray(2, 2, 1, 1, 2, 2, 2, 2), nums);
       });
   }
 }

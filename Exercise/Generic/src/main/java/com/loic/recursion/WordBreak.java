@@ -48,7 +48,7 @@ public class WordBreak extends SingleSolutionProvider<Pair<String, Set<String>>,
                   preWords.add(begin);
                   postWords.add(0, end);
                   String nextString = delta == 0 ? null
-                      : s.substring(begin.length(), s.length() - end.length());
+                    : s.substring(begin.length(), s.length() - end.length());
                   biDirectionGenerateWords(preWords, postWords, nextString, wordDict, result);
                   postWords.remove(0);
                   preWords.remove(preWords.size() - 1);

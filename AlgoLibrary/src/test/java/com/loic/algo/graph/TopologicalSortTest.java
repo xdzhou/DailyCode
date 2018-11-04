@@ -5,15 +5,15 @@ import com.google.common.graph.GraphBuilder;
 import com.loic.algo.graph.topologicalSort.ITopologicalSort;
 import com.loic.algo.graph.topologicalSort.KahnImpl;
 import com.loic.algo.graph.topologicalSort.TopologicalDfsImpl;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TopologicalSortTest {
+class TopologicalSortTest {
 
   @Test
-  public void unDirectedGraphtest() {
+  void unDirectedGraphtest() {
     Graph graph = GraphBuilder.undirected().build();
 
     ITopologicalSort algo = new KahnImpl();
@@ -24,7 +24,7 @@ public class TopologicalSortTest {
   }
 
   @Test
-  public void cycleGraphTest() {
+  void cycleGraphTest() {
     Graph<?> graph = GraphHepler.cycleDirectedGraph();
 
     ITopologicalSort algo = new KahnImpl();
@@ -35,13 +35,13 @@ public class TopologicalSortTest {
   }
 
   @Test
-  public void simpleGraphTest() {
+  void simpleGraphTest() {
     Graph<Integer> graph = GraphHepler.directedGraph();
 
     ITopologicalSort algo = new TopologicalDfsImpl();
-    Assert.assertEquals(algo.sort(graph).size(), 13);
+    assertEquals(algo.sort(graph).size(), 13);
 
     algo = new KahnImpl();
-    Assert.assertEquals(algo.sort(graph).size(), 13);
+    assertEquals(algo.sort(graph).size(), 13);
   }
 }

@@ -45,8 +45,8 @@ public class Drop {
   @Override
   public String toString() {
     return "Drop{" +
-        "column=" + column +
-        ", rotation=" + rotation +
-        '}';
+      "column=" + column +
+      ", rotation=" + rotation +
+      '}';
   }
 }

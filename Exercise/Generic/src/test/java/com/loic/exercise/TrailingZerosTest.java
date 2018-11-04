@@ -1,7 +1,7 @@
 package com.loic.exercise;
 
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class TrailingZerosTest {
 

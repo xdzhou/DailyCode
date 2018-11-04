@@ -1,15 +1,15 @@
 package com.loic.algo;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.loic.algo.BitUtils.getOneCount;
 import static com.loic.algo.BitUtils.isBitStaggered;
-import static org.testng.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class BitUtilsTest {
+class BitUtilsTest {
 
   @Test
-  public void testIsBitStaggered() {
+  void testIsBitStaggered() {
     assertTrue(isBitStaggered(convert("101")));
     assertTrue(isBitStaggered(convert("1010")));
     assertFalse(isBitStaggered(convert("1011")));
@@ -18,7 +18,7 @@ public class BitUtilsTest {
   }
 
   @Test
-  public void testOneCount() {
+  void testOneCount() {
     assertEquals(getOneCount(convert("101")), 2);
     assertEquals(getOneCount(convert("111")), 3);
     assertEquals(getOneCount(convert("101110")), 4);

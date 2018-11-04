@@ -26,9 +26,9 @@ public class ContainerMostWater implements SolutionProvider<int[], Integer> {
     while (head < tail) {
       max = Math.max(max, (tail - head) * Math.min(input[head], input[tail]));
       if (input[head] < input[tail]) {
-        head ++;
+        head++;
       } else {
-        tail --;
+        tail--;
       }
     }
     return max;

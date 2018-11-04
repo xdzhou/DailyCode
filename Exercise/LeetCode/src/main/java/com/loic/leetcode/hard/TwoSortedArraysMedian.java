@@ -37,7 +37,7 @@ public class TwoSortedArraysMedian implements BiSolutionProvider<int[], int[], D
       }
     }
     if (low < high && nums1[low] < nums2[k - low - 1]) {
-      low ++;
+      low++;
     }
     //find k_th num
     int p1 = low, p2 = k - low;

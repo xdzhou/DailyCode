@@ -1,13 +1,13 @@
 package com.loic.recursion;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 
-public class InvertStackTest {
+class InvertStackTest {
   @Test
-  public void test() {
+  void test() {
     InvertStack algo = new InvertStack();
     LinkedList<Integer> stack = new LinkedList<Integer>();
     for (int i = 0; i < 10; i++) {
@@ -16,13 +16,13 @@ public class InvertStackTest {
     String s = stack.toString();
 
     algo.resolve(stack);
-    Assert.assertNotEquals(s, stack.toString());
+    Assertions.assertNotEquals(s, stack.toString());
     algo.resolve(stack);
-    Assert.assertEquals(s, stack.toString());
+    Assertions.assertEquals(s, stack.toString());
 
     algo.resolve2(stack);
-    Assert.assertNotEquals(s, stack.toString());
+    Assertions.assertNotEquals(s, stack.toString());
     algo.resolve2(stack);
-    Assert.assertEquals(s, stack.toString());
+    Assertions.assertEquals(s, stack.toString());
   }
 }

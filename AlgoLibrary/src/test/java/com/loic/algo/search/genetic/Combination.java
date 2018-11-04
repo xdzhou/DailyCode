@@ -15,9 +15,9 @@ public class Combination {
 
   public int delta(Combination other) {
     return Math.abs(first - other.first)
-        + Math.abs(second - other.second)
-        + Math.abs(third - other.third)
-        + Math.abs(fourth - other.fourth);
+      + Math.abs(second - other.second)
+      + Math.abs(third - other.third)
+      + Math.abs(fourth - other.fourth);
   }
 
   @Override
@@ -55,10 +55,10 @@ public class Combination {
   @Override
   public String toString() {
     return "Combination{" +
-        "first=" + first +
-        ", second=" + second +
-        ", third=" + third +
-        ", fourth=" + fourth +
-        '}';
+      "first=" + first +
+      ", second=" + second +
+      ", third=" + third +
+      ", fourth=" + fourth +
+      '}';
   }
 }

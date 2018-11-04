@@ -2,17 +2,17 @@ package com.loic.exercise;
 
 import com.loic.algo.common.Point;
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class MaxPointsInLineTest {
 
   @Test
   public void test() {
     SolutionChecker.create(new MaxPointsInLine())
-        .check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4)
-        .check(generatePoints(2, 3, 3, 3, -5, 3), 3)
-        .check(generatePoints(1, 1, 1, 1, 1, 1), 3)
-        .check(generatePoints(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
+      .check(generatePoints(0, 0, 1, 1, 2, 2, 0, 0), 4)
+      .check(generatePoints(2, 3, 3, 3, -5, 3), 3)
+      .check(generatePoints(1, 1, 1, 1, 1, 1), 3)
+      .check(generatePoints(1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 5);
   }
 
   private Point[] generatePoints(int... p) {

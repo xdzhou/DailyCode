@@ -2,7 +2,7 @@ package com.loic.codejam;
 
 import com.google.common.io.Files;
 import com.loic.solution.ScannerResolver;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JamExecutorTest {
 
@@ -23,19 +23,19 @@ public class JamExecutorTest {
     new JamExecutor<>(new IntResolver()).execute(new File(path));
 
     Arrays.stream(new File(path).listFiles())
-        .filter(f -> f.getName().endsWith("out"))
-        .peek(f -> {
-          List<String> lines = null;
-          try {
-            lines = Files.readLines(f, Charset.forName("UTF-8"));
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-          for (int i = 0; i < lines.size(); i++) {
-            assertEquals(lines.get(i), "Case #" + (i + 1) + ": 100");
-          }
+      .filter(f -> f.getName().endsWith("out"))
+      .peek(f -> {
+        List<String> lines = null;
+        try {
+          lines = Files.readLines(f, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        for (int i = 0; i < lines.size(); i++) {
+          assertEquals(lines.get(i), "Case #" + (i + 1) + ": 100");
+        }
 
-        }).forEach(f -> assertTrue(f.delete()));
+      }).forEach(f -> assertTrue(f.delete()));
   }
 
   public static final class IntResolver implements ScannerResolver<Integer> {

@@ -1,25 +1,25 @@
 package com.loic;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
 
-public class FileBuilderTest {
+class FileBuilderTest {
 
-  @Test(expectedExceptions = IllegalStateException.class)
-  public void testEmptyArgu() {
-    FileBuilder.main(null);
-  }
-
-  @Test(expectedExceptions = IllegalStateException.class)
-  public void testInvalideFile() {
-    FileBuilder.main(new String[]{"bla"});
+  @Test
+  void testEmptyArgu() {
+    Assertions.assertThrows(IllegalStateException.class, () -> FileBuilder.main(null));
   }
 
   @Test
-  public void testRealClass() {
+  void testInvalideFile() {
+    Assertions.assertThrows(IllegalStateException.class, () -> FileBuilder.main(new String[]{"bla"}));
+  }
+
+  @Test
+  void testRealClass() {
     String path = Paths.get("").toFile().getAbsolutePath();
     path = path.substring(0, path.indexOf("DailyCode") + 9);
     File generatedFIle = new File(path, "/Exercise/Common/src/main/java/TestMain.java");
@@ -27,6 +27,6 @@ public class FileBuilderTest {
 
     FileBuilder.main(new String[]{"src/test/java/com/loic/TestMain.java"});
 
-    Assert.assertTrue(generatedFIle.delete());
+    Assertions.assertTrue(generatedFIle.delete());
   }
 }

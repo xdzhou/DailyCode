@@ -5,11 +5,11 @@ import com.loic.algo.search.core.ApplyStrategy;
 import com.loic.algo.search.core.HeuristicStrategy;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TransitionStrategy;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 1
@@ -18,16 +18,16 @@ import static org.testng.Assert.assertTrue;
  * 8,9...15
  * 16,17...31
  */
-public class MinimaxAlphaBetaTest {
+class MinimaxAlphaBetaTest {
 
   @Test
-  public void testMinMaxAlgo() {
+  void testMinMaxAlgo() {
     SearchParam<Integer, Boolean> param = SearchParam.<Integer, Boolean>builder()
-        .maxDepth(4)
-        .transitionStrategy(transitionStrategy())
-        .heuristicStrategy(heuristicStrategy())
-        .applyStrategy(applyStrategy())
-        .build();
+      .maxDepth(4)
+      .transitionStrategy(transitionStrategy())
+      .heuristicStrategy(heuristicStrategy())
+      .applyStrategy(applyStrategy())
+      .build();
 
     Optional<Boolean> result = new MinimaxAlphaBeta().find(1, param);
     assertTrue(result.isPresent());

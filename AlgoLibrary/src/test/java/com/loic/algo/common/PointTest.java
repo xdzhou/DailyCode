@@ -1,23 +1,23 @@
 package com.loic.algo.common;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PointTest {
+class PointTest {
 
   @Test
-  public void testConstructor() {
+  void testConstructor() {
     Point p = new Point(12, 23);
     assertEquals(p.x, 12);
     assertEquals(p.y, 23);
   }
 
   @Test
-  public void testEqual() {
+  void testEqual() {
     Point p = new Point(12, 23);
     assertEquals(p, new Point(12, 23));
-    assertEquals(p.hashCode(), new Point(12, 23).hashCode(), 0);
+    assertEquals(p.hashCode(), new Point(12, 23).hashCode());
     assertEquals(p.toString(), new Point(12, 23).toString());
   }
 }

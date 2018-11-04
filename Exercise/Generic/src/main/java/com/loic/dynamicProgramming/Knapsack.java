@@ -16,7 +16,7 @@ public class Knapsack extends SingleSolutionProvider<Triple<Integer, Integer[], 
   protected Integer resolve(Triple<Integer, Integer[], Integer[]> param) {
     Objects.requireNonNull(param);
     Preconditions.checkArgument(param.second().length == param.third().length,
-        "weight.length != value.length");
+      "weight.length != value.length");
     return getMaxValue(param.first(), param.second(), param.third());
   }
 

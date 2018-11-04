@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static java.util.Objects.requireNonNull;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BiSolutionChecker<T, K, E> {
   private final BiSolutionProvider<T, K, E> solutionProvider;
@@ -20,7 +19,12 @@ public class BiSolutionChecker<T, K, E> {
 
   public BiSolutionChecker<T, K, E> check(T input1, K input2, E output) {
     for (BiFunction<T, K, E> solution : solutionProvider.solutions()) {
-      assertEquals(solution.apply(input1, input2), output);
+      Object curOut = solution.apply(input1, input2);
+      if (output.getClass().isArray()) {
+        assertArrayEquals((Object[]) curOut, (Object[]) output);
+      } else {
+        assertEquals(curOut, output);
+      }
     }
     return this;
   }

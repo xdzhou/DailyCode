@@ -21,9 +21,9 @@ class Slice {
 
   boolean include(int row, int column) {
     return row1 <= row &&
-        row <= row2 &&
-        col1 <= column &&
-        column <= col2;
+      row <= row2 &&
+      col1 <= column &&
+      column <= col2;
   }
 
   void extend(Direction dir, Pizza pizza) {

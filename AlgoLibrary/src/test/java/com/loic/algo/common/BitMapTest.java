@@ -1,18 +1,18 @@
 package com.loic.algo.common;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class BitMapTest {
+class BitMapTest {
 
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testNegLength() {
-    new BitMap(-12);
+  @Test
+  void testNegLength() {
+    assertThrows(IllegalArgumentException.class, () -> new BitMap(-12));
   }
 
   @Test
-  public void testSet() {
+  void testSet() {
     BitMap bitMap = new BitMap(12);
     assertTrue(bitMap.set(1));
     assertFalse(bitMap.set(1));
@@ -22,7 +22,7 @@ public class BitMapTest {
   }
 
   @Test
-  public void testBinaryString() {
+  void testBinaryString() {
     BitMap bitMap = new BitMap(40);
     bitMap.set(0);
     bitMap.set(39);

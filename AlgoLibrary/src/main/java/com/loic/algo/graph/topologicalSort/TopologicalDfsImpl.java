@@ -29,8 +29,8 @@ public class TopologicalDfsImpl implements ITopologicalSort {
 
     //find all nodes whose out degree is 0
     List<N> outDegreeZero = graph.nodes().stream()
-        .filter(node -> graph.outDegree(node) == 0)
-        .collect(Collectors.toList());
+      .filter(node -> graph.outDegree(node) == 0)
+      .collect(Collectors.toList());
 
     List<N> results = new ArrayList<>();
     Set<N> visitedNodes = new HashSet<>();

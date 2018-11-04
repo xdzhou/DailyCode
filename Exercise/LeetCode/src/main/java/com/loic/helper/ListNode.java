@@ -11,16 +11,6 @@ public class ListNode {
     this.val = val;
   }
 
-  public List<Integer> toList() {
-    List<Integer> list = new ArrayList<>();
-    ListNode node = this;
-    while (node != null) {
-      list.add(node.val);
-      node = node.next;
-    }
-    return list;
-  }
-
   public static ListNode createNodes(List<Integer> nums) {
     ListNode head = null;
     ListNode cur = null;
@@ -49,5 +39,15 @@ public class ListNode {
       cur = node;
     }
     return head;
+  }
+
+  public List<Integer> toList() {
+    List<Integer> list = new ArrayList<>();
+    ListNode node = this;
+    while (node != null) {
+      list.add(node.val);
+      node = node.next;
+    }
+    return list;
   }
 }

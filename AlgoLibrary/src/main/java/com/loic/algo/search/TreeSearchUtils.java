@@ -14,8 +14,8 @@ public class TreeSearchUtils {
 
   public static <E> List<E> asStringSort(Set<E> sets) {
     return sets.stream()
-        .sorted(Comparator.comparing(Object::toString))
-        .collect(Collectors.toList());
+      .sorted(Comparator.comparing(Object::toString))
+      .collect(Collectors.toList());
   }
 
   //FIXME should not supposed to return null

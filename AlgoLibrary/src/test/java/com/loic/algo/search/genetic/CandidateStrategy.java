@@ -20,9 +20,9 @@ public class CandidateStrategy implements CandidateResolver<Combination> {
   @Override
   public Combination merge(Combination gene1, Combination gene2, Random random) {
     return new Combination(random.nextBoolean() ? gene1.first : gene2.first,
-        random.nextBoolean() ? gene1.second : gene2.second,
-        random.nextBoolean() ? gene1.third : gene2.third,
-        random.nextBoolean() ? gene1.fourth : gene2.fourth);
+      random.nextBoolean() ? gene1.second : gene2.second,
+      random.nextBoolean() ? gene1.third : gene2.third,
+      random.nextBoolean() ? gene1.fourth : gene2.fourth);
   }
 
   @Override
@@ -30,9 +30,9 @@ public class CandidateStrategy implements CandidateResolver<Combination> {
     int value = random.nextInt(bound);
     int index = random.nextInt(4);
     return new Combination(index == 0 ? value : combination.first,
-        index == 1 ? value : combination.second,
-        index == 2 ? value : combination.third,
-        index == 3 ? value : combination.fourth);
+      index == 1 ? value : combination.second,
+      index == 2 ? value : combination.third,
+      index == 3 ? value : combination.fourth);
   }
 }
 

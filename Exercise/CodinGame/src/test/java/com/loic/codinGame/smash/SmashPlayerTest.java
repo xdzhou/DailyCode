@@ -4,14 +4,14 @@ import com.loic.algo.search.TreeSearchUtils;
 import com.loic.algo.search.core.SearchParam;
 import com.loic.algo.search.core.TreeSearch;
 import com.loic.algo.search.impl.MinimaxAlphaBeta;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SmashPlayerTest {
   private final Random random = new Random(new Date().getTime());

@@ -105,9 +105,9 @@ class GameState implements Cloneable {
     sb.append("Block: ").append(myBlockCount).append("          ").append(otherBlockCount).append('\n');
     for (int line = 0; line < BordState.HEIGHT; line++) {
       sb.append(Arrays.toString(myBord.getData(line)))
-          .append("     ")
-          .append(Arrays.toString(otherBord.getData(line)))
-          .append('\n');
+        .append("     ")
+        .append(Arrays.toString(otherBord.getData(line)))
+        .append('\n');
     }
     return sb.toString();
   }

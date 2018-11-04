@@ -14,10 +14,10 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public class WeightSelectorTest {
+class WeightSelectorTest {
 
   //@Test
-  public void test() {
+  void test() {
     Stragety stragety = new Stragety();
 
     GeneticImpl algo = new GeneticImpl();
@@ -25,32 +25,32 @@ public class WeightSelectorTest {
     algo.setSimuCount(20);
 
     SearchParam<Distri, Integer> param = SearchParam.<Distri, Integer>builder()
-        .applyStrategy(stragety)
-        .transitionStrategy(stragety)
-        .maxDepth(10)
-        .timerDuration(10).build();
+      .applyStrategy(stragety)
+      .transitionStrategy(stragety)
+      .maxDepth(10)
+      .timerDuration(10).build();
 
     WeightSelector.ParamHeuristicFun<Distri> heuristicFun = ((distri, depth, params) -> {
       int ave = distri.average();
       return depth * params[0]
-          + Math.abs(ave - distri.child[0]) * params[1]
-          + Math.abs(ave - distri.child[1]) * params[2]
-          + Math.abs(ave - distri.child[2]) * params[3]
-          + Math.abs(ave - distri.child[3]) * params[4];
+        + Math.abs(ave - distri.child[0]) * params[1]
+        + Math.abs(ave - distri.child[1]) * params[2]
+        + Math.abs(ave - distri.child[2]) * params[3]
+        + Math.abs(ave - distri.child[3]) * params[4];
     });
 
     double[] result = new WeightSelector<Distri, Integer>()
-        .withRootStates(new Distri(4))
-        .withSearchParam(param)
-        .withRanges(Range.closed(0d, 1d),
-            Range.closed(-1d, 1d),
-            Range.closed(-1d, 1d),
-            Range.closed(-1d, 1d),
-            Range.closed(-1d, 1d))
-        .withHeuristicFun(heuristicFun)
-        .withAlgo(algo)
-        .withStateComparator(Comparator.comparingInt(Distri::min))
-        .select();
+      .withRootStates(new Distri(4))
+      .withSearchParam(param)
+      .withRanges(Range.closed(0d, 1d),
+        Range.closed(-1d, 1d),
+        Range.closed(-1d, 1d),
+        Range.closed(-1d, 1d),
+        Range.closed(-1d, 1d))
+      .withHeuristicFun(heuristicFun)
+      .withAlgo(algo)
+      .withStateComparator(Comparator.comparingInt(Distri::min))
+      .select();
 
     System.out.println("optimised param: " + Arrays.toString(result));
 
@@ -67,7 +67,7 @@ public class WeightSelectorTest {
       this.sum = sum;
     }
 
-    public int average() {
+    int average() {
       int ssum = sum;
       for (int i : child) {
         ssum += i;
@@ -75,7 +75,7 @@ public class WeightSelectorTest {
       return ssum / 4;
     }
 
-    public int min() {
+    int min() {
       return Arrays.stream(child).min().getAsInt();
     }
   }

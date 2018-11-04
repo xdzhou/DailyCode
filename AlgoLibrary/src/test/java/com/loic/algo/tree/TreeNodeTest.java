@@ -1,13 +1,13 @@
 package com.loic.algo.tree;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TreeNodeTest {
+class TreeNodeTest {
 
   @Test
-  public void testCompleteBinary() {
+  void testCompleteBinary() {
     TreeNode<Integer> node = TreeNode.binaryTree(1, 2, 3);
 
     assertEquals(node.value(), Integer.valueOf(2));
@@ -16,7 +16,7 @@ public class TreeNodeTest {
   }
 
   @Test
-  public void testPartBinary() {
+  void testPartBinary() {
     TreeNode<Integer> node = TreeNode.binaryTree(1, 2, 3, 4);
 
     assertEquals(node.value(), Integer.valueOf(2));
@@ -25,7 +25,7 @@ public class TreeNodeTest {
   }
 
   @Test
-  public void testSet() {
+  void testSet() {
     TreeNode<Integer> root = TreeNode.of(2);
     root.setLeft(TreeNode.of(1));
     root.setRight(TreeNode.of(3));

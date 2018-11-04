@@ -1,13 +1,12 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.DivideTwoIntegers;
 import com.loic.solution.BiSolutionChecker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class DivideTwoIntegersTest {
+class DivideTwoIntegersTest {
 
   @Test
-  public void test() {
+  void test() {
     BiSolutionChecker.create(new DivideTwoIntegers())
       .check(10, 3, 3)
       .check(9, 3, 3)

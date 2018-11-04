@@ -24,7 +24,7 @@ public class SearchRange implements BiSolutionProvider<int[], Integer, int[]> {
     while (from <= to) {
       int mid = (from + to) >>> 1;
       if (nums[mid] == target) {
-        if (mid+1 <= to && nums[mid + 1] == target) {
+        if (mid + 1 <= to && nums[mid + 1] == target) {
           from = mid + 1;
         } else {
           range[1] = mid;
@@ -46,7 +46,7 @@ public class SearchRange implements BiSolutionProvider<int[], Integer, int[]> {
     while (from <= to) {
       int mid = (from + to) >>> 1;
       if (nums[mid] == target) {
-        if (mid-1 >= from && nums[mid - 1] == target) {
+        if (mid - 1 >= from && nums[mid - 1] == target) {
           to = mid - 1;
         } else {
           range[0] = mid;

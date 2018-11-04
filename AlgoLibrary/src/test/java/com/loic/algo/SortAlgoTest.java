@@ -1,16 +1,16 @@
 package com.loic.algo;
 
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SortAlgoTest {
+class SortAlgoTest {
   private Double lists[];
   private int Num = 200;
 
-  @BeforeClass
-  public void beforeClass() {
+  @BeforeEach
+  void beforeClass() {
     lists = new Double[Num];
     for (int i = 0; i < Num; i++) {
       lists[i] = Math.random() * 100;
@@ -26,42 +26,42 @@ public class SortAlgoTest {
   }
 
   @Test
-  public void sortInsert() {
+  void sortInsert() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortInsert(testTable);
     assertTrue(SortAlgo.isSorted(testTable));
   }
 
   @Test
-  public void sortMerge() {
+  void sortMerge() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortMerge(testTable);
     assertTrue(SortAlgo.isSorted(testTable));
   }
 
   @Test
-  public void sortMergeBU() {
+  void sortMergeBU() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortMergeBU(testTable);
     assertTrue(SortAlgo.isSorted(testTable));
   }
 
   @Test
-  public void sortQuick() {
+  void sortQuick() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortQuick(testTable);
     assertTrue(SortAlgo.isSorted(testTable));
   }
 
   @Test
-  public void sortSelect() {
+  void sortSelect() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortSelect(testTable);
     assertTrue(SortAlgo.isSorted(testTable));
   }
 
   @Test
-  public void sortShell() {
+  void sortShell() {
     Double[] testTable = cloneTable(lists);
     SortAlgo.sortShell(testTable);
     assertTrue(SortAlgo.isSorted(testTable));

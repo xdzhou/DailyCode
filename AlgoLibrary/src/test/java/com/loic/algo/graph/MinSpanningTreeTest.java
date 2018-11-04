@@ -6,16 +6,16 @@ import com.google.common.graph.ValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.loic.algo.graph.minSpanningTree.IMinSpanningTree;
 import com.loic.algo.graph.minSpanningTree.PrimImpl;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MinSpanningTreeTest {
+class MinSpanningTreeTest {
 
   @Test
-  public void minSpanning() {
+  void minSpanning() {
     IMinSpanningTree algo = new PrimImpl();
     ValueGraph<Integer, Double> graph = valueGraph();
     Set<EndpointPair<Integer>> edges = algo.search(graph);
@@ -24,7 +24,7 @@ public class MinSpanningTreeTest {
       totalWeight += graph.edgeValue(pair.nodeU(), pair.nodeV());
     }
 
-    assertEquals(totalWeight, 39, 0);
+    assertEquals(totalWeight, 39);
   }
 
   //https://zh.wikipedia.org/wiki/%E6%99%AE%E6%9E%97%E5%A7%86%E7%AE%97%E6%B3%95#/media/File:Prim_Algorithm_7.svg

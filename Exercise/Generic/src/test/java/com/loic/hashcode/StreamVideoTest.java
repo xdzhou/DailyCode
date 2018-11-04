@@ -1,7 +1,7 @@
 package com.loic.hashcode;
 
 import com.loic.hashcode.streamVideo.Main;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 

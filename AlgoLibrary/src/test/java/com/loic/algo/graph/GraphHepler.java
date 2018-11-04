@@ -2,16 +2,16 @@ package com.loic.algo.graph;
 
 import com.google.common.graph.*;
 
-public class GraphHepler {
+class GraphHepler {
   /*
    * @see graph image
    * http://my.csdn.net/uploads/201207/04/1341373589_4609.png
    */
-  public static Graph<Integer> directedGraph() {
+  static Graph<Integer> directedGraph() {
     MutableGraph<Integer> mutableGraph = GraphBuilder.directed()
-        .allowsSelfLoops(false)
-        .expectedNodeCount(13)
-        .build();
+      .allowsSelfLoops(false)
+      .expectedNodeCount(13)
+      .build();
     mutableGraph.putEdge(0, 6);
     mutableGraph.putEdge(2, 0);
     mutableGraph.putEdge(0, 1);
@@ -30,22 +30,22 @@ public class GraphHepler {
     return mutableGraph;
   }
 
-  public static Graph<Integer> cycleDirectedGraph() {
+  static Graph<Integer> cycleDirectedGraph() {
     MutableGraph<Integer> mutableGraph = GraphBuilder.directed()
-        .allowsSelfLoops(false)
-        .expectedNodeCount(3)
-        .build();
+      .allowsSelfLoops(false)
+      .expectedNodeCount(3)
+      .build();
     mutableGraph.putEdge(0, 1);
     mutableGraph.putEdge(1, 2);
     mutableGraph.putEdge(2, 0);
     return mutableGraph;
   }
 
-  public static ValueGraph<Integer, Double> valueGraph() {
+  static ValueGraph<Integer, Double> valueGraph() {
     MutableValueGraph<Integer, Double> mutableValueGraph = ValueGraphBuilder.undirected()
-        .allowsSelfLoops(false)
-        .expectedNodeCount(6)
-        .build();
+      .allowsSelfLoops(false)
+      .expectedNodeCount(6)
+      .build();
     mutableValueGraph.putEdgeValue(0, 1, 1.1d);
     mutableValueGraph.putEdgeValue(2, 1, 1d);
     mutableValueGraph.putEdgeValue(0, 4, 3d);

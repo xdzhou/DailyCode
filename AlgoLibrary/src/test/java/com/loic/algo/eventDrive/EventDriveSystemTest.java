@@ -1,6 +1,6 @@
 package com.loic.algo.eventDrive;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 

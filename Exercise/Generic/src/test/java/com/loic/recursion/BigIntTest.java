@@ -1,31 +1,31 @@
 package com.loic.recursion;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class BigIntTest {
+class BigIntTest {
   @Test
-  public void testIntAdd() {
+  void testIntAdd() {
     BigInt bigInt = new BigInt();
     bigInt.add(999999999);
-    Assert.assertEquals("999999999", bigInt.getPrintableValue());
+    Assertions.assertEquals("999999999", bigInt.getPrintableValue());
     bigInt.add(1);
-    Assert.assertEquals("1000000000", bigInt.getPrintableValue());
+    Assertions.assertEquals("1000000000", bigInt.getPrintableValue());
     bigInt.add(999999999);
-    Assert.assertEquals("1999999999", bigInt.getPrintableValue());
+    Assertions.assertEquals("1999999999", bigInt.getPrintableValue());
 
     bigInt.add(999999999);
-    Assert.assertEquals("2999999998", bigInt.getPrintableValue());
+    Assertions.assertEquals("2999999998", bigInt.getPrintableValue());
     bigInt.add(999999999);
-    Assert.assertEquals("3999999997", bigInt.getPrintableValue());
+    Assertions.assertEquals("3999999997", bigInt.getPrintableValue());
   }
 
   @Test
-  public void testBigIntAdd() {
+  void testBigIntAdd() {
     BigInt bigInt = new BigInt("1952234567890");
-    Assert.assertEquals("1952234567890", bigInt.getPrintableValue());
+    Assertions.assertEquals("1952234567890", bigInt.getPrintableValue());
 
     bigInt.add(new BigInt("1000000000000"));
-    Assert.assertEquals("2952234567890", bigInt.getPrintableValue());
+    Assertions.assertEquals("2952234567890", bigInt.getPrintableValue());
   }
 }

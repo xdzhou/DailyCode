@@ -1,22 +1,22 @@
 package com.loic.OOP;
 
 import com.loic.OOP.RubikCube.Direction;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RubikCubeTest {
   @Test
   public void testRotate() {
     RubikCube rubikCube = RubikCube.getPrefectRubikCube();
-    Assert.assertTrue(rubikCube.isRubikCubePrefect());
+    Assertions.assertTrue(rubikCube.isRubikCubePrefect());
 
     rubikCube.clockwiseRotate(Direction.XDirection, 1, 1);
-    Assert.assertFalse(rubikCube.isRubikCubePrefect());
+    Assertions.assertFalse(rubikCube.isRubikCubePrefect());
 
     rubikCube.clockwiseRotate(Direction.XDirection, 2, 1);
-    Assert.assertFalse(rubikCube.isRubikCubePrefect());
+    Assertions.assertFalse(rubikCube.isRubikCubePrefect());
 
     rubikCube.clockwiseRotate(Direction.XDirection, 3, 1);
-    Assert.assertTrue(rubikCube.isRubikCubePrefect());
+    Assertions.assertTrue(rubikCube.isRubikCubePrefect());
   }
 }

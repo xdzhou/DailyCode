@@ -57,9 +57,9 @@ public abstract class AbstractGenetic<Gene> {
     Map<Gene, Double> result = computeScores(populations);
     timer.checkTime();
     populations = populations.stream()
-        .sorted((g1, g2) -> Double.compare(result.get(g2), result.get(g1)))
-        .limit(selectionNumber)
-        .collect(Collectors.toList());
+      .sorted((g1, g2) -> Double.compare(result.get(g2), result.get(g1)))
+      .limit(selectionNumber)
+      .collect(Collectors.toList());
   }
 
   protected abstract Map<Gene, Double> computeScores(List<Gene> genes);

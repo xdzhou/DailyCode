@@ -1,22 +1,21 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.GenerateParentheses;
 import com.loic.solution.SolutionChecker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 
-public class GenerateParenthesesTest {
+class GenerateParenthesesTest {
 
   @Test
-  public void testOne() {
+  void testOne() {
     SolutionChecker.create(new GenerateParentheses())
       .check(1, Arrays.asList("()"));
   }
 
   @Test
-  public void testThree() {
+  void testThree() {
     SolutionChecker.create(new GenerateParentheses())
       .check(3,
         Arrays.asList("((()))",

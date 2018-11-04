@@ -4,13 +4,13 @@ import com.loic.OOP.meteor.Board;
 import com.loic.OOP.meteor.BoardCell;
 import com.loic.OOP.meteor.Cell;
 import com.loic.OOP.meteor.Piece;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * http://www.ibm.com/developerworks/cn/java/j-javaoptimization/index.html
@@ -20,7 +20,7 @@ public class MeteorTest {
   private List<Piece> mPieces;
   private int numberOfSolutions;
 
-  @BeforeTest
+  @BeforeEach
   public void initBoard() {
     mBoard = new Board();
     mPieces = new ArrayList<>(Board.CELL_COUNT / Piece.CELL_COUNT);
@@ -193,7 +193,7 @@ public class MeteorTest {
     for (int i = 0; i < Board.CELL_COUNT; i++) {
       BoardCell boardCell = mBoard.getCell(i);
       if (boardCell.getPiece() == null && !boardCell.isProcessing()
-          && boardCell.getIslandCount() % Piece.CELL_COUNT != 0) {
+        && boardCell.getIslandCount() % Piece.CELL_COUNT != 0) {
         return true;
       }
     }

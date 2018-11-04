@@ -1,57 +1,56 @@
 package com.loic.leetcode.medium;
 
-import com.loic.leetcode.medium.String2Integer;
 import com.loic.solution.SolutionChecker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class String2IntegerTest {
+class String2IntegerTest {
   private final SolutionChecker<String, Integer> checker = SolutionChecker.create(new String2Integer());
 
   @Test
-  public void testSmallNumber() {
+  void testSmallNumber() {
     checker.check("42", 42);
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     checker.check("   42", 42);
   }
 
   @Test
-  public void testEmptyAtEnd() {
+  void testEmptyAtEnd() {
     checker.check("42   ", 42);
   }
 
   @Test
-  public void testCharAtEnd() {
+  void testCharAtEnd() {
     checker.check("42sfsdf", 42);
   }
 
   @Test
-  public void testCharAtStart() {
+  void testCharAtStart() {
     checker.check("sfsdf42", 0);
   }
 
   @Test
-  public void testSign() {
+  void testSign() {
     checker.check("  -42", -42)
-    .check(" +42", 42);
+      .check(" +42", 42);
   }
 
   @Test
-  public void testMaxMin() {
+  void testMaxMin() {
     checker.check("" + Integer.MAX_VALUE, Integer.MAX_VALUE)
-      .check(""+Integer.MIN_VALUE, Integer.MIN_VALUE);
+      .check("" + Integer.MIN_VALUE, Integer.MIN_VALUE);
   }
 
   @Test
-  public void testBoard() {
+  void testBoard() {
     checker.check("2147483646", 2147483646)
       .check("-2147483647", -2147483647);
   }
 
   @Test
-  public void testOverFlow() {
+  void testOverFlow() {
     checker.check("9999999999", Integer.MAX_VALUE)
       .check("2147483648", Integer.MAX_VALUE)
       .check("-9999999999", Integer.MIN_VALUE)

@@ -1,16 +1,16 @@
 package com.loic.divideConquer;
 
 import com.loic.solution.SolutionChecker;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-public class DCIntegerDivisionTest {
+class DCIntegerDivisionTest {
 
   @Test
-  public void testSimpleCase() {
+  void testSimpleCase() {
     SolutionChecker.create(new DCIntegerDivision())
-        .check(1, 1)
-        .check(2, 2)
-        .check(3, 3)
-        .check(4, 5);
+      .check(1, 1)
+      .check(2, 2)
+      .check(3, 3)
+      .check(4, 5);
   }
 }
