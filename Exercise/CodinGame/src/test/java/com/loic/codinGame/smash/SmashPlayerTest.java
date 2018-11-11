@@ -13,11 +13,11 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SmashPlayerTest {
+class SmashPlayerTest {
   private final Random random = new Random(new Date().getTime());
 
   @Test
-  public void test() throws Exception {
+  void test() throws Exception {
     final ColorSet[] colorSets = new ColorSet[8];
     fill(colorSets);
 

@@ -1,10 +1,10 @@
 fileTree('.') {
-    include '**/build.gradle'
-    exclude 'build.gradle' // Exclude the root build file.
+  include '**/build.gradle'
+  exclude 'build.gradle' // Exclude the root build file.
 }
 .collect {
-    relativePath(it.parent).replace(File.separator, ':')
+  relativePath(it.parent).replace(File.separator, ':')
 }
 .each {
-    include(it)
+  include(it)
 }

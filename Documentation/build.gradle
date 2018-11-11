@@ -1,0 +1,9 @@
+plugins {
+  id 'org.asciidoctor.convert' version '1.5.9'
+}
+
+version = '1.0.0-SNAPSHOT'
+
+asciidoctorj {
+  version = '1.5.5'
+}

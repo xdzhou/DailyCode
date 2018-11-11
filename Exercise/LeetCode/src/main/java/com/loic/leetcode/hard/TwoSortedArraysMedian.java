@@ -2,7 +2,7 @@ package com.loic.leetcode.hard;
 
 import com.loic.solution.BiSolutionProvider;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -12,7 +12,7 @@ import java.util.function.BiFunction;
 public class TwoSortedArraysMedian implements BiSolutionProvider<int[], int[], Double> {
   @Override
   public List<BiFunction<int[], int[], Double>> solutions() {
-    return Arrays.asList(this::resolve);
+    return Collections.singletonList(this::resolve);
   }
 
   private double resolve(int[] nums1, int[] nums2) {
