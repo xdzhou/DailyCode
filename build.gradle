@@ -1,10 +1,7 @@
 subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
-    apply plugin: 'maven'
     apply plugin: 'jacoco'
-
-    task hello << { task -> println "I'm $task.project.name" }
 
     pmd {
         sourceSets = [sourceSets.main]
@@ -42,12 +39,6 @@ subprojects {
         mavenCentral()
     }
 
-    allprojects {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:deprecation"
-        }
-    }
-
     tasks.withType(Test) {
         scanForTestClasses = false
         include "**/*Test.class" // whatever Ant pattern matches your test class files
@@ -59,7 +50,6 @@ subprojects {
             html.enabled false
         }
     }
-
 
     dependencies {
         compile 'com.google.guava:guava:21.0'
