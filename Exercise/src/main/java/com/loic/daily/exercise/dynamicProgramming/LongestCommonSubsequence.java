@@ -11,6 +11,7 @@ public class LongestCommonSubsequence {
    */
   public static String find(String s1, String s2) {
     //LONGEST(i, j) means the Longest Common Subsequence of all pairs of prefixes of the strings
+    //the Longest Common Subsequence which end at i-th character of s1, and j-th character of s2
     int[][] longest = new int[s1.length() + 1][s2.length() + 1];
     for (int i = 0; i <= s1.length(); i++) {
       for (int j = 0; j <= s2.length(); j++) {
