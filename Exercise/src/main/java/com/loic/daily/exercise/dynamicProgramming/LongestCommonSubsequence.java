@@ -10,7 +10,7 @@ public class LongestCommonSubsequence {
    * subsequences are not required to occupy consecutive positions within the original sequences
    */
   public static String find(String s1, String s2) {
-    //LONGEST(i, j) means the Longest Common Subsequence of first i character of s1 and first j character of s2
+    //LONGEST(i, j) means the Longest Common Subsequence of all pairs of prefixes of the strings
     int[][] longest = new int[s1.length() + 1][s2.length() + 1];
     for (int i = 0; i <= s1.length(); i++) {
       for (int j = 0; j <= s2.length(); j++) {

@@ -11,7 +11,7 @@ public class LevenshteinDistance {
    * the minimum number of single-character edits (insertions, deletions or substitutions) required to change one word into the other
    */
   public static int distance(String s1, String s2) {
-    //DIS(i, j) is the edit distance of the first i character of s1 and the first j character of s2
+    //DIS(i, j) is the edit distance of all pairs of prefixes of the strings
     int[][] dis = new int[s1.length() + 1][s2.length() + 1];
     for (int i = 0; i <= s1.length(); i++) {
       for (int j = 0; j <= s2.length(); j++) {
