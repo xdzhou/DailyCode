@@ -28,7 +28,7 @@ public class MaxSubArray {
 
   //using dp algo
   public static int dpResolveOptimal(int[] nums) {
-    //same idea of method dpResolve
+    //same idea of method dpResolve()
     //but we don't use max aray, as every time we only use max(i-1) to compute max(i)
 
     //the max sum subarray which end at (i-1)-th item
