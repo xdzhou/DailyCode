@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class LongestIncreasingSubsequence {
 
-  //complexity n*n
+  //complexity O(n*n)
   public static int dpResolve(int[] nums) {
     // longest(i) the longest increasing subsequence which end at i-th number
     int[] longest = new int[nums.length];
@@ -30,7 +30,7 @@ public class LongestIncreasingSubsequence {
   /**
    * https://www.cnblogs.com/liyukuneed/archive/2013/05/26/3090402.html
    */
-  //complexity nlgn
+  //complexity O(nlgn)
   public static int optimal(int[] nums) {
     // for all last number of the increasing subsequence of length (i+1), smallestEnd[i] is smallest
     // end number
@@ -49,13 +49,29 @@ public class LongestIncreasingSubsequence {
         right++;
         smallestEnd[right] = nums[i];
       } else {
-        int index = Arrays.binarySearch(smallestEnd, 0, right + 1, nums[i]);
-        if (index < 0) {
-          index = -index - 1;
-          smallestEnd[index] = nums[i];
-        }
+        smallestEnd[binarySearch(smallestEnd, 0, right, nums[i])] = nums[i];
       }
     }
     return right + 1;
+  }
+
+  /**
+   * search the index of first item which is bigger than key
+   *
+   * @param nums the array to search
+   * @param from the from index (include)
+   * @param to   the to index (include)
+   * @param key  the key value to search
+   */
+  private static int binarySearch(int[] nums, int from, int to, int key) {
+    while (from <= to) {
+      int mid = (from + to) >>> 1;
+      if (nums[mid] > key) {
+        to = mid - 1;
+      } else {
+        from = mid + 1;
+      }
+    }
+    return from;
   }
 }

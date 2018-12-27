@@ -11,6 +11,12 @@ class LongestIncreasingSubsequenceTest {
     algoTest(4, 1, 5, 8, 3, 6, 7);
   }
 
+  @Test
+  void hasEqualNums() {
+    //strictly increase
+    algoTest(3, 1, 1, 1, 2, 3);
+  }
+
   private void algoTest(int logest, int... nums) {
     Assertions.assertEquals(logest, LongestIncreasingSubsequence.dpResolve(nums));
     Assertions.assertEquals(logest, LongestIncreasingSubsequence.optimal(nums));
