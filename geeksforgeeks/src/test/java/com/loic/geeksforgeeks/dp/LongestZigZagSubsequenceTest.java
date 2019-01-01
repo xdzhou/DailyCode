@@ -1,4 +1,4 @@
-package com.loic.geeksforgeeks;
+package com.loic.geeksforgeeks.dp;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

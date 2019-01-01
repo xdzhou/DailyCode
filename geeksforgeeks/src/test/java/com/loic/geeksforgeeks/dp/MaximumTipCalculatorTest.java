@@ -1,7 +1,4 @@
-package com.loic.geeksforgeeks;
-
-import java.util.Arrays;
-import java.util.Scanner;
+package com.loic.geeksforgeeks.dp;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

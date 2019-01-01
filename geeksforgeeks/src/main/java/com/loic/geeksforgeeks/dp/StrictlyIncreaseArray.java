@@ -1,4 +1,4 @@
-package com.loic.geeksforgeeks;
+package com.loic.geeksforgeeks.dp;
 
 import java.util.Arrays;
 
