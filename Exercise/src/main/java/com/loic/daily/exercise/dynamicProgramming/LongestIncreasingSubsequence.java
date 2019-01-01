@@ -1,7 +1,5 @@
 package com.loic.daily.exercise.dynamicProgramming;
 
-import java.util.Arrays;
-
 /**
  * https://en.wikipedia.org/wiki/Longest_increasing_subsequence
  */

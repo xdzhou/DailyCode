@@ -3,6 +3,8 @@ package com.loic.daily.exercise.catalanNumber;
 /**
  * https://en.wikipedia.org/wiki/Catalan_number
  * f(n) = C(2n, n) - C(2n, n+1) = C(2n, n) / (n+1)
+ * f(n+1) = f(0)*f(n) + f(1)*f(n-1) + f(2)*f(n-2) + ... + f(n)*f(0)
+ * f(0) = 1
  * <p>
  * 1. n pairs of parentheses which are correctly matched, like :((())), ()(()), ()()(), (())(), (()())
  * 2. https://blog.csdn.net/Hackbuteer1/article/details/7450250

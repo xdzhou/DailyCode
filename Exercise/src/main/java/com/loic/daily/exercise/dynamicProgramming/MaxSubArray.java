@@ -42,7 +42,7 @@ public class MaxSubArray {
   }
 
   //using dp algo
-  private static int dpResolve(int[] nums) {
+  public static int dpResolve(int[] nums) {
     //max(i) is the max subArray which end at i-th item
     int[] max = new int[nums.length];
     max[0] = nums[0];

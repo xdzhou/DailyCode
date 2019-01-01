@@ -28,5 +28,6 @@ class MaxSubArrayTest {
   private void testCase(int maxSum, int... nums) {
     Assertions.assertEquals(maxSum, MaxSubArray.resolve(nums));
     Assertions.assertEquals(maxSum, MaxSubArray.dpResolveOptimal(nums));
+    Assertions.assertEquals(maxSum, MaxSubArray.dpResolve(nums));
   }
 }
