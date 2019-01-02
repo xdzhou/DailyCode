@@ -1,7 +1,28 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    configurations.maybeCreate('pitest')
+    dependencies {
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.3.0'
+        pitest 'org.pitest:pitest-junit5-plugin:0.3'
+    }
+}
+
+allprojects {
+    group = 'com.loic'
+    version = '0.1.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
     apply plugin: 'jacoco'
+    apply plugin: 'info.solidsoft.pitest'
 
     pmd {
         sourceSets = [sourceSets.main]
@@ -35,10 +56,6 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    repositories {
-        mavenCentral()
-    }
-
     tasks.withType(Test) {
         scanForTestClasses = false
         include "**/*Test.class" // whatever Ant pattern matches your test class files
@@ -59,5 +76,13 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    pitest {
+        //pitestVersion = "1.4.3"
+        testPlugin = 'junit5'
+        threads = 4
+        //timestampedReports = false
+        //mainProcessJvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005']
     }
 }

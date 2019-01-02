@@ -12,6 +12,11 @@ class CatalanUtilsTest {
     }
   }
 
+  @Test
+  void binomialCoefficient(){
+    Assertions.assertEquals(CatalanUtils.binomialCoefficient(10, 7), CatalanUtils.binomialCoefficient(10, 3));
+  }
+
   private long parentheseCount(int n) {
     return parentheseCount(n, n);
   }

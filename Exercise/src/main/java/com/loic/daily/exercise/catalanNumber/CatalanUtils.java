@@ -21,10 +21,10 @@ public final class CatalanUtils {
   /**
    * Returns value of Binomial Coefficient C(n, k)
    */
-  private static long binomialCoefficient(int n, int k) {
+  static long binomialCoefficient(int n, int k) {
     // Since C(n, k) = C(n, n-k)
     if (k > n - k) {
-      k = n - k;
+      return binomialCoefficient(n, n - k);
     }
     long res = 1;
     // Calculate value of [n*(n-1)*---*(n-k+1)] / [k*(k-1)*---*1]
