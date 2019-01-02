@@ -9,6 +9,6 @@ class TwoSumTest {
 
   @Test
   void test() {
-    assertArrayEquals(toIntArray(0, 1), TwoSum.resolve(toIntArray(2, 7, 11, 15), 9));
+    assertArrayEquals(toIntArray(0, 1), TwoSum.findTarget(toIntArray(2, 7, 11, 15), 9));
   }
 }

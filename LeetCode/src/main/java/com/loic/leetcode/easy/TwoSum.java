@@ -14,7 +14,7 @@ import java.util.Map;
 public class TwoSum {
 
   //check if the complement exists in the array.
-  public static int[] resolve(int[] nums, int target) {
+  public static int[] findTarget(int[] nums, int target) {
     Map<Integer, Integer> map = new HashMap<>(nums.length);
     for (int i = 0; i < nums.length; i++) {
 
