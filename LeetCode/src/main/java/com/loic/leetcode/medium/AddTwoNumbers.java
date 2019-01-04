@@ -20,12 +20,18 @@ public class AddTwoNumbers {
     int additional = 0;
     //ATTENTION: in this while loop, don't forget the condition additional > 0, ex: 9+1=10
     while (node1 != null || node2 != null || additional > 0) {
-      int sum = add(additional, node1, node2);
-      curNode.next = new ListNode(sum % 10);
-      additional = sum / 10;
-      curNode = curNode.next;
-      node1 = node1 == null ? null : node1.next;
-      node2 = node2 == null ? null : node2.next;
+      if (additional == 0 && (node1 == null || node2 == null)) {
+        //1000+1=1001, for this case, we don't need continue adding the number when a node is null
+        curNode.next = node1 == null ? node2 : node1;
+        node1 = node2 = null;
+      } else {
+        int sum = add(additional, node1, node2);
+        curNode.next = new ListNode(sum % 10);
+        additional = sum / 10;
+        curNode = curNode.next;
+        node1 = node1 == null ? null : node1.next;
+        node2 = node2 == null ? null : node2.next;
+      }
     }
     return dummy.next;
   }
