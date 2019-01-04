@@ -15,10 +15,12 @@ public class DistinctPalindromicSubstrings {
   public static int resolve(String s) {
     Set<String> palindromic = new HashSet<>();
 
-    //dp(i, j) is true if s.subString(i, j) is palindromic
+    //dp(i, j) is true if s.subString(i, j+1) is palindromic
     boolean[][] dp = new boolean[s.length()][s.length()];
 
-    for (int i = 0; i < s.length(); i++) {
+    //ATTENTION: here we can't increase "i" from 0 to s.length()-1
+    //because "dp[i + 1][j - 1]" isn't computed when we are in "i" step
+    for (int i = s.length() - 1; i >= 0; i--) {
       for (int j = i; j < s.length(); j++) {
         if (s.charAt(i) == s.charAt(j) && (j - i <= 2 || dp[i + 1][j - 1])) {
           dp[i][j] = true;
@@ -26,7 +28,7 @@ public class DistinctPalindromicSubstrings {
         }
       }
     }
-
+    System.out.println(palindromic);
     return palindromic.size();
   }
 }

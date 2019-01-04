@@ -9,7 +9,12 @@ class DistinctPalindromicSubstringsTest {
   void test() {
     Assertions.assertEquals(5, DistinctPalindromicSubstrings.resolve("abaaa"));
     Assertions.assertEquals(4, DistinctPalindromicSubstrings.resolve("geek"));
-    Assertions.assertEquals(33, DistinctPalindromicSubstrings.resolve("legefgtayfuqntwwworaeafheoxyzrukwaqdijfipzbevxarottsvzzznwaopuynwothaaprasxxsa"));
+    Assertions.assertEquals(35, DistinctPalindromicSubstrings.resolve("legefgtayfuqntwwworaeafheoxyzrukwaqdijfipzbevxarottsvzzznwaopuynwothaaprasxxsa"));
+  }
+
+  @Test
+  void hard(){
+    Assertions.assertEquals(6, DistinctPalindromicSubstrings.resolve("banana"));
   }
 
 }
