@@ -4,7 +4,7 @@ import com.loic.leetcode.SolutionChecker;
 import org.junit.jupiter.api.Test;
 
 class String2IntegerTest {
-  private final SolutionChecker<String, Integer> checker = SolutionChecker.create(String2Integer::resolve);
+  private final SolutionChecker<String, Integer> checker = SolutionChecker.create(String2Integer::atoi);
 
   @Test
   void testSmallNumber() {
@@ -13,7 +13,8 @@ class String2IntegerTest {
 
   @Test
   void testEmpty() {
-    checker.check("   42", 42);
+    checker.check("   42", 42)
+    .check("  ", 0);
   }
 
   @Test
@@ -34,7 +35,10 @@ class String2IntegerTest {
   @Test
   void testSign() {
     checker.check("  -42", -42)
-      .check(" +42", 42);
+      .check(" +42", 42)
+      .check("-", 0)
+      .check("+", 0)
+      .check("", 0);
   }
 
   @Test
