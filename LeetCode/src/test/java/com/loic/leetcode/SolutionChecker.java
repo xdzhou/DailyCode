@@ -2,6 +2,7 @@ package com.loic.leetcode;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -18,9 +19,9 @@ public final class SolutionChecker<I, O> {
     return new SolutionChecker<>(Arrays.asList(algos));
   }
 
-  public SolutionChecker<I, O> check(I input, O output) {
+  public SolutionChecker<I, O> check(I input, O... expected) {
     for (Function<I, O> algo : algos) {
-      Assertions.assertEquals(output, algo.apply(input));
+      assertOutputs(algo.apply(input), expected);
     }
     return this;
   }
@@ -42,4 +43,12 @@ public final class SolutionChecker<I, O> {
     }
     return this;
   }
+
+  private void assertOutputs(O output, O... expected) {
+    boolean match = Arrays.stream(expected)
+      .map(e -> Objects.equals(e, output))
+      .anyMatch(b -> b);
+    Assertions.assertTrue(match, "expected outputs : " + Arrays.toString(expected) + " , but found " + output);
+  }
 }
+

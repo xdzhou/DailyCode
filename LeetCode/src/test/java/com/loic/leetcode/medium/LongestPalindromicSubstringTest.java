@@ -1,15 +1,16 @@
 package com.loic.leetcode.medium;
 
-import org.junit.jupiter.api.Assertions;
+import com.loic.leetcode.SolutionChecker;
 import org.junit.jupiter.api.Test;
 
 class LongestPalindromicSubstringTest {
+  private final SolutionChecker<String, String> checker = SolutionChecker.create(LongestPalindromicSubstring::find, LongestPalindromicSubstring::manacher);
 
   @Test
   void find() {
-    Assertions.assertEquals("", LongestPalindromicSubstring.find(""));
-    Assertions.assertEquals("aba", LongestPalindromicSubstring.find("babad"));
-    Assertions.assertEquals("bb", LongestPalindromicSubstring.find("cbbd"));
-    Assertions.assertEquals("anana", LongestPalindromicSubstring.find("banana"));
+    checker.check("", "")
+      .check("babad", "bab", "aba")
+      .check("cbbd", "bb")
+      .check("banana", "anana");
   }
 }
