@@ -2,8 +2,15 @@ package com.loic.leetcode.medium;
 
 /*
  * 11. Container With Most Water
+ * https://leetcode.com/problems/container-with-most-water/
+ *
+ * Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai).
+ * n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines,
+ * which together with x-axis forms a container, such that the container contains the most water.
+ *
+ * Note: You may not slant the container and n is at least 2.
  */
-public class ContainerMostWater {
+public final class ContainerMostWater {
 
   /*
    * https://leetcode.com/problems/container-with-most-water/discuss/6099/yet-another-way-to-see-what-happens-in-the-on-algorithm
@@ -15,6 +22,7 @@ public class ContainerMostWater {
     while (head < tail) {
       max = Math.max(max, (tail - head) * Math.min(input[head], input[tail]));
       if (input[head] < input[tail]) {
+        //we remove the lower column, because all the container with this lower column will has less water
         head++;
       } else {
         tail--;

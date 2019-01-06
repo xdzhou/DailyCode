@@ -75,7 +75,6 @@ public final class RegularExpressionMatching {
     return indexS == s.length() && (indexP == p.length() || nextP == '*');
   }
 
-
   /**
    * the length of same char at s.charAt(referenceIndex)
    */
