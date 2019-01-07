@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListNode {
-  public int val;
+  public final int val;
   public ListNode next;
 
   public ListNode(int val) {
@@ -49,5 +49,18 @@ public class ListNode {
       node = node.next;
     }
     return list;
+  }
+
+  public boolean equalTo(ListNode other) {
+    ListNode head1 = this;
+    ListNode head2 = other;
+    while (head1 != null && head2 != null) {
+      if (head1.val != head2.val) {
+        return false;
+      }
+      head1 = head1.next;
+      head2 = head2.next;
+    }
+    return head1 == null && head2 == null;
   }
 }
