@@ -4,6 +4,9 @@ import com.loic.helper.ListNode;
 
 /*
  * 19. Remove Nth Node From End of List
+ * https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+ *
+ * Given a linked list, remove the n-th node from the end of list and return its head.
  */
 public class RemoveEndNode {
 
@@ -14,6 +17,9 @@ public class RemoveEndNode {
 
     ListNode first = dummy, second = dummy;
     for (int i = 0; i < n + 1; i++) {
+      if (first == null) {
+        return head;
+      }
       first = first.next;
     }
     while (first != null) {

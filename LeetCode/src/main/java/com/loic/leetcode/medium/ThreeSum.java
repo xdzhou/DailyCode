@@ -2,12 +2,18 @@ package com.loic.leetcode.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /*
  * 15. 3Sum
+ * https://leetcode.com/problems/3sum/
+ *
+ * Given an array nums of n integers, are there elements a, b, c in nums
+ * such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+ *
+ * NOTE: The solution set must not contain duplicate triplets.
  */
 public class ThreeSum {
 
@@ -47,7 +53,7 @@ public class ThreeSum {
 
   public static List<List<Integer>> resolve(int[] input) {
     Arrays.sort(input);
-    Map<List<Integer>, List<Integer>> map = new HashMap<>();
+    Set<List<Integer>> set = new HashSet<>();
     for (int index = 0; index < input.length - 2; index++) {
       int head = index + 1;
       int tail = input.length - 1;
@@ -55,7 +61,7 @@ public class ThreeSum {
         int value = input[head] + input[tail];
         if (value == -input[index]) {
           List<Integer> list = Arrays.asList(input[index], input[head], input[tail]);
-          map.put(list, list);
+          set.add(list);
           head++;
           tail--;
         } else if (value < -input[index]) {
@@ -65,6 +71,6 @@ public class ThreeSum {
         }
       }
     }
-    return new ArrayList<>(map.values());
+    return new ArrayList<>(set);
   }
 }

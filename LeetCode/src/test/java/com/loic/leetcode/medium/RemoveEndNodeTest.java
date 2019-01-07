@@ -13,6 +13,7 @@ class RemoveEndNodeTest {
   @Test
   void testNormalRemove() {
     test(2, Arrays.asList(1, 2, 3, 5), 1, 2, 3, 4, 5);
+    test(200, Arrays.asList(1, 2, 3, 5), 1, 2, 3, 5);
   }
 
   @Test
