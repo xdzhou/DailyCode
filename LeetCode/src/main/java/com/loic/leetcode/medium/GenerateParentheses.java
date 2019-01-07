@@ -5,7 +5,11 @@ import java.util.List;
 
 /*
  * 22. Generate Parentheses
- * https://en.wikipedia.org/wiki/Catalan_number
+ * https://leetcode.com/problems/generate-parentheses/
+ *
+ * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+ *
+ * NOTE: https://en.wikipedia.org/wiki/Catalan_number
  */
 public class GenerateParentheses {
 
