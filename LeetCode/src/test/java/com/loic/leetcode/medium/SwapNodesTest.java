@@ -13,11 +13,11 @@ class SwapNodesTest {
 
   @Test
   void test() {
-    checker.check(ListNode.createNodes(1, 2, 3, 4), (input, output) -> {
+    checker.check(ListNode.create(1, 2, 3, 4), (input, output) -> {
       Assertions.assertEquals(Arrays.asList(2, 1, 4, 3), output.toList());
-    }).check(ListNode.createNodes(1), (input, output) -> {
+    }).check(ListNode.create(1), (input, output) -> {
       Assertions.assertEquals(Collections.singletonList(1), output.toList());
-    }).check(ListNode.createNodes(1, 2, 3), (input, output) -> {
+    }).check(ListNode.create(1, 2, 3), (input, output) -> {
       Assertions.assertEquals(Arrays.asList(2, 1, 3), output.toList());
     });
   }

@@ -37,9 +37,9 @@ class RemoveEndNodeTest {
   }
 
   private void test(int n, List<Integer> expect, int... nums) {
-    ListNode node = RemoveEndNode.resolve(ListNode.createNodes(nums), n);
+    ListNode node = RemoveEndNode.resolve(ListNode.create(nums), n);
     List<Integer> result1 = node == null ? Collections.EMPTY_LIST : node.toList();
-    node = RemoveEndNode.removeNthFromEnd(ListNode.createNodes(nums), n);
+    node = RemoveEndNode.removeNthFromEnd(ListNode.create(nums), n);
     List<Integer> result2 = node == null ? Collections.EMPTY_LIST : node.toList();
     Assertions.assertEquals(expect, result1);
     Assertions.assertEquals(expect, result2);

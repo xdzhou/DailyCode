@@ -11,7 +11,7 @@ public class ListNode {
     this.val = val;
   }
 
-  public static ListNode createNodes(List<Integer> nums) {
+  public static ListNode create(List<Integer> nums) {
     ListNode head = null;
     ListNode cur = null;
     for (int num : nums) {
@@ -26,7 +26,7 @@ public class ListNode {
     return head;
   }
 
-  public static ListNode createNodes(int... nums) {
+  public static ListNode create(int... nums) {
     ListNode head = null;
     ListNode cur = null;
     for (int num : nums) {
