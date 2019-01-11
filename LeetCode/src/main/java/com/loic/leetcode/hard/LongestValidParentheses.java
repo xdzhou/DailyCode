@@ -1,5 +1,7 @@
 package com.loic.leetcode.hard;
 
+import java.util.LinkedList;
+
 /**
  * 32. Longest Valid Parentheses
  * https://leetcode.com/problems/longest-valid-parentheses/
@@ -9,7 +11,66 @@ package com.loic.leetcode.hard;
  */
 public final class LongestValidParentheses {
 
-  public static int find(String s) {
+  public static int stackResolve(String s) {
+    int max = 0;
+    LinkedList<Integer> stack = new LinkedList<>();
+    for (int i = 0; i < s.length(); i++) {
+      if (s.charAt(i) == '(') {
+        if (stack.isEmpty()) {
+          // the 'i-1' pushed is used as reference, in order to compute valid Parentheses length
+          stack.push(i - 1);
+        }
+        stack.push(i);
+      } else {
+        if (!stack.isEmpty()) {
+          stack.pop();
+        }
+        if (!stack.isEmpty()) {
+          // valid Parentheses length is 'i-stack.peek()', that's why we need push 'i-1' at the beginning
+          max = Math.max(max, i - stack.peek());
+        }
+      }
+    }
+    return max;
+  }
+
+  public static int resolve(String s) {
+    int left = 0, right = 0;
+    int max = 0;
+    // scan from left to right, and make sure 'left' is always >= 'right'
+    for (int i = 0; i < s.length(); i++) {
+      if (s.charAt(i) == '(') {
+        left++;
+      } else {
+        right++;
+      }
+      if (left == right) {
+        max = Math.max(max, left + right);
+      } else if (right > left) {
+        left = right = 0;
+      }
+    }
+    left = right = 0;
+    // scan from right to left, and make sure 'right' is always >= 'left'
+    for (int i = s.length() - 1; i >= 0; i--) {
+      if (s.charAt(i) == '(') {
+        left++;
+      } else {
+        right++;
+      }
+      if (left == right) {
+        max = Math.max(max, left + right);
+      } else if (left > right) {
+        left = right = 0;
+      }
+    }
+    // we need scan twice as we may never meet the condition "left==right" to update 'max'
+    // Maybe the 'left' always >= 'right', when scan from left to right
+    // ex. "(()()("
+    return max;
+  }
+
+  public static int dpResolve(String s) {
     int max = 0;
     //dp[i] is the longest valid parentheses length which ended at index i
     int[] dp = new int[s.length()];
