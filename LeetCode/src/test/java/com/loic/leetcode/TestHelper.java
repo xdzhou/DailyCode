@@ -5,7 +5,7 @@ public final class TestHelper {
     //utils
   }
 
-  public static int[] toIntArray(int... nums){
+  public static int[] toArray(int... nums){
     return nums;
   }
 }

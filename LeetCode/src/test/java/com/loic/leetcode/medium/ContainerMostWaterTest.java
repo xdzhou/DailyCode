@@ -1,6 +1,6 @@
 package com.loic.leetcode.medium;
 
-import static com.loic.leetcode.TestHelper.toIntArray;
+import static com.loic.leetcode.TestHelper.toArray;
 
 import java.util.Random;
 
@@ -13,14 +13,14 @@ class ContainerMostWaterTest {
 
   @Test
   void test2lines() {
-    checker.check(toIntArray(2, 3), 2)
-      .check(toIntArray(30, 100), 30);
+    checker.check(toArray(2, 3), 2)
+      .check(toArray(30, 100), 30);
   }
 
   @Test
   void test3lines() {
-    checker.check(toIntArray(2, 3, 8), 4)
-      .check(toIntArray(30, 100, 10), 30);
+    checker.check(toArray(2, 3, 8), 4)
+      .check(toArray(30, 100, 10), 30);
   }
 
   @Test

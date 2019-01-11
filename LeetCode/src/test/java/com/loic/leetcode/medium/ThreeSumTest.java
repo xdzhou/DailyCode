@@ -1,6 +1,6 @@
 package com.loic.leetcode.medium;
 
-import static com.loic.leetcode.TestHelper.toIntArray;
+import static com.loic.leetcode.TestHelper.toArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ class ThreeSumTest {
 
   @Test
   void test() {
-    checker.check(toIntArray(-1, 0, 1, 2, -1, -4), tripleList(-1, -1, 2, -1, 0, 1));
+    checker.check(toArray(-1, 0, 1, 2, -1, -4), tripleList(-1, -1, 2, -1, 0, 1));
   }
 
   private List<List<Integer>> tripleList(int... nums) {

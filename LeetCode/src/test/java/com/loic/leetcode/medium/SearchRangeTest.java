@@ -1,6 +1,6 @@
 package com.loic.leetcode.medium;
 
-import static com.loic.leetcode.TestHelper.toIntArray;
+import static com.loic.leetcode.TestHelper.toArray;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -9,12 +9,12 @@ class SearchRangeTest {
   //FIXME
   //@Test
   void test() {
-    testCase(toIntArray(0, 1, 2, 2, 3), 2, toIntArray(2, 3));
-    testCase(toIntArray(0, 1, 2, 3), 2, toIntArray(2, 2));
-    testCase(toIntArray(0), 0, toIntArray(0, 0));
-    testCase(toIntArray(0, 1), 1, toIntArray(1, 1));
-    testCase(toIntArray(0, 1, 2, 3, 4), 5, toIntArray(-1, -1));
-    testCase(toIntArray(2, 2, 2, 2, 2), 2, toIntArray(0, 4));
+    testCase(toArray(0, 1, 2, 2, 3), 2, toArray(2, 3));
+    testCase(toArray(0, 1, 2, 3), 2, toArray(2, 2));
+    testCase(toArray(0), 0, toArray(0, 0));
+    testCase(toArray(0, 1), 1, toArray(1, 1));
+    testCase(toArray(0, 1, 2, 3, 4), 5, toArray(-1, -1));
+    testCase(toArray(2, 2, 2, 2, 2), 2, toArray(0, 4));
   }
 
   private void testCase(int[] nums, int target, int[] expected) {
