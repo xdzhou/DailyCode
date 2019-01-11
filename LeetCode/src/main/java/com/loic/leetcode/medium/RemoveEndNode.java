@@ -8,7 +8,7 @@ import com.loic.helper.ListNode;
  *
  * Given a linked list, remove the n-th node from the end of list and return its head.
  */
-public class RemoveEndNode {
+public final class RemoveEndNode {
 
 
   public static ListNode removeNthFromEnd(ListNode head, int n) {

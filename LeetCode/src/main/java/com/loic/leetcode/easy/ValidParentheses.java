@@ -14,7 +14,7 @@ import java.util.LinkedList;
  * Open brackets must be closed in the correct order.
  * Note that an empty string is also considered valid.
  */
-public class ValidParentheses {
+public final class ValidParentheses {
 
   public static boolean isValid(String s) {
     LinkedList<Character> stack = new LinkedList<>();
