@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 
 class ValidSudokuTest {
 
-  private final SolutionChecker<char[][], Boolean> checker = SolutionChecker.create(ValidSudoku::resolve);
+  private final SolutionChecker<char[][], Boolean> checker = SolutionChecker.create(ValidSudoku::resolve, ValidSudoku::encodeResolve);
 
   @Test
-  void validSodukoTest() {
+  void validSudokuTest() {
     checker.check(goodBoard(), true);
   }
 
   @Test
-  void unvalidSodukoTest() {
+  void unvalidSudokuTest() {
     checker.check(badBoard(), false);
   }
 
