@@ -15,5 +15,6 @@ class DivideTwoIntegersTest {
     assertEquals(-3, DivideTwoIntegers.resolve(-9, 3));
     assertEquals(0, DivideTwoIntegers.resolve(-1010369383, -2147483648));
     assertEquals(Integer.MAX_VALUE, DivideTwoIntegers.resolve(Integer.MIN_VALUE, -1));
+    assertEquals(Integer.MIN_VALUE, DivideTwoIntegers.resolve(Integer.MIN_VALUE, 1));
   }
 }
