@@ -1,6 +1,6 @@
 package com.loic.leetcode.medium;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 
 /*
  * 19. Remove Nth Node From End of List

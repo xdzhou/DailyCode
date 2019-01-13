@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 /*
- * 10. Regular Expression Matching
+ * 36. Valid Sudoku
+ * https://leetcode.com/problems/valid-sudoku/
+ *
+ * Determine if a 9x9 Sudoku board is valid.
  */
 public class ValidSudoku {
 

@@ -3,7 +3,7 @@ package com.loic.leetcode.hard;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 
 /**
  * 23. Merge k Sorted Lists

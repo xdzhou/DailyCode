@@ -2,7 +2,7 @@ package com.loic.leetcode.hard;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 import org.junit.jupiter.api.Test;
 
 class ReverseNodesInKGroupTest {

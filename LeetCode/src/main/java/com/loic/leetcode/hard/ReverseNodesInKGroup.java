@@ -1,6 +1,6 @@
 package com.loic.leetcode.hard;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 
 /**
  * 25. Reverse Nodes in k-Group

@@ -1,6 +1,6 @@
 package com.loic.leetcode.easy;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 
 /**
  * 21. Merge Two Sorted Lists

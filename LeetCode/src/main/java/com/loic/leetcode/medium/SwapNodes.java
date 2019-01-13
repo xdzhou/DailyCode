@@ -1,6 +1,6 @@
 package com.loic.leetcode.medium;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 
 /*
  * 24. Swap Nodes in Pairs

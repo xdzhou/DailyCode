@@ -3,7 +3,7 @@ package com.loic.leetcode.medium;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.loic.helper.ListNode;
+import com.loic.leetcode.helper.ListNode;
 import com.loic.leetcode.SolutionChecker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.loic.helper;
+package com.loic.leetcode.helper;
 
 import java.util.ArrayList;
 import java.util.List;
