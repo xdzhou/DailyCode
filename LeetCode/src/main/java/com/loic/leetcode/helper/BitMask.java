@@ -3,10 +3,10 @@ package com.loic.leetcode.helper;
 /**
  * an array of boolean, by default, the array is set to false
  */
-public class BooleanArray {
+public class BitMask {
   private final int[] bits;
 
-  public BooleanArray(int size) {
+  public BitMask(int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("size should be positive");
     }

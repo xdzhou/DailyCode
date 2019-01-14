@@ -9,12 +9,12 @@ class BooleanArrayTest {
 
   @Test
   void negativeSize() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> new BooleanArray(-5));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> new BitMask(-5));
   }
 
   @Test
   void get() {
-    BooleanArray array = new BooleanArray(100);
+    BitMask array = new BitMask(100);
     long trueCount = IntStream.range(0, 100).filter(array::get).count();
     Assertions.assertEquals(0, trueCount);
 

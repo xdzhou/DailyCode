@@ -3,7 +3,7 @@ package com.loic.leetcode.medium;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.loic.leetcode.helper.BooleanArray;
+import com.loic.leetcode.helper.BitMask;
 
 /*
  * 36. Valid Sudoku
@@ -41,7 +41,7 @@ public class ValidSudoku {
     // first 81 items for row
     // second 81 items for column
     // last 81 items for cell
-    BooleanArray array = new BooleanArray(9 * 9 * 3);
+    BitMask array = new BitMask(9 * 9 * 3);
     // array[0]: row 0 already has '1', array[9]: row 1 already has '1'
     // array[81]: column 0 already has '1' ...
     for (int i = 0; i < 9; i++) {
@@ -60,7 +60,7 @@ public class ValidSudoku {
   }
 
   // try set true for index, if anyone is already set, return false
-  private static boolean check(BooleanArray array, int... index) {
+  private static boolean check(BitMask array, int... index) {
     for (int i : index) {
       if (array.get(i)) {
         return false;
