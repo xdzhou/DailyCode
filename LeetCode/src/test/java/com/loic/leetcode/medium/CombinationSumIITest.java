@@ -1,31 +1,50 @@
 package com.loic.leetcode.medium;
 
-import static com.loic.leetcode.TestHelper.toArray;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CombinationSumIITest {
 
   @Test
   void testEmpty() {
-    Assertions.assertTrue(CombinationSumII.resolve(toArray(), 8).isEmpty());
-    Assertions.assertTrue(CombinationSumII.resolve(toArray(9), 8).isEmpty());
-    Assertions.assertTrue(CombinationSumII.resolve(toArray(3, 7), 8).isEmpty());
-    Assertions.assertTrue(CombinationSumII.resolve(toArray(1, 3, 7), 100).isEmpty());
+    assertTrue(CombinationSumII.combine(8).isEmpty());
+    assertTrue(CombinationSumII.combine(8, 9).isEmpty());
+    assertTrue(CombinationSumII.combine(8, 3, 7).isEmpty());
+    assertTrue(CombinationSumII.combine(100, 3, 7, 1).isEmpty());
+
+    assertTrue(CombinationSumII.combine2(8).isEmpty());
+    assertTrue(CombinationSumII.combine2(8, 9).isEmpty());
+    assertTrue(CombinationSumII.combine2(8, 3, 7).isEmpty());
+    assertTrue(CombinationSumII.combine2(100, 3, 7, 1).isEmpty());
   }
 
   @Test
   void testSimpleCase() {
-    Assertions.assertEquals(Arrays.asList(Arrays.asList(7)), CombinationSumII.resolve(toArray(2, 3, 6, 7), 7));
+    assertEquals(Arrays.asList(Arrays.asList(7)), CombinationSumII.combine(7, 2, 3, 6, 7));
+    assertEquals(Arrays.asList(Arrays.asList(7)), CombinationSumII.combine2(7, 2, 3, 6, 7));
   }
 
   @Test
   void testSmallCase() {
     List<List<Integer>> result = Arrays.asList(Arrays.asList(1, 7), Arrays.asList(2, 6), Arrays.asList(1, 1, 6), Arrays.asList(1, 2, 5));
-    Assertions.assertEquals(result, CombinationSumII.resolve(toArray(10, 1, 2, 7, 6, 1, 5), 8));
+
+    assertTrue(listEqual(result, CombinationSumII.combine(8, 10, 1, 2, 7, 6, 1, 5)));
+    assertTrue(listEqual(result, CombinationSumII.combine2(8, 10, 1, 2, 7, 6, 1, 5)));
+  }
+
+  private boolean listEqual(List<List<Integer>> list1, List<List<Integer>> list2) {
+    return list2Set(list1).equals(list2Set(list2));
+  }
+
+  private Set<Set<Integer>> list2Set(List<List<Integer>> list) {
+    return list.stream().map(HashSet::new).collect(Collectors.toSet());
   }
 }
