@@ -113,7 +113,7 @@ public final class SudokuSolver {
         }
       }
     }
-    //
+    //TODO fill other empty cell
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
         board[i][j] = cells[i][j].value;
@@ -159,9 +159,8 @@ public final class SudokuSolver {
     }
   }
 
-  static List<Character> CHARS = Arrays.asList('1', '2', '3', '4', '5', '6', '7', '8', '9');
-
   private static class Cell {
+    private static final List<Character> CHARS = Arrays.asList('1', '2', '3', '4', '5', '6', '7', '8', '9');
     private char value = '.';
     private final Set<Character> possibleChars = new HashSet<>(CHARS);
 
