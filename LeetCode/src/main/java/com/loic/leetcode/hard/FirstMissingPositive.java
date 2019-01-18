@@ -10,6 +10,29 @@ import java.util.Arrays;
  */
 public final class FirstMissingPositive {
 
+  public static int optimalFind(int... nums) {
+    int index = 0;
+    //idea is to move 1 to nums[0], 2 to nums[1] ...
+    while (index < nums.length) {
+      if (nums[index] == index + 1 || nums[index] <= 0 || nums[index] > nums.length) {
+        //skip too small or too big numbers
+        index++;
+      } else if (nums[index] != nums[nums[index] - 1]) { // illimite loop without this condition
+        //move nums[index] to his correct place (to index 'nums[index]-1')
+        int tmp = nums[index];
+        nums[index] = nums[nums[index] - 1];
+        nums[tmp - 1] = tmp;
+      } else {
+        index++;
+      }
+    }
+    index = 0;
+    while (index < nums.length && index + 1 == nums[index]) {
+      index++;
+    }
+    return index + 1;
+  }
+
   public static int find(int... nums) {
     Arrays.sort(nums);
 
