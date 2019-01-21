@@ -18,6 +18,7 @@ public class ReverseInteger {
     int threshold = Integer.MAX_VALUE / 10;
     int cur = 0;
     while (num != 0) {
+      // -121%10=-1
       int mod = num % 10;
       //overflows may happens when compute (10*cur)
       if (Math.abs(cur) > threshold) {

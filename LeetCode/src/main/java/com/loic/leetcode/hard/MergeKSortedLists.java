@@ -14,6 +14,7 @@ import com.loic.leetcode.helper.ListNode;
 public final class MergeKSortedLists {
 
   public static ListNode merge(ListNode... lists) {
+    //PQ size should >0, while lists size could be zero
     PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length + 1, Comparator.comparingInt(n -> n.val));
     int listRemain = lists.length;
     for (ListNode head : lists) {

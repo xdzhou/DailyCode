@@ -9,6 +9,9 @@ package com.loic.leetcode.hard;
  */
 public final class TrappingRainWater {
 
+  /**
+   * idea is to find left hightest and right highest of current item
+   */
   public static int trap(int... heights) {
     if (heights.length < 3) {
       return 0;

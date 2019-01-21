@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public final class SubstringWithConcatenationWords {
 
+  // ATTENTION: the words array could contain duplications
   public static List<Integer> findSubstring(String s, String... words) {
     int wordLen = words.length == 0 ? 0 : words[0].length();
     if (wordLen == 0 || s.length() < wordLen * words.length) {

@@ -87,7 +87,7 @@ public final class LongestValidParentheses {
             dp[i] = 0;
           } else {
             // we found a valid parentheses end at index 'i-1'
-            // check s[i-dp[i-1]-1, i] substring could be a valid parentheses
+            // check if s[i-dp[i-1]-1, i] substring could be a valid parentheses
             int opponent = i - dp[i - 1] - 1;
             // we also need to contact previous potential valid parentheses which end at index 'opponent - 1'
             dp[i] = getChar(s, opponent) == '(' ? dp[i - 1] + 2 + getDp(dp, opponent - 1) : 0;
