@@ -13,7 +13,7 @@ class WildcardMatchingTest {
   }
 
   @Test
-  void isMatch() {
+  void test() {
     Assertions.assertTrue(WildcardMatching.isMatch("", "*"));
     Assertions.assertTrue(WildcardMatching.isMatch("a", "*"));
     Assertions.assertTrue(WildcardMatching.isMatch("ab", "*"));
@@ -21,6 +21,7 @@ class WildcardMatchingTest {
     Assertions.assertTrue(WildcardMatching.isMatch("abcd", "a*d"));
 
     Assertions.assertFalse(WildcardMatching.isMatch("abcd", "a?dd"));
+    Assertions.assertFalse(WildcardMatching.isMatch("b", "*a*"));
   }
 
   @Test
