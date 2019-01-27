@@ -21,17 +21,19 @@ public final class Permutations {
     if (start == nums.length) {
       result.add(new ArrayList<>());
     } else {
+      // generate permutation of nums[start+1:]
       process(result, start + 1, nums);
       int delta = nums.length - 1 - start;
 
       int size = result.size();
-      for (int j = 0; j < size; j++) {
-        for (int i = 0; i <= delta; i++) {
-          if (i == delta) {
-            result.get(j).add(i, nums[start]);
+      // for all the permutation of nums[start+1:], insert nums[start] at different position
+      for (int subIndex = 0; subIndex < size; subIndex++) {
+        for (int insertPosition = 0; insertPosition <= delta; insertPosition++) {
+          if (insertPosition == delta) {
+            result.get(subIndex).add(insertPosition, nums[start]);
           } else {
-            List<Integer> subList = new ArrayList<>(result.get(j));
-            subList.add(i, nums[start]);
+            List<Integer> subList = new ArrayList<>(result.get(subIndex));
+            subList.add(insertPosition, nums[start]);
             result.add(subList);
           }
         }
