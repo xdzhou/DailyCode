@@ -1,7 +1,5 @@
 package com.loic.leetcode.medium;
 
-import static com.loic.leetcode.TestHelper.list2Set;
-import static com.loic.leetcode.TestHelper.toList;
 import static com.loic.leetcode.TestHelper.toSet;
 
 import java.util.List;
@@ -16,14 +14,14 @@ class PermutationsTest {
   void permute() {
     List<List<Integer>> result = Permutations.permute(1, 2, 3);
 
-    Set<List<Integer>> expected = toSet(
-      toList(1, 2, 3),
-      toList(1, 3, 2),
-      toList(2, 1, 3),
-      toList(2, 3, 1),
-      toList(3, 1, 2),
-      toList(3, 2, 1));
+    Set<Set<Integer>> expected = toSet(
+      toSet(1, 2, 3),
+      toSet(1, 3, 2),
+      toSet(2, 1, 3),
+      toSet(2, 3, 1),
+      toSet(3, 1, 2),
+      toSet(3, 2, 1));
 
-    Assertions.assertEquals(expected, list2Set(result));
+    Assertions.assertEquals(expected, toSet(result));
   }
 }

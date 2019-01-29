@@ -7,7 +7,8 @@ public final class JumpGame2 {
   public static int optimal(int... nums) {
     int jumpCount = 0;
     // if we jump 'jumpCount' times, we could go to index range [from:to]
-    int from = 0, to = 0;
+    int to = 0;
+    // int from = 0;
     // the farthest index we can jump to, from index range [from:to]
     // and index range [to+1:farthest] will be jumping 'jumpCount+1' times range
     int farthest = 0;
@@ -17,7 +18,7 @@ public final class JumpGame2 {
       farthest = Math.max(farthest, i + nums[i]);
       if (i == to) {
         jumpCount++;
-        from = i + 1;
+        //from = i + 1;
         to = farthest;
       }
     }

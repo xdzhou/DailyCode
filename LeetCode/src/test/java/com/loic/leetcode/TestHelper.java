@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class TestHelper {
   private TestHelper() {
@@ -14,12 +15,12 @@ public final class TestHelper {
     return nums;
   }
 
-  public static <T> Set<T> list2Set(List<T> list) {
-    return new HashSet<>(list);
+  public static <T> Set<Set<T>> toSet(List<List<T>> list) {
+    return list.stream().map(HashSet::new).collect(Collectors.toSet());
   }
 
   public static <T> Set<T> toSet(T... array) {
-    return list2Set(Arrays.asList(array));
+    return new HashSet<>(Arrays.asList(array));
   }
 
   public static <T> List<T> toList(T... array) {
