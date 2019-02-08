@@ -2,6 +2,16 @@ package com.loic.leetcode.hard;
 
 import java.util.Arrays;
 
+/**
+ * 45. Jump Game II
+ * https://leetcode.com/problems/jump-game-ii/
+ * <p>
+ * Given an array of non-negative integers, you are initially positioned at the first index of the array.
+ * <p>
+ * Each element in the array represents your maximum jump length at that position.
+ * <p>
+ * Your goal is to reach the last index in the minimum number of jumps.
+ */
 public final class JumpGame2 {
 
   public static int optimal(int... nums) {
