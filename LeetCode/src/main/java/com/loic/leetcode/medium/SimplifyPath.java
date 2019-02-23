@@ -1,5 +1,6 @@
 package com.loic.leetcode.medium;
 
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
@@ -20,11 +21,9 @@ public final class SimplifyPath {
     String[] subPaths = path.split("/");
     for (String sub : subPaths) {
       if (sub.length() > 0) {
-        if (sub.equals(".")) {
-          //nothing to do
-        } else if (sub.equals("..")) {
+        if (sub.equals("..")) {
           p.parentDir();
-        } else {
+        } else if (!sub.equals(".")) {
           p.childDir(sub);
         }
       }
@@ -34,7 +33,7 @@ public final class SimplifyPath {
 
   private static class Path {
 
-    private final LinkedList<String> dirs = new LinkedList<>();
+    private final Deque<String> dirs = new LinkedList<>();
 
     public void childDir(String child) {
       dirs.push(child);
