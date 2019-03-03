@@ -18,6 +18,10 @@ public final class TestHelper {
     return nums;
   }
 
+  public static char[] toCharArray(char... chars) {
+    return chars;
+  }
+
   public static <T> Set<Set<T>> toSet(List<List<T>> list) {
     return list.stream().map(HashSet::new).collect(Collectors.toSet());
   }
