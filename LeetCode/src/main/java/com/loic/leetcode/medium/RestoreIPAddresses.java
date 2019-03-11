@@ -34,10 +34,10 @@ public final class RestoreIPAddresses {
       if (lens.size() == 3) {
         if (remainLen <= maxLen && convert(ip, lens.get(lens.size() - 1), remainLen) <= 255) {
           StringBuilder sb = new StringBuilder();
-          sb.append(ip, 0, lens.get(0)).append('.');
-          sb.append(ip, lens.get(0), lens.get(1)).append('.');
-          sb.append(ip, lens.get(1), lens.get(2)).append('.');
-          sb.append(ip, lens.get(2), ip.length());
+          sb.append(ip, 0, lens.get(0)).append('.')
+            .append(ip, lens.get(0), lens.get(1)).append('.')
+            .append(ip, lens.get(1), lens.get(2)).append('.')
+            .append(ip, lens.get(2), ip.length());
           result.add(sb.toString());
         }
       } else {
