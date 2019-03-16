@@ -1,9 +1,11 @@
 package com.loic.leetcode.helper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class TreeNode {
   public int val;
@@ -42,6 +44,10 @@ public class TreeNode {
       }
     }
     return root;
+  }
+
+  public static TreeNode fromLevelOrder(int... values) {
+    return fromLevelOrder(Arrays.stream(values).boxed().collect(Collectors.toList()));
   }
 
   private static TreeNode generate(List<Integer> list, int index) {
