@@ -17,7 +17,7 @@ public class TreeNode {
   /**
    * create a Binary tree from level order
    */
-  public static TreeNode createFromLevelOrder(List<Integer> list) {
+  public static TreeNode fromLevelOrder(List<Integer> list) {
     if (list.isEmpty()) {
       return null;
     }
