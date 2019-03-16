@@ -30,10 +30,6 @@ public final class TestHelper {
     return new HashSet<>(Arrays.asList(array));
   }
 
-  public static <T> List<T> toList(T... array) {
-    return Arrays.asList(array);
-  }
-
   public static List<Interval> intervals(int... nums) {
     List<Interval> list = new ArrayList<>();
     for (int i = 0; i < nums.length; i = i + 2) {
