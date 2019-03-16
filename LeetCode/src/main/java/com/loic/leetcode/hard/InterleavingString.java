@@ -69,4 +69,55 @@ public final class InterleavingString {
     memo[memoIndex] = 1;
     return true;
   }
+
+  public static boolean dpSolution2D(String s1, String s2, String s3) {
+    if (s1.length() + s2.length() != s3.length()) {
+      return false;
+    }
+    // dp[i,j] means whether s3[-1:i+j) is formed by interleaving of s1[-1:i) and s2[-1:j)
+    boolean[][] dp = new boolean[s1.length() + 1][s2.length() + 1];
+    for (int i = 0; i <= s1.length(); i++) {
+      for (int j = 0; j <= s2.length(); j++) {
+        if (i == 0) {
+          dp[i][j] = j == 0 || dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
+        } else if (j == 0) {
+          dp[i][j] = dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i - 1);
+        } else {
+          char c = s3.charAt(i + j - 1);
+          dp[i][j] =
+            (dp[i][j - 1] && s2.charAt(j - 1) == c) || (dp[i - 1][j] && s1.charAt(i - 1) == c);
+        }
+      }
+    }
+    return dp[s1.length()][s2.length()];
+  }
+
+  /**
+   * from the 2D DP solution, we know that dp[i][j] only depends on dp[i-1][j] or dp[i][j-1], in
+   * this case, we can use 1D dp instead
+   */
+  public static boolean dpSolution1D(String s1, String s2, String s3) {
+    if (s1.length() + s2.length() != s3.length()) {
+      return false;
+    }
+    if (s1.length() < s2.length()) {
+      return dpSolution1D(s2, s1, s3);
+    }
+    // dp[i,j] means whether s3[-1:i+j) is formed by interleaving of s1[-1:i) and s2[-1:j)
+    boolean[] dp = new boolean[s2.length() + 1];
+    for (int i = 0; i <= s1.length(); i++) {
+      for (int j = 0; j <= s2.length(); j++) {
+        if (i == 0) {
+          dp[j] = j == 0 || dp[j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
+        } else if (j == 0) {
+          dp[j] = dp[j] && s1.charAt(i - 1) == s3.charAt(i - 1);
+        } else {
+          char c = s3.charAt(i + j - 1);
+          dp[j] =
+            (dp[j - 1] && s2.charAt(j - 1) == c) || (dp[j] && s1.charAt(i - 1) == c);
+        }
+      }
+    }
+    return dp[s2.length()];
+  }
 }
