@@ -16,6 +16,20 @@ public class TreeNode {
     val = x;
   }
 
+  public boolean equal(TreeNode other) {
+    return isSameTree(this, other);
+  }
+
+  private static boolean isSameTree(TreeNode p, TreeNode q) {
+    if (p == null) {
+      return q == null;
+    }
+    if (q == null) {
+      return false;
+    }
+    return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+  }
+
   /**
    * create a Binary tree from level order
    */
