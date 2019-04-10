@@ -1,8 +1,10 @@
 package com.loic.leetcode.hard;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * 128. Longest Consecutive Sequence
@@ -20,6 +22,7 @@ import java.util.OptionalInt;
  */
 public class LongestConsecutiveSequence {
 
+  // union find
   public static int maxLen(int... nums) {
     Map<Integer, Node> visited = new HashMap<>();
     for (int val : nums) {
@@ -59,5 +62,24 @@ public class LongestConsecutiveSequence {
         return root;
       }
     }
+  }
+
+  public static int maxLen2(int... nums) {
+    Set<Integer> set = new HashSet<>();
+    for (int val : nums) {
+      set.add(val);
+    }
+    int maxLen = 0;
+    for (int val : nums) {
+      // make sure 'val' is the first number of the sequence
+      if (!set.contains(val - 1)) {
+        int num = val + 1;
+        while (set.contains(num)) {
+          num++;
+        }
+        maxLen = Math.max(maxLen, num - val);
+      }
+    }
+    return maxLen;
   }
 }
