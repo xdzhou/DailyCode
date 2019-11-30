@@ -89,7 +89,6 @@ public class WordLadder2 {
     // DFS to print path
     List<List<String>> path = new ArrayList<>();
     dfs(endWordIndex, minDis, graph, allWords, new LinkedList<>(), path);
-    System.out.println(path);
     return path;
   }
 
