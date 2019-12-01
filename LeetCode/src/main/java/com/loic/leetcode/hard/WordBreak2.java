@@ -3,12 +3,9 @@ package com.loic.leetcode.hard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * 140. Word Break II
@@ -52,24 +49,19 @@ import java.util.stream.Collectors;
 public class WordBreak2 {
 
   public static List<String> wordBreak(String s, List<String> wordDict) {
-    Set<String> words = new HashSet<>(wordDict);
-    Set<Integer> lens = words.stream()
-      .map(String::length)
-      .collect(Collectors.toSet());
-    // dp[i] is all possible break of s[i,). if empty, s[i,) can NOT break
-    Map<Integer, Break> dp = new HashMap<>();
+    // dp[i] is all possible partition of s[i,). if Null, s[i,) can NOT break
+    Map<Integer, Partition> dp = new HashMap<>();
     for (int begin = s.length() - 1; begin >= 0; begin--) {
+      String subS = s.substring(begin);
       int from = begin;
-      Break partition = new Break(from);
-      lens.stream()
-        .map(len -> from + len)
-        .filter(end -> end <= s.length())
-        .filter(end -> words.contains(s.substring(from, end)))
-        .forEach(end -> {
-          if (end == s.length()) {
-            partition.subBreaks.add(Break.EMPTY);
-          } else if (dp.containsKey(end)) {
-            partition.subBreaks.add(dp.get(end));
+      Partition partition = new Partition(from);
+      wordDict.stream()
+        .filter(subS::startsWith)
+        .forEach(w -> {
+          if (w.length() == subS.length()) {
+            partition.subBreaks.add(Partition.EMPTY);
+          } else if (dp.containsKey(from + w.length())) {
+            partition.subBreaks.add(dp.get(from + w.length()));
           }
         });
       if (!partition.subBreaks.isEmpty()) {
@@ -95,13 +87,13 @@ public class WordBreak2 {
     }
   }
 
-  private static final class Break {
-    private static final Break EMPTY = new Break(-1);
+  private static final class Partition {
+    private static final Partition EMPTY = new Partition(-1);
 
     private final int from;
-    private final List<Break> subBreaks = new ArrayList<>();
+    private final List<Partition> subBreaks = new ArrayList<>();
 
-    private Break(int from) {
+    private Partition(int from) {
       this.from = from;
     }
 
