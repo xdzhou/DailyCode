@@ -21,5 +21,6 @@ class BinaryTreeInorderTraversalTest {
     root.right = right;
 
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7), BinaryTreeInorderTraversal.visit(root));
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7), BinaryTreeInorderTraversal.visit2(root));
   }
 }
