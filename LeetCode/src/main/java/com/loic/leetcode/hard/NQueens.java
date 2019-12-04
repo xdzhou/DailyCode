@@ -1,6 +1,7 @@
 package com.loic.leetcode.hard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,9 +20,7 @@ public final class NQueens {
   public static List<List<String>> solve(int n) {
     char[][] board = new char[n][n];
     for (char[] chars : board) {
-      for (int i = 0; i < chars.length; i++) {
-        chars[i] = '.';
-      }
+      Arrays.fill(chars, '.');
     }
     List<List<String>> result = new ArrayList<>();
     process(board, result, 0, new HashSet<>(), new HashSet<>(), new HashSet<>());
