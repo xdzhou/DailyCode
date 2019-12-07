@@ -13,7 +13,7 @@ class PascalTriangleTest {
   void generate() {
     Assertions.assertEquals(singletonList(singletonList(1)), PascalTriangle.generate(1));
     Assertions.assertEquals(
-      Arrays.asList(singletonList(1), Arrays.asList(1, 1), Arrays.asList(1, 2, 2)),
+      Arrays.asList(singletonList(1), Arrays.asList(1, 1), Arrays.asList(1, 2, 1)),
       PascalTriangle.generate(3));
   }
 }
