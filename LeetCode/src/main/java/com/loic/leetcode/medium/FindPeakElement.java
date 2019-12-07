@@ -38,8 +38,8 @@ public class FindPeakElement {
     int to = nums.length - 1;
     while (from < to) {
       int mid = (from + to) >>> 1;
-      boolean biggerThanPre = mid == 0 ? true : nums[mid - 1] < nums[mid];
-      boolean biggerThanNext = mid == nums.length - 1 ? true : nums[mid + 1] < nums[mid];
+      boolean biggerThanPre = mid == 0 || nums[mid - 1] < nums[mid];
+      boolean biggerThanNext = mid == nums.length - 1 || nums[mid + 1] < nums[mid];
       if (biggerThanPre && biggerThanNext) {
         return mid;
       } else if (biggerThanPre) {
