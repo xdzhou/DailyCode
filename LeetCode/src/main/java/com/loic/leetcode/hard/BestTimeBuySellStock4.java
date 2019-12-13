@@ -69,6 +69,47 @@ public class BestTimeBuySellStock4 {
     return dp[ascendings.size()][k];
   }
 
+  public static int maxProfit2(int m, int... prices) {
+    if (m == 0 || prices.length < 2) {
+      return 0;
+    }
+    if (m >= prices.length / 2) {
+      //max profit could got
+      int maxProfit = 0;
+      for (int i = 1; i < prices.length; i++) {
+        maxProfit += (Math.max(0, prices[i] - prices[i - 1]));
+      }
+      return maxProfit;
+    }
+    /*
+     * f(n,k) means the max profit could got from first n-th prices within max k transactions
+     * f(n,k) = f(n-1,k) if the n-th price isn't used
+     * f(n,k) = f(n-2,k-1)+p(n)-p(n-1) if sell at n-th, buy at (n-1)-th
+     * f(n,k) = f(n-3,k-1)+p(n)-p(n-2) if sell at n-th, buy at (n-2)-th
+     * f(n,k) = f(n-4,k-1)+p(n)-p(n-3) if sell at n-th, buy at (n-3)-th
+     * bref, to get f(n,k) when selling at n-th
+     * ==> compute max[f(n-2,k-1)+p(n)-p(n-1), f(n-3,k-1)+p(n)-p(n-2), f(n-4,k-1)+p(n)-p(n-3), ...]
+     * ==> compute max[f(n-2,k-1)-p(n-1), f(n-3,k-1)-p(n-2), f(n-4,k-1)-p(n-3), ...]
+     * ==> using a temp variable to trace the max of this number
+     */
+    //dp[k][n] = f(n,k) above
+    int[][] dp = new int[2][prices.length];
+    boolean reverse = false;
+    for (int k = 1; k <= m; k++) {
+      //preK[n] = f(n,k-1)
+      int[] preK = reverse ? dp[1] : dp[0];
+      //curK[n] = f(n,k)
+      int[] curK = reverse ? dp[0] : dp[1];
+      int tempMax = -prices[0];
+      for (int n = 1; n < prices.length; n++) {
+        curK[n] = Math.max(curK[n - 1], tempMax + prices[n]);
+        tempMax = Math.max(tempMax, preK[n - 1] - prices[n]);
+      }
+      reverse = !reverse;
+    }
+    return reverse ? dp[1][prices.length - 1] : dp[0][prices.length - 1];
+  }
+
   private static List<Ascending> retrieveAscending(int... prices) {
     List<Ascending> result = new ArrayList<>();
     Boolean isRaising = null;

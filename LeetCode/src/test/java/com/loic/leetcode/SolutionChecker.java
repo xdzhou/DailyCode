@@ -1,5 +1,6 @@
 package com.loic.leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -15,15 +16,15 @@ public final class SolutionChecker<I, O> {
     this.algos = algos;
   }
 
-  public static <I, O> SolutionChecker<I, O> create(Function<I, O>... algos) {
-    return new SolutionChecker<>(Arrays.asList(algos));
+  public static <I, O> SolutionChecker<I, O> create(Function<I, O> algo0, Function<I, O>... algos) {
+    List<Function<I, O>> list = new ArrayList<>(1 + algos.length);
+    list.add(algo0);
+    Arrays.stream(algos).forEach(list::add);
+    return new SolutionChecker<>(list);
   }
 
-  public SolutionChecker<I, O> check(I input, O... expected) {
-    for (Function<I, O> algo : algos) {
-      assertOutputs(algo.apply(input), expected);
-    }
-    return this;
+  public SolutionChecker<I, O> check(I input, O expected) {
+    return check(input, (i, o) -> Assertions.assertEquals(o, expected));
   }
 
   public SolutionChecker<I, O> check(I input, BiConsumer<I, O> consumer) {
@@ -42,13 +43,6 @@ public final class SolutionChecker<I, O> {
       Assertions.assertEquals(expected, algos.get(i).apply(input));
     }
     return this;
-  }
-
-  private void assertOutputs(O output, O... expected) {
-    boolean match = Arrays.stream(expected)
-      .map(e -> Objects.equals(e, output))
-      .anyMatch(b -> b);
-    Assertions.assertTrue(match, "expected outputs : " + Arrays.toString(expected) + " , but found " + output);
   }
 }
 
