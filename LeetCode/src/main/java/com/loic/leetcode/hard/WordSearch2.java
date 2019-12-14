@@ -134,4 +134,68 @@ public class WordSearch2 {
       return globalCharCount.charTable[row][col] < charTable[row][col];
     }
   }
+
+
+  /////optimal///
+  public static List<String> findWords2(char[][] board, String... words) {
+    Trie root = buildTrie(words);
+    List<String> result = new ArrayList<>();
+    for (int row = 0; row < board.length; row++) {
+      for (int col = 0; col < board[0].length; col++) {
+        dfs(row, col, board, root, result);
+      }
+    }
+    return result;
+  }
+
+  private static void dfs(int row, int col, char[][] board, Trie t, List<String> result) {
+    char c = board[row][col];
+    if (c == '@' || t.next(c) == null) {
+      return;
+    }
+    t = t.next(c);
+    if (t.word != null) {
+      result.add(t.word);
+      t.word = null; // remove duplicate
+    }
+    board[row][col] = '@';
+    if (row > 0) {
+      dfs(row - 1, col, board, t, result);
+    }
+    if (row < board.length - 1) {
+      dfs(row + 1, col, board, t, result);
+    }
+    if (col > 0) {
+      dfs(row, col - 1, board, t, result);
+    }
+    if (col < board[0].length - 1) {
+      dfs(row, col + 1, board, t, result);
+    }
+    board[row][col] = c;
+  }
+
+  private static Trie buildTrie(String... words) {
+    Trie root = new Trie();
+    for (String w : words) {
+      Trie t = root;
+      for (char c : w.toCharArray()) {
+        int index = c - 'a';
+        if (t.next[index] == null) {
+          t.next[index] = new Trie();
+        }
+        t = t.next[index];
+      }
+      t.word = w;
+    }
+    return root;
+  }
+
+  private static final class Trie {
+    private final Trie[] next = new Trie[26];
+    private String word;
+
+    public Trie next(char c) {
+      return next[c - 'a'];
+    }
+  }
 }

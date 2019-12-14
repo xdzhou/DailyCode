@@ -12,6 +12,11 @@ class WordSearch2Test {
     Assertions.assertEquals(Arrays.asList("oath", "eat"), WordSearch2.findWords(board("oaan", "etae", "ihkr", "iflv"), "oath", "pea", "eat", "rain"));
   }
 
+  @Test
+  void simple2() {
+    Assertions.assertEquals(Arrays.asList("oath", "eat"), WordSearch2.findWords2(board("oaan", "etae", "ihkr", "iflv"), "oath", "pea", "eat", "rain"));
+  }
+
   private char[][] board(String... rows) {
     char[][] board = new char[rows.length][];
     for (int i = 0; i < rows.length; i++) {
