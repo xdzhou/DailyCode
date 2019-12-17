@@ -3,7 +3,6 @@ package com.loic.leetcode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -19,12 +18,12 @@ public final class SolutionChecker<I, O> {
   public static <I, O> SolutionChecker<I, O> create(Function<I, O> algo0, Function<I, O>... algos) {
     List<Function<I, O>> list = new ArrayList<>(1 + algos.length);
     list.add(algo0);
-    Arrays.stream(algos).forEach(list::add);
+    list.addAll(Arrays.asList(algos));
     return new SolutionChecker<>(list);
   }
 
   public SolutionChecker<I, O> check(I input, O expected) {
-    return check(input, (i, o) -> Assertions.assertEquals(o, expected));
+    return check(input, (i, o) -> Assertions.assertEquals(expected, o));
   }
 
   public SolutionChecker<I, O> check(I input, BiConsumer<I, O> consumer) {

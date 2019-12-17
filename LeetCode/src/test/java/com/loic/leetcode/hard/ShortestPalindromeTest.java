@@ -1,6 +1,6 @@
 package com.loic.leetcode.hard;
 
-import org.junit.jupiter.api.Assertions;
+import com.loic.leetcode.SolutionChecker;
 import org.junit.jupiter.api.Test;
 
 class ShortestPalindromeTest {
@@ -8,32 +8,14 @@ class ShortestPalindromeTest {
 
   @Test
   void simple() {
-    Assertions.assertEquals("", ShortestPalindrome.shortestPalindrome(""));
-    Assertions.assertEquals("a", ShortestPalindrome.shortestPalindrome("a"));
-    Assertions.assertEquals("aa", ShortestPalindrome.shortestPalindrome("aa"));
-    Assertions.assertEquals("aba", ShortestPalindrome.shortestPalindrome("aba"));
-    Assertions.assertEquals("aaacecaaa", ShortestPalindrome.shortestPalindrome("aacecaaa"));
-    Assertions.assertEquals("dcbabcd", ShortestPalindrome.shortestPalindrome("abcd"));
-  }
-
-  @Test
-  void simple2() {
-    Assertions.assertEquals("", ShortestPalindrome.shortestPalindrome2(""));
-    Assertions.assertEquals("a", ShortestPalindrome.shortestPalindrome2("a"));
-    Assertions.assertEquals("aa", ShortestPalindrome.shortestPalindrome2("aa"));
-    Assertions.assertEquals("aba", ShortestPalindrome.shortestPalindrome2("aba"));
-    Assertions.assertEquals("aaacecaaa", ShortestPalindrome.shortestPalindrome2("aacecaaa"));
-    Assertions.assertEquals("dcbabcd", ShortestPalindrome.shortestPalindrome2("abcd"));
-  }
-
-  @Test
-  void test1() {
-    Assertions.assertEquals(BIG, ShortestPalindrome.shortestPalindrome(BIG));
-  }
-
-  @Test
-  void test2() {
-    Assertions.assertEquals(BIG, ShortestPalindrome.shortestPalindrome2(BIG));
+    SolutionChecker.create(ShortestPalindrome::shortestPalindrome, ShortestPalindrome::shortestPalindrome2, ShortestPalindrome::shortestPalindrome3)
+      .check("", "")
+      .check("a", "a")
+      .check("aa", "aa")
+      .check("aba", "aba")
+      .check("aacecaaa", "aaacecaaa")
+      .check("abcd", "dcbabcd")
+      .check(BIG, BIG);
   }
 
   private static String bigString() {

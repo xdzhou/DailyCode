@@ -79,4 +79,36 @@ public class ShortestPalindrome {
     }
     return true;
   }
+
+  public static String shortestPalindrome3(String s) {
+    if (s.length() < 2) {
+      return s;
+    }
+    StringBuilder sb = new StringBuilder(s.length() * 2);
+    sb.append(s);
+    sb.reverse();
+    sb.insert(0, '#').insert(0, s);
+    // create a new string [s + # + reverse(s)]
+    // adding '#' to avoid some test case like s is "aaa"
+    String newS = sb.toString();
+    //dp[i] is length of longest prefix of s[0,i] that is equal to the suffix of s[0,i]
+    //ex, for "abcab", the prefix "ab" is equal to suffix "ab", which is longest, so the length is 2
+    int[] dp = new int[newS.length()];
+    dp[0] = 0;
+    for (int i = 1; i < dp.length; i++) {
+      int len = dp[i - 1];
+      while (len > 0 && newS.charAt(i) != newS.charAt(len)) {
+        len = dp[len - 1];
+      }
+      if (newS.charAt(i) == newS.charAt(len)) {
+        len++;
+      }
+      dp[i] = len;
+    }
+    //
+    sb.setLength(0);
+    sb.append(newS, s.length() + 1, newS.length() - dp[dp.length - 1]);
+    sb.append(s);
+    return sb.toString();
+  }
 }
