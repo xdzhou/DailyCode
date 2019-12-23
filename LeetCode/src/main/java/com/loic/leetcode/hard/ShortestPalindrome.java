@@ -107,8 +107,8 @@ public class ShortestPalindrome {
     }
     //
     sb.setLength(0);
-    sb.append(newS, s.length() + 1, newS.length() - dp[dp.length - 1]);
-    sb.append(s);
+    sb.append(newS, s.length() + 1, newS.length() - dp[dp.length - 1])
+      .append(s);
     return sb.toString();
   }
 }
