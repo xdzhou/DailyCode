@@ -20,5 +20,6 @@ class BasicCalculatorTest {
     Assertions.assertEquals(3, BasicCalculator.calculate("2-(5-6)"));
     Assertions.assertEquals(3, BasicCalculator.calculate("2-(5-(2-1)-6)-1"));
     Assertions.assertEquals(8, BasicCalculator.calculate("2-(0-(0-0)-6)-0"));
+    Assertions.assertEquals(0, BasicCalculator.calculate("  "));
   }
 }
