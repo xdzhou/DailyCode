@@ -9,4 +9,4 @@
 
 
 [1]: https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
-[1]: https://blog.csdn.net/Yaokai_AssultMaster/article/details/79599809
+[2]: https://blog.csdn.net/Yaokai_AssultMaster/article/details/79599809
