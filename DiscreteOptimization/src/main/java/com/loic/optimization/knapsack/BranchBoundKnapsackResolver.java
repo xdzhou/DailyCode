@@ -9,9 +9,15 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Knapsack {
+public class BranchBoundKnapsackResolver implements KnapsackResolver {
+  private final int maxIteration;
 
-  public static Set<Treasure> resolve(List<Treasure> items, int capacity) {
+  public BranchBoundKnapsackResolver(int maxIteration) {
+    this.maxIteration = maxIteration;
+  }
+
+  @Override
+  public Set<Treasure> resolve(List<Treasure> items, int capacity) {
     // remove too big items & sorted by density
     List<Treasure> validItems =
       items.stream()
@@ -29,8 +35,13 @@ public class Knapsack {
       new PriorityQueue<>(Comparator.comparingDouble(n -> -n.heuristic.maxValueTheory));
     queue.add(root);
     Node curBest = root;
+    int num = 0;
     while (!queue.isEmpty()) {
       Node node = queue.poll();
+      if (num > maxIteration) {
+        break;
+      }
+      num++;
       if (node.heuristic.maxValueTheory > curBest.exactValue) {
         List<Node> children = node.childrenNodes(validItems);
         for (Node child : children) {
