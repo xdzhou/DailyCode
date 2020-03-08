@@ -31,17 +31,36 @@ class KnapsackTest {
     resolvers.put("Greedy-Density-First", new GreedyKnapsackResolver(Comparator.comparingDouble(Treasure::density).reversed()));
     resolvers.put("Greedy-Weight-First", new GreedyKnapsackResolver(Comparator.comparingDouble(Treasure::weight).reversed()));
     resolvers.put("Greedy-Value-First", new GreedyKnapsackResolver(Comparator.comparingDouble(Treasure::value).reversed()));
-    resolvers.put("Branch-Bound-1000", new BranchBoundKnapsackResolver(1_000));
     resolvers.put("Branch-Bound-10000", new BranchBoundKnapsackResolver(10_000));
+    resolvers.put("LDS:Nature-10000", new LDSKnapsackResolver(10_000));
+    resolvers.put("LDS:Greedy-Density-First-10000", new LDSKnapsackResolver(10_000, Comparator.comparingDouble(Treasure::density).reversed()));
+    resolvers.put("LDS:Greedy-Weight-First-10000", new LDSKnapsackResolver(10_000, Comparator.comparingDouble(Treasure::weight).reversed()));
+    resolvers.put("LDS:Greedy-Value-First-10000", new LDSKnapsackResolver(10_000, Comparator.comparingDouble(Treasure::value).reversed()));
+
+    BestKnapsackResolver resolver = new BestKnapsackResolver(resolvers);
 
     File inputsFolder = new File(getClass().getResource("/knapsack").getFile());
     return Stream.of(inputsFolder)
       .flatMap(f -> Arrays.stream(f.listFiles()))
-      .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolvers)));
+      .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolver)));
   }
 
-  private void testInputFile(File inputFile, Map<String, KnapsackResolver> resolvers) {
-    try (Scanner scanner = new Scanner(inputFile);) {
+  @TestFactory
+  Stream<DynamicTest> LDSTest() {
+    Map<String, KnapsackResolver> resolvers = new HashMap<>();
+
+    //resolvers.put("LDS:Greedy-Weight-First", new LDSKnapsackResolver(Comparator.comparingDouble(Treasure::weight).reversed()));
+    //resolvers.put("LDS:Greedy-Value-First", new LDSKnapsackResolver(Comparator.comparingDouble(Treasure::value).reversed()));
+    BestKnapsackResolver resolver = new BestKnapsackResolver(resolvers);
+
+    File inputsFolder = new File(getClass().getResource("/knapsack").getFile());
+    return Stream.of(inputsFolder)
+      .flatMap(f -> Arrays.stream(f.listFiles()))
+      .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolver)));
+  }
+
+  private void testInputFile(File inputFile, KnapsackResolver resolver) {
+    try (Scanner scanner = new Scanner(inputFile)) {
       int size = scanner.nextInt();
       int capacity = scanner.nextInt();
       List<Treasure> list = new ArrayList<>(size);
@@ -49,12 +68,10 @@ class KnapsackTest {
         int value = scanner.nextInt();
         list.add(new Treasure(i, scanner.nextInt(), value));
       }
-      resolvers.forEach((name, resolver) -> {
-        Set<Treasure> treasures = resolver.resolve(list, capacity);
-        int value = treasures.stream().mapToInt(Treasure::value).sum();
-        Assertions.assertTrue(treasures.stream().mapToInt(Treasure::weight).sum() <= capacity);
-        System.out.println(name + " : " + value);
-      });
+      Set<Treasure> treasures = resolver.resolve(list, capacity);
+      int value = treasures.stream().mapToInt(Treasure::value).sum();
+      Assertions.assertTrue(treasures.stream().mapToInt(Treasure::weight).sum() <= capacity);
+      System.out.println("best : " + value);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
