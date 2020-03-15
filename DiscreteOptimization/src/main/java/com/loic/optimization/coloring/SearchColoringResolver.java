@@ -1,6 +1,6 @@
 package com.loic.optimization.coloring;
 
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,21 +10,23 @@ import java.util.stream.Collectors;
 
 import com.loic.optimization.TimeoutException;
 
-public class MyColoringResolver implements ColoringResolver {
-  private static final Logger LOGGER = Logger.getLogger(MyColoringResolver.class.getName());
-  private final Comparator<Vertex> comparator;
+public class SearchColoringResolver implements ColoringResolver {
+  private static final Logger LOGGER = Logger.getLogger(SearchColoringResolver.class.getName());
   private final long timeoutMs;
+  // best result
+  private int minColorCount = Integer.MAX_VALUE;
+  private Map<Vertex, Integer> result = Collections.emptyMap();
+  private long maxMs;
 
-  public MyColoringResolver(Comparator<Vertex> comparator, long timeoutMs) {
-    this.comparator = comparator;
+  public SearchColoringResolver(long timeoutMs) {
     this.timeoutMs = timeoutMs;
   }
 
   @Override
   public Map<Vertex, Integer> resolve(List<Vertex> vertices) {
-    vertices.sort(comparator);
     minColorCount = Integer.MAX_VALUE;
     maxMs = System.currentTimeMillis() + timeoutMs;
+    result = Collections.emptyMap();
     try {
       search(0, new HashMap<>(), vertices, 0);
     } catch (TimeoutException e) {
@@ -32,11 +34,6 @@ public class MyColoringResolver implements ColoringResolver {
     }
     return result;
   }
-
-  // best result
-  private int minColorCount = Integer.MAX_VALUE;
-  private Map<Vertex, Integer> result;
-  private long maxMs;
 
   private void search(int colorCount, Map<Vertex, Integer> colors, List<Vertex> vertices, int from) {
     if (System.currentTimeMillis() > maxMs) {
@@ -59,19 +56,15 @@ public class MyColoringResolver implements ColoringResolver {
       .filter(colors::containsKey)
       .map(colors::get)
       .collect(Collectors.toSet());
-    boolean assignedColor = false;
     for (int c = 0; c <= colorCount; c++) {
       if (!exclude.contains(c)) {
-        assignedColor = true;
         colors.put(v, c);
         search(colorCount, colors, vertices, from + 1);
         colors.remove(v);
       }
     }
-    if (!assignedColor) {
-      colors.put(v, colorCount + 1);
-      search(colorCount + 1, colors, vertices, from + 1);
-      colors.remove(v);
-    }
+    colors.put(v, colorCount + 1);
+    search(colorCount + 1, colors, vertices, from + 1);
+    colors.remove(v);
   }
 }

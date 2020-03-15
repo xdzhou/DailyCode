@@ -27,7 +27,7 @@ public class BestColoringResolver implements ColoringResolver {
       .orElse(Collections.emptyMap());
   }
 
-  private static int colorCount(Map<Vertex, Integer> result) {
+  static int colorCount(Map<Vertex, Integer> result) {
     return (int) result.values().stream().distinct().count();
   }
 }

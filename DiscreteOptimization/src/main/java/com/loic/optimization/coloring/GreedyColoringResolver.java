@@ -1,7 +1,5 @@
 package com.loic.optimization.coloring;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,17 +7,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GreedyColoringResolver implements ColoringResolver {
-  private final Comparator<Vertex> comparator;
-
-  public GreedyColoringResolver(Comparator<Vertex> comparator) {
-    this.comparator = comparator;
-  }
 
   @Override
   public Map<Vertex, Integer> resolve(List<Vertex> vertices) {
     Map<Vertex, Integer> result = new HashMap<>();
-    vertices.stream()
-      .sorted(comparator)
+    vertices
       .forEach(v -> {
         Set<Integer> exclude = v.neighbours().stream()
           .filter(result::containsKey)
@@ -39,5 +31,4 @@ public class GreedyColoringResolver implements ColoringResolver {
       id++;
     } while (true);
   }
-
 }
