@@ -3,7 +3,6 @@ package com.loic.optimization.coloring;
 import static com.loic.optimization.coloring.BestColoringResolver.colorCount;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

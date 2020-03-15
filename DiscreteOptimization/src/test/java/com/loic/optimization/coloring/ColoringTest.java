@@ -24,15 +24,15 @@ class ColoringTest {
 
     ColoringResolver greedy = new GreedyColoringResolver();
     ColoringResolver greedyNeighbourSize = new ComparatorResolverDecorator(greedy, sizeCom.reversed());
-    ColoringResolver search = new SearchColoringResolver(1_000);
+    ColoringResolver search = new SearchColoringResolver(100);
     ColoringResolver searchNeighbourSize = new ComparatorResolverDecorator(search, sizeCom.reversed());
 
     Map<String, ColoringResolver> resolverMap = new HashMap<>();
-    resolverMap.put("Greedy-Random", new RandomResolverDecorator(greedy, 10_000));
-    resolverMap.put("Greedy-neighbourSize(random)", new RandomResolverDecorator(greedyNeighbourSize, 10_000));
-    resolverMap.put("Search-neighbourSize", new ComparatorResolverDecorator(new SearchColoringResolver(10_000), sizeCom.reversed()));
-    resolverMap.put("Search-neighbourSize(random)", new RandomResolverDecorator(searchNeighbourSize, 10_000));
-    resolverMap.put("LDS-neighbourSize", new ComparatorResolverDecorator(new LDSResolverDecorator(greedy), sizeCom.reversed()));
+    resolverMap.put("Greedy-Random", new RandomResolverDecorator(greedy, 1_000));
+    resolverMap.put("Greedy-neighbourSize(random)", new RandomResolverDecorator(greedyNeighbourSize, 1_000));
+    resolverMap.put("Search-neighbourSize", new ComparatorResolverDecorator(new SearchColoringResolver(1_000), sizeCom.reversed()));
+    resolverMap.put("Search-neighbourSize(random)", new RandomResolverDecorator(searchNeighbourSize, 1_000));
+    //resolverMap.put("LDS-neighbourSize", new ComparatorResolverDecorator(new LDSResolverDecorator(greedy), sizeCom.reversed()));
 
     ColoringResolver resolver = new BestColoringResolver(resolverMap);
 
@@ -40,14 +40,6 @@ class ColoringTest {
     return Stream.of(inputsFolder)
       .flatMap(f -> Arrays.stream(f.listFiles()))
       .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolver)));
-  }
-
-  @Test
-  void test() {
-    Comparator<Vertex> sizeCom = comparingInt(v -> v.neighbours().size());
-    File file = new File(getClass().getResource("/coloring/gc_100_5").getFile());
-    ColoringResolver greedy = new GreedyColoringResolver();
-    testInputFile(file, new ComparatorResolverDecorator(new LDSResolverDecorator(greedy), sizeCom.reversed()));
   }
 
   private void testInputFile(File inputFile, ColoringResolver resolver) {
