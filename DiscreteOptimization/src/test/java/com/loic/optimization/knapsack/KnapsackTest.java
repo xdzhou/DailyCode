@@ -45,20 +45,6 @@ class KnapsackTest {
       .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolver)));
   }
 
-  @TestFactory
-  Stream<DynamicTest> LDSTest() {
-    Map<String, KnapsackResolver> resolvers = new HashMap<>();
-
-    //resolvers.put("LDS:Greedy-Weight-First", new LDSKnapsackResolver(Comparator.comparingDouble(Treasure::weight).reversed()));
-    //resolvers.put("LDS:Greedy-Value-First", new LDSKnapsackResolver(Comparator.comparingDouble(Treasure::value).reversed()));
-    BestKnapsackResolver resolver = new BestKnapsackResolver(resolvers);
-
-    File inputsFolder = new File(getClass().getResource("/knapsack").getFile());
-    return Stream.of(inputsFolder)
-      .flatMap(f -> Arrays.stream(f.listFiles()))
-      .map(f -> DynamicTest.dynamicTest("test " + f.getName(), () -> testInputFile(f, resolver)));
-  }
-
   private void testInputFile(File inputFile, KnapsackResolver resolver) {
     try (Scanner scanner = new Scanner(inputFile)) {
       int size = scanner.nextInt();

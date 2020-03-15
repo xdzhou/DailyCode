@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,6 +16,7 @@ import com.loic.optimization.MaxIterationException;
  * limited discrepancy search
  */
 public class LDSKnapsackResolver implements KnapsackResolver {
+  private static final Logger LOGGER = Logger.getLogger(LDSKnapsackResolver.class.getName());
   private final int maxIteration;
   private final Comparator<Treasure> comparator;
 
@@ -54,7 +56,7 @@ public class LDSKnapsackResolver implements KnapsackResolver {
           Set<Integer> skippedItems = new HashSet<>();
           findSkip(skippedItems, 0, size - 1, skipCount, skip -> {
             iterationCount[0]++;
-            if(iterationCount[0]>maxIteration){
+            if (iterationCount[0] > maxIteration) {
               throw new MaxIterationException(maxIteration);
             }
             Result r = search(tmp, capacity, skip);
@@ -63,8 +65,8 @@ public class LDSKnapsackResolver implements KnapsackResolver {
         }
         items = items.subList(size, items.size());
       }
-    }catch (MaxIterationException e){
-      // max iteration reached, return current best
+    } catch (MaxIterationException e) {
+      LOGGER.info("max iteration reached...");
     }
     return best[0];
   }
