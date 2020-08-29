@@ -8,7 +8,6 @@ import javax.swing.*;
 public class TspGui implements TspPathListener {
   private static final int DIMENSION = 850;
 
-  private final JFrame frame;
   private final PathCanvas pathCanvas;
   private final JLabel resultLabel;
 
@@ -18,7 +17,7 @@ public class TspGui implements TspPathListener {
   private long preDrawTimeMs = -1;
 
   public TspGui() {
-    frame = new JFrame("TSP");
+    JFrame frame = new JFrame("TSP");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setLayout(new BorderLayout());
     pathCanvas = new PathCanvas();
@@ -60,6 +59,7 @@ public class TspGui implements TspPathListener {
     for (int i = 0; i < points.size(); i++) {
       distance += disManager.distance(i, (i + 1) % points.size());
     }
+    distance = Utils.convertPrecision(distance);
 
     pathCanvas.repaint();
     resultLabel.setText("Iteration : " + iteration + ", distance : " + distance);

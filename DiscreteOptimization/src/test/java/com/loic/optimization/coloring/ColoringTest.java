@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.TestFactory;
 class ColoringTest {
 
   @TestFactory
+  @Disabled
   Stream<DynamicTest> fileInputsTest() {
     Comparator<Vertex> sizeCom = comparingInt(v -> v.neighbours().size());
 

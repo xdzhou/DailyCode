@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -26,6 +27,7 @@ class KnapsackTest {
   }
 
   @TestFactory
+  @Disabled
   Stream<DynamicTest> fileInputsTest() {
     Map<String, KnapsackResolver> resolvers = new HashMap<>();
     resolvers.put("Greedy-Density-First", new GreedyKnapsackResolver(Comparator.comparingDouble(Treasure::density).reversed()));

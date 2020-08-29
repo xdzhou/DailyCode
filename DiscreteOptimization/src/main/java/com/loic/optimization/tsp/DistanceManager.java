@@ -1,30 +1,15 @@
 package com.loic.optimization.tsp;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.loic.optimization.LRUCache;
 
 public class DistanceManager {
   private final List<Point> points;
-  private final Map<String, Double> disMap = new HashMap<>();
-  private final int[] closestPoint;
+  private final LRUCache<String, Double> disMap = new LRUCache<>(1000_000);
 
   public DistanceManager(List<Point> points) {
     this.points = points;
-    closestPoint = new int[points.size()];
-    /*
-      int curId = i;
-      int closest = IntStream.range(0, points.size())
-        .filter(id -> id != curId)
-        .boxed()
-        .min(Comparator.comparingDouble(id -> distance(id, curId)))
-        .get();
-      closestPoint[curId] = closest;
-       */
-  }
-
-  public int closestId(int id) {
-    return closestPoint[id];
   }
 
   public double distance(int id1, int id2) {
@@ -32,7 +17,12 @@ public class DistanceManager {
       return distance(id2, id1);
     }
     String key = id1 + "-" + id2;
-    return disMap.computeIfAbsent(key, k -> distance(points.get(id1), points.get(id2)));
+    Double value = disMap.get(key);
+    if (value == null) {
+      value = distance(points.get(id1), points.get(id2));
+      disMap.put(key, value);
+    }
+    return value;
   }
 
   private double distance(Point p1, Point p2) {

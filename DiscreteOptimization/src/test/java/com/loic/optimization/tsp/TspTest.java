@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.TestFactory;
 class TspTest {
 
   @TestFactory
+  @Disabled
   Stream<DynamicTest> fileInputsTest() {
     //TspResolver resolver = new LocalSearchTspResolver(false);
     TspResolver resolver = new TwoOptTspResolver(10_000);
@@ -27,19 +29,21 @@ class TspTest {
   }
 
   @Test
+  @Disabled
   void guiTest() throws IOException {
-    TspResolver resolver = new TwoOptTspResolver(100_000);
+    TspResolver resolver = new TwoOptTspResolver(100_0000);
     resolver.setListener(new TspGui());
-    File input = new File(getClass().getResource("/tsp/tsp_2103_1").getFile());
+    File input = new File(getClass().getResource("/tsp/tsp_100_3").getFile());
     testInputFile(input, resolver);
     System.in.read();
   }
 
   @Test
+  @Disabled
   void swapTest() throws IOException {
-    TspResolver resolver = new SwapTspResolver(100_000);
+    TspResolver resolver = new SwapTspResolver(100_0000);
     resolver.setListener(new TspGui());
-    File input = new File(getClass().getResource("/tsp/tsp_2103_1").getFile());
+    File input = new File(getClass().getResource("/tsp/tsp_2152_1").getFile());
     testInputFile(input, resolver);
     System.in.read();
   }
@@ -54,7 +58,12 @@ class TspTest {
       }
       List<Integer> result = resolver.resolve(list);
       Assertions.assertEquals(list.size(), result.stream().distinct().count());
-      //System.out.println("best path : " + result);
+      DistanceManager disManager = new DistanceManager(list);
+      double distance = 0;
+      for (int i = 0; i < list.size(); i++) {
+        distance += disManager.distance(result.get(i), result.get((i + 1) % list.size()));
+      }
+      System.out.println("best distance : " + distance);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
