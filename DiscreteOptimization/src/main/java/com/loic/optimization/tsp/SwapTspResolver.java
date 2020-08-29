@@ -7,12 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class SwapTspResolver implements TspResolver {
-  private static final Logger LOGGER = Logger.getLogger(SwapTspResolver.class.getName());
 
   private TspPathListener listener;
   private final long timeoutMs;

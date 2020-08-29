@@ -40,7 +40,7 @@ public class TwoOptTspResolver implements TspResolver {
 
     //int[][] tabu = new int[len][len];
     Map<String, Integer> tabuMap = new HashMap<>();
-    long swapSize = (long) len * (len - 3) / 2 + 1;
+    //long swapSize = (long) len * (len - 3) / 2 + 1;
     int tabuSize = 250;
     long maxTime = System.currentTimeMillis() + timeoutMs;
 
