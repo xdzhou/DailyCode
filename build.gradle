@@ -71,7 +71,8 @@ subprojects {
     dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
-        testCompile 'org.mockito:mockito-core:2.7.22'
+        testCompile 'org.mockito:mockito-core:2.22.0'
+        compile 'com.google.guava:guava:30.0-jre'
     }
 
     test {
