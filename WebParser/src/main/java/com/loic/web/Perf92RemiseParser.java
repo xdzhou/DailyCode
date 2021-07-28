@@ -1,29 +1,38 @@
-package com.loic.daily.exercise;
+package com.loic.web;
 
+import com.loic.web.utils.JsoupWrap;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Perf92RemiseParser {
-  private static int count = 0;
+  private int count = 0;
 
   public static void main(String... args) throws InterruptedException {
-    while (true) {
+    new Perf92RemiseParser().process();
+  }
+
+  public void process() throws InterruptedException {
+    boolean found = false;
+    while (!found) {
+      long sleepSec = 20;
       try {
-        process();
+        found = hasFreePlace();
       } catch (IOException e) {
-        System.out.println("error " + e.getMessage());
+        System.out.println("Error: " + e.getMessage());
+        sleepSec = 120;
       }
-      Thread.sleep(10_000);
+      Thread.sleep(sleepSec * 1_000);
     }
   }
 
-  private static void process() throws IOException {
+  private boolean hasFreePlace() throws IOException {
     String initUrl = "https://www.hauts-de-seine.gouv.fr/booking/create/12083/1";
     Map<String, String> headers = new HashMap<>();
     headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
@@ -37,21 +46,20 @@ public class Perf92RemiseParser {
     headers.put("Upgrade-Insecure-Requests", "1");
 
     JsoupWrap jsoup = new JsoupWrap();
-    Document doc = jsoup.response(initUrl).parse();
+    Document doc = jsoup.request(initUrl).parse();
     Element fieldset = doc.selectFirst("fieldset#fchoix_Booking");
     Elements radios = fieldset.select("input.radio");
     int curChoice = (count++) % radios.size();
     String choiceValue = radios.get(curChoice).attr("value");
 
-
     Document rdvDoc;
     try {
-      rdvDoc = jsoup.response(initUrl, c -> c
+      rdvDoc = jsoup.request(initUrl, c -> c
           .method(Connection.Method.POST)
           .data("planning", choiceValue)
           .data("nextButton", "Etape suivante")
           .headers(headers)).parse();
-      System.out.println("choice " + choiceValue);
+      System.out.println("choice N" + (curChoice+1) + " with value " + choiceValue);
     } catch (IOException e) {
       count--;
       throw e;
@@ -61,7 +69,10 @@ public class Perf92RemiseParser {
     if (form.text().contains("Il n'existe plus de plage horaire libre")) {
       System.out.println("retry later on");
     } else {
-      System.err.println("QUICK");
+      Toolkit.getDefaultToolkit().beep();
+      System.out.println("Quick on choice N" + (curChoice+1));
+      return true;
     }
+    return false;
   }
 }

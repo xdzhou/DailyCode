@@ -1,26 +1,25 @@
-package com.loic.daily.exercise;
+package com.loic.web;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
+import com.loic.web.utils.JsoupWrap;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.*;
-import java.util.function.Consumer;
-
+import java.util.Optional;
 
 public class DoctolibParser {
   private static final String DOCTOLIB_ROOT = "https://www.doctolib.fr";
   private static final JsonMapper JSON_MAPPER = new JsonMapper();
-  private Map<String, String> cookies = Collections.emptyMap();
+  private final JsoupWrap jsoupWrap = new JsoupWrap();
 
-  public static void main(String... args) throws Exception {
+  public static void main(String... args) throws IOException, InterruptedException {
     int pageLoadSize = 15;
     int loop = 10;
     DoctolibParser parser = new DoctolibParser();
@@ -49,22 +48,7 @@ public class DoctolibParser {
         || zipCode.startsWith("75") || zipCode.startsWith("91") || zipCode.startsWith("94");
   }
 
-  private Connection.Response jsoupResponse(String url) throws IOException {
-    return jsoupResponse(url, c -> {
-    });
-  }
-
-  private Connection.Response jsoupResponse(String url, Consumer<Connection> consumer) throws IOException {
-    Connection connection = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36")
-        .timeout(10_000)
-        .cookies(cookies);
-    consumer.accept(connection);
-    Connection.Response response = connection.execute();
-    cookies = response.cookies();
-    return response;
-  }
-
-  private void checkAvailabilities(int loop, List<Site> sites) throws Exception {
+  private void checkAvailabilities(int loop, List<Site> sites) throws InterruptedException {
     while (loop > 0 && sites.size() > 0) {
       System.out.printf("Scan %d sites in loop ...%d%n", sites.size(), loop);
       Iterator<Site> iterator = sites.iterator();
@@ -73,7 +57,7 @@ public class DoctolibParser {
         String url = DOCTOLIB_ROOT + "/search_results/" + site.id + ".json?ref_visit_motive_ids%5B%5D=6970&ref_visit_motive_ids%5B%5D=7005&speciality_id=5494&search_result_format=json&limit=3&force_max_limit=2";
         String json = null;
         try {
-          json = jsoupResponse(url, c -> c.ignoreContentType(true)).body();
+          json = jsoupWrap.request(url, c -> c.ignoreContentType(true)).body();
           JsonNode rootNode = JSON_MAPPER.readValue(json, JsonNode.class);
           JsonNode availNode = rootNode.get("availabilities");
           String zipCode = rootNode.get("search_result").get("zipcode").asText();
@@ -86,7 +70,7 @@ public class DoctolibParser {
           } else {
             iterator.remove();
           }
-        } catch (Exception e) {
+        } catch (IOException e) {
           //e.printStackTrace();
           iterator.remove();
         }
@@ -109,7 +93,7 @@ public class DoctolibParser {
   }
 
   private Optional<String> loadSites(String href, List<Site> sites) throws IOException {
-    Document doc = jsoupResponse(DOCTOLIB_ROOT + href).parse();
+    Document doc = jsoupWrap.request(DOCTOLIB_ROOT + href).parse();
     for (Element ele : doc.select("div.dl-search-result")) {
       String searchId = ele.attr("id").split("-")[2];
       Element nameEle = ele.selectFirst("a.dl-search-result-name");
@@ -124,7 +108,7 @@ public class DoctolibParser {
   }
 
   private void fetchSiteIds(Site site) throws IOException {
-    Document siteRoot = jsoupResponse(DOCTOLIB_ROOT + site.url).parse();
+    Document siteRoot = jsoupWrap.request(DOCTOLIB_ROOT + site.url).parse();
     Element dataLayer = siteRoot.selectFirst("div#datalayer");
     JsonNode propsNode = JSON_MAPPER.readValue(dataLayer.attr("data-props"), JsonNode.class);
     site.profileId = propsNode.get("profile_id").asText();

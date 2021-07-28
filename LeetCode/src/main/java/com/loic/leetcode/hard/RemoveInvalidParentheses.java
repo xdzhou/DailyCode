@@ -1,9 +1,7 @@
 package com.loic.leetcode.hard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 301. Remove Invalid Parentheses
