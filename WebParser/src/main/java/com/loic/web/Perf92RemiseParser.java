@@ -1,12 +1,12 @@
-package com.loic.daily.exercise;
+package com.loic.web;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.loic.web.utils.JsoupWrap;
 import org.jsoup.Connection;
-import org.jsoup.HttpStatusException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -43,7 +43,7 @@ public class Perf92RemiseParser {
     headers.put("Upgrade-Insecure-Requests", "1");
 
     JsoupWrap jsoup = new JsoupWrap();
-    Document doc = jsoup.response(initUrl).parse();
+    Document doc = jsoup.request(initUrl).parse();
     Element fieldset = doc.selectFirst("fieldset#fchoix_Booking");
     Elements radios = fieldset.select("input.radio");
     int curChoice = (count++) % radios.size();
@@ -51,7 +51,7 @@ public class Perf92RemiseParser {
 
     Document rdvDoc;
     try {
-      rdvDoc = jsoup.response(initUrl, c -> c
+      rdvDoc = jsoup.request(initUrl, c -> c
         .method(Connection.Method.POST)
         .data("planning", choiceValue)
         .data("nextButton", "Etape suivante")
