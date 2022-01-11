@@ -1,5 +1,8 @@
 package com.loic.leetcode.hard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 964. Least Operators to Express Number
  * <p>
@@ -33,4 +36,42 @@ package com.loic.leetcode.hard;
  * The expression contains 3 operations.
  */
 public class LeastOperators2Target {
+
+  public static int resolveCache(int x, int target) {
+    // cache.get(i) means the min operations to get target 'i'
+    Map<Integer, Integer> cache = new HashMap<>();
+    cache.put(x + x, 1);
+    cache.put(0, 1); // x-x
+    cache.put(x * x, 1);
+    cache.put(1, 1); // x/x
+    cache.put(x, 0);
+    return resolveCacheIntern(x, target, cache);
+  }
+
+  private static int resolveCacheIntern(int x, int target, Map<Integer, Integer> cache) {
+    if (cache.containsKey(target)) {
+      return cache.get(target);
+    }
+    int result;
+    int mulTimes = 0;
+    long product = x;
+    while (product < target) {
+      mulTimes++;
+      // [WARN] use long here to avoid overflow !!!
+      product *= x;
+    }
+    System.out.println("target >> " + target + " , times " + mulTimes);
+    // here temp >= target
+    if (product == target) {
+      result = mulTimes;
+    } else {
+      // multiply x by 'mulTimes' time (the value should be 'temp'), than subtraction 'temp - target'
+      int result1 = product - target >= target ? Integer.MAX_VALUE : (mulTimes + 1 + resolveCacheIntern(x, (int) (product - target), cache));
+      // multiply x by 'mulTimes-1' time (the value should be 'temp/x'), than add 'target - temp / x'
+      int result2 = mulTimes + (mulTimes == 0 ? 2 : 0) + resolveCacheIntern(x, (int) (target - product / x), cache);
+      result = Math.min(result1, result2);
+    }
+    cache.put(target, result);
+    return result;
+  }
 }
