@@ -1,5 +1,8 @@
 package com.loic.leetcode.hard;
 
+import com.loic.leetcode.annotation.RelatedTopic;
+import com.loic.leetcode.annotation.Topic;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +40,7 @@ import java.util.Map;
  */
 public class LeastOperators2Target {
 
+  @RelatedTopic(topics = Topic.Cache)
   public static int resolveCache(int x, int target) {
     // cache.get(i) means the min operations to get target 'i'
     Map<Integer, Integer> cache = new HashMap<>();

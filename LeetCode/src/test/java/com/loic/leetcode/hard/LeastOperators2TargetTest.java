@@ -16,11 +16,5 @@ class LeastOperators2TargetTest {
   @Test
   void leetcodeTestWrong() {
     assertEquals(45, LeastOperators2Target.resolveCache(79, 155800339));
-    //assertEquals(45, LeastOperators2Target.leastOpsExpressTarget(79, 155800339));
-  }
-  @Test
-  void leetcodeTestWrong2() {
-    //assertEquals(45, LeastOperators2Target.resolveCache(79, 155800339));
-    assertEquals(45, LeastOperators2Target.leastOpsExpressTarget(79, 155800339));
   }
 }
